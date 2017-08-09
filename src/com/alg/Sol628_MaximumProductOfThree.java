@@ -13,7 +13,7 @@ public class Sol628_MaximumProductOfThree {
         return Math.max(nums[0]*nums[1] * nums[n-1], nums[n-1] * nums[n-2]* nums[n-3]);
     }
     public static int maximumProduct(int[] nums) {
-        // length >=3
+        // length >=3 assumption
         int n = nums.length;
         int max1= Integer.MIN_VALUE, max2 = Integer.MIN_VALUE, max3 = Integer.MIN_VALUE;
         int min1 = Integer.MAX_VALUE, min2 = Integer.MAX_VALUE;
