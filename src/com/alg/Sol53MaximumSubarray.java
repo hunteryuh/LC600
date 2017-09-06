@@ -25,10 +25,25 @@ public class Sol53MaximumSubarray {
 
 
     }
+    // dp approach
+    public static int maxsubdp(int[] nums){
+        assert nums.length >=1;
+        int n = nums.length;
+        int[] sum = new int[n]; // sum[i]: the max subarray ending in nums[i]
+        int result = nums[0];
+        sum[0] = nums[0];
+
+        for (int i = 1; i < n ;i++){
+            sum[i] = Math.max(nums[i],sum[i-1] + nums[i]);
+            result = Math.max(result, sum[i]);
+        }
+        return result;
+    }
 
     public static void main(String[] args){
         int[] nums = {-2,1,-3,4,-1,2,1,-5,4};
         //int k = 2;
         System.out.println(maxSubArray(nums));
+        System.out.println(maxsubdp(nums));
     }
 }
