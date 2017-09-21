@@ -55,7 +55,7 @@ public class Sol387_FirstUniqueCharacter_inAString {
 
     }
 
-    public int firstUniqChar2(String s) {
+    public static int firstUniqChar2(String s) {
         int freq [] = new int[26];
         for(int i = 0; i < s.length(); i ++)
             freq [s.charAt(i) - 'a'] ++;
@@ -72,5 +72,6 @@ public class Sol387_FirstUniqueCharacter_inAString {
         System.out.println(firstUniqChar(t));
         String a = "ccdcde";
         System.out.println(firstUniqChar(a));
+        System.out.println(firstUniqChar2(a));
     }
 }
