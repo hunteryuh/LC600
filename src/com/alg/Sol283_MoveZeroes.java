@@ -24,6 +24,8 @@ public class Sol283_MoveZeroes {
                swap(nums,i,j++);
            }
         }
+
+        // space O(1), time O(n)
     }
 
     private static void swap(int[] nums, int i, int j) {
@@ -37,5 +39,9 @@ public class Sol283_MoveZeroes {
         int[] a = { 0,1,0,3,12};
         moveZeroes(a);
         System.out.println(Arrays.toString(a));
+    }
+
+    public static void moveZeroes2(int[] nums){
+        return;
     }
 }
