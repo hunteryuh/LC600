@@ -25,6 +25,8 @@ public class Sol53MaximumSubarray {
 
 
     }
+
+
     // dp approach
     public static int maxsubdp(int[] nums){
         assert nums.length >=1;
@@ -45,5 +47,23 @@ public class Sol53MaximumSubarray {
         //int k = 2;
         System.out.println(maxSubArray(nums));
         System.out.println(maxsubdp(nums));
+    }
+
+    //camp
+    public static int maxsubarray(int[] nums){
+        int cursum = 0;
+        int maxsum = Integer.MAX_VALUE;
+        for (int i = 0; i< nums.length;i++){
+            if (cursum <=0){
+                cursum = nums[i];
+            }else{
+                cursum += nums[i];
+            }
+
+            if (cursum > maxsum){
+                maxsum = cursum;
+            }
+        }
+        return maxsum;
     }
 }
