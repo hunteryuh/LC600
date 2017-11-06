@@ -1,7 +1,9 @@
 package com.alg;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * Created by HAU on 11/5/2017.
@@ -26,7 +28,7 @@ public class Sol102_BinaryTreeLevelOrderTraversal {
         }
     }
     public static List<List<Integer>> levelOrder(TreeNode root) {
-        // using dfs
+        // using dfs, recursion
         List<List<Integer>> res = new ArrayList<>();
         levelhelper(root, res, 0);
         return res;
@@ -65,5 +67,30 @@ public class Sol102_BinaryTreeLevelOrderTraversal {
         node3.left = node6;
         node5.left = node7;
         System.out.println(levelOrder(node1));
+        System.out.println(levelOrd2(node1));
+    }
+    //method 2, dfs but with queue, first in first out
+    public static List<List<Integer>> levelOrd2(TreeNode root){
+        List<List<Integer>> res = new ArrayList<>();
+        Queue<TreeNode> q = new LinkedList<>();
+        if ( root == null) return res;
+        q.add(root);
+
+        while (!q.isEmpty()){
+            int size = q.size();
+            List<Integer> tmp = new ArrayList<>();
+            for ( int i = 0; i < size; i++){
+                TreeNode node = q.poll();
+                tmp.add(node.val);
+                if (node.left != null){
+                    q.add(node.left);
+                }
+                if (node.right!= null){
+                    q.add(node.right);
+                }
+            }
+            res.add(tmp);
+        }
+        return res;
     }
 }
