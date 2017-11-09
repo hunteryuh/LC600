@@ -24,7 +24,7 @@ public class Sol75SortColors {
             else if (nums[i]==2) swap(nums,i,hi--);
             else if(nums[i]==1) i++;
 
-        }   // too slow, beats 5%...
+        }   // one pass, O(n)
 
     }
     private static void swap(int[] a, int i, int j){
