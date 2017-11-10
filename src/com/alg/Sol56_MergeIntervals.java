@@ -1,9 +1,6 @@
 package com.alg;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by HAU on 11/8/2017.
@@ -50,6 +47,10 @@ public class Sol56_MergeIntervals {
         Interval a2 = new Interval(2,6);
         Interval a3 = new Interval(8,9);
         Interval a4 = new Interval(10,14);
+//        List<Interval> list = new ArrayList<>(Arrays.asList(a1,a2));
+//        for ( Interval i: list){
+//            System.out.println(i.start + ", "+ i.end);
+//        }
         List<Interval> list = new ArrayList<>();
         list.add(a1);
         list.add(a2);
