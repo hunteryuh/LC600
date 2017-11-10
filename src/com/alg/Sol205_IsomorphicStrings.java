@@ -58,4 +58,20 @@ public class Sol205_IsomorphicStrings {
         System.out.println(isIsomorphic(s2,t2));
         System.out.println(isIsomorph(s2,t2));
     }
+    public static boolean isIsomorphic2(String s, String t){
+        int[] map = new int[256];
+        char[] sc = s.toCharArray();
+        char[] tc = t.toCharArray();
+        for (int i = 0; i < s.length(); i++){
+            if ( map[sc[i]] == 0){
+                map[sc[i]] = tc[i];
+            }else{
+                if (map[sc[i]] != tc[i]){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 }
