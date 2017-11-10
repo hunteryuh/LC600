@@ -17,6 +17,7 @@ public class Sol69_SqrtX {
         return res;  // time limited for largest int
     }
     public static int mySqrt(int x){
+        // binary search [0, n/2 + 1], time O(log n)
         if ( x == 0 || x== 1) return x;
         int start = 1;
         int end = x /2 ;
