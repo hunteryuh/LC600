@@ -1,5 +1,9 @@
 package com.alg;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+
 /**
  * Created by HAU on 6/12/2017.
  */
@@ -9,15 +13,34 @@ public class Sol151_ReverseWordsInAString {
     public static String reverseWords(String s){
         if (s == null || s.length() == 0)
             return "";
-        String[] arr = s.split(" ");
+        String[] arr = s.trim().split(" +");
         StringBuilder sb = new StringBuilder();
 
         for ( int i = arr.length - 1; i >= 0; i--){
-            if(true)  //!arr[i].equals("")
                 sb.append(arr[i]).append(" ");
         }
         //if (sb.length() == 0) return "";
         return sb.length()==0 ? "": sb.substring(0,sb.length() - 1);
+    }
+
+    public static String reverseWds(String s){
+        //similar as above, use string concatenation
+        String res = "";
+        String[] words = s.trim().split("\\s+");
+        /*private final String REGEX = "\\d"; // a single digit
+In this example \d is the regular expression; the extra backslash is required for the code to compile. */
+        for (int i = words.length - 1; i >0; i--){
+            res += words[i] + " ";
+        }
+        return res + words[0];
+    }
+    public static String reverseWs(String s){
+        // built in functions used
+        String[] words = s.trim().split(" +"); // one or more whitespace " "
+        //System.out.println();
+        Collections.reverse(Arrays.asList(words)); // Arrays.asList(array) return a list view of the specified array
+        //System.out.println(words);
+        return String.join(" ",words);
     }
 
     // in-place
@@ -47,6 +70,7 @@ public class Sol151_ReverseWordsInAString {
 
     public static void main(String[] args) {
         String s = "how old are you";
+        System.out.println(reverseWs(s));
         System.out.println(reverseWords(s));
         String t = " ";
         System.out.println(reverseWords(t));
