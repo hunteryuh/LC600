@@ -41,6 +41,9 @@ public class Sol242_ValidAnagram {
         String s = "silent";
         String t = "listen";
         System.out.println(isAnagram(s,t));
+        String t2 = "lendsi";
+        System.out.println(isAnagram3(s,t2));
+        System.out.println(isAnagram3(s,t));
     }
 
     public static boolean isAnagram2(String s, String t) {
@@ -51,6 +54,17 @@ public class Sol242_ValidAnagram {
         char[] str2 = t.toCharArray();
         Arrays.sort(str1);
         Arrays.sort(str2);
-        return Arrays.equals(str1, str2);
+        return Arrays.equals(str1, str2);  // O(n log n) with the sorting
+    }
+
+    // method 2 using int array
+    public static boolean isAnagram3(String s, String t){
+        int[] alpha = new int[26]; //'z'-'a'+1 = 26
+        for(char c:s.toCharArray()) alpha[c - 'a']++;
+        for(char c:t.toCharArray()) alpha[c - 'a']--;
+        for(int i: alpha) if(i != 0) return false;
+        return true;
+
+
     }
 }
