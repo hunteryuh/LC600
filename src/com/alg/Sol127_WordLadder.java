@@ -38,6 +38,8 @@ public class Sol127_WordLadder {
             String word = q.remove();
             if (word.equals(endWord)) return distance.get(word);
             // if not found, go to find neighbors
+            // if the goal is to find one path of transformation, better use DFS depth first search
+            // here we are asked for shortest path, then use breadth first search bfs
             for (int i = 0; i < word.length(); i++){
                 char oldChar = word.charAt(i);
                 for (char c = 'a'; c <= 'z'; c++){
@@ -45,7 +47,7 @@ public class Sol127_WordLadder {
                         continue;
                     }
                     StringBuilder sb = new StringBuilder(word);
-                    sb.setCharAt(i,c);
+                    sb.setCharAt(i,c);  //set the ith char in the stringbuilder as c
                     String newword = sb.toString();
                     if ( dic.contains(newword) && !visited.contains(newword)){
                         q.add(newword);
