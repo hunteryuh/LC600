@@ -35,7 +35,7 @@ public class Sol380_InsertDeleteGetRandomO1 {
             int pos = map.get(val);
             if (pos < nums.size() - 1) { // if not the last one, then swap the last one with this val
                 int last = nums.get(nums.size() - 1);  // arraylist get() O(1), basically a value in an array
-                nums.set(pos, last);  // set the element at "pos" position to be last element in the list // like an array set, O(1)
+                nums.set(pos, last);  // set the element at "pos" position to be last element in the list
                 map.put(last, pos); // put the last element in the list with the pos position
             }
             map.remove(val);  // hashmap remove O(1)
