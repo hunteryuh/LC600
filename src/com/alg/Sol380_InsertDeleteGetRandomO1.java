@@ -35,10 +35,13 @@ public class Sol380_InsertDeleteGetRandomO1 {
             int pos = map.get(val);
             if (pos < nums.size() - 1) { // if not the last one, then swap the last one with this val
                 int last = nums.get(nums.size() - 1);  // arraylist get() O(1), basically a value in an array
-                nums.set(pos, last);  // set the element at "pos" position to be last element in the list
+                nums.set(pos, last);  // set the element at "pos" position to be last element in the list , set like assign value in an array element
                 map.put(last, pos); // put the last element in the list with the pos position
             }
-            map.remove(val);  // hashmap remove O(1)
+            map.remove(val);  // hashmap remove() It is O(1) only when removing the last element by index.
+            // O(1); map remove(obj)
+            //O(1+k/n) where k is the no. of collision elements
+            // added to the same LinkedList (k elements had same hashCode)
             nums.remove(nums.size() - 1);
             return true;
         }
