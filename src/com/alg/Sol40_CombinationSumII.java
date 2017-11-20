@@ -34,7 +34,7 @@ public class Sol40_CombinationSumII {
         }
         for ( int i = index; i < candidates.length; i++){
             if (candidates[i] > target) return;  // array is sorted
-            if ( i > index && candidates[i] == candidates[i - 1]) continue;
+            if ( i > index && candidates[i] == candidates[i - 1]) continue; // candidate may have duplicate numbers
             subset.add(candidates[i]);
             helper(candidates,i + 1,subset,target - candidates[i],result);  // i + 1, only be used once
             subset.remove(subset.size() - 1);
