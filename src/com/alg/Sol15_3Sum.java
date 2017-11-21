@@ -64,6 +64,7 @@ public class Sol15_3Sum {
         return list;  //Submission Result: Time Limit Exceeded
     }
     public static  List<List<Integer>> ThreeSum(int[] nums) {
+        //O(n^2) time complexity
         int n = nums.length;
         List<List<Integer>> list = new ArrayList<List<Integer>>();
         Arrays.sort(nums);
@@ -78,7 +79,7 @@ public class Sol15_3Sum {
 
                 if (  nums[j] + nums[k] == sum) {
                     list.add(Arrays.asList(nums[i], nums[j], nums[k]));
-                    while ( j < k && nums[j] == nums[j+1]) j++;
+                    while ( j < k && nums[j] == nums[j+1]) j++;  // skip the same values
                     while ( j < k && nums[k] == nums[k-1]) k--;
 
                     j++;
