@@ -27,6 +27,7 @@ public class Sol377_CombinationSum4 {
         int[] dp = new int[target + 1];
         dp[0] = 1;
         for (int i = 1; i <= target; i++){
+            // i = 0 does not help
             for (int num: nums){
                 if ( i >= num){
                     dp[i] += dp[i - num];
@@ -45,5 +46,19 @@ public class Sol377_CombinationSum4 {
         int[] nums = {1,2,3};
         int t = 4;
         System.out.println(combinationSum4(nums,t));
+        System.out.println(combinationSum42(nums,t));
+    }
+    public static int combinationSum42(int[] nums, int target) {
+        int[] dp = new int[target + 1];
+        dp[0] = 1;
+        for (int i = 0; i <= target; i++){
+            // i starts from 0, not 1 0 + num = num
+            for (int num: nums){
+                if ( i + num <= target){
+                    dp[i+num] += dp[i];
+                }
+            }
+        }
+        return dp[target];
     }
 }
