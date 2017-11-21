@@ -23,6 +23,10 @@ public class Sol136_SingleNumber {
     }
 
     //bit manipulation
+    /*first , we have to know the bitwise XOR in java
+
+0 ^ N = N
+N ^ N = 0*/
     public static int sN(int[] nums){
         int res = 0;
         for (int n: nums){
