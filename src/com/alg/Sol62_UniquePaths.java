@@ -10,6 +10,7 @@ The robot can only move either down or right at any point in time. The robot is 
 How many possible unique paths are there?*/
 public class Sol62_UniquePaths {
     public static int uniquePaths(int m, int n){
+        //time O(mn), space(mn)
         int[][] matrix = new int[m][n];
         for (int i = 0; i < m; i++){
             for (int j = 0; j < n ;j ++){
@@ -25,7 +26,21 @@ public class Sol62_UniquePaths {
 
     public static void main(String[] args) {
         System.out.println(uniquePaths(4,3)); // combination C-2_5
-        //System.out.println(up2(4,3));
+        System.out.println(uniquePaths2(4,3));
     }
 
+    // improvement improve o(mn), space(n)
+    public static int uniquePaths2(int m, int n){
+        int[] dp = new int[n];
+        //initial
+        for (int i = 0; i< n ; i++){
+            dp[i] = 1;
+        }
+        for (int i = 1; i < m; i++){
+            for (int j = 1; j < n ; j++){
+                dp[j] += dp[j-1];
+            }
+        }
+        return dp[n-1];
+    }
 }
