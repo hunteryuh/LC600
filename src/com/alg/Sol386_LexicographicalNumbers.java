@@ -43,6 +43,7 @@ public class Sol386_LexicographicalNumbers {
     }
 
     public static List<Integer> lexiOrder2(int n){
+        // O(n) time O(1) space
         List<Integer> list = new ArrayList<>();
         int cur = 1;
         for (int i = 1; i <= n; i++){
