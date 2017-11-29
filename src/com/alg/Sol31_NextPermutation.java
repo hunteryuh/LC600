@@ -83,7 +83,7 @@ public class Sol31_NextPermutation {
         nextPermutation(t3);
         System.out.println(Arrays.toString(t3));*/
 
-
+//test
         int[] t4 = { 1,5,1};
         nextPermutation(t4);
         System.out.println(Arrays.toString(t4));
