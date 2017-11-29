@@ -13,7 +13,7 @@ public class Sol2_addTwoNumbers {
         ListNode next;
         ListNode (int x) { val = x;}
     }
-
+    // time: O(max(m,n)) , m,n the length of two lists respectively
     public static ListNode addTwoNumbers(ListNode l1, ListNode l2){
         ListNode head = new ListNode(0);
         ListNode p = l1;
@@ -45,10 +45,31 @@ public class Sol2_addTwoNumbers {
         ListNode l2 = new ListNode(8);
         l2.next = new ListNode(5);
         l2.next.next = new ListNode(5);
-        ListNode res = addTwoNumbers(l1,l2);
+        //ListNode res = addTwoNumbers(l1,l2);
+        //592+558 = 1150
+        ListNode res = add2Num(l1,l2);
         while (res!= null){
             System.out.print(res.val +"->");
             res = res.next;
         }
+    }
+
+    // similar way as above
+    public static ListNode add2Num(ListNode l1, ListNode l2){
+        ListNode prev = new ListNode(0);
+        ListNode head = prev;
+        int carry = 0;
+        while (l1!= null || l2!= null || carry != 0){
+            ListNode cur = new ListNode(0);
+            int sum = (l1 == null ? 0 : l1.val) + (l2 == null ?0:l2.val )+ carry;
+            cur.val = sum % 10;
+            carry = sum /10;
+            prev.next = cur;
+            prev = cur;
+            if (l1!= null) l1 = l1.next;
+            if (l2!= null) l2 = l2.next;
+        }
+
+        return head.next;
     }
 }
