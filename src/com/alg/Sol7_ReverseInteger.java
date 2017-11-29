@@ -36,6 +36,7 @@ public class Sol7_ReverseInteger {
             if ( res > 214748364) return 0;
             res = res * 10 + x % 10;
             x /= 10;    // works for integer ending in 0:  5190-->915
+            // too many corner cases in this way
 
         }
         return res*sign;
@@ -43,10 +44,10 @@ public class Sol7_ReverseInteger {
     }
 
     public static void main(String[] args) {
-        int res = reverse(254);
+        int res = reverseInt(254);
         //System.out.println(res);
 
-        assert res == 4452;
+        assert res == 452;
         //System.out.println("done");
 /*        int r2 = reverse(5190);
         System.out.println(r2);
@@ -55,4 +56,18 @@ public class Sol7_ReverseInteger {
         System.out.println(reverse(2147447412));
         System.out.println(reverse(-2147483648));*/
     }
+
+    // better solution: short and elegant
+    public static int reverseInt(int x){
+        long rev = 0;
+        while (x!= 0){
+            rev = rev * 10 + x%10;
+            x /=10;
+            if ( rev > Integer.MAX_VALUE || rev < Integer.MIN_VALUE){ // out of range
+                return 0;
+            }
+        }
+        return (int) rev;
+    }
+
 }
