@@ -12,7 +12,7 @@ package com.alg;
     // O(N) in the below
 public class Sol287_FindtheDuplicateNumber {
     public static int findDuplicate(int[] nums){
-
+        //is the same as find the cycle entry pointin linkedlist!
 
         int slow = nums[0];
         int fast = nums[nums[0]];
@@ -28,6 +28,7 @@ public class Sol287_FindtheDuplicateNumber {
         return slow;
 
     }
+    // binary search method, need some proof
     public static int findDup_bs(int[] nums){
         int lo = 0;
         int hi = nums.length - 1;
