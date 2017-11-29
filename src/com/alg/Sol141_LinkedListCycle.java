@@ -23,6 +23,7 @@ public class Sol141_LinkedListCycle {
         }
     }
     public static boolean hasCycle(ListNode head){
+        // using hashtable, O(n) time, O(n) space
         Set<ListNode> set = new HashSet<>();
         while (head!= null){
             if (set.contains(head)){
@@ -35,6 +36,7 @@ public class Sol141_LinkedListCycle {
         return false;
     }
     public static boolean hasCycle2(ListNode head){
+        // two pointers,
         if ( head == null || head.next == null){
             return false;
         }
