@@ -1,6 +1,7 @@
 package com.alg;
 
 import java.util.Arrays;
+import java.util.PriorityQueue;
 import java.util.Random;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Random;
 public class Sol215_kthLargestElementInAnArray {
     public static int findKthLarget_s2(int[] nums, int k){
         int n = nums.length;
-        //O(nlog n )
+        //O(nlog n ) time, O(1) space
         Arrays.sort(nums);
         return nums[n-k];
 
@@ -28,7 +29,7 @@ public class Sol215_kthLargestElementInAnArray {
         int hi = n - 1;
         while ( lo < hi){
             int j = partition(nums,lo, hi);
-            if ( j < s) lo = j + 1;
+            if ( j < s) lo = j + 1; //pivot is too small
             else if (j > s) hi = j - 1;
             else break;
         }
@@ -36,13 +37,15 @@ public class Sol215_kthLargestElementInAnArray {
     }
 
 
-
+    // quick select,
     private static int partition(int[] nums, int lo, int hi) {
         int i = lo;
         int j = hi + 1;
         while (true){
             while ( i < hi && nums[++i] < nums[lo]);
             while ( j > lo && nums[lo] < nums[--j]);
+            // put nums that are <= pivot to the left
+            // put nums that are  > pivot to the right
             if ( i >= j) break;
             swap(nums,i,j);
         }
@@ -72,5 +75,16 @@ public class Sol215_kthLargestElementInAnArray {
     public static void main(String[] args) {
         int[] nums = { 1,4,2,6,5,0};
         System.out.println(findKthLarget(nums,2));
+    }
+    // with priorityqueue, time Nlogk
+    public static int findKthLarge(int[] nums, int k){
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for (int n : nums){
+            pq.add(n);
+            if(pq.size() > k){
+                pq.poll();
+            }
+        }
+        return pq.peek();
     }
 }
