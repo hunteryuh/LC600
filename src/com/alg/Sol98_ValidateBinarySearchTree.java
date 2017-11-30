@@ -1,5 +1,9 @@
 package com.alg;
 
+import sun.reflect.generics.tree.Tree;
+
+import java.util.Stack;
+
 /**
  * Created by HAU on 11/26/2017.
  */
@@ -68,5 +72,44 @@ public class Sol98_ValidateBinarySearchTree {
             return false;
 
         return isValidBST2(p.left, min, p.val) && isValidBST2(p.right, p.val, max);
+    }
+
+    //in order traversal method 2
+    public boolean isValidBST0(TreeNode root){
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = root, pre = null;
+        while (!stack.isEmpty() || cur != null){
+            if (cur!= null){
+                stack.push(cur);
+                cur = cur.left;
+            }else{
+                TreeNode p = stack.pop();
+                if ( pre != null && p.val <= pre.val){
+                    return false;
+                }
+                pre = p;
+                cur = p.right;
+            }
+        }
+        return true;
+    }
+    // in order method 3
+    public boolean isValidBST3(TreeNode root){
+        if ( root == null) return true;
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode pre = null, cur = root;
+        while ( cur!= null || !stack.isEmpty() ){
+            while (cur!= null){
+                stack.push(cur);
+                cur = cur.left;
+            }
+            cur = stack.pop();
+            if ( pre != null && cur.val <= pre.val){
+                return false;
+            }
+            pre = cur;
+            cur = cur.right;
+        }
+        return true;
     }
 }
