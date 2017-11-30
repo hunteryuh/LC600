@@ -43,7 +43,8 @@ public class Sol3_LongestSubstringWithoutRepeatingCharacters {
 
     public static int lengthOfLongestSubstring(String s) {
 
-        /*The reason is that if s[j] have a duplicate in the range [i, j) with index j'​ , we don't need to increase i
+        /*The reason is that if s[j] have a duplicate in the range [i, j) with index j'​ ,
+        we don't need to increase i
          little by little. We can skip all the elements in the range [i, j'] and let i to be j' + 1 directly.*/
         if ( s == null || s.length() == 0) return 0;
         if (s.length() == 1) return 1;
