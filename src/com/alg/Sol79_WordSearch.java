@@ -17,7 +17,7 @@ public class Sol79_WordSearch {
         int n = board[0].length;
         for ( int i = 0; i < m ; i ++){
             for (int j = 0; j < n; j++){
-                if (dfs(board,word,i,j,0)){
+                if (dfs2(board,word,i,j,0)){
                     result = true;
                 }
             }
@@ -42,6 +42,25 @@ public class Sol79_WordSearch {
                 return true;
             }
             board[i][j] = tmp;   // depth first search
+
+        }
+        return false;
+    }
+    private static boolean dfs2(char[][] board, String word, int i, int j, int start) {
+        if (start == word.length()) return true;
+        int m = board.length;
+        int n = board[0].length;
+
+        if ( i < 0 || j < 0 || i>=m || j>=n) return false;  // out of the board
+        if ( board[i][j] == word.charAt(start)){
+            char c = board[i][j];
+            board[i][j] = '-';
+            boolean res = dfs2(board,word,i+1,j,start+1) ||
+                    dfs2(board,word,i-1,j,start+1)||dfs2(board,word,i,j+1,start+1)
+                    ||dfs2(board,word,i,j-1,start+1);
+
+            board[i][j] = c;   // depth first search ( backtracking)
+            return res;
 
         }
         return false;
