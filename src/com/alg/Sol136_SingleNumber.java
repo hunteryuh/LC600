@@ -21,7 +21,12 @@ public class Sol136_SingleNumber {
         assert set.size() == 1;
         return set.iterator().next();
     }
+/* Hashset
+Search: O(1+k/n)
+Insert: O(1)
+Delete: O(1+k/n) where k is the no. of collision elements added to the same LinkedList (k elements had same hashCode)
 
+Insertion is O(1) because you add the element right at the head of LinkedList.*/
     //bit manipulation
     /*first , we have to know the bitwise XOR in java
 
