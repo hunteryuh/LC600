@@ -33,4 +33,18 @@ public class Sol344_ReverseString {
         //System.out.println(reverseString(s));
        // System.out.println(reverseString2(s));
     }
+    // in one part
+    public String reverseString3(String s) {
+        char[] word = s.toCharArray();
+        int i = 0;
+        int j = s.length() - 1;
+        while (i < j) {
+            char temp = word[i];
+            word[i] = word[j];
+            word[j] = temp;
+            i++;
+            j--;
+        }
+        return new String(word);
+    }
 }
