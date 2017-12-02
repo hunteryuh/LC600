@@ -3,7 +3,15 @@ package com.alg;
 /**
  * Created by HAU on 10/1/2017.
  */
-/*Write a program to find the node at which the intersection of two singly linked lists begins.*/
+/*Write a program to find the node at which the intersection of two singly linked lists begins.
+*
+For example, the following two linked lists:
+
+A:          a1 → a2
+                   ↘
+                     c1 → c2 → c3
+                   ↗
+B:     b1 → b2 → b3*/
 public class Sol160_IntersectionOfTwoLinkedLists {
     public static class ListNode{
         int val;
@@ -16,31 +24,23 @@ public class Sol160_IntersectionOfTwoLinkedLists {
     public static ListNode getIntersectionNode(ListNode headA, ListNode headB){
         if (headA == null || headB == null)
             return null;
-        //ListNode cur = headA;
         int len1 = getL(headA);
-        int len2 = getL(headB);
-        int dif = Math.abs(len1  - len2);
-        if (len1 > len2){
-            while (dif > 0){
+        int len2 = getL(headB);  //Get the length of the two lists.
+        // move headA and headB to the same start point
+        while(len1 > len2){
                 headA = headA.next;
-                dif--;
-            }
-        }else{
-            while (dif > 0){
-                headB = headB.next;
-                dif--;
-            }
+                len1--;
         }
-
-        while (headA != null){
-            if (headA == headB){
-                return headA;
-            }
+        while(len2 > len1){
+            headB = headB.next;
+            len2--;
+        }
+        // find the intersection until end
+        while(headA != headB){
             headA = headA.next;
             headB = headB.next;
-
         }
-        return null;
+        return headA;
     }
     private static int getL(ListNode head){
         int c = 0;
