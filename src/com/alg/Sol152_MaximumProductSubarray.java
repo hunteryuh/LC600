@@ -40,6 +40,27 @@ public class Sol152_MaximumProductSubarray {
 
     public static void main(String[] args) {
         int[] n= {2,3,-2,4};
-        System.out.println(maxProduct(n));
+        //System.out.println(maxProduct(n)); //6
+        //System.out.println(maxProSub(n));
+        int[] x = {0,2};
+        System.out.println(maxProSub(x));
+        System.out.println(maxProSub(n));
+    }
+    // simpler method 2
+    public static int maxProSub(int[] nums){
+        int n = nums.length;
+        int max = nums[0], min = nums[0];
+        int res = nums[0];
+        for ( int i = 1; i < n; i++){
+            int temp = max;
+            max = Math.max(nums[i], Math.max(max * nums[i],min* nums[i])); // could be itself? ,like {0,2}
+            // wrong max =  Math.max(max * nums[i],min* nums[i]); // could be itself.
+            min = Math.min(nums[i], Math.min(min * nums[i],temp* nums[i]));
+            // wrong:min = Math.min(min * nums[i],temp* nums[i]);
+            if ( max > res){
+                res = max;
+            }
+        }
+        return res;
     }
 }
