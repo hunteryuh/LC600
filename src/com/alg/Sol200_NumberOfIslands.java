@@ -41,6 +41,6 @@ public class Sol200_NumberOfIslands {
                 {'0', '0', '0', '0', '0'},
                 {'1', '0', '1', '0', '1'}
         };
-        System.out.println(numIslands(M));
+        System.out.println(numIslands(M)); //6
     }
 }
