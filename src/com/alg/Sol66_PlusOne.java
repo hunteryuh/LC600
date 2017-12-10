@@ -20,17 +20,13 @@ public class Sol66_PlusOne {
             if (digits[i] != 9){
                 digits[i]++;
                 return digits;
-            }else {
-                digits[i] = 0;
-                if (i == 0){
-                    digits[i] = 10;  // can accept double digits at the leading index?
-                    return digits;
-                }
-
             }
+            digits[i] = 0;
 
         }
-        return digits;
+        int[] res = new int[n+1];
+        res[0] = 1;
+        return res;
     }
     public static int[] plusOne(int[] digits) {
         int n = digits.length;
@@ -54,8 +50,9 @@ public class Sol66_PlusOne {
     }
 
     public static void main(String[] args) {
-        int[] num = {0};
-        int[] res = plusOne(num);
+        //int[] num = {1,0};
+        int[] num = {9,9};
+        int[] res = plusOne_alt(num);
 //        for ( int i: res){
 //            System.out.print(i+ " ");
 //        }
