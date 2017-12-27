@@ -1,6 +1,8 @@
 package com.alg;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by HAU on 12/27/2017.
@@ -37,5 +39,28 @@ public class Sol0_amz_truckTopK {
 
         System.out.println(trucktopK(dlist,4,2));
 
+    }
+    // use array as output
+    public static Point[] kNearest(Point[] array, Point origin, int k){
+        Point[] res = new Point[k];
+        int index = 0;
+        PriorityQueue<Point> pq = new PriorityQueue<>(k, new Comparator<Point>() {
+            @Override
+            public int compare(Point o1, Point o2) {
+                return (int)(getDis(o1,origin)-getDis(o2,origin));
+            }
+        });
+        for(int i = 0; i < array.length;i++){
+            pq.add(array[i]);
+            if(pq.size() > k) pq.remove();
+        }
+        while( !pq.isEmpty()){
+            res[index++] = pq.remove();
+        }
+        return res;
+    }
+    private static double getDis(Point a, Point b){
+        return Math.sqrt( (a.getX() - b.getX()) *(a.getX() - b.getX())
+            + (a.getY() - b.getY())*(a.getY() - b.getY()));
     }
 }
