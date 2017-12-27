@@ -11,7 +11,7 @@ since they are successive in gray code
 Example2: 10001000, 10011001
 return -1
 since they are not successive in gray code.*/
-public class Sol_0amz_grayCode {
+public class Sol0_amz_grayCode {
     public static int isConGrayCode(int t1, int t2){
         int x = (t1 ^ t2);
         int total = 0;
