@@ -21,4 +21,18 @@ public class Sol0_amz_overlapRectangle {
             return false;
         return true;
     }
+
+    public static void main(String[] args) {
+        /* Driver program to test above function */
+
+        Point l1 = new Point(0,10), r1 = new Point(10, 0);
+        Point l2 = new Point(5,5), r2 = new Point(15, 0);
+        if (isOverlap(l1, r1, l2, r2))
+            System.out.println("Rectangles Overlap");
+        else {
+            System.out.println("Rectangles Don't Overlap");
+        }
+
+
+    }
 }
