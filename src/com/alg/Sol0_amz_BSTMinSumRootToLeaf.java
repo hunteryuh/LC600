@@ -44,6 +44,14 @@ public class Sol0_amz_BSTMinSumRootToLeaf {
         root.left.right = new TreeNode(9);
         //root.right.left = new TreeNode(11);
         System.out.println(BSTMinSumRootToLeaf(root));
+        System.out.println(getMinPathSum(root));
+    }
+    // recursion 2
+    public static int getMinPathSum(TreeNode root){
+        if ( root == null) return 0;
+        int left = getMinPathSum(root.left);
+        int right = getMinPathSum(root.right);
+        return  Math.min(left,right) + root.val;
     }
 }
 
