@@ -8,7 +8,7 @@ package com.alg;
 Example
 Given: 1 --> 2 --> 6 --> 3 --> 4 --> 5 --> 6, val = 6
 Return: 1 --> 2 --> 3 --> 4 --> 5*/
-public class So204_RemoveLinkedlistElement {
+public class Sol203_RemoveLinkedlistElement {
     public static class ListNode {
         int val;
         ListNode next;
