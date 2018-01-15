@@ -6,7 +6,8 @@ import java.util.Queue;
 /**
  * Created by HAU on 12/30/2017.
  */
-/*一个处理器要处理一堆request，一次只能处理一条，每次执行一个任务最多执行时间q，接着执行等待着的下一个任务。若前一个任务没执行完则放到队尾，等待下一次执行
+/*一个处理器要处理一堆request，一次只能处理一条，每次执行一个任务最多执行时间q，接着执行等待着的下一个任务。
+若前一个任务没执行完则放到队尾，等待下一次执行
 
 假设只要有任务开始以后cpu是不会空闲的，也就是说cpu开始后如果空闲了就说明没有任务了，另外Robin Round最后返回值是float*/
 public class Sol0_amz_RoundRobinSchedule {
@@ -14,8 +15,8 @@ public class Sol0_amz_RoundRobinSchedule {
         int arrTime;
         int exeTime;
         MyProcess(int arr, int exe){
-            arrTime = arr;
-            exeTime = exe;
+            arrTime = arr; // process arrival time
+            exeTime = exe; //process, time to take to finish the execution
         }
     }
     public static float RRSchedule(int[] Atime, int[] Etime, int q){
@@ -49,7 +50,7 @@ public class Sol0_amz_RoundRobinSchedule {
 
 
         }
-        return (float) totalWaitTime/len;
+        return (float) totalWaitTime/len; // average wait time to return
 
     }
 
@@ -57,6 +58,11 @@ public class Sol0_amz_RoundRobinSchedule {
         int[] Atime = {0,1,4};
         int[] Etime = {5,2,3};
         System.out.println(RRSchedule(Atime, Etime, 3));
+        // wait time for the 2nd job, 2s
+        // wait time for the 3rd job, 1s ( 5 - 4 )
+        // wait time for the rest of 1st job ( 3 + 2 + 3 -3 = 5 s)
+        // total = 2 + 1 + 5 = 8 , 8/3 = 2.3
+
     }
 
 }
