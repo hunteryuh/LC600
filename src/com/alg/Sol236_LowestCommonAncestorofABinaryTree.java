@@ -24,6 +24,7 @@ public class Sol236_LowestCommonAncestorofABinaryTree {
             return root;
         }
         return left != null? left: right;
+        //  return left == null ? right : right == null ? left : root;
     }
     public static void main(String[] args) {
         //      8
