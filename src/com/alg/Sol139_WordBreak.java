@@ -24,7 +24,7 @@ public class Sol139_WordBreak {
         while(!queue.isEmpty()){
             int start = queue.remove();
             if(visited[start]  == 0){
-                for (int end = start + 1; end <s.length(); end++){
+                for (int end = start + 1; end <= s.length(); end++){
                     if(set.contains(s.substring(start,end))){
                         queue.add(end);
                         if(end == s.length())
@@ -37,6 +37,14 @@ public class Sol139_WordBreak {
         }
         return false;
     }
+
+    /*
+
+    Time complexity : O(n^2). For every starting index, the search can continue till the end of the given string.
+
+    Space complexity : O(n). Queue of atmost nnn size is needed.
+
+*/
     // dp approach time O(n^2), space O(n)
     public static boolean wordBreakdp(String s, List<String> wordDict){
         Set<String> set = new HashSet<>(wordDict);
@@ -57,5 +65,6 @@ public class Sol139_WordBreak {
         String s = "goodyear";
         List<String> dict = new ArrayList<>(Arrays.asList("good","bad","year"));
         System.out.println(wordBreakdp(s,dict));
+        System.out.println(wordBreak(s,dict));
     }
 }
