@@ -7,7 +7,23 @@ import java.util.List;
 /**
  * Created by HAU on 6/10/2017.
  */
+/*Given a set of distinct integers, nums, return all possible subsets (the power set).
 
+Note: The solution set must not contain duplicate subsets.
+
+For example,
+If nums = [1,2,3], a solution is:
+
+[
+  [3],
+  [1],
+  [2],
+  [1,2,3],
+  [1,3],
+  [2,3],
+  [1,2],
+  []
+]*/
 
 
 public class Sol78_subsets {
