@@ -44,7 +44,7 @@ public class Sol73_SetMatrixZeroes {
                 }
             }
         }
-        if (row){
+/*        if (row){
             for ( int j = 0; j< matrix[0].length; j++){
                 matrix[0][j] = 0;
             }
@@ -53,7 +53,7 @@ public class Sol73_SetMatrixZeroes {
             for ( int i = 0; i< matrix.length; i++){
                 matrix[i][0] = 0;
             }
-        }
+        }*/
     }
 
     public static void main(String[] args) {
@@ -61,7 +61,7 @@ public class Sol73_SetMatrixZeroes {
         for(int[] row: t){
             Arrays.fill(row,1);
         }
-        t[2][0] = 0;
+        t[2][1] = 0;
         //t[1][1] = 0;
         setZeroes(t);
         System.out.println();
