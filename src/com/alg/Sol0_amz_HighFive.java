@@ -1,6 +1,5 @@
 package com.alg;
 
-import edu.princeton.cs.algs4.In;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,9 +30,13 @@ public class Sol0_amz_HighFive {
                 map.put(key, new PriorityQueue<>());
             }
             PriorityQueue<Integer> pq = map.get(key);
+            /*
+            优先级队列是不同于先进先出队列的另一种队列。每次从队列中取出的是具有最高优先权的元素。
+            如果不提供Comparator的话，优先队列中元素默认按自然顺序排列，
+            也就是数字默认是小的在队列头，字符串则按字典序排列。*/
             if(pq.size() < Cap){
                 pq.add(val);
-            }else if( val > pq.peek()){
+            }else if( val > pq.peek()){ // peek出最小值
                 pq.poll();
                 pq.offer(val);
             }
