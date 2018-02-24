@@ -19,7 +19,7 @@ public class Sol0_amz_FindOptimalWeights {
         }
     }
 
-    public static Container findOptimalWeights(double capacity, double[] weights, int numOfContainers){
+    public static Container findOptimalWeights(double capacity, double[] weights){
         Arrays.sort(weights);
         double min = 0;
         double first = 0, second = 0;
@@ -33,15 +33,21 @@ public class Sol0_amz_FindOptimalWeights {
                     min = sum;
                     first = weights[i];
                     second = weights[j];
-
                 }
                 i++;
-
             }else{
                 j--;
             }
         }
         return new Container(first,second);
     }
+    public static void main(String[] args) {
+        double[] nums = {10,24,30,9,19,23,7};
+        //TwoClose test = new TwoClose();
+        Container ans = findOptimalWeights(35,nums);
+
+        System.out.println("first:" + ans.first + ", second:" + ans.second);
+    }
+
 
 }
