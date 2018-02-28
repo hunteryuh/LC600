@@ -10,7 +10,7 @@ import java.util.HashMap;
 *
 * Given a string of lowercase alphabets, count all possible substrings
 * (not necessarily distinct) that has exactly k distinct characters.*/
-public class Sol_0amz_countKDis {
+public class Sol0_amz_countKDis {
     public static int countkDist(String str, int k){
         int res = 0;
         int len = str.length();
@@ -97,7 +97,7 @@ public class Sol_0amz_countKDis {
                     map.put(str.charAt(j),1 + map.get(str.charAt(j)));
                 }
                 subs += str.charAt(j);
-                if(dist == k){
+                if(dist == k && !resList.contains(subs)){
                     res++;
                     resList.add(subs);
                 }
