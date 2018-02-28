@@ -67,21 +67,25 @@ public class Sol407_TrappingRainWaterII {
         int[][] dirs = new int[][]{{-1,0},{1,0},{0,-1},{0,1}};
         int res = 0;
         while(!queue.isEmpty()){
-            Cell cell = queue.poll();
-            for (int [] dir : dirs){
+            Cell cell = queue.poll(); //（start from lowest cell because water will leak from here）
+            for (int [] dir : dirs){ //For every cell adjacent to this cell: Compute the gap of two cell only when the new one is lower
                 int row = cell.x + dir[0];
                 int col = cell.y + dir[1];
                 if ( row>=0 && row<m && col>=0 && col< n
                         && !visited[row][col]){
                     visited[row][col] = true;
                     res += Math.max(0,cell.h - heightMap[row][col]);
-                    queue.offer(new Cell(row,col, Math.max(heightMap[row][col], cell.h)));
+                    queue.offer(new Cell(row,col, Math.max(heightMap[row][col], cell.h))); //
+                    //Add this new cell into queue and make the height as taller of two.
+                    // (Set as taller so next round it will not count. Because we only need the positive gap)
                 }
             }
         }
         return res;
 
     }
+    /*A visualization of the most popular priority queue algorithm.
+https://www.youtube.com/watch?v=cJayBq38VYw*/
 
     public static void main(String[] args) {
         int[][] heightMatrix={
