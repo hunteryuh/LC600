@@ -16,8 +16,8 @@ Input: "aaa"
 Output: 6
 Explanation: Six palindromic strings: "a", "a", "a", "aa", "aa", "aaa".*/
 public class Sol647_PalindromeSubstrings {
-    int res = 0;
-    public  int countSubstrings(String s) {
+    static int res = 0;
+    public  static int countSubstrings(String s) {
 
         if (s == null || s.length() == 0) return 0;
         for (int i = 0; i<s.length();i++){
@@ -27,9 +27,39 @@ public class Sol647_PalindromeSubstrings {
         return res;
     }
 
-    private  void helper(String s, int i, int j) {
+    private  static void helper(String s, int i, int j) {
         while(i>=0 && j<s.length() && s.charAt(i)== s.charAt(j)){
             res++;i--;j++;
         }
+    }
+
+    public static void main(String[] args) {
+        String s = "abcba";
+        System.out.println(countSubstrings(s)); //7
+        String t = "caa";  //4
+        System.out.println(countSubPalin(t));
+    }
+    // version 2  time O(n^2)
+    public static int countSubPalin(String s){
+        if ( s == null || s.length() == 0){
+            return 0;
+        }
+        int count = 0;
+        for(int i = 0; i < s.length(); i++){
+            count += counthelper(s,i,i);
+            count += counthelper(s,i,i+1);
+        }
+        return count;
+    }
+
+    private static int counthelper(String s, int start, int end) {
+        int c = 0;
+        while(start >=0 && end < s.length()
+                && s.charAt(start) == s.charAt(end)){
+            c++;
+            start--;
+            end++;
+        }
+        return c;
     }
 }
