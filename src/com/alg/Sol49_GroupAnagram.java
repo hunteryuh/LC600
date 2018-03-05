@@ -12,7 +12,7 @@ public class Sol49_GroupAnagram {
     //time : Nklog(k)   N is length of strs, k is the max length of string in strs
     public static List<List<String>> groupAnagrams(String[] strs) {
         if (strs.length == 0) return new ArrayList<List<String>>();
-        Map<String, List> res = new HashMap<>();
+        Map<String, List<String>> res = new HashMap<>();
         for (String s : strs){
             char[] car = s.toCharArray();
             Arrays.sort(car);
@@ -22,6 +22,10 @@ public class Sol49_GroupAnagram {
             }
 
             res.get(key).add(s);
+
+/*            List<String> anagrams = res.getOrDefault(key, new LinkedList());
+            anagrams.add(s);
+            res.put(key,anagrams);*/
 
         }
         return new ArrayList(res.values());
