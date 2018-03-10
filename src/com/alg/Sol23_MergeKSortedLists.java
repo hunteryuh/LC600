@@ -20,7 +20,20 @@ public class Sol23_MergeKSortedLists {
     }
     public static ListNode mergeKLists(ListNode[] lists) {
         if (lists == null || lists.length == 0) return null;
-        /*//最佳方法，面试官肯定会希望通过这道题考察你对PriorityQueue的掌握
+        /*最佳方法，面试官肯定会希望通过这道题考察你对PriorityQueue的掌握
+        Time: O(Nlogk) where k is the number of linked lists.
+
+    The comparison cost will be reduced to O(logk) for every pop and insertion to priority queue. But finding the node with the smallest value just costs O(1) time.
+    There are N nodes in the final linked list.
+
+    suppose there are k lists and n elements in each list
+
+    solution 1: heap sort, time O(nk * log k), with O(k) heap memeory
+
+Space: O(N)
+
+    O(n) Creating a new linked list costs O(n) space.
+    O(k) The code above present applies in-place method which cost O(1) space. And the priority queue (often implemented with heaps) costs O(k) space (it's far less than N in most situations).
 */
         PriorityQueue<ListNode> pq = new PriorityQueue<>(lists.length, new Comparator<ListNode>() {
             @Override
