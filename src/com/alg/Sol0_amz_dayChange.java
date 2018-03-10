@@ -1,6 +1,9 @@
 package com.alg;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by HAU on 1/5/2018.
@@ -37,5 +40,11 @@ public class Sol0_amz_dayChange {
         int[] a = {1, 0, 0, 0, 0, 1, 0, 0};
         int[] res = daysChange(a,1);
         System.out.println(Arrays.toString(res));
+
+        List<Integer> list = new ArrayList<>();
+        for(int n : res){
+            list.add(n);
+        }
+        System.out.println(list);
     }
 }
