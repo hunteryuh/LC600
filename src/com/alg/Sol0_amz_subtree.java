@@ -3,7 +3,7 @@ package com.alg;
 /**
  * Created by HAU on 12/27/2017.
  */
-/*Check if one BST is a subtree of another.*/
+/*Check if one BST T2 is a subtree of another T1.*/
 public class Sol0_amz_subtree {
     public static class TreeNode{
         int val;
