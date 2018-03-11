@@ -2,6 +2,9 @@ package com.alg;
 
 import java.awt.*;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 /**
  * Created by HAU on 12/27/2017.
  */
@@ -34,5 +37,20 @@ public class Sol0_amz_overlapRectangle {
         }
 
 
+    }
+    //预处理, 不管是左上角+右下角 还是 左下角+右上角
+//都统一为左上角+右上角
+    public static boolean overlap(Point l1, Point r1, Point l2, Point r2) {
+        int a = min(l1.x, r1.x);
+        int b = max(l1.y, r1.y);
+        int c = max(l1.x, r1.x);
+        int d = min(l1.y, r1.y);
+        int e = min(l2.x, r2.x);
+        int f = max(l2.y, r2.y);
+        int g = max(l2.x, r2.x);
+        int h = min(l2.y, r2.y);
+        if (d > f || h > b) return false;
+        if (c < e || g < a) return false;
+        return true;
     }
 }
