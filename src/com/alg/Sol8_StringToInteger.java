@@ -57,7 +57,7 @@ public class Sol8_StringToInteger {
     }
 
     public static void main(String[] args) {
-//        System.out.println(myAtoi("-2090k"));
+        System.out.println(myAtoi("-2090k"));
 //        System.out.println(myAtoi("2147483647"));
 //        System.out.println(myAtoi("2147483648"));
 //        System.out.println(myAtoi("-2147483698"));
