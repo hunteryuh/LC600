@@ -41,7 +41,7 @@ public class Sol1_TwoSum_II {
         int[] res = new int[2];
 
         // assume array is sorted.
-        // element can be equal?!!
+        // element can be equal?!! en.
 
         for ( int i = 0; i < numbers.length; i++){
             int t = i;
