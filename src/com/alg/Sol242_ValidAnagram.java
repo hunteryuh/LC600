@@ -14,6 +14,7 @@ s = "anagram", t = "nagaram", return true.
 s = "rat", t = "car", return false.*/
 public class Sol242_ValidAnagram {
     public static boolean isAnagram(String s, String t) {
+        //   time : O(n), space: O(n)
         if(s.length() != t.length() ){ //|| s.equals(t)
             return false;
         }
@@ -25,6 +26,8 @@ public class Sol242_ValidAnagram {
             }else{
                 counts.put(c,1);
             }
+            // one line
+            //counts.put(c, counts.getOrDefault(c,0) + 1);
         }
         for (int i = 0; i< t.length(); i++){
             Character ch = t.charAt(i);
@@ -44,6 +47,7 @@ public class Sol242_ValidAnagram {
         String t2 = "lendsi";
         System.out.println(isAnagram3(s,t2));
         System.out.println(isAnagram3(s,t));
+        System.out.println(isAnagram4(s,t));
     }
 
     public static boolean isAnagram2(String s, String t) {
@@ -64,7 +68,26 @@ public class Sol242_ValidAnagram {
         for(char c:t.toCharArray()) alpha[c - 'a']--;
         for(int i: alpha) if(i != 0) return false;
         return true;
-
-
     }
+    // version 3 using array
+    // time : O(n), space: O(1)
+    public static boolean isAnagram4(String s, String t){
+        if (s.length() != t.length()) {
+            return false;
+        }
+        int[] count = new int[26]; //'z'-'a'+1 = 26
+        for(char c:s.toCharArray()) count[c - 'a']++;
+        for(char c:t.toCharArray()) {
+            if(count[c-'a'] == 0){
+                return false;
+            }
+            count[c - 'a']--;
+        }
+
+        return true;
+    }
+    // follow up: what if the inputs contain unicode characters?
+    // int [256] ( 1k)
+    // each unicode： 16 bits, 2 bytes 2^16 = 64k, too large, can use hashtable
+
 }
