@@ -52,7 +52,8 @@ public class Sol0_polluteFruitbfs {
                 }
                 size--;
             }
-            if ( queue.size() > 0 ) steps++;
+            if ( queue.size() > 0 )
+                steps++;
         }
         for(int i = 0 ; i < m; i++) {
             for (int j = 0; j < n; j++) {
