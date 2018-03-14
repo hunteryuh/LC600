@@ -4,8 +4,6 @@ package com.alg;
  * Created by HAU on 7/4/2017.
  */
 
-import edu.princeton.cs.algs4.In;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -65,6 +63,7 @@ public class Sol15_3Sum {
     }
     public static  List<List<Integer>> ThreeSum(int[] nums) {
         //O(n^2) time complexity
+        //外层for 执行n 次，里面俩层循一共也只有n 次，因为lo 和 hi 是单调变化的，一个从头往后，一个从后往前
         int n = nums.length;
         List<List<Integer>> list = new ArrayList<List<Integer>>();
         Arrays.sort(nums);
