@@ -38,7 +38,7 @@ public class Sol239_SlidingWindowMaximum {
             }
             deque.offerLast(i);  // add the end of the list, same as offer, addLast
             if ( i >= k - 1){
-                res[i-k+1] = nums[deque.peekFirst()]; // same as peek, check the first element in the queeu
+                res[i-k+1] = nums[deque.peekFirst()]; // same as peek, check the first element in the queue
             }
 
         }
