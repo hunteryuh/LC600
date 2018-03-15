@@ -5,8 +5,6 @@ package com.alg;
  */
 
 
-import edu.princeton.cs.algs4.In;
-
 import java.util.LinkedList;
 import java.util.Stack;
 
@@ -18,7 +16,7 @@ import java.util.Stack;
  *     ListNode(int x) { val = x; }
  * }
  */
-public class Sol234Palindrome_Linked_List {
+public class Sol234_Palindrome_Linked_List {
 
     public static class ListNode {
         int val;
@@ -37,7 +35,8 @@ public class Sol234Palindrome_Linked_List {
             rev = head.val + rev;
             head = head.next;
         }
-        return ori.equals(rev);   //O(n) time, O(n) space
+        return ori.equals(rev);   //O(n) time, O(n) space  string usage
+        //    // 反向字串與正向字串相等就是回文陣列
     }
     public static boolean isPld2(ListNode head){
         if (head == null || head.next == null) return true;
@@ -55,7 +54,7 @@ public class Sol234Palindrome_Linked_List {
         if (count%2==1) stack.pop();
 
         for (int i=0;i<count/2;i++){
-            if (!(stack.pop().equals(half2.pop() ))) return false;
+            if (!(stack.pop().equals(half2.pop() ))) return false; // for string or char
         }
         return true;  //O(n) time and O(1) space
     }
@@ -88,5 +87,49 @@ public class Sol234Palindrome_Linked_List {
         System.out.println(isPld2(h4));
 
 
+    }
+    public static boolean isPanld(ListNode head){
+        ListNode fast = head, slow = head;
+        while (fast!= null && fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        if ( fast != null){
+            slow = slow.next; // there are odd number of nodes, slow now is the node after the middle
+        }
+        slow = reverse(slow); // the node at the end
+        fast = head; // fast is the original head
+        while (slow!= null){
+            if (slow.val != fast.val){
+                return false;
+            }
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return true;
+    }
+    public static ListNode reverse(ListNode head){
+        ListNode prev = null;
+        while (head != null){
+            ListNode temp = head.next;
+            head.next = prev;
+            prev = head;
+            head = temp;
+        }
+        return prev;
+    }
+
+    //find middle way 2
+    private ListNode findMiddle(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+        ListNode slow = head, fast = head.next;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
     }
 }
