@@ -61,4 +61,14 @@ public class Sol101_SymmetricTree {
         }
         return true;
     }
+    // mirror a tree
+    public void mirrorTree(TreeNode root){
+        if( root == null) return;
+        mirrorTree(root.left);
+        mirrorTree(root.right);
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+        return;
+    }
 }
