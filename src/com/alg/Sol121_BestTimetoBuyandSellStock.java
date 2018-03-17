@@ -3,7 +3,7 @@ package com.alg;
 /**
  * Created by HAU on 5/23/2017.
  */
-public class Sol121BestTimetoBuyandSellStock {
+public class Sol121_BestTimetoBuyandSellStock {
     public static int maxProfit(int[] prices){
         int max=0;
         int n = prices.length;
