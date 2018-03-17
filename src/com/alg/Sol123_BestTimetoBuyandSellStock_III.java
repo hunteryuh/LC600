@@ -3,7 +3,15 @@ package com.alg;
 /**
  * Created by HAU on 5/24/2017.
  */
-public class Sol123BestTimetoBuyandSellStock_III {
+/*Say you have an array for which the ith element is the price of a given stock on day i.
+
+Design an algorithm to find the maximum profit. You may complete at most two transactions.
+
+Note:
+You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+
+*/
+public class Sol123_BestTimetoBuyandSellStock_III {
     public static int maxProfit2times(int[] prices){
         if (prices.length ==0) return 0;
         int n = prices.length;
