@@ -7,7 +7,7 @@ package com.alg;
 //as many transactions as you like
 //(ie, buy one and sell one share of the stock multiple times).
 
-public class Sol122BestTimetoBuyandSellStock_II {
+public class Sol122_BestTimetoBuyandSellStock_II {
     //(Simple One Pass) O(n) time O(1) space
     public static int maxProfit(int[] prices) {
         if (prices.length==0) return 0;
