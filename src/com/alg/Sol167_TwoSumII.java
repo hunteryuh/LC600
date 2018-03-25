@@ -22,8 +22,8 @@ public class Sol167_TwoSumII {
         while ( left < right){
             int sum = num[left] + num[right];
             if( sum == target){
-                indice[0] = left;
-                indice[1] = right;
+                indice[0] = left + 1;
+                indice[1] = right + 1;
                 break;
             }else if( sum > target){
                 right--;
