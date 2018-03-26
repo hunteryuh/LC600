@@ -14,7 +14,7 @@ Both num1 and num2 contains only digits 0-9.
 Both num1 and num2 does not contain any leading zero.
 You must not use any built-in BigInteger library or convert the inputs to integer directly.
 */
-public class Sol43MultiplyStrings {
+public class Sol43_MultiplyStrings {
     public static String multiply(String num1, String num2) {
         int a = Integer.parseInt(num1);
         int b = Integer.parseInt(num2);
