@@ -29,12 +29,10 @@ public class Sol60_PermutationSequence {
             num.add(i); //  // numbers = {1, 2, 3, 4}
         }
         for(int i = 0, g = k - 1; i < n; i++){
-            fact = fact / ( n - i); // 24 /4  6/3
-            int index = g / fact;  //  13/ 6
-            sb.append(num.remove(index));
-            g -= index * fact;
-
-
+            fact = fact / ( n - i); // 24 /4 =6,  6/3 = 2, 2/2 = 1, 1/1 = 1,
+            int index = g / fact;  //  13/ 6 = 2， 1/2 = 0, 1/1 = 1, 0/1 = 0,
+            sb.append(num.remove(index)); //3, 1, ?4, 2 ( num list is shortened)
+            g -= index * fact; //13 - 2*6 = 1, 1 - 0 * 2 = 1, 1 - 1 * 1 = 0, 0 - 0 = 0
         }
         return sb.toString();
     }
