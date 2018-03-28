@@ -23,14 +23,13 @@ public class Sol142_LinkedListCycleII {
         // two pointer
         if ( head == null || head.next == null) return null;
         ListNode fast = head, slow = head;
-        while(fast.next.next != null && fast.next != null){
+        while(fast!= null && fast.next!= null){
             fast = fast.next.next;
             slow = slow.next;
-            if (fast.next == null) return null; // no cycle
             if ( slow == fast){
                 slow = head;  // move the slow pointer to the beginning of the list
                 // now it takes same distance from the fast pointer and the head to the start of the cycle
-                while (slow!= fast){
+                while (slow!= fast){  //  a+ b +c +b = 2(a+b)-->a = c
                     fast = fast.next;
                     slow = slow.next;
                 }
