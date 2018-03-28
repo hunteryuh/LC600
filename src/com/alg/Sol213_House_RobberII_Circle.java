@@ -15,7 +15,7 @@ Meanwhile, the security system for these houses remain the same as for those in 
 Given a list of non-negative integers representing the amount of money of each house,
 determine the maximum amount of money you can rob tonight without alerting the police.
 */
-public class Sol213House_RobberII_Circle {
+public class Sol213_House_RobberII_Circle {
     public static int rob(int[] nums) {
         if(nums == null || nums.length==0) return 0;
         int n = nums.length;
