@@ -15,7 +15,7 @@ the only constraint stopping you from robbing each of them is that
 Given a list of non-negative integers representing the amount of money of each house,
 determine the maximum amount of money you can rob tonight without alerting the police.
 */
-public class Sol198House_Robber {
+public class Sol198_House_Robber {
     public static int rob198(int[] nums) {
         if(nums.length==0) return 0;
         int n = nums.length;
