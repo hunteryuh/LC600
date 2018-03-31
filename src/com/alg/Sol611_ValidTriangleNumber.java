@@ -30,12 +30,15 @@ public class Sol611_ValidTriangleNumber {
         return count;
     }
     public static int triangleNumber(int[] nums){
+        //Time complexity : O(n2). Loop of kkk and jjj will be executed O(n2)O(n^2)O(n​2​​) times in total, because, we do not reinitialize the value of kkk for a new value of jjj
+        // chosen(for the same iii). Thus the complexity will be O(n^2+n^2)=O(n^2).
         int n = nums.length;
         int count = 0;
         Arrays.sort(nums);
         for (int i = 0; i < n - 2; i++){
            int k = i + 2;
-            for (int j = i + 1; j < n - 1 && nums[i] != 0; j++){
+            // if ( nums[i] == 0) continue; // a second way to skip nums[i]==0
+            for (int j = i + 1; j < n - 1 && nums[i] != 0; j++){ //
                 while ( k < n && nums[i]+nums[j]>nums[k] ){
                     k++;
                 }
