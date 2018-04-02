@@ -12,7 +12,7 @@ respectively.
         Note:
         You are not suppose to use the library's sort function for this problem.
 */
-public class Sol75SortColors {
+public class Sol75_SortColors {
     public static void sortColors(int[] nums) {
 
 
