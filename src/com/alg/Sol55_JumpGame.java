@@ -24,7 +24,7 @@ public class Sol55_JumpGame {
         }
         return last == 0;
     }
-    // greedy 2
+    // greedy 2  O(n)
     public static boolean canJ(int[] nums){
         int max = 0;
         for(int i = 0; i < nums.length ; i++){
