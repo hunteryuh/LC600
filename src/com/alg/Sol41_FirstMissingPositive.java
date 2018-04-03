@@ -47,4 +47,20 @@ public class Sol41_FirstMissingPositive {
         int[] nums = {0,1,-1,-2,3};
         System.out.println(firstMissingPositive(nums));
     }
+    // method 2
+    public static int firstMissingPositive2(int[] nums) {
+        int len=nums.length;
+        //int res=0;
+        if(len==0) return 1;
+        int[] n1=new int[len];
+        for(int i=0;i<len;i++){
+            if(nums[i]>0&&nums[i]<=len){
+                n1[nums[i]-1]=nums[i];
+            }
+        }
+        for(int i=0;i<len;i++){
+            if(n1[i]==0) return i+1;
+        }
+        return len+1;
+    }
 }
