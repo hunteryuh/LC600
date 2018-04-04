@@ -21,6 +21,8 @@ find(7) -> false
 */
 public class Sol170_TwoSumIII_DataStructureDesign {
     class TwoSum {
+
+        //O1 time for add, O(n) time for find, O(n) space
         private List<Integer> list = new ArrayList<>();
         private Map<Integer,Integer> map = new HashMap<>();
         /** Initialize your data structure here. */
