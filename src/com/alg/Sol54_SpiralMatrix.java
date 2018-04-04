@@ -38,7 +38,7 @@ public class Sol54_SpiralMatrix {
                 for(int c = c2 - 1; c> c1;c--){
                     res.add(matrix[r2][c]);
                 }
-                for(int r = r1; r>r1; r--){
+                for(int r = r2; r>r1; r--){
                     res.add(matrix[r][c1]);
                 }
             }
