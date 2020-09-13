@@ -15,7 +15,7 @@ Initially, there is a Robot at position (0, 0).
 public class Sol657_JudgeRouteCircle {
     public static boolean judgeCircle(String moves){
         int x = 0, y = 0;
-        for ( int i = 0; i< moves.length();i++){
+        for (int i = 0; i< moves.length();i++) {
             char c = moves.charAt(i);
             switch (c){
                 case 'U': y++;break;

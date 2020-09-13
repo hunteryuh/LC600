@@ -7,18 +7,18 @@ package com.alg;
 by any combination of the coins, return -1.*/
 public class Sol322_CoinChange {
     public static int coinChange(int[] coins, int amount) {
-        if ( coins == null || coins.length == 0 || amount < 0){
+        if (coins == null || coins.length == 0 || amount < 0) {
             return -1;
         }
         int[] counts = new int[amount+1];
         counts[0] = 0;
         for (int i = 1; i <= amount; i++){
             counts[i] = -1;
-            for ( int j = 0; j< coins.length; j++){
-                if ( i == coins[j]){
+            for (int j = 0; j < coins.length; j++) {
+                if (i == coins[j]) {
                     counts[i] = 1;
-                }else if ( i > coins[j] && counts[i - coins[j]] >= 0){
-                    if (counts[i] == -1 || counts[i] > counts[i-coins[j]] + 1){
+                } else if (i > coins[j] && counts[i - coins[j]] >= 0) {
+                    if (counts[i] == -1 || counts[i] > counts[i-coins[j]] + 1) {
                         counts[i] = counts[i - coins[j]] + 1;
                     }
                 }
@@ -27,11 +27,39 @@ public class Sol322_CoinChange {
         return counts[amount];
     }
 
+    public static int coinChange2(int[] coins, int amount) {
+        if (coins == null || coins.length == 0 || amount < 0) {
+            return -1;
+        }
+        // f[x]: the fewest number of coins to make up to amount x
+        int[] f = new int[amount+1];  // 0 .. M
+        f[0] = 0;  // init
+        for (int i = 1; i <= amount; i++) {
+            f[i] = Integer.MAX_VALUE;
+            // select last coin
+            for (int j = 0; j < coins.length; j++) {
+                if (i >= coins[j] && f[i - coins[j]] != Integer.MAX_VALUE && f[i - coins[j]] + 1 < f[i]) {
+                    f[i] = f[i - coins[j]] + 1;
+                }
+            }
+        }
+        if (f[amount] == Integer.MAX_VALUE) {
+            return -1;
+        }
+        return f[amount];
+    }
+
+
     public static void main(String[] args) {
-        int[] coins = { 1,2,5};
+        int[] coins = {1, 2, 5};
         int amount = 11;
         System.out.println(coinChange(coins,amount));
+        System.out.println(coinChange2(coins,amount));
         int[] c2 = {2};
         System.out.println(coinChange(c2,amount));
+        System.out.println(coinChange2(c2,amount));
+        int[] c3 = {2, 5, 7};
+        System.out.println(coinChange(c3, 27));
+        System.out.println(coinChange2(c3, 27));  // 5,5,5,5,7  NOT 7,7,7,2,2,2
     }
 }

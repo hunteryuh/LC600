@@ -23,18 +23,18 @@ contain all the characters in T in complexity O(n).
 public class Sol76_MinimumWindowSubstring {
     public static  String minWindow(String s, String t){
         // s : source; t: target to find
-        if ( t.length() > s.length()) return "";
+        if (t.length() > s.length()) return "";
         String result = "";
         // define hashmap target for char counter in t
         HashMap<Character,Integer> target = new HashMap<>();
         for (char c : t.toCharArray()){
             if (target.containsKey(c)){
                 target.put(c,target.get(c) + 1);
-            }else{
+            } else {
                 target.put(c,1);
             }
         }
-        //define a second hashmap for char counter in
+        // define a second hashmap for char counter in
         HashMap<Character,Integer> map = new HashMap<>();
         int left = 0;
         int minL = s.length() + 1; // has to be bigger than the length
@@ -63,7 +63,7 @@ public class Sol76_MinimumWindowSubstring {
                 }
                 if ( i-left+1 < minL){
                     minL = i - left + 1;
-                    result = s.substring(left,i+1);
+                    result = s.substring(left, i+1);
                 }
 
             }
@@ -72,10 +72,52 @@ public class Sol76_MinimumWindowSubstring {
 
     }
 
+    public static String minWindow2(String s, String t) {
+        // s : source; t: target to find
+        if (s == null || s.length() == 0 || t.length() > s.length()) return "";
+        HashMap<Character, Integer> targetMap = new HashMap<>();
+        for (char c : t.toCharArray()) {
+            if (!targetMap.containsKey(c)) {
+                targetMap.put(c, 1);
+            } else {
+                targetMap.put(c, targetMap.get(c) + 1);
+            }
+        }
+        int left = 0;
+        int minLength = s.length() + 1;
+        int count = 0;
+        int minLeft = 0;
+        for (int right = 0; right < s.length(); right++) {
+            char curr = s.charAt(right);
+            if (targetMap.containsKey(curr)) {
+                if (targetMap.get(curr) > 0) count++;
+                targetMap.put(curr, targetMap.get(curr) - 1); // if s[right] is part of the target string
+
+                while (count == t.length()) {
+                    if (right - left + 1 < minLength) {
+                        minLength = right - left + 1;
+                        minLeft = left;
+                    }
+                    // move left pointer right, s[left] is the one to remove
+                    char leftChar = s.charAt(left);
+                    if (targetMap.containsKey(leftChar)) {
+                        if (targetMap.get(leftChar) == 0) count--; // if there is no more this char, decrease the count
+                        targetMap.put(leftChar, targetMap.get(leftChar) + 1);  // need to count this again after we move left pointer + 1 for the counter to match in the next step
+                    }
+                    left++;
+                }
+            }
+        }
+        if (minLength > s.length()) return "";
+        return s.substring(minLeft, minLeft + minLength);
+
+    }
+
     public static void main(String[] args) {
         String s = "ADOBECODEBANCC";
         String t = "BCA";
-        //System.out.println(minWindow(s,t));
+        System.out.println(minWindow(s,t)); //BANC
+        System.out.println(minWindow2(s,t));
         String s1 = "a";
         String t1 = "a";
         System.out.println(minWindow(s1,t1));

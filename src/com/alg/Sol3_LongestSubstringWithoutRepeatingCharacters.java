@@ -43,9 +43,10 @@ public class Sol3_LongestSubstringWithoutRepeatingCharacters {
 
     public static int lengthOfLongestSubstring(String s) {
 
-        /*The reason is that if s[j] have a duplicate in the range [i, j) with index j'​ ,
-        we don't need to increase i
-         little by little. We can skip all the elements in the range [i, j'] and let i to be j' + 1 directly.*/
+        /* The reason is that if s[j] have a duplicate in the range [i, j) with index j'​ ,
+            we don't need to increase i little by little. We can skip all the elements in the range [i, j']
+            and let i to be j' + 1 directly.
+        */
         if ( s == null || s.length() == 0) return 0;
         if (s.length() == 1) return 1;
         int n = s.length();
@@ -59,8 +60,6 @@ public class Sol3_LongestSubstringWithoutRepeatingCharacters {
             }
             map.put(s.charAt(j), j + 1);
             result = Math.max(result, j + 1 - i);
-
-
         }
         return result;
     }
@@ -75,6 +74,7 @@ public class Sol3_LongestSubstringWithoutRepeatingCharacters {
         System.out.println(lengthOfLongestSubstring(s3));
         String s4 = "tmmuxzt";
         System.out.println(lengthOfLongestSubstring(s4));
+        System.out.println(lengthOfLongestSubstring4(s4));
     }
 
     // method 3, assume ASCII 128
@@ -86,6 +86,21 @@ public class Sol3_LongestSubstringWithoutRepeatingCharacters {
             i = Math.max(index[s.charAt(j)],i);
             res = Math.max(res, j - i + 1);
             index[s.charAt(j)] = j + 1;
+        }
+        return res;
+    }
+    // method 4
+    public static int lengthOfLongestSubstring4(String s) {
+        int res = 0;
+        int j = 0;
+        Set<Character> set = new HashSet<>();
+        for (int i = 0; i < s.length(); i++) {
+            while (j < s.length() && !set.contains(s.charAt(j)) ) {
+                set.add(s.charAt(j));
+                res = Math.max(res, j - i + 1);
+                j++;
+            }
+            set.remove(s.charAt(i));
         }
         return res;
     }

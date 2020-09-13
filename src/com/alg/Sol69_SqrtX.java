@@ -36,8 +36,32 @@ public class Sol69_SqrtX {
         return ans;
     }
 
+    public static int mySqrt2(int x) {
+        if (x <= 1) return x;
+        int start = 1;
+        int end = x/2;
+        int mid = 0;
+        while (start + 1 < end) {  // After the loop we check start and end
+            mid = start + (end - start)/2;
+            if (mid <= x / mid) {
+                start = mid;
+            } else {
+                end = mid;
+            }
+        }
+
+        if (end <= x / end) {
+            return end;
+        }
+
+
+        return start;
+    }
+
     public static void main(String[] args) {
         System.out.println(mySqrt(2147395599));
+        System.out.println(mySqrt2(2147395599));
         System.out.println(Integer.MAX_VALUE);
+        System.out.println(Integer.MIN_VALUE);
     }
 }
