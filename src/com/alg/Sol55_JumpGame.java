@@ -28,15 +28,37 @@ public class Sol55_JumpGame {
     public static boolean canJ(int[] nums){
         int max = 0;
         for(int i = 0; i < nums.length ; i++){
-            if ( max < i) return false;
-            if( i + nums[i] > max) max = i + nums[i];
+            if (max < i) return false;
+            if (i + nums[i] > max) max = i + nums[i];
         }
         return true;
+    }
+
+    // dynamic programming
+    public static boolean canJ2(int[] nums) {
+        // f[j] : whether it can jump to jth stone
+        // f[j=] = OR_0<i<=j (f[i]  AND i + a[i] >= j)
+        // time O(n^2), space O(n)
+        int n = nums.length;
+        boolean[] f = new boolean[n];
+        f[0] = true;
+        for (int j = 1; j < n; j++) {  // start with 1, not 0 initiated above
+            // previous stone (last step)
+            f[j] = false;
+            for (int i = 0; i < j; i++) {
+                if (f[i] && i + nums[i] >= j) {
+                    f[j] = true;
+                    break;  // found it is true already, no need to check further
+                }
+            }
+        }
+        return f[n - 1];
     }
 
     public static void main(String[] args) {
         int[] nums = {8,4,2,1,0,2,0};
         System.out.println(canJump(nums));
         System.out.println(canJ(nums));
+        System.out.println(canJ2(nums));
     }
 }

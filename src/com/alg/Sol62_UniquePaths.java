@@ -12,11 +12,12 @@ public class Sol62_UniquePaths {
     public static int uniquePaths(int m, int n){
         //time O(mn), space(mn)
         int[][] matrix = new int[m][n];
-        for (int i = 0; i < m; i++){
-            for (int j = 0; j < n ;j ++){
-                if(i == 0 || j ==0){
-                    matrix[i][j] = 1;
-                }else{
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n ;j ++) {
+                if (i == 0 || j == 0) {
+                    matrix[i][j] = 1;  // corner case
+                } else {
+                    //              up              left
                     matrix[i][j] = matrix[i-1][j] + matrix[i][j-1];
                 }
             }
@@ -25,7 +26,8 @@ public class Sol62_UniquePaths {
     }
 
     public static void main(String[] args) {
-        System.out.println(uniquePaths(4,3)); // combination C-2_5
+        System.out.println(uniquePaths(4,3));
+        // combination C-2_5  (need 5 steps in total, which are 2 horizontal steps + 3 vertical steps
         System.out.println(uniquePaths2(4,3));
     }
 
