@@ -20,6 +20,7 @@ package com.alg;
         Note:
         Your solution should be in logarithmic complexity.*/
 public class Sol162_FindPeakElement {
+    // O(n)
     public static int findPeakElement_n(int[] nums) {
         int n = nums.length;
         for (int i = 1; i < n; i++){
@@ -29,19 +30,38 @@ public class Sol162_FindPeakElement {
         }
         return nums.length-1;
     }
+
+    // O(logn)
     public static int findPeakElement(int[] nums) {
         int n = nums.length;
         int lo = 0;
         int hi = n - 1;
-        while ( lo < hi){
+        while (lo < hi) {
             int mid = lo + (hi - lo)/2;
             if (nums[mid] > nums[mid+1]){
                 hi = mid;
-            }else{
+            } else {
                 lo = mid + 1;
             }
         }
         return lo;
+    }
+
+    public static int findPeak(int[] nums) {
+        int start = 0;
+        int end = nums.length - 1;
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            if (nums[mid] > nums[mid + 1]) {
+                end = mid;
+            } else {
+                start = mid;
+            }
+        }
+        if (nums[start] > nums[end]) {
+            return start;
+        }
+        return end;
     }
 
     public static void main(String[] args) {
@@ -49,5 +69,7 @@ public class Sol162_FindPeakElement {
         int[] b = {1,2,3};
         System.out.println(findPeakElement(a));
         System.out.println(findPeakElement(b));
+        System.out.println(findPeak(a));
+        System.out.println(findPeak(b));
     }
 }

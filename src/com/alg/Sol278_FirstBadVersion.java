@@ -9,7 +9,7 @@ public class Sol278_FirstBadVersion {
     public static int firstBadVersion(int n) {
         int left = 1;
         int right = n;
-        while ( left < right){
+        while (left < right) {
             int mid = left + (right - left) /2;
             if (isBadVersion(mid)){
                 right = mid;
@@ -26,7 +26,5 @@ public class Sol278_FirstBadVersion {
     public static void main(String[] args) {
         int[] nums = {1,2,2,-1,-1,-1};
         System.out.println(firstBadVersion(5));  // not real test
-
-
     }
 }

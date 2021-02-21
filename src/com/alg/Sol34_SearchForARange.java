@@ -59,6 +59,50 @@ public class Sol34_SearchForARange {
         return lo;
     }
 
+    public static int[] searchRange3(int[] nums, int target) {
+        int[] res = {-1, -1};
+        if (nums == null || nums.length == 0) {
+            return res;
+        }
+        int left = binarySearch(nums, target, true);
+        int right = binarySearch(nums, target, false);
+        return new int[]{left, right};
+
+    }
+
+    private static int binarySearch(int[] nums, int target, boolean first) {
+        int start = 0;
+        int end = nums.length - 1;
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            if (nums[mid] < target) {
+                start = mid;
+            } else if (nums[mid] > target) {
+                end = mid;
+            } else /*nums[mid] == target*/ if (first) {
+                end = mid;
+            } else {
+                start = mid;
+            }
+        }
+        if (first) {
+            if (nums[start] == target) {
+                return start;
+            }
+            if (nums[end] == target) {
+                return end;
+            }
+        } else {
+            if (nums[end] == target) {
+                return end;
+            }
+            if (nums[start] == target) {
+                return start;
+            }
+        }
+        return -1;
+    }
+
     public static void main(String[] args) {
         int[] nums = {1,2,6,6,10};
         int[] res = searchRange2(nums,6);
@@ -66,5 +110,10 @@ public class Sol34_SearchForARange {
         int[] nums2 = {1};
         int[] res2 = searchRange2(nums,1);
         System.out.println(Arrays.toString(res2));
+
+        int[] res3 = searchRange3(nums,6);
+        int[] res4 = searchRange3(nums2,1);
+        System.out.println(Arrays.toString(res3));
+        System.out.println(Arrays.toString(res4));
     }
 }

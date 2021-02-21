@@ -36,8 +36,8 @@ public class Sol697_DegreeOfAnArray {
         }
         int res = nums.length;
         int degree = Collections.max(count.values());
-        for(int x: count.keySet()){
-            if ( count.get(x) == degree){
+        for(int x: count.keySet()) {
+            if (count.get(x) == degree){
                 res = Math.min(res, right.get(x) - left.get(x) + 1);
             }
         }

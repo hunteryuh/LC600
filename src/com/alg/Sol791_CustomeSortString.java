@@ -1,4 +1,8 @@
 package com.alg;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /*S and T are strings composed of lowercase letters. In S, no letter occurs more than once.
 
 S was sorted in some custom order previously. We want to permute the characters of T so that they match the order that S was sorted. More specifically, if x occurs before y in S, then x should occur before y in the returned string.
@@ -34,9 +38,41 @@ public class Sol791_CustomeSortString {
         return sb.toString();
     }
 
+    public static String customSortString2(String S, String T) {
+        StringBuilder result = new StringBuilder();
+        Map<Character, Integer> tMap = new HashMap<>();
+        for (char c : T.toCharArray()) {
+            tMap.put(c, tMap.getOrDefault(c,0) + 1);
+        }
+
+        for (char c : S.toCharArray()) {
+            // need to deal with chars that in S but not T
+            if (tMap.containsKey(c)) {
+                while (tMap.get(c) > 0) {  
+                    // need to be "while" to keep the order of multi-occurrence letters in result
+                    result.append(c);
+                    tMap.put(c, tMap.get(c) - 1);
+                }
+            }
+        }
+        for (char c : T.toCharArray()) {
+            if (tMap.get(c) > 0) {  // here "if" is ok as "c" could occur multiple times in the char array
+                result.append(c);
+                tMap.put(c, tMap.get(c) - 1);
+            }
+        }
+        return result.toString();
+
+    }
+
     public static void main(String[] args) {
         String s = "abc";
-        String t = "bccda";
+        String t = "bcdea";
         System.out.println(customSortString(s,t));
+        System.out.println(customSortString2(s,t));
+        String s2 = "kqep";
+        String t2 = "pekeqff";
+        System.out.println(customSortString(s2,t2));
+        System.out.println(customSortString2(s2,t2));
     }
 }
