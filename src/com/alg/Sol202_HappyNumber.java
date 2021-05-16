@@ -1,5 +1,8 @@
 package com.alg;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by HAU on 12/12/2017.
  */
@@ -32,6 +35,44 @@ public class Sol202_HappyNumber {
             n /= 10;
         }
         return s;
+    }
+
+    public static boolean isHappyNumber(int n) {
+        for (int i = 0 ; i < 1e5; i++) {  //arbitrary large number to cover most cases
+            if (n == 1) {
+                return true;
+            };
+            int sum = 0;
+            int m = n;
+            while (m > 0) {
+                sum += (m % 10) * (m % 10);
+                m /= 10;
+            }
+            n = sum;
+        }
+        return false;
+    }
+
+    public static boolean isHappyNumber2(int n) {
+        Set<Integer> set = new HashSet<>();
+
+        while (set.add(n)) {
+//            set.add(n);
+            int sum = 0;
+            while (n > 0) {
+                sum += (n%10) * (n%10);
+                n /= 10;
+            }
+            if (sum == 1) {
+                return true;
+            } else {
+                n = sum;
+//                if (set.contains(n)) {
+//                    return false;
+//                }
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) {

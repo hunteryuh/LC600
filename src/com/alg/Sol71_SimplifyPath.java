@@ -1,6 +1,7 @@
 package com.alg;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Stack;
 
 /**
@@ -22,7 +23,7 @@ public class Sol71_SimplifyPath {
         int n = path.length();
         if (n==1) return "/";
         int i;
-        for (i = n-1;i>=0; i--){
+        for (i = n-1; i >= 0; i--){
             if (path.charAt(i) == '/')
                 break;
         }
@@ -65,7 +66,7 @@ public class Sol71_SimplifyPath {
             return "/";
         }
         for (String s: p){
-            res.append("/" + s);
+            res.append("/").append(s);
         }
         return res.toString();
 //        if (result.length() > 1){
@@ -126,20 +127,53 @@ public class Sol71_SimplifyPath {
 
         return sb.toString();
     }
+
+    public static String simplifyPathWithStack(String path) {
+        String[] splits = path.split("/+");
+        Stack<String> stack = new Stack<>();
+        for (String s: splits) {
+            if (s.equals("..")) {
+                if (!stack.isEmpty()) {
+                    stack.pop();
+                }
+            } else if (!s.equals(".") && !s.equals("")) {
+                stack.push(s);
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        if (stack.isEmpty()) {
+            sb.append("/");
+            // return "/";
+        }
+        for (String a: stack) {
+            sb.append("/").append(a);
+        }
+        return sb.toString();
+//        return "/" + String.join("/", stack);
+    }
+
+
     public static void main(String[] args) {
         String p1 = "/a/./b/../../c/";
         System.out.println(simplifyPath(p1));
+        System.out.println(simplifyPathWithStack(p1));
+
+//        System.out.println(simplifyPath(p1).equals(simplifyPathWithStack(p1)));
         String p2 = "/../../";
         System.out.println(simplifyPath(p2));
+        System.out.println(simplifyPathWithStack(p2));
         String p3 = "/home//foo/";
         System.out.println(simplifyPath(p3));
+        System.out.println(simplifyPathWithStack(p3));
+
 
 
         String p = "/";
         System.out.println(simplifyPath(p));
+        System.out.println(simplifyPathWithStack(p));
         String p4 = "/..";
         System.out.println(simplifyPath(p4));
-
-
+        System.out.println(simplifyPathWithStack(p4));
     }
 }

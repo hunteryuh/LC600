@@ -18,14 +18,34 @@ public class Sol236_LowestCommonAncestorofABinaryTree {
     }
     public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if(root == null || root == p || root == q) return root;
-        TreeNode left = lowestCommonAncestor(root.left,p,q);
-        TreeNode right = lowestCommonAncestor(root.right, p,q);
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
         if (left != null && right!= null){
             return root;
         }
         return left != null? left: right;
         //  return left == null ? right : right == null ? left : root;
     }
+
+    public static TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || root == p || root == q) {
+            return root;
+        }
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        if (left != null && right!= null){
+            return root;
+        }
+
+        if (left != null) {
+            return left;
+        }
+        if (right != null) {
+            return right;
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         //      8
         //    /   \
@@ -49,6 +69,8 @@ public class Sol236_LowestCommonAncestorofABinaryTree {
         node3.left = node6;
         node5.left = node7;
         System.out.println(lowestCommonAncestor(node1, node3, node7).val); //8
+        System.out.println(lowestCommonAncestor2(node1, node3, node7).val); //8
         System.out.println(lowestCommonAncestor(node1, node2, node7).val); //2
+        System.out.println(lowestCommonAncestor2(node1, node2, node7).val); //2
     }
 }

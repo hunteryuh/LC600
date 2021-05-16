@@ -2,8 +2,12 @@ package com.alg;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 
 /**
  * Created by HAU on 2/4/2018.
@@ -29,26 +33,77 @@ Visually, the graph looks like the following:
      /   \
     0 --- 2
          / \
-         \_/*/
-public class Sol133_CloneGraph {
-     static class UndirectedGraphNode {
-     int label;
-     List<UndirectedGraphNode> neighbors;
-     UndirectedGraphNode(int x) { label = x; neighbors = new ArrayList<UndirectedGraphNode>();
-     }
- };
-    private static Map<Integer,UndirectedGraphNode> map = new HashMap<>();
-    public static UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+         \_/
 
-        if ( node == null) return null;
-        if ( map.containsKey(node.label)){
+ https://www.lintcode.com/problem/137/
+ https://www.jiuzhang.com/problem/clone-graph/
+
+ */
+public class Sol133_CloneGraph {
+    static class UndirectedGraphNode {
+        int label;
+        List<UndirectedGraphNode> neighbors;
+        UndirectedGraphNode(int x) {
+            label = x; neighbors = new ArrayList<UndirectedGraphNode>();
+        }
+    };
+    private static Map<Integer,UndirectedGraphNode> map = new HashMap<>();
+    public static UndirectedGraphNode cloneGraph0(UndirectedGraphNode node) {
+
+        if (node == null) return null;
+        if (map.containsKey(node.label)){
             return map.get(node.label);
         }
         UndirectedGraphNode cloned = new UndirectedGraphNode(node.label);
         map.put(cloned.label, cloned);
-        for(UndirectedGraphNode neibor: node.neighbors){
-            cloned.neighbors.add(cloneGraph(neibor));
+        for(UndirectedGraphNode neighbor: node.neighbors){
+            cloned.neighbors.add(cloneGraph0(neighbor));
         }
         return cloned;
+    }
+
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        /*
+        1. 从原图给定的点找到所有点
+        2. 复制所有的点
+        3. 复制所有的边
+         */
+        if (node == null) {
+            return null;
+        }
+        //BFS
+        ArrayList<UndirectedGraphNode> nodes = getAllNodes(node);
+
+        Map<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<>();
+        for (UndirectedGraphNode oldNode : nodes) {
+            map.put(oldNode, new UndirectedGraphNode(oldNode.label));
+        }
+
+        // copy neighbors
+        for (UndirectedGraphNode oldNode : nodes) {
+            UndirectedGraphNode newNode = map.get(oldNode);
+            for (UndirectedGraphNode neighbor: oldNode.neighbors) {
+                UndirectedGraphNode newNeighbor = map.get(neighbor);
+                newNode.neighbors.add(newNeighbor);
+            }
+        }
+        return map.get(node);
+    }
+
+    private ArrayList<UndirectedGraphNode> getAllNodes(UndirectedGraphNode node) {
+        Queue<UndirectedGraphNode> queue = new LinkedList<>();
+        queue.offer(node);
+        Set<UndirectedGraphNode> set = new HashSet<>();
+        set.add(node);
+        while (!queue.isEmpty()) {
+            UndirectedGraphNode head = queue.poll();
+            for (UndirectedGraphNode neighbor: head.neighbors) {
+                if (!set.contains(neighbor)) {
+                    set.add(neighbor);
+                    queue.offer(neighbor);
+                }
+            }
+        }
+        return new ArrayList<>(set);
     }
 }

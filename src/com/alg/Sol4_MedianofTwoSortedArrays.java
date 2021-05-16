@@ -75,4 +75,27 @@ public class Sol4_MedianofTwoSortedArrays {
 
     }
 
+    public static double findMedianSortedArrays2(int[] nums1, int[] nums2) {
+        int len1 = nums1.length;
+        int len2 = nums2.length;
+        int[] merged = new int[len1+len2];
+        int i = 0, j = 0;
+        int k;
+        for (k = 0; k <= (len1 + len2) / 2; k++) {
+            if (i == len1) {
+                merged[k] = nums2[j++];
+            } else if (j == len2) {
+                merged[k] = nums1[i++];
+            } else if (nums1[i] <= nums2[j]) {
+                merged[k] = nums1[i++];
+            } else if (nums1[i] > nums2[j]) {
+                merged[k] = nums2[j++];
+            }
+        }
+        if ((len1 + len2) % 2 == 1) {
+            return merged[k-1];
+        }
+        return (merged[k-1] + merged[k-2])/2.0;
+    }
+
 }

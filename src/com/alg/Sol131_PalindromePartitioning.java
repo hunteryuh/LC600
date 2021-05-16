@@ -56,7 +56,7 @@ public class Sol131_PalindromePartitioning {
     public List<List<String>> partitionPal(String s) {
         List<List<String>> result = new ArrayList<List<String>>();
         List<String> curList = new ArrayList<String>();
-        doPart(s,result,curList,0);
+        doPart(s, result, curList,0);
         return result;
     }
 
@@ -66,22 +66,23 @@ public class Sol131_PalindromePartitioning {
             result.add(new ArrayList<>(curList));
             return;
         }
-        for ( int i = pos; i < len; i++){
-            if(isPal(s,pos,i)){
-                curList.add(s.substring(pos,i+1));
-                doPart(s,result,curList, i+1);
+        for (int i = pos; i < len; i++){
+            if (isPal(s, pos, i)){
+                curList.add(s.substring(pos, i + 1));
+                doPart(s, result, curList, i + 1);
                 curList.remove(curList.size() - 1);
             }
         }
     }
 
     private boolean isPal(String s, int j, int k) {
-        if( j == k) return true;
-        while ( j < k){
+        if (j == k) return true;
+        while (j < k){
             if(s .charAt(j) != s.charAt(k)) {
                 return false;
             }
-            j++;k--;
+            j++;
+            k--;
         }
         return true;
     }

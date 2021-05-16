@@ -22,8 +22,10 @@ public class Sol692_TopKFrequentWords {
         PriorityQueue<String> pq = new PriorityQueue<>(
                 (a,b)-> count.get(a) == count.get(b)?
                         b.compareTo(a) : count.get(a) - count.get(b)
-        );//出现频率低、字典序大的单词优先弹出
-
+        );
+        //出现频率低、字典序大的单词优先弹出,  i.e min-heap, the item needs to be polled first at the head of the queue, which are lower frequency, or higher alphabetical
+        // After reading others' comments, I realized that the reason is a word that has a higher alphabetical order can stay higher in the min-heap.
+        //For example, when min-heap has "abc", "abd", "bun", min-heap should have them in this order to be removed: "bob", "bun", "ban".
         for (String word: count.keySet()){
             pq.add(word);
             if(pq.size() > k){

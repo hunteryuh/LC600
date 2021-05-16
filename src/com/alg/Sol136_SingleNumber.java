@@ -42,6 +42,8 @@ N ^ N = 0*/
 
     public static void main(String[] args) {
         int[] nums = {2,3,5,2,3};
+
+        System.out.println(0);
         System.out.println(singleNumber(nums));
         System.out.println(sN(nums));
     }

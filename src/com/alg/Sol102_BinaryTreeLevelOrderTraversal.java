@@ -35,8 +35,8 @@ public class Sol102_BinaryTreeLevelOrderTraversal {
     }
 
     private static void levelhelper(TreeNode root, List<List<Integer>> res, int depth) {
-        if ( root == null) return ;
-        if ( depth == res.size()){
+        if (root == null) return ;
+        if (depth == res.size()){
             res.add(new ArrayList<>());
         }
         res.get(depth).add(root.val);
@@ -69,24 +69,26 @@ public class Sol102_BinaryTreeLevelOrderTraversal {
         System.out.println(levelOrder(node1));
         System.out.println(levelOrd2(node1));
     }
-    //method 2, dfs but with queue, first in first out
+
+    //method 2, BFS but with queue, first in first out
     public static List<List<Integer>> levelOrd2(TreeNode root){
         List<List<Integer>> res = new ArrayList<>();
+        if (root == null) return res;
         Queue<TreeNode> q = new LinkedList<>();
-        if ( root == null) return res;
-        q.add(root);
+        q.offer(root);
 
         while (!q.isEmpty()){
-            int size = q.size();
             List<Integer> tmp = new ArrayList<>();
-            for ( int i = 0; i < size; i++){
-                TreeNode node = q.poll();
+            int size = q.size(); // store the size of the current level
+            for (int i = 0; i < size; i++) {
+                // cannot use i < queue.size() as the size changes in the loop, so need to cache the size beforehand
+                TreeNode node = q.poll();  // get the head node of the queue
                 tmp.add(node.val);
                 if (node.left != null){
-                    q.add(node.left);
+                    q.offer(node.left);
                 }
                 if (node.right!= null){
-                    q.add(node.right);
+                    q.offer(node.right);
                 }
             }
             res.add(tmp);

@@ -17,11 +17,12 @@ public class Sol336_PalindromePairs {
         List<List<Integer>> res = new ArrayList<>();
         if ( words == null || words.length < 2 ) return res;
         Map<String,Integer> map = new HashMap<>();
+        //build the map save the key-val pairs: String - idx
         for(int i = 0; i < words.length; i++){
             map.put(words[i],i);
         }
         for(int i = 0; i < words.length; i++){
-            for ( int j = 0; j <= words[i].length(); j++){ // notice it should be "j <= words[i].length()"
+            for (int j = 0; j <= words[i].length(); j++){ // notice it should be "j <= words[i].length()"
                 String s1 = words[i].substring(0,j);
                 String s2 = words[i].substring(j);
                 if(isPalind(s1)){ //word2 + s1 + s2 is palindrome
@@ -30,7 +31,9 @@ public class Sol336_PalindromePairs {
                         res.add(Arrays.asList(map.get(str2reverse),i)); // [word2 index,i]
                     }
                 }
-                if(isPalind(s2) && !s2.isEmpty()){ //// s1 + s2 + word2 is palindrome (avoid duplicate)
+                if(isPalind(s2) && !s2.isEmpty()) { // s1 + s2 + word2 is palindrome
+                    // (avoid duplicate): s2.length != 0 as when j = 0, s1 is empty and palindrome, when j = words[i].length, s2 is empty and palindrome
+
                     String s1reverse = new StringBuilder(s1).reverse().toString();
                     if( map.getOrDefault(s1reverse,i) != i){
                         res.add(Arrays.asList(i, map.get(s1reverse)));
@@ -55,8 +58,11 @@ public class Sol336_PalindromePairs {
     public static void main(String[] args) {
         //String[] strings = {"abc","cba","tts","s","stt"};
         String[] s2 = {"aba","ba","a","caba"};
+        String[] s3 = {"abcd","dcba"};
 
         System.out.println(palindromePairs(s2));
+        System.out.println(palindromePairs(s3));
+
         /*Input:
 ["aba","ba","a","caba"]
 Output:

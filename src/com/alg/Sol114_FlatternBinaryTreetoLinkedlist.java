@@ -1,5 +1,7 @@
 package com.alg;
 
+import java.util.Stack;
+
 /**
  * Created by HAU on 11/25/2017.
  */
@@ -28,8 +30,9 @@ click to show hints.
 
 Hints:
 If you notice carefully in the flattened tree, each node's right child points to the next node of a pre-order traversal.*/
+// https://www.jiuzhang.com/problem/flatten-binary-tree-to-linked-list/
 public class Sol114_FlatternBinaryTreetoLinkedlist {
-    public static class TreeNode{
+    public static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
@@ -37,7 +40,8 @@ public class Sol114_FlatternBinaryTreetoLinkedlist {
             val = x;
         }
     }
-    private static  TreeNode prev = null;
+    private static TreeNode prev = null;
+
     public static void flatten(TreeNode root){
         if (root == null) return;
         flatten(root.right);
@@ -72,16 +76,16 @@ public class Sol114_FlatternBinaryTreetoLinkedlist {
         node3.left = node6;
         node5.left = node7;
 
-        flatten(node1);
-        while ( node1 != null){
-            System.out.println(node1.val);
+        flatten4(node1);
+        while (node1 != null){
+            System.out.print(node1.val + "->");
             node1 = node1.right;
 
         }
     }
     public static void flatten2(TreeNode root){
         // straightforward recursive
-        if ( root == null) return;
+        if (root == null) return;
         TreeNode left = root.left;
         TreeNode right = root.right;
         root.left = null;
@@ -91,5 +95,61 @@ public class Sol114_FlatternBinaryTreetoLinkedlist {
         TreeNode cur = root;
         while (cur.right != null) cur = cur.right;
         cur.right = right;
+    }
+
+    public static void flatten3(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+
+        while(!stack.empty()) {
+            TreeNode node = stack.pop();
+            if (node.right != null) {
+                stack.push(node.right);
+            }
+
+            if (node.left != null) {
+                stack.push(node.left);
+            }
+
+            if (!stack.empty()) {
+                node.right = stack.peek();
+            }
+            node.left = null;
+        }
+    }
+
+
+    public static void flatten4(TreeNode root) {
+        helper(root);
+    }
+    // flatten root and return the last node
+    private static TreeNode helper(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+
+        TreeNode leftLast = helper(root.left);
+        TreeNode rightLast = helper(root.right);
+
+        // connect leftLast to root.right
+        if (leftLast != null) {
+            leftLast.right = root.right;
+            root.right = root.left;  // pointed by the comment at line 148
+            root.left = null;
+        }
+
+        if (rightLast != null) {
+            return rightLast;
+        }
+        // at this time the "leftLast" may be already the right child of the node (node.right, at line 141), but to get the node we still need its reference
+        if (leftLast != null) {
+            return leftLast;
+        }
+
+        return root;
     }
 }

@@ -18,15 +18,15 @@ public class Sol98_ValidateBinarySearchTree {
     static TreeNode prev;
     public static boolean isValidBST(TreeNode root) {
         // use in-order traversal
-        if ( root == null) return true;
-        if ( !isValidBST(root.left)) {
+        if (root == null) return true;
+        if (!isValidBST(root.left)) {
             return false;
         }
-        if( prev!= null && prev.val >= root.val){
+        if (prev!= null && prev.val >= root.val){
             return false;
         }
         prev = root;
-        if ( !isValidBST(root.right)){
+        if (!isValidBST(root.right)){
             return false;
         }
         return true;
@@ -64,10 +64,10 @@ public class Sol98_ValidateBinarySearchTree {
     }
 
     public static boolean isValidBST2(TreeNode p, double min, double max){
-        if(p==null)
+        if (p == null)
             return true;
 
-        if(p.val <= min || p.val >= max)
+        if (p.val <= min || p.val >= max)
             return false;
 
         return isValidBST2(p.left, min, p.val) && isValidBST2(p.right, p.val, max);
@@ -81,9 +81,9 @@ public class Sol98_ValidateBinarySearchTree {
             if (cur!= null){
                 stack.push(cur);
                 cur = cur.left;
-            }else{
+            } else {
                 TreeNode p = stack.pop();
-                if ( pre != null && p.val <= pre.val){
+                if (pre != null && p.val <= pre.val){
                     return false;
                 }
                 pre = p;
@@ -92,18 +92,19 @@ public class Sol98_ValidateBinarySearchTree {
         }
         return true;
     }
+
     // in order method 3
     public boolean isValidBST3(TreeNode root){
-        if ( root == null) return true;
+        if (root == null) return true;
         Stack<TreeNode> stack = new Stack<>();
         TreeNode pre = null, cur = root;
-        while ( cur!= null || !stack.isEmpty() ){
+        while (cur!= null || !stack.isEmpty() ){
             while (cur!= null){
                 stack.push(cur);
                 cur = cur.left;
             }
             cur = stack.pop();
-            if ( pre != null && cur.val <= pre.val){
+            if (pre != null && cur.val <= pre.val){
                 return false;
             }
             pre = cur;

@@ -57,10 +57,14 @@ public class Sol56_MergeIntervals {
         list.add(a3);
         list.add(a4);
         List<Interval> res = merge(list);
-        for ( Interval i: res){
-            System.out.println(i.start + ", "+ i.end);
-        }
-        //System.out.println(res);
+//        for ( Interval i: res){
+//            System.out.println(i.start + ", "+ i.end);
+//        }
+
+
+        int[][] intervals = {{1,3}, {2,6}, {8,10}, {15,18}};
+        int[][] result = mergeIntervals(intervals);
+        System.out.println(Arrays.deepToString(result));
     }
 
     //advanced style
@@ -77,8 +81,80 @@ public class Sol56_MergeIntervals {
                 last.end = Math.max(last.end, item.end);
             }
         }
+
         return ans;
 
+    }
+
+    // new input
+
+    /*
+    Example 1:
+
+Input: intervals = [[1,3],[2,6],[8,10],[15,18]]
+Output: [[1,6],[8,10],[15,18]]
+Explanation: Since intervals [1,3] and [2,6] overlaps, merge them into [1,6].
+Example 2:
+
+Input: intervals = [[1,4],[4,5]]
+Output: [[1,5]]
+Explanation: Intervals [1,4] and [4,5] are considered overlapping.
+     */
+    public static int[][] mergeIntervals(int[][] intervals) {
+        Arrays.sort(intervals, Comparator.comparing(i -> i[0]));
+
+        LinkedList<int[]> result = new LinkedList<>();
+
+        for (int[] interval : intervals) {
+            if (result.isEmpty() || result.getLast()[1] < interval[0]) {
+                result.add(interval);
+            } else {
+                result.getLast()[1] = Math.max(interval[1], result.getLast()[1]);
+            }
+        }
+
+//        int[][] output = new int[result.size()][2];
+//        int i = 0;
+//        for (int[] interval: result) {
+//            output[i][0] = interval[0];
+//            output[i][1] = interval[1];
+//            i++;
+//        }
+
+//        return output;
+        // this part is to get an availability duration (longer than 1) from the calenders/intervals
+        List<int[]> availability = new ArrayList<>();
+        for (int i = 0; i < result.size() - 1; i++) {
+            if (result.get(i+1)[0] - result.get(i)[1] > 1) {
+                availability.add(new int[]{result.get(i)[1], result.get(i+1)[0]});
+            }
+        }
+
+//        int[][] aval = availability.toArray(new int[availability.size()][]);
+//        System.out.println(Arrays.deepToString(aval));
+
+        for(int[] avail: availability) {
+            System.out.println(Arrays.toString(avail));
+        }
+        return result.toArray(new int[result.size()][]);
+
+    }
+
+    // user List instead of LinkedList variable  (no getLast method, so use .get(xx.size()-1) instead)
+    public static int[][] mergeIntervals2(int[][] intervals) {
+        Arrays.sort(intervals, Comparator.comparing(i -> i[0]));
+        List<int[]> res = new LinkedList<>();
+
+        for (int i = 0; i < intervals.length; i++) {
+            int[] cur = intervals[i];
+            if (res.isEmpty() || res.get(res.size() -1)[1] < cur[0]) {
+                res.add(cur);
+            } else {
+                res.get(res.size() - 1)[1] = Math.max(res.get(res.size() - 1)[1], cur[1]);
+            }
+        }
+
+        return res.toArray(new int[res.size()][]);
     }
 
 }

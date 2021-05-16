@@ -21,7 +21,13 @@ For example, you may serialize the following tree
      / \
     4   5
 as "[1,2,3,null,null,4,5]", just the same as how LeetCode OJ serializes a binary tree. You do not necessarily need to follow this format, so please be creative and come up with different approaches yourself.
-Note: Do not use class member/global/static variables to store states. Your serialize and deserialize algorithms should be stateless.*/
+Note: Do not use class member/global/static variables to store states.
+Your serialize and deserialize algorithms should be stateless.
+https://www.lintcode.com/help/binary-tree-representation/
+https://www.jiuzhang.com/solution/binary-tree-serialization/
+*/
+
+
 public class Sol297_SerializeAndDeserializeBinaryTree {
   public static class TreeNode {
       int val;
@@ -57,17 +63,16 @@ public class Sol297_SerializeAndDeserializeBinaryTree {
               return "{}";
           StringBuilder sb = new StringBuilder();
 
-          LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
+          LinkedList<TreeNode> queue = new LinkedList<TreeNode>(); // can use ArrayList as well
           queue.add(root);
-          for(int i = 0; i <queue.size(); i++){
+          for(int i = 0; i < queue.size(); i++){
               TreeNode node = queue.get(i);
                   //sb.append(node.val + ",");
               if ( node == null) continue;
               queue.add(node.left);
               queue.add(node.right);
-
-
           }
+
           while (queue.get(queue.size()-1) == null){
               queue.remove(queue.size()-1);
           }
@@ -75,8 +80,8 @@ public class Sol297_SerializeAndDeserializeBinaryTree {
           for (int i = 0; i < queue.size(); i++){
               if (queue.get(i) == null){
                   sb.append("#,");
-              }else{
-                  sb.append(queue.get(i).val + ",");
+              } else {
+                  sb.append(queue.get(i).val).append(",");
               }
           }
           sb.deleteCharAt(sb.length()-1);
@@ -140,10 +145,12 @@ public class Sol297_SerializeAndDeserializeBinaryTree {
                   }
                   queue.add(node);
               }
-              if(!left) index++;
+              if (!left) {
+                  index++;
+              }
               left = !left;
           }
-          for (TreeNode t: queue){
+          for (TreeNode t: queue) {
               System.out.println(t.val);
           }
           return root;

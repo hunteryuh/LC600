@@ -1,5 +1,6 @@
 package com.alg;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
@@ -29,16 +30,27 @@ public class Sol144_BinaryTreePreorderTraversal {
             val = x;
         }
     }
-    public static List<Integer> preorderTraversal(TreeNode root) {
-        List<Integer> preres = new LinkedList<>();
-        if ( root == null) return preres;
-        preres.add(root.val);
-        preres.addAll(preorderTraversal(root.left));
-        preres.addAll(preorderTraversal(root.right));
-        return preres;
 
+    // Divide and Conquer
+    public static List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> result = new LinkedList<>();
+
+        // null or leaf
+        if (root == null) return result;
+
+        // Divide
+        List<Integer> left = preorderTraversal(root.left);
+        List<Integer> right = preorderTraversal(root.left);
+
+        // Conquer  (merge)
+        result.add(root.val);
+        result.addAll(left);
+        result.addAll(right);
+
+        return result;
     }
-    // method 2 with a helper
+
+    // method 2 with a helper to traverse
     public static List<Integer> preOrderTra(TreeNode root){
         List<Integer> res = new LinkedList<>();
         prehelper(root,res);
@@ -50,6 +62,7 @@ public class Sol144_BinaryTreePreorderTraversal {
         prehelper(root.left,list);
         prehelper(root.right,list);
     }
+
     // method 3, iterative
     public static List<Integer> preorderTra(TreeNode root){
         List<Integer> res = new LinkedList<>();
@@ -65,5 +78,20 @@ public class Sol144_BinaryTreePreorderTraversal {
             }
         }
         return res;
+    }
+
+    // method 4, iterative
+    public static List<Integer> preorderTraversal2(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) return result;
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()){
+            TreeNode node = stack.pop();
+            result.add(node.val);
+            if (node.right != null) stack.push(node.right);
+            if (node.left != null) stack.push(node.left);
+        }
+        return result;
     }
 }
