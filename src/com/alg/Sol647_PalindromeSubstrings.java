@@ -62,4 +62,28 @@ public class Sol647_PalindromeSubstrings {
         }
         return c;
     }
+
+    //dp https://mp.weixin.qq.com/s/2WetyP6IYQ6VotegepVpEw
+    public int countSubPalins(String s) {
+        int res = 0;
+        int n = s.length();
+        boolean[][] dp = new boolean[n][n];
+        //dp[i][j] - start i -> end j true if s[i] == s[j] && dp[i+1][j-1]
+        for (int i = n - 1; i>=0; i--) {
+            for (int j = i; j < n; j++) {
+                if (s.charAt(i) == s.charAt(j)) {
+                    if (j == i || j - i  == 1) {
+                        dp[i][j] = true;
+                        res++;
+                    } else { // j - i > 1
+                        dp[i][j] = dp[i+1][j-1];
+                        if (dp[i][j]) {
+                            res++;
+                        }
+                    }
+                }
+            }
+        }
+        return res;
+    }
 }

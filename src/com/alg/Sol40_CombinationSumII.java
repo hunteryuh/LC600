@@ -16,6 +16,8 @@ Each number in C may only be used once in the combination.
 Note:
 All numbers (including target) will be positive integers.
 The solution set must not contain duplicate combinations.*/
+
+// https://www.jiuzhang.com/problem/combination-sum-ii/
 public class Sol40_CombinationSumII {
     public static List<List<Integer>> combinationSum2(int[] candidates, int target){
         ArrayList<List<Integer>> result = new ArrayList<>();
@@ -34,7 +36,13 @@ public class Sol40_CombinationSumII {
         }
         for ( int i = index; i < candidates.length; i++){
             if (candidates[i] > target) return;  // array is sorted
-            if ( i > index && candidates[i] == candidates[i - 1]) continue; // candidate may have duplicate numbers
+            // "continue the while loop" by satisfied "if (i > cur && cand[i] == cand[i - 1])".
+            //You see, in your case [1,1,1], if you need a sum of 2, you will not skip the third 1 because
+            // it does not satisfy the condition "i > cur".
+            // What I mean in my first comment, for example, [1,1,1,2], we want a sum of 4, we have add [1, 1(second), 2] to the result set,
+            // then back from the recursion, when i > cur, that is, i point to the third 1, this time we skip the third 1,
+            // just to avoid another [1,1(third), 2] added to the result set.
+            if (i > index && candidates[i] == candidates[i - 1]) continue; // candidate may have duplicate numbers
             subset.add(candidates[i]);
             helper(candidates,i + 1,subset,target - candidates[i],result);  // i + 1, only be used once
             subset.remove(subset.size() - 1);
@@ -45,6 +53,33 @@ public class Sol40_CombinationSumII {
     public static void main(String[] args) {
         int[] nums = { 10,1,2,1,6,5,7};
         int t = 8;
-        System.out.println(combinationSum2(nums,t));  // can print list directly
+//        System.out.println(combinationSum2(nums,t));  // can print list directly
+        Sol40_CombinationSumII s = new Sol40_CombinationSumII();
+        List<List<Integer>> res = s.combinationSum22(nums, t);
+        System.out.println(res);
+    }
+
+    public List<List<Integer>> combinationSum22(int[] candidates, int target) {
+        List<List<Integer>> results = new ArrayList<>();
+        List<Integer> sol = new ArrayList<>();
+        Arrays.sort(candidates);
+        dfs(candidates, sol, target, results, 0);
+        return results;
+    }
+    private void dfs(int[] candidates, List<Integer> sol, int target, List<List<Integer>> results, int start) {
+        if (target == 0) {
+            List<Integer> temp = new ArrayList<>(sol);
+            results.add(temp);
+            return;
+        }
+
+        for (int i = start; i < candidates.length; i++) {
+            if (candidates[i] > target) break; // otherwise time exceeded
+            if (i > start && candidates[i] == candidates[i - 1]) continue;
+            sol.add(candidates[i]);
+            dfs(candidates, sol, target - candidates[i], results, i + 1);
+            sol.remove(sol.size() - 1);
+
+        }
     }
 }

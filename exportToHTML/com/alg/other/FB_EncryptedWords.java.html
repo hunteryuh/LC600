@@ -1,0 +1,76 @@
+<html>
+<head>
+<title>FB_EncryptedWords.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+.s4 { color: #067d17;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+FB_EncryptedWords.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg.other;</span>
+<span class="s2">/* 
+You've devised a simple encryption method for alphabetic strings that shuffles the characters in such a way that the resulting string is hard to quickly read, but is easy to convert back into the original string. 
+When you encrypt a string S, you start with an initially-empty resulting string R and append characters to it as follows: 
+Append the middle character of S (if S has even length, then we define the middle character as the left-most of the two central characters) 
+Append the encrypted version of the substring of S that's to the left of the middle character (if non-empty) 
+Append the encrypted version of the substring of S that's to the right of the middle character (if non-empty) 
+For example, to encrypt the string &quot;abc&quot;, we first take &quot;b&quot;, and then append the encrypted version of &quot;a&quot; (which is just &quot;a&quot;) and the encrypted version of &quot;c&quot; (which is just &quot;c&quot;) to get &quot;bac&quot;. 
+If we encrypt &quot;abcxcba&quot; we'll get &quot;xbacbca&quot;. That is, we take &quot;x&quot; and then append the encrypted version &quot;abc&quot; and then append the encrypted version of &quot;cba&quot;. 
+Input 
+S contains only lower-case alphabetic characters 
+1 &lt;= |S| &lt;= 10,000 
+Output 
+Return string R, the encrypted version of S. 
+Example 1 
+S = &quot;abc&quot; 
+R = &quot;bac&quot; 
+Example 2 
+S = &quot;abcd&quot; 
+R = &quot;bacd&quot; 
+Example 3 
+S = &quot;abcxcba&quot; 
+R = &quot;xbacbca&quot; 
+Example 4 
+S = &quot;facebook&quot; 
+R = &quot;eafcobok&quot; 
+ */</span>
+<span class="s0">public class </span><span class="s1">FB_EncryptedWords {</span>
+    <span class="s1">String findEncryptedWord(String s) {</span>
+        <span class="s2">// Write your code here</span>
+        <span class="s0">int </span><span class="s1">n = s.length();</span>
+        <span class="s2">// &quot;abc&quot;  &quot;abcd&quot;</span>
+        <span class="s0">if </span><span class="s1">(n &lt;= </span><span class="s3">1</span><span class="s1">) {</span>
+            <span class="s0">return </span><span class="s1">s;</span>
+        <span class="s1">}</span>
+        <span class="s0">char </span><span class="s1">midChar = s.charAt(n/</span><span class="s3">2</span><span class="s1">);</span>
+        <span class="s0">int </span><span class="s1">midIndex = n/</span><span class="s3">2</span><span class="s1">;</span>
+        <span class="s0">if </span><span class="s1">(n % </span><span class="s3">2 </span><span class="s1">== </span><span class="s3">0</span><span class="s1">) {</span>
+            <span class="s1">midChar = s.charAt(n / </span><span class="s3">2 </span><span class="s1">- </span><span class="s3">1</span><span class="s1">);</span>
+            <span class="s1">midIndex = n/</span><span class="s3">2</span><span class="s1">-</span><span class="s3">1</span><span class="s1">;</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">midChar + findEncryptedWord(s.substring(</span><span class="s3">0</span><span class="s1">,midIndex))</span>
+                <span class="s1">+ findEncryptedWord((s.substring(midIndex + </span><span class="s3">1</span><span class="s1">,n)));</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+<span class="s2">//        String a = &quot;a&quot;;</span>
+<span class="s2">//        System.out.println(&quot;a&quot;);</span>
+<span class="s2">//        System.out.println(a.substring(0,0));</span>
+<span class="s2">//        String s = &quot;abcd&quot;;</span>
+        <span class="s1">String s = </span><span class="s4">&quot;abcxcba&quot;</span><span class="s1">;</span>
+        <span class="s1">FB_EncryptedWords f = </span><span class="s0">new </span><span class="s1">FB_EncryptedWords();</span>
+        <span class="s1">System.out.println(f.findEncryptedWord(s));</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<html>
+<head>
+<title>FB_LargestTripleProducts.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+FB_LargestTripleProducts.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg.other;</span>
+
+<span class="s0">import </span><span class="s1">java.util.Arrays;</span>
+
+<span class="s2">/* 
+You're given a list of n integers arr[0..(n-1)]. You must compute a list output[0..(n-1)] such that, for each index i (between 0 and n-1, inclusive), output[i] is equal to the product of the three largest elements out of arr[0..i] (or equal to -1 if i &lt; 2, as arr[0..i] then includes fewer than three elements). 
+Note that the three largest elements used to form any product may have the same values as one another, but they must be at different indices in arr. 
+Signature 
+int[] findMaxProduct(int[] arr) 
+Input 
+n is in the range [1, 100,000]. 
+Each value arr[i] is in the range [1, 1,000]. 
+Output 
+Return a list of n integers output[0..(n-1)], as described above. 
+Example 1 
+n = 5 
+arr = [1, 2, 3, 4, 5] 
+output = [-1, -1, 6, 24, 60] 
+The 3rd element of output is 3*2*1 = 6, the 4th is 4*3*2 = 24, and the 5th is 5*4*3 = 60. 
+Example 2 
+n = 5 
+arr = [2, 1, 2, 1, 2] 
+output = [-1, -1, 4, 4, 8] 
+The 3rd element of output is 2*2*1 = 4, the 4th is 2*2*1 = 4, and the 5th is 2*2*2 = 8. 
+ 
+ */</span>
+<span class="s0">public class </span><span class="s1">FB_LargestTripleProducts {</span>
+    <span class="s0">public int</span><span class="s1">[] findMaxProducts(</span><span class="s0">int</span><span class="s1">[] arr) {</span>
+        <span class="s0">int </span><span class="s1">n = arr.length;</span>
+        <span class="s0">if </span><span class="s1">(n == </span><span class="s3">1</span><span class="s1">) </span><span class="s0">return new int</span><span class="s1">[]{-</span><span class="s3">1</span><span class="s1">};</span>
+        <span class="s0">if </span><span class="s1">(n == </span><span class="s3">2</span><span class="s1">) </span><span class="s0">return new int</span><span class="s1">[]{-</span><span class="s3">1</span><span class="s1">, -</span><span class="s3">1</span><span class="s1">};</span>
+        <span class="s0">int</span><span class="s1">[] largest3 = {Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE};</span>
+
+        <span class="s0">int</span><span class="s1">[] res = </span><span class="s0">new int</span><span class="s1">[n];</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; </span><span class="s3">3</span><span class="s1">; i++) {</span>
+            <span class="s1">largest3 = get3Largest(largest3, arr[i]);</span>
+        <span class="s1">}</span>
+        <span class="s1">res[</span><span class="s3">0</span><span class="s1">] = -</span><span class="s3">1</span><span class="s1">;</span>
+        <span class="s1">res[</span><span class="s3">1</span><span class="s1">] = -</span><span class="s3">1</span><span class="s1">;</span>
+        <span class="s1">res[</span><span class="s3">2</span><span class="s1">] = arr[</span><span class="s3">0</span><span class="s1">] * arr[</span><span class="s3">1</span><span class="s1">] * arr[</span><span class="s3">2</span><span class="s1">];</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">3</span><span class="s1">; i &lt; n; i++) {</span>
+            <span class="s1">largest3 = get3Largest(largest3, arr[i]);</span>
+            <span class="s1">res[i] = largest3[</span><span class="s3">0</span><span class="s1">] * largest3[</span><span class="s3">1</span><span class="s1">] * largest3[</span><span class="s3">2</span><span class="s1">];</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">res;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private int</span><span class="s1">[] get3Largest(</span><span class="s0">int</span><span class="s1">[] largest3, </span><span class="s0">int </span><span class="s1">k) {</span>
+        <span class="s0">if </span><span class="s1">(k &gt; largest3[</span><span class="s3">0</span><span class="s1">]) {</span>
+            <span class="s1">largest3[</span><span class="s3">2</span><span class="s1">] = largest3[</span><span class="s3">1</span><span class="s1">];</span>
+            <span class="s1">largest3[</span><span class="s3">1</span><span class="s1">] = largest3[</span><span class="s3">0</span><span class="s1">];</span>
+            <span class="s1">largest3[</span><span class="s3">0</span><span class="s1">] = k;  </span><span class="s2">// notice the order, [0] is the last to update to avoid override</span>
+        <span class="s1">} </span><span class="s0">else if </span><span class="s1">( k &gt; largest3[</span><span class="s3">1</span><span class="s1">]) {</span>
+            <span class="s1">largest3[</span><span class="s3">2</span><span class="s1">] = largest3[</span><span class="s3">1</span><span class="s1">];</span>
+            <span class="s1">largest3[</span><span class="s3">1</span><span class="s1">] = k;</span>
+        <span class="s1">} </span><span class="s0">else if </span><span class="s1">(k &gt; largest3[</span><span class="s3">2</span><span class="s1">]) {</span>
+            <span class="s1">largest3[</span><span class="s3">2</span><span class="s1">] = k;</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">largest3;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+        <span class="s0">int</span><span class="s1">[] arr = {</span><span class="s3">2</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,</span><span class="s3">2</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,</span><span class="s3">2</span><span class="s1">};</span>
+        <span class="s1">FB_LargestTripleProducts f = </span><span class="s0">new </span><span class="s1">FB_LargestTripleProducts();</span>
+        <span class="s0">int</span><span class="s1">[] res = f.findMaxProducts(arr);</span>
+        <span class="s1">System.out.println(Arrays.toString(res));</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

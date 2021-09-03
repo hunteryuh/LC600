@@ -1,0 +1,41 @@
+<html>
+<head>
+<title>Sol0_aplusb.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Sol0_aplusb.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Created by HAU on 1/9/2018.</span>
+ <span class="s2">*/</span>
+<span class="s0">public class </span><span class="s1">Sol0_aplusb {</span>
+    <span class="s0">public static int </span><span class="s1">aplusb(</span><span class="s0">int </span><span class="s1">a, </span><span class="s0">int </span><span class="s1">b){</span>
+        <span class="s0">while</span><span class="s1">(b != </span><span class="s3">0</span><span class="s1">){</span>
+            <span class="s0">int </span><span class="s1">carry = a &amp; b;</span>
+            <span class="s1">a = a^b;</span>
+            <span class="s1">b = carry &lt;&lt; </span><span class="s3">1</span><span class="s1">;</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">a;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+        <span class="s0">int </span><span class="s1">a = </span><span class="s3">4</span><span class="s1">;</span>
+        <span class="s0">int </span><span class="s1">b = </span><span class="s3">10</span><span class="s1">;</span>
+        <span class="s1">System.out.println(aplusb(a,b));</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

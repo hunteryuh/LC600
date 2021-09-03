@@ -23,6 +23,8 @@ public class Sol258_AddDigits {
     public static void main(String[] args) {
         System.out.println(addDigits(83));
         System.out.println(addDig2(83));
+        System.out.println(addDigits2(183));
+        System.out.println(addDigits2(1));
     }
 
     //In mathematics we have learnt that any number that is divisible by 9, the sum of the digits in the number is also divisible by 9. Also,
@@ -31,6 +33,21 @@ public class Sol258_AddDigits {
         if (num < 10) return num;
         else if(num % 9 == 0) return 9;
         else return  num % 9;
+    }
+
+    //
+    public static int addDigits2(int num) {
+        if (num < 10)  return num;
+        int sum = 0;
+        while (num >= 10) {
+            sum = 0;
+            while (num > 0) {
+                sum += num % 10;
+                num /= 10;
+            }
+            num = sum;
+        }
+        return sum;
     }
 }
 

@@ -1,0 +1,120 @@
+<html>
+<head>
+<title>FB_PairSums.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+FB_PairSums.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg.other;</span>
+
+<span class="s0">import </span><span class="s1">com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;</span>
+
+<span class="s0">import </span><span class="s1">java.util.Arrays;</span>
+<span class="s0">import </span><span class="s1">java.util.HashMap;</span>
+<span class="s0">import </span><span class="s1">java.util.Map;</span>
+
+<span class="s2">/* 
+Given a list of n integers arr[0..(n-1)], determine the number of different pairs of elements within it which sum to k. 
+If an integer appears in the list multiple times, each copy is considered to be different; that is, two pairs are considered different if one pair includes at least one array index which the other doesn't, even if they include the same values. 
+Signature 
+int numberOfWays(int[] arr, int k) 
+Input 
+n is in the range [1, 100,000]. 
+Each value arr[i] is in the range [1, 1,000,000,000]. 
+k is in the range [1, 1,000,000,000]. 
+Output 
+Return the number of different pairs of elements which sum to k. 
+Example 1 
+n = 5 
+k = 6 
+arr = [1, 2, 3, 4, 3] 
+output = 2 
+The valid pairs are 2+4 and 3+3. 
+Example 2 
+n = 5 
+k = 6 
+arr = [1, 5, 3, 3, 3] 
+output = 4 
+There's one valid pair 1+5, and three different valid pairs 3+3 (the 3rd and 4th elements, 3rd and 5th elements, and 4th and 5th elements). 
+ */</span>
+<span class="s0">public class </span><span class="s1">FB_PairSums {</span>
+    <span class="s0">public int </span><span class="s1">PairSums(</span><span class="s0">int</span><span class="s1">[] arr, </span><span class="s0">int </span><span class="s1">k) {</span>
+        <span class="s1">Map&lt;Integer, Integer&gt; fq = </span><span class="s0">new </span><span class="s1">HashMap&lt;&gt;();</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i : arr) {</span>
+            <span class="s1">fq.put(i, fq.getOrDefault(i, </span><span class="s3">0</span><span class="s1">) + </span><span class="s3">1</span><span class="s1">);</span>
+        <span class="s1">}</span>
+        <span class="s0">int </span><span class="s1">res = </span><span class="s3">0</span><span class="s1">;</span>
+        <span class="s0">int </span><span class="s1">pairDiff = </span><span class="s3">0</span><span class="s1">;</span>
+        <span class="s0">for </span><span class="s1">(Integer item : fq.keySet()) {</span>
+            <span class="s0">int </span><span class="s1">count = fq.get(item);</span>
+            <span class="s0">if </span><span class="s1">(item + item == k) {</span>
+                <span class="s1">res += count * (count - </span><span class="s3">1</span><span class="s1">) /</span><span class="s3">2</span><span class="s1">;</span>
+            <span class="s1">} </span><span class="s0">else if </span><span class="s1">(fq.containsKey(k - item)) {</span>
+                <span class="s1">pairDiff += fq.get(item) * fq.get(k - item);</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">res + pairDiff / </span><span class="s3">2</span><span class="s1">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">// sort and two pointers, nlogn + n</span>
+    <span class="s0">public int </span><span class="s1">numberOfWays(</span><span class="s0">int</span><span class="s1">[] arr, </span><span class="s0">int </span><span class="s1">k) {</span>
+        <span class="s1">Arrays.sort(arr);</span>
+        <span class="s0">int </span><span class="s1">left = </span><span class="s3">0</span><span class="s1">;</span>
+        <span class="s0">int </span><span class="s1">right = arr.length - </span><span class="s3">1</span><span class="s1">;</span>
+        <span class="s0">int </span><span class="s1">res = </span><span class="s3">0</span><span class="s1">;</span>
+        <span class="s0">while </span><span class="s1">(left &lt; right) {</span>
+            <span class="s0">int </span><span class="s1">sum = arr[left] + arr[right];</span>
+            <span class="s0">if </span><span class="s1">(sum &lt; k) {</span>
+                <span class="s1">left++;</span>
+            <span class="s1">} </span><span class="s0">else if </span><span class="s1">(sum &gt; k) {</span>
+                <span class="s1">right--;</span>
+            <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                <span class="s0">if </span><span class="s1">(arr[left] != arr[right]) {</span>
+                    <span class="s0">int </span><span class="s1">lc = </span><span class="s3">1</span><span class="s1">;</span>
+                    <span class="s0">while </span><span class="s1">(arr[left + </span><span class="s3">1</span><span class="s1">] == arr[left]) {</span>
+                        <span class="s1">left++;</span>
+                        <span class="s1">lc++;</span>
+                    <span class="s1">}</span>
+                    <span class="s1">left++;</span>
+
+                    <span class="s0">int </span><span class="s1">rc = </span><span class="s3">1</span><span class="s1">;</span>
+                    <span class="s0">while </span><span class="s1">(arr[right-</span><span class="s3">1</span><span class="s1">] == arr[right]) {</span>
+                        <span class="s1">right--;</span>
+                        <span class="s1">rc++;</span>
+                    <span class="s1">}</span>
+                    <span class="s1">right--;</span>
+                    <span class="s1">res += lc * rc;</span>
+                <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                    <span class="s0">int </span><span class="s1">c = right - left + </span><span class="s3">1</span><span class="s1">;</span>
+                    <span class="s1">res += c * (c - </span><span class="s3">1</span><span class="s1">) /</span><span class="s3">2</span><span class="s1">;</span>
+                    <span class="s0">break</span><span class="s1">;</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">res;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+        <span class="s0">int</span><span class="s1">[] arr = { </span><span class="s3">1</span><span class="s1">, </span><span class="s3">5</span><span class="s1">, </span><span class="s3">3</span><span class="s1">, </span><span class="s3">3</span><span class="s1">, </span><span class="s3">3</span><span class="s1">, </span><span class="s3">1</span><span class="s1">, </span><span class="s3">5</span><span class="s1">};</span>
+        <span class="s0">int </span><span class="s1">k = </span><span class="s3">6</span><span class="s1">;</span>
+        <span class="s1">FB_PairSums f = </span><span class="s0">new </span><span class="s1">FB_PairSums();</span>
+        <span class="s1">System.out.println(f.PairSums(arr, k));</span>
+        <span class="s1">System.out.println(f.numberOfWays(arr, k));</span>
+<span class="s2">//        System.out.println(Integer.MAX_VALUE);</span>
+<span class="s2">//        int count = 100_000;</span>
+<span class="s2">//        System.out.println((long) count * ((long)count - 1) / 2);</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

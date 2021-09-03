@@ -44,5 +44,6 @@ public class Sol628_MaximumProductOfThree {
         int[] b = { -1,-2,2,1};
         System.out.println(maximumProduct(b));
         int[] c = {-1,-3,-4,1,10};
+        System.out.println(maximumProduct(c));
     }
 }

@@ -64,7 +64,7 @@ public class Sol27_RemoveElement {
     }
 
     public static void main(String[] args) {
-        int[] nums = { 3,1,2,1,3,5,3};
+        int[] nums = {3,1,2,1,3,5,3};
         int val = 3;
         System.out.println(removeElement(nums,val));
         System.out.println(Arrays.toString(nums));
@@ -73,5 +73,45 @@ public class Sol27_RemoveElement {
         int v2 = 2;
         System.out.println(removeElement(t,v2));
         System.out.println(Arrays.toString(t));
+
+        Sol27_RemoveElement ss = new Sol27_RemoveElement();
+        int[] nums2 = {0,1,2,2,3,0,4,2};
+        System.out.println(ss.removeElement2(nums2, v2));
+        System.out.println(Arrays.toString(nums2));
     }
+
+    // https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0027.%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0.md
+    public int removeElement2(int[] nums, int val) {
+        int slow = 0;
+        for (int fast = 0; fast < nums.length; fast++) {
+            if (nums[fast] == val) {
+                continue;
+            }
+            nums[slow] = nums[fast];
+            slow++;
+        }
+        return slow;
+    }
+
+    public int removeElement3(int[] nums, int val) {
+        // avoid unnecessary copy
+        int n = nums.length;
+        for (int i = 0; i < n ; i++) {
+            if (nums[i] == val) {
+                nums[i] = nums[n-1];
+                n--;
+                i--;
+            }
+        }
+        return n;
+    }
+
+
+
+
+
+
+
+
+
 }

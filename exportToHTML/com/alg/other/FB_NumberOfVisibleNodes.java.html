@@ -1,0 +1,100 @@
+<html>
+<head>
+<title>FB_NumberOfVisibleNodes.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+FB_NumberOfVisibleNodes.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg.other;</span>
+
+<span class="s0">import </span><span class="s1">java.util.LinkedList;</span>
+<span class="s0">import </span><span class="s1">java.util.Queue;</span>
+
+<span class="s2">/* 
+There is a binary tree with N nodes. You are viewing the tree from its left side and can see only the leftmost nodes at each level. 
+Return the number of visible nodes. 
+Note: You can see only the leftmost nodes, but that doesn't mean they have to be left nodes. The leftmost node at a level could be a right node. 
+Signature 
+int visibleNodes(Node root) { 
+Input 
+The root node of a tree, where the number of nodes is between 1 and 1000, and the value of each node is between 0 and 1,000,000,000 
+Output 
+An int representing the number of visible nodes. 
+Example 
+            8  &lt;------ root 
+           / \ 
+         3    10 
+        / \     \ 
+       1   6     14 
+          / \    / 
+         4   7  13 
+output = 4 
+ */</span>
+<span class="s0">public class </span><span class="s1">FB_NumberOfVisibleNodes {</span>
+    <span class="s0">static class </span><span class="s1">Node {</span>
+        <span class="s0">int </span><span class="s1">data;</span>
+        <span class="s1">Node left;</span>
+        <span class="s1">Node right;</span>
+        <span class="s1">Node() {</span>
+            <span class="s0">this</span><span class="s1">.data = </span><span class="s3">0</span><span class="s1">;</span>
+            <span class="s0">this</span><span class="s1">.left = </span><span class="s0">null</span><span class="s1">;</span>
+            <span class="s0">this</span><span class="s1">.right = </span><span class="s0">null</span><span class="s1">;</span>
+        <span class="s1">}</span>
+        <span class="s1">Node(</span><span class="s0">int </span><span class="s1">data) {</span>
+            <span class="s0">this</span><span class="s1">.data = data;</span>
+            <span class="s0">this</span><span class="s1">.left = </span><span class="s0">null</span><span class="s1">;</span>
+            <span class="s0">this</span><span class="s1">.right = </span><span class="s0">null</span><span class="s1">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s2">// Add any helper functions you may need here</span>
+
+
+    <span class="s0">public int </span><span class="s1">visibleNodes(Node root) {</span>
+        <span class="s2">// Write your code here</span>
+        <span class="s0">if </span><span class="s1">(root == </span><span class="s0">null</span><span class="s1">) </span><span class="s0">return </span><span class="s3">0</span><span class="s1">;</span>
+        <span class="s1">Queue&lt;Node&gt; q = </span><span class="s0">new </span><span class="s1">LinkedList&lt;&gt;();</span>
+        <span class="s1">q.offer(root);</span>
+        <span class="s0">int </span><span class="s1">res = </span><span class="s3">0</span><span class="s1">;</span>
+        <span class="s0">while </span><span class="s1">(!q.isEmpty()) {</span>
+            <span class="s0">int </span><span class="s1">size = q.size();</span>
+            <span class="s1">res++;</span>
+            <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; size; i++) {</span>
+                <span class="s1">Node node = q.poll();</span>
+                <span class="s0">if </span><span class="s1">(node.left != </span><span class="s0">null</span><span class="s1">) {</span>
+                    <span class="s1">q.offer(node.left);</span>
+                <span class="s1">}</span>
+                <span class="s0">if </span><span class="s1">(node.right != </span><span class="s0">null</span><span class="s1">) {</span>
+                    <span class="s1">q.offer(node.right);</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">res;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+        <span class="s1">Node n1 = </span><span class="s0">new </span><span class="s1">Node(</span><span class="s3">8</span><span class="s1">);</span>
+        <span class="s1">Node n2 = </span><span class="s0">new </span><span class="s1">Node(</span><span class="s3">3</span><span class="s1">);</span>
+        <span class="s1">Node n3 = </span><span class="s0">new </span><span class="s1">Node(</span><span class="s3">10</span><span class="s1">);</span>
+        <span class="s1">Node n4 = </span><span class="s0">new </span><span class="s1">Node(</span><span class="s3">14</span><span class="s1">);</span>
+        <span class="s1">n1.left = n2;</span>
+        <span class="s1">n1.right = n3;</span>
+        <span class="s1">n3.right = n4;</span>
+        <span class="s1">FB_NumberOfVisibleNodes f = </span><span class="s0">new </span><span class="s1">FB_NumberOfVisibleNodes();</span>
+        <span class="s1">System.out.println(f.visibleNodes(n1));</span>
+
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

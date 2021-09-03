@@ -56,17 +56,59 @@ public class Sol199_BinaryTreeRightSideView {
         return rightView;
     }
 
+    public static List<Integer> rightSideView2(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        List<Integer> res = new ArrayList<>();
+        if (root == null) return res;
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                if (i == 0) {
+                    res.add(node.val);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+             }
+        }
+        return res;
+
+    }
+
     public static void main(String[] args) {
         TreeNode n1 = new TreeNode(1);
         TreeNode n2 = new TreeNode(2);
         TreeNode n3 = new TreeNode(3);
         TreeNode n4 = new TreeNode(5);
-        TreeNode n5 = new TreeNode(6);
+        TreeNode n5 = new TreeNode(4);
         n1.left = n2;
         n1.right = n3;
         n2.right = n4;
         n4.left = n5;
-        System.out.println(rightSideView(n1));   // [1,3,5,6]
+//        System.out.println(rightSideView(n1));   // [1,3,5,6]
+        System.out.println(leftSideView(n1));   //
+
+    }
+
+    public static List<Integer> leftSideView(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        dfs(root, 0, list);
+        return list;
+    }
+
+    private static void dfs(TreeNode root, int level, List<Integer> list) {
+        if (root == null) return;
+
+        if (list.size() == level) {
+            list.add(root.val);
+        }
+        dfs(root.left, level + 1, list);
+        dfs(root.right, level + 1, list);
 
     }
 }

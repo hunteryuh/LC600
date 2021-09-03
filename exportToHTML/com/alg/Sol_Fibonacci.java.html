@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>Sol_Fibonacci.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Sol_Fibonacci.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Created by HAU on 6/11/2017.</span>
+ <span class="s2">*/</span>
+<span class="s0">public class </span><span class="s1">Sol_Fibonacci {</span>
+    <span class="s0">public static int </span><span class="s1">fib(</span><span class="s0">int </span><span class="s1">n){</span>
+        <span class="s0">if </span><span class="s1">(n &lt;= </span><span class="s3">1</span><span class="s1">) </span><span class="s0">return </span><span class="s1">n;</span>
+        <span class="s0">return </span><span class="s1">fib(n-</span><span class="s3">2</span><span class="s1">) + fib(n-</span><span class="s3">1</span><span class="s1">);</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static int </span><span class="s1">fib2(</span><span class="s0">int </span><span class="s1">n){</span>
+        <span class="s0">int</span><span class="s1">[] f = </span><span class="s0">new int</span><span class="s1">[n+</span><span class="s3">1</span><span class="s1">];</span>
+        <span class="s0">int </span><span class="s1">i;</span>
+        <span class="s1">f[</span><span class="s3">0</span><span class="s1">] = </span><span class="s3">0</span><span class="s1">;</span>
+        <span class="s1">f[</span><span class="s3">1</span><span class="s1">] = </span><span class="s3">1</span><span class="s1">;</span>
+        <span class="s0">for </span><span class="s1">(i = </span><span class="s3">2</span><span class="s1">; i &lt; n + </span><span class="s3">1</span><span class="s1">; i++){</span>
+            <span class="s1">f[i] = f[i-</span><span class="s3">1</span><span class="s1">] + f[i-</span><span class="s3">2</span><span class="s1">];</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">f[n];</span>
+    <span class="s1">}</span>
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+        <span class="s1">System.out.println(fib(</span><span class="s3">14</span><span class="s1">));</span>
+        <span class="s1">System.out.println(fib2(</span><span class="s3">14</span><span class="s1">));</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

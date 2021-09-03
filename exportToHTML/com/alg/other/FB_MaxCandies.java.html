@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>FB_MaxCandies.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+FB_MaxCandies.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg.other;</span>
+
+<span class="s0">import </span><span class="s1">java.util.PriorityQueue;</span>
+<span class="s0">import </span><span class="s1">java.util.Queue;</span>
+
+<span class="s2">/* 
+Magical Candy Bags 
+You have N bags of candy. The ith bag contains arr[i] pieces of candy, and each of the bags is magical! 
+It takes you 1 minute to eat all of the pieces of candy in a bag (irrespective of how many pieces of candy are inside), and as soon as you finish, the bag mysteriously refills. If there were x pieces of candy in the bag at the beginning of the minute, then after you've finished you'll find that floor(x/2) pieces are now inside. 
+You have k minutes to eat as much candy as possible. How many pieces of candy can you eat? 
+Signature 
+int maxCandies(int[] arr, int K) 
+Input 
+1 ≤ N ≤ 10,000 
+1 ≤ k ≤ 10,000 
+1 ≤ arr[i] ≤ 1,000,000,000 
+Output 
+A single integer, the maximum number of candies you can eat in k minutes. 
+Example 1 
+N = 5 
+k = 3 
+arr = [2, 1, 7, 4, 2] 
+output = 14 
+In the first minute you can eat 7 pieces of candy. That bag will refill with floor(7/2) = 3 pieces. 
+In the second minute you can eat 4 pieces of candy from another bag. That bag will refill with floor(4/2) = 2 pieces. 
+In the third minute you can eat the 3 pieces of candy that have appeared in the first bag that you ate. 
+In total you can eat 7 + 4 + 3 = 14 pieces of candy. 
+ */</span>
+<span class="s0">public class </span><span class="s1">FB_MaxCandies {</span>
+    <span class="s0">int </span><span class="s1">maxCandies(</span><span class="s0">int</span><span class="s1">[] arr, </span><span class="s0">int </span><span class="s1">k) {</span>
+        <span class="s2">// Write your code here</span>
+        <span class="s1">PriorityQueue&lt;Integer&gt; pq = </span><span class="s0">new </span><span class="s1">PriorityQueue&lt;&gt;((a,b) -&gt; b -a);</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i : arr) {</span>
+            <span class="s1">pq.add(i);</span>
+        <span class="s1">}</span>
+        <span class="s0">int </span><span class="s1">res = </span><span class="s3">0</span><span class="s1">;</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i&lt; k; i++) {</span>
+            <span class="s0">int </span><span class="s1">val =  pq.poll();</span>
+            <span class="s1">res += val;</span>
+            <span class="s1">pq.add(val/</span><span class="s3">2</span><span class="s1">);</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">res;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+        <span class="s0">int</span><span class="s1">[] c = {</span><span class="s3">2</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,</span><span class="s3">7</span><span class="s1">,</span><span class="s3">2</span><span class="s1">,</span><span class="s3">4</span><span class="s1">};</span>
+        <span class="s0">int </span><span class="s1">k = </span><span class="s3">3</span><span class="s1">;</span>
+        <span class="s1">FB_MaxCandies f = </span><span class="s0">new </span><span class="s1">FB_MaxCandies();</span>
+        <span class="s1">System.out.println(f.maxCandies(c, k));</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

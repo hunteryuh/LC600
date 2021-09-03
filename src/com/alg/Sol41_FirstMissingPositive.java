@@ -46,6 +46,9 @@ public class Sol41_FirstMissingPositive {
     public static void main(String[] args) {
         int[] nums = {0,1,-1,-2,3};
         System.out.println(firstMissingPositive(nums));
+        int[] nums2 = {3,4,1,-1};
+        Sol41_FirstMissingPositive s41 = new Sol41_FirstMissingPositive();
+        System.out.println(s41.firstMissingPositiveNumber(nums2));
     }
     // method 2
     public static int firstMissingPositive2(int[] nums) {
@@ -63,4 +66,28 @@ public class Sol41_FirstMissingPositive {
         }
         return len+1;
     }
+
+    // https://www.jiuzhang.com/problem/first-missing-positive/
+    // https://www.cnblogs.com/AnnieKim/archive/2013/04/21/3034631.html
+    public int firstMissingPositiveNumber(int[] nums) {
+        if (nums == null) {
+            return 1;
+        }
+        int n = nums.length;
+        int i = 0;
+        while (i < n) {
+            if (nums[i] > 0 && nums[i] <= n && nums[nums[i] - 1] != nums[i]) {
+                swap(nums, i, nums[i] - 1);
+            } else {
+                i++;
+            }
+        }
+        for (i = 0; i < n; i++) {
+            if (nums[i] != i + 1) {
+                return i + 1;
+            }
+        }
+        return n + 1;
+    }
+
 }

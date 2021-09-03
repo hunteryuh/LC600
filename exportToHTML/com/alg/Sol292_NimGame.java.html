@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>Sol292_NimGame.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Sol292_NimGame.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Created by HAU on 9/9/2017.</span>
+ <span class="s2">*/</span>
+<span class="s2">/* 
+* You are playing the following Nim Game with your friend: There is a heap of stones on the table, each time one of you take turns to remove 1 to 3 stones. The one who removes the last stone will be the winner. You will take the first turn to remove the stones. 
+ 
+Both of you are very clever and have optimal strategies for the game. Write a function to determine whether you can win the game given the number of stones in the heap. 
+ 
+For example, if there are 4 stones in the heap, then you will never win the game: no matter 1, 2, or 3 stones you remove, the last stone will always be removed by your friend.*/</span>
+<span class="s0">public class </span><span class="s1">Sol292_NimGame {</span>
+    <span class="s0">public static boolean </span><span class="s1">canWinNim(</span><span class="s0">int </span><span class="s1">n){</span>
+        <span class="s0">return </span><span class="s1">n%</span><span class="s3">4 </span><span class="s1">!= </span><span class="s3">0</span><span class="s1">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+        <span class="s1">System.out.println(canWinNim(</span><span class="s3">4</span><span class="s1">));</span>
+        <span class="s1">System.out.println(canWinNim(</span><span class="s3">41</span><span class="s1">));</span>
+
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

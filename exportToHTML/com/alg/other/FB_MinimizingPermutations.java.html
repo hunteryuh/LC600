@@ -1,0 +1,131 @@
+<html>
+<head>
+<title>FB_MinimizingPermutations.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+.s4 { color: #067d17;}
+.s5 { color: #0037a6;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+FB_MinimizingPermutations.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg.other;</span>
+
+<span class="s0">import </span><span class="s1">java.util.Arrays;</span>
+<span class="s0">import </span><span class="s1">java.util.HashSet;</span>
+<span class="s0">import </span><span class="s1">java.util.LinkedList;</span>
+<span class="s0">import </span><span class="s1">java.util.Queue;</span>
+<span class="s0">import </span><span class="s1">java.util.Set;</span>
+
+<span class="s2">/*In this problem, you are given an integer N, and a permutation, P of the integers from 1 to N, denoted as (a_1, a_2, ..., a_N). You want to rearrange the elements of the permutation into increasing order, repeatedly making the following operation: 
+Select a sub-portion of the permutation, (a_i, ..., a_j), and reverse its order. 
+Your goal is to compute the minimum number of such operations required to return the permutation to increasing order. 
+Signature 
+int minOperations(int[] arr) 
+Input 
+Array arr is a permutation of all integers from 1 to N, N is between 1 and 8 
+Output 
+An integer denoting the minimum number of operations required to arrange the permutation in increasing order 
+Example 
+If N = 3, and P = (3, 1, 2), we can do the following operations: 
+Select (1, 2) and reverse it: P = (3, 2, 1). 
+Select (3, 2, 1) and reverse it: P = (1, 2, 3). 
+output = 2 
+ 
+ */</span>
+<span class="s0">public class </span><span class="s1">FB_MinimizingPermutations {</span>
+    <span class="s0">public int </span><span class="s1">minOperations(</span><span class="s0">int</span><span class="s1">[] arr) {</span>
+        <span class="s0">if </span><span class="s1">(arr == </span><span class="s0">null </span><span class="s1">|| arr.length == </span><span class="s3">0 </span><span class="s1">|| isSorted(arr)) {</span>
+            <span class="s0">return </span><span class="s3">0</span><span class="s1">;</span>
+        <span class="s1">}</span>
+        <span class="s0">int </span><span class="s1">res = </span><span class="s3">0</span><span class="s1">;</span>
+        <span class="s1">Queue&lt;</span><span class="s0">int</span><span class="s1">[]&gt; queue = </span><span class="s0">new </span><span class="s1">LinkedList&lt;&gt;();</span>
+        <span class="s1">Set&lt;String&gt; visited = </span><span class="s0">new </span><span class="s1">HashSet&lt;&gt;();</span>
+        <span class="s1">queue.offer(arr);</span>
+        <span class="s1">visited.add(Arrays.toString(arr));</span>
+        <span class="s0">while </span><span class="s1">(!queue.isEmpty()) {</span>
+            <span class="s1">res++;</span>
+            <span class="s0">int </span><span class="s1">size = queue.size();</span>
+            <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i&lt; size; i++) {</span>
+                <span class="s0">int</span><span class="s1">[] cur = queue.poll();</span>
+                <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">l = </span><span class="s3">0</span><span class="s1">; l &lt; cur.length; l++) {</span>
+                    <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">r = l + </span><span class="s3">1</span><span class="s1">; r &lt; cur.length; r++) {</span>
+                        <span class="s0">int</span><span class="s1">[] next = Arrays.copyOf(cur, cur.length);</span>
+                        <span class="s1">subReverse(next, l, r);</span>
+                        <span class="s0">if </span><span class="s1">(isSorted(next)) </span><span class="s0">return </span><span class="s1">res;</span>
+                        <span class="s0">if </span><span class="s1">(!visited.contains(Arrays.toString(next))) {</span>
+                            <span class="s1">visited.add(Arrays.toString(next));</span>
+                            <span class="s1">queue.offer(next);</span>
+                        <span class="s1">}</span>
+                    <span class="s1">}</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+
+        <span class="s0">return </span><span class="s1">-</span><span class="s3">1</span><span class="s1">;</span>
+
+    <span class="s1">}</span>
+    <span class="s0">private void </span><span class="s1">subReverse(</span><span class="s0">int</span><span class="s1">[] arr, </span><span class="s0">int </span><span class="s1">left, </span><span class="s0">int </span><span class="s1">right) {</span>
+        <span class="s0">while </span><span class="s1">(left &lt; right) {</span>
+            <span class="s0">int </span><span class="s1">temp = arr[left];</span>
+            <span class="s1">arr[left] = arr[right];</span>
+            <span class="s1">arr[right] = temp;</span>
+            <span class="s1">left++;</span>
+            <span class="s1">right--;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+    <span class="s0">private boolean </span><span class="s1">isSorted(</span><span class="s0">int</span><span class="s1">[] arr) {</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i + </span><span class="s3">1 </span><span class="s1">&lt; arr.length; i++) {</span>
+            <span class="s0">if </span><span class="s1">(arr[i+</span><span class="s3">1</span><span class="s1">] &lt; arr[i]) {</span>
+                <span class="s0">return false</span><span class="s1">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return true</span><span class="s1">;</span>
+    <span class="s1">}</span>
+    <span class="s0">static int </span><span class="s1">test_case_number = </span><span class="s3">1</span><span class="s1">;</span>
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+        <span class="s1">FB_MinimizingPermutations f = </span><span class="s0">new </span><span class="s1">FB_MinimizingPermutations();</span>
+        <span class="s0">int </span><span class="s1">n_1 = </span><span class="s3">5</span><span class="s1">;</span>
+        <span class="s0">int</span><span class="s1">[] arr_1 = {</span><span class="s3">1</span><span class="s1">, </span><span class="s3">2</span><span class="s1">, </span><span class="s3">5</span><span class="s1">, </span><span class="s3">4</span><span class="s1">, </span><span class="s3">3</span><span class="s1">};</span>
+        <span class="s0">int </span><span class="s1">expected_1 = </span><span class="s3">1</span><span class="s1">;</span>
+        <span class="s0">int </span><span class="s1">output_1 = f.minOperations(arr_1);</span>
+        <span class="s1">check(expected_1, output_1);</span>
+
+        <span class="s0">int </span><span class="s1">n_2 = </span><span class="s3">3</span><span class="s1">;</span>
+        <span class="s0">int</span><span class="s1">[] arr_2 = {</span><span class="s3">3</span><span class="s1">, </span><span class="s3">1</span><span class="s1">, </span><span class="s3">2</span><span class="s1">};</span>
+        <span class="s0">int </span><span class="s1">expected_2 = </span><span class="s3">2</span><span class="s1">;</span>
+        <span class="s0">int </span><span class="s1">output_2 = f.minOperations(arr_2);</span>
+        <span class="s1">check(expected_2, output_2);</span>
+    <span class="s1">}</span>
+
+    <span class="s0">static void </span><span class="s1">check(</span><span class="s0">int </span><span class="s1">expected, </span><span class="s0">int </span><span class="s1">output) {</span>
+        <span class="s0">boolean </span><span class="s1">result = (expected == output);</span>
+        <span class="s0">char </span><span class="s1">rightTick = </span><span class="s4">'</span><span class="s5">\u2713</span><span class="s4">'</span><span class="s1">;</span>
+        <span class="s0">char </span><span class="s1">wrongTick = </span><span class="s4">'</span><span class="s5">\u2717</span><span class="s4">'</span><span class="s1">;</span>
+        <span class="s0">if </span><span class="s1">(result) {</span>
+            <span class="s1">System.out.println(rightTick + </span><span class="s4">&quot; Test #&quot; </span><span class="s1">+ test_case_number);</span>
+        <span class="s1">}</span>
+        <span class="s0">else </span><span class="s1">{</span>
+            <span class="s1">System.out.print(wrongTick + </span><span class="s4">&quot; Test #&quot; </span><span class="s1">+ test_case_number + </span><span class="s4">&quot;: Expected &quot;</span><span class="s1">);</span>
+            <span class="s1">printInteger(expected);</span>
+            <span class="s1">System.out.print(</span><span class="s4">&quot; Your output: &quot;</span><span class="s1">);</span>
+            <span class="s1">printInteger(output);</span>
+            <span class="s1">System.out.println();</span>
+        <span class="s1">}</span>
+        <span class="s1">test_case_number++;</span>
+    <span class="s1">}</span>
+    <span class="s0">static void </span><span class="s1">printInteger(</span><span class="s0">int </span><span class="s1">n) {</span>
+        <span class="s1">System.out.print(</span><span class="s4">&quot;[&quot; </span><span class="s1">+ n + </span><span class="s4">&quot;]&quot;</span><span class="s1">);</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<html>
+<head>
+<title>Sol274_Hindex.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Sol274_Hindex.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg;</span>
+
+<span class="s0">import </span><span class="s1">java.util.Arrays;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Created by HAU on 11/30/2017.</span>
+ <span class="s2">*/</span>
+<span class="s2">/* Given an array of citations (each citation is a non-negative integer) of a researcher, write a function to compute the researcher's h-index. 
+ 
+According to the definition of h-index on Wikipedia: &quot;A scientist has index h if h of his/her N papers have at least h citations each, and the other N − h papers have no more than h citations each.&quot; 
+ 
+For example, given citations = [3, 0, 6, 1, 5], which means the researcher has 5 papers in total and each of them had received 3, 0, 6, 1, 5 citations respectively. Since the researcher has 3 papers with at least 3 citations each and the remaining two with no more than 3 citations each, his h-index is 3. 
+ 
+Note: If there are several possible values for h, the maximum one is taken as the h-index. */</span>
+<span class="s0">public class </span><span class="s1">Sol274_Hindex {</span>
+    <span class="s0">public static int </span><span class="s1">hIndex(</span><span class="s0">int</span><span class="s1">[] citations){</span>
+        <span class="s2">// time O(nlogn), space O(1)</span>
+        <span class="s1">Arrays.sort(citations);</span>
+        <span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">;</span>
+        <span class="s0">while</span><span class="s1">( i &lt; citations.length &amp;&amp; citations[citations.length-</span><span class="s3">1</span><span class="s1">-i] &gt;i){</span>
+            <span class="s1">i++;</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">i; </span><span class="s2">// after the loop, i = i' + 1 the i'th one is not cited at least h times , 0,..i'-1 are.</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static int </span><span class="s1">Hindex(</span><span class="s0">int</span><span class="s1">[] citations){</span>
+        <span class="s2">// bucket sort</span>
+        <span class="s0">int </span><span class="s1">n = citations.length;</span>
+        <span class="s0">int</span><span class="s1">[] buckets = </span><span class="s0">new int</span><span class="s1">[n+</span><span class="s3">1</span><span class="s1">];</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">c : citations){</span>
+            <span class="s0">if</span><span class="s1">(c &gt;= n){</span>
+                <span class="s1">buckets[n]++;</span>
+            <span class="s1">}</span><span class="s0">else</span><span class="s1">{</span>
+                <span class="s1">buckets[c]++;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">int </span><span class="s1">count = </span><span class="s3">0</span><span class="s1">;</span>
+        <span class="s0">for </span><span class="s1">( </span><span class="s0">int </span><span class="s1">i = n; i&gt;=</span><span class="s3">0</span><span class="s1">; i--){</span>
+            <span class="s1">count += buckets[i];</span>
+            <span class="s0">if</span><span class="s1">( count &gt;= i){</span>
+                <span class="s0">return </span><span class="s1">i;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s3">0</span><span class="s1">;</span>
+
+    <span class="s1">}</span>
+
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+        <span class="s0">int</span><span class="s1">[] cites = {</span><span class="s3">0</span><span class="s1">,</span><span class="s3">1</span><span class="s1">};</span>
+        <span class="s2">//System.out.println(hIndex(cites));</span>
+        <span class="s1">System.out.println(Hindex(cites));</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

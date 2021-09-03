@@ -1,0 +1,104 @@
+<html>
+<head>
+<title>Sol51_N_Queens.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+.s4 { color: #067d17;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Sol51_N_Queens.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg;</span>
+
+<span class="s0">import </span><span class="s1">java.util.ArrayDeque;</span>
+<span class="s0">import </span><span class="s1">java.util.ArrayList;</span>
+<span class="s0">import </span><span class="s1">java.util.Deque;</span>
+<span class="s0">import </span><span class="s1">java.util.List;</span>
+
+<span class="s2">/* 
+The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other. 
+ 
+Given an integer n, return all distinct solutions to the n-queens puzzle. 
+ 
+Each solution contains a distinct board configuration of the n-queens' placement, where 'Q' and '.' both indicate a queen and an empty space, respectively. 
+ 
+ 
+ 
+Example 1: 
+ 
+ 
+Input: n = 4 
+Output: [[&quot;.Q..&quot;,&quot;...Q&quot;,&quot;Q...&quot;,&quot;..Q.&quot;],[&quot;..Q.&quot;,&quot;Q...&quot;,&quot;...Q&quot;,&quot;.Q..&quot;]] 
+Explanation: There exist two distinct solutions to the 4-queens puzzle as shown above 
+Example 2: 
+ 
+Input: n = 1 
+Output: [[&quot;Q&quot;]] 
+ */</span>
+<span class="s0">public class </span><span class="s1">Sol51_N_Queens {</span>
+
+    <span class="s2">// https://www.jiuzhang.com/problem/n-queens/</span>
+    <span class="s2">// https://leetcode-cn.com/problems/n-queens/solution/shou-hua-tu-jie-cong-jing-dian-de-nhuang-hou-wen-t/</span>
+    <span class="s0">public </span><span class="s1">List&lt;List&lt;String&gt;&gt; solveNQueens(</span><span class="s0">int </span><span class="s1">n) {</span>
+        <span class="s1">List&lt;List&lt;String&gt;&gt; results = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;();</span>
+        <span class="s1">List&lt;Integer&gt; sol = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;();</span>
+        <span class="s1">dfs(n, results, sol);</span>
+        <span class="s0">return </span><span class="s1">results;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">dfs(</span><span class="s0">int </span><span class="s1">n, List&lt;List&lt;String&gt;&gt; results, List&lt;Integer&gt; sol) {</span>
+        <span class="s0">if </span><span class="s1">(sol.size() == n) {</span>
+            <span class="s1">results.add(buildBoard(sol));</span>
+            <span class="s0">return</span><span class="s1">;</span>
+        <span class="s1">}</span>
+
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; n; i++) {</span>
+            <span class="s0">if </span><span class="s1">(canPut(i, sol)) {</span>
+                <span class="s1">sol.add(i);</span>
+                <span class="s1">dfs(n, results, sol);</span>
+                <span class="s1">sol.remove(sol.size() - </span><span class="s3">1</span><span class="s1">);</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private </span><span class="s1">List&lt;String&gt; buildBoard(List&lt;Integer&gt; sol) {</span>
+        <span class="s1">List&lt;String&gt; board = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;();</span>
+        <span class="s0">int </span><span class="s1">size = sol.size();</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; size; i++) {</span>
+            <span class="s1">StringBuilder sb = </span><span class="s0">new </span><span class="s1">StringBuilder();</span>
+            <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">j = </span><span class="s3">0</span><span class="s1">; j &lt; size; j++) {</span>
+                <span class="s0">if </span><span class="s1">(j == sol.get(i)) {</span>
+                    <span class="s1">sb.append(</span><span class="s4">'Q'</span><span class="s1">);</span>
+                <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                    <span class="s1">sb.append(</span><span class="s4">'.'</span><span class="s1">);</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+            <span class="s1">board.add(sb.toString());</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">board;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private boolean </span><span class="s1">canPut(</span><span class="s0">int </span><span class="s1">k, List&lt;Integer&gt; sol) {</span>
+        <span class="s2">// 1  2  3  4</span>
+        <span class="s2">//若有其他皇后在同一列或同一斜线上则不合法</span>
+        <span class="s0">int </span><span class="s1">row = sol.size();</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; sol.size(); i++) {</span>
+            <span class="s0">if </span><span class="s1">(k == sol.get(i)) </span><span class="s0">return false</span><span class="s1">;</span>
+            <span class="s0">if </span><span class="s1">(row + k == i + sol.get(i)) </span><span class="s0">return false</span><span class="s1">;</span>
+            <span class="s0">if </span><span class="s1">(row - k == i - sol.get(i)) </span><span class="s0">return false</span><span class="s1">;</span>
+        <span class="s1">}</span>
+        <span class="s0">return true</span><span class="s1">;</span>
+    <span class="s1">}</span>
+
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

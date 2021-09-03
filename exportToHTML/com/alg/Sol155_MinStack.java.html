@@ -1,0 +1,78 @@
+<html>
+<head>
+<title>Sol155_MinStack.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Sol155_MinStack.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg;</span>
+
+<span class="s0">import </span><span class="s1">java.util.Stack;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Created by HAU on 1/23/2018.</span>
+ <span class="s2">*/</span>
+<span class="s2">/*Design a stack that supports push, pop, top, and retrieving the minimum element in constant time. 
+ 
+push(x) -- Push element x onto stack. 
+pop() -- Removes the element on top of the stack. 
+top() -- Get the top element. 
+getMin() -- Retrieve the minimum element in the stack. 
+Example: 
+MinStack minStack = new MinStack(); 
+minStack.push(-2); 
+minStack.push(0); 
+minStack.push(-3); 
+minStack.getMin();   --&gt; Returns -3. 
+minStack.pop(); 
+minStack.top();      --&gt; Returns 0. 
+minStack.getMin();   --&gt; Returns -2.*/</span>
+<span class="s0">public class </span><span class="s1">Sol155_MinStack {</span>
+    <span class="s0">long </span><span class="s1">min;</span>
+    <span class="s1">Stack&lt;Long&gt; stack;</span>
+    <span class="s0">public </span><span class="s1">Sol155_MinStack(){</span>
+        <span class="s1">stack = </span><span class="s0">new </span><span class="s1">Stack&lt;&gt;();</span>
+    <span class="s1">}</span>
+    <span class="s0">public void </span><span class="s1">push(</span><span class="s0">int </span><span class="s1">x){</span>
+        <span class="s0">if</span><span class="s1">(stack.isEmpty()){</span>
+            <span class="s1">stack.push(</span><span class="s3">0L</span><span class="s1">);</span>
+            <span class="s1">min = x;</span>
+        <span class="s1">}</span><span class="s0">else</span><span class="s1">{</span>
+            <span class="s1">stack.push(x - min);</span><span class="s2">//Could be negative if min value needs to change</span>
+            <span class="s0">if </span><span class="s1">( x &lt; min){</span>
+                <span class="s1">min = x;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+    <span class="s0">public void </span><span class="s1">pop(){</span>
+        <span class="s0">if</span><span class="s1">(stack.isEmpty()) </span><span class="s0">return</span><span class="s1">;;</span>
+        <span class="s0">long </span><span class="s1">pop = stack.pop();</span>
+        <span class="s0">if </span><span class="s1">(pop &lt; </span><span class="s3">0</span><span class="s1">){</span>
+            <span class="s1">min = min - pop; </span><span class="s2">//If negative, increase the min value</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+    <span class="s0">public int </span><span class="s1">top(){</span>
+        <span class="s0">long </span><span class="s1">top = stack.peek();</span>
+        <span class="s0">if </span><span class="s1">(top &gt; </span><span class="s3">0</span><span class="s1">){</span>
+            <span class="s0">return </span><span class="s1">(</span><span class="s0">int</span><span class="s1">) (top + min);</span>
+        <span class="s1">}</span><span class="s0">else</span><span class="s1">{</span>
+            <span class="s0">return </span><span class="s1">(</span><span class="s0">int</span><span class="s1">) min;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+    <span class="s0">public int </span><span class="s1">getMin(){</span>
+        <span class="s0">return </span><span class="s1">(</span><span class="s0">int</span><span class="s1">)min;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

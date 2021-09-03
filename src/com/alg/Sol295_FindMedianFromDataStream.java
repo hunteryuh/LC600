@@ -65,4 +65,21 @@ public class Sol295_FindMedianFromDataStream {
         double res = obj.findMedian();
         System.out.println(res);
     }
+
+    PriorityQueue<Integer> minHeap = new PriorityQueue<>();  // the min will be polled
+    PriorityQueue<Integer> maxHeap = new PriorityQueue<>( (a,b) -> b - a);
+    public void addNum(int num) {
+        minHeap.add(num);
+        maxHeap.add(minHeap.poll());
+        if (minHeap.size() < maxHeap.size()) {
+            minHeap.add(maxHeap.poll());
+        }
+
+    }
+    public double findMedian() {
+        if (maxHeap.size() == minHeap.size()) {
+            return (maxHeap.peek() + minHeap.peek()) / 2.0;
+        }
+        return minHeap.peek();
+    }
 }

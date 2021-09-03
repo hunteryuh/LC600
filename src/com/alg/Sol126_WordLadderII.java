@@ -25,6 +25,9 @@ Return
 */
 /*大部分都是先用BFS找到最短步骤数，并将一些相关信息使用HashMap保存，
 然后再使用DFS遍历保存下来的neighbor和distance信息，找出符合要求的结果，大概是因为Word Ladder I那个题目中延续下来的方法。*/
+
+
+    // https://www.jiuzhang.com/problem/word-ladder-ii/
 public class Sol126_WordLadderII {
     public static List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
 /*        if (beginWord.length() != endWord.length()) return 0;
@@ -39,16 +42,17 @@ public class Sol126_WordLadderII {
         ArrayList<String> sol = new ArrayList<>();
         
         dic.add(beginWord); 
-        bfs( beginWord, endWord, dic, nodeNeighbors, distance);
-        dfs( beginWord, endWord, dic, nodeNeighbors, distance, sol, res);
+        bfs(beginWord, endWord, dic, nodeNeighbors, distance);
+        dfs(beginWord, endWord, dic, nodeNeighbors, distance, sol, res);
         return res;
         
     }
 
 
 
-    private static void bfs(String beginWord, String endWord, HashSet<String> dic, HashMap<String, ArrayList<String>> nodeNeighbors, HashMap<String, Integer> distance) {
-        for( String str: dic){
+    private static void bfs(String beginWord, String endWord, HashSet<String> dic,
+        HashMap<String, ArrayList<String>> nodeNeighbors, HashMap<String, Integer> distance) {
+        for (String str: dic){
             nodeNeighbors.put(str, new ArrayList<>());
         }
         Queue<String> queue = new LinkedList<>();
@@ -75,7 +79,7 @@ public class Sol126_WordLadderII {
                     }
                 }
             }
-            if(found){
+            if (found) {
                 break;
             }
         }
@@ -116,6 +120,111 @@ public class Sol126_WordLadderII {
         String start = "hit";
         String end = "cog";
         List<String> list = new ArrayList<>(Arrays.asList("hot","dot","dog","log","lot","cog"));
-        System.out.println(findLadders(start,end,list));
+//        System.out.println(findLadders(start,end,list));
+        Sol126_WordLadderII ss = new Sol126_WordLadderII();
+
+        System.out.println(ss.findLadders2(start,end,list));
+    }
+
+    // https://leetcode.com/problems/word-ladder-ii/discuss/40447/Share-two-similar-Java-solution-that-Accpted-by-OJ.
+    public List<List<String>> findLadders2(String beginWord, String endWord, List<String> wordList) {
+        List<List<String>> res = new ArrayList<>();
+        
+        List<String> sol = new ArrayList<>();
+        HashSet<String> dict = new HashSet<String>(wordList);
+        Map<String, List<String>> neighborMap = new HashMap<>();
+
+        Map<String, Integer> distance = new HashMap<>();
+        dict.add(beginWord);
+        bfsGetMinDistance(beginWord, endWord, neighborMap, distance, dict);
+        dfsGetPathsWithMinDistance(beginWord, endWord, neighborMap, distance, res, sol);
+        return res;
+    }
+
+    private void dfsGetPathsWithMinDistance(String beginWord, String endWord, Map<String, List<String>> neighborMap,
+        Map<String, Integer> distance, List<List<String>> res, List<String> sol) {
+        sol.add(beginWord);
+        if (endWord.equals(beginWord)) {
+            res.add(new ArrayList<>(sol));
+//            return;
+        } else {
+            for (String nb : neighborMap.get(beginWord)) {
+                if (distance.get(nb) == distance.get(beginWord) + 1) {
+                    dfsGetPathsWithMinDistance(nb, endWord, neighborMap, distance, res, sol);
+                }
+            }
+        }
+        sol.remove(sol.size() - 1);
+
+    }
+
+    private void bfsGetMinDistance(String beginWord, String endWord, 
+        Map<String, List<String>> neighborMap, Map<String, Integer> distance, Set<String> wordList) {
+        for (String s: wordList) { //For each word in dictionary set up hashmap to store all of its adjacent neighbours
+            neighborMap.put(s, new ArrayList<>());
+        }
+        Queue<String> queue = new LinkedList<>();
+        queue.offer(beginWord);
+        distance.put(beginWord, 0);
+        int level = 0;
+        boolean found = false;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            level++;
+            for (int i = 0; i < size; i++) {
+                String cur = queue.poll();
+//                int curD = distance.get(cur);
+                List<String> neighbors = getValidNeighbors(cur, wordList);
+                for (String nb: neighbors) {
+                    neighborMap.get(cur).add(nb);
+                    if (nb.equals(endWord)) { // found the shortest path
+                        found = true;
+                    }
+                    if (!distance.containsKey(nb)) { // check if visited
+                        distance.put(nb, level /*curD + 1*/);
+                        queue.offer(nb);
+                    }
+                }
+            }
+            if (found) {
+                break;
+            }
+        }
+    }
+
+
+    private List<String> getValidNeighbors(String word, Set<String> wordList) {
+        List<String> ns = new ArrayList<>();
+        for (int i = 0; i < word.length(); i++) {
+            char c = word.charAt(i);
+            for (char nc = 'a'; nc <= 'z'; nc++) {
+                // cannot put nc!=c in the 2nd condition of for loop,
+                // otherwise the loop will end instead of skip one char
+                if (nc != c) {
+                    String nw = word.substring(0, i) + nc + word.substring(i + 1, word.length());
+                    if (wordList.contains(nw)) {
+                        ns.add(nw);
+                    }
+                }
+            }
+        }
+        return ns;
+
+//        ArrayList<String> res = new ArrayList<String>();
+//        char chs[] = word.toCharArray();
+//
+//        for (char ch ='a'; ch <= 'z'; ch++) {
+//            for (int i = 0; i < chs.length; i++) {
+//                if (chs[i] == ch) continue;
+//                char old_ch = chs[i];
+//                chs[i] = ch;
+//                if (wordList.contains(String.valueOf(chs))) {
+//                    res.add(String.valueOf(chs));
+//                }
+//                chs[i] = old_ch;
+//            }
+//
+//        }
+//        return res;
     }
 }

@@ -1,0 +1,114 @@
+<html>
+<head>
+<title>SOL_test.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+.s4 { color: #067d17;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+SOL_test.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Created by HAU on 6/14/2017.</span>
+ <span class="s2">*/</span>
+<span class="s2">// Java program for Knight Tour problem</span>
+<span class="s0">public class </span><span class="s1">SOL_test{</span>
+    <span class="s0">static int </span><span class="s1">N = </span><span class="s3">8</span><span class="s1">;</span>
+
+    <span class="s2">/* A utility function to check if i,j are 
+       valid indexes for N*N chessboard */</span>
+    <span class="s0">static boolean </span><span class="s1">isSafe(</span><span class="s0">int </span><span class="s1">x, </span><span class="s0">int </span><span class="s1">y, </span><span class="s0">int </span><span class="s1">sol[][]) {</span>
+        <span class="s0">return </span><span class="s1">(x &gt;= </span><span class="s3">0 </span><span class="s1">&amp;&amp; x &lt; N &amp;&amp; y &gt;= </span><span class="s3">0 </span><span class="s1">&amp;&amp;</span>
+                <span class="s1">y &lt; N &amp;&amp; sol[x][y] == -</span><span class="s3">1</span><span class="s1">);</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/* A utility function to print solution 
+       matrix sol[N][N] */</span>
+    <span class="s0">static void </span><span class="s1">printSolution(</span><span class="s0">int </span><span class="s1">sol[][]) {</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">x = </span><span class="s3">0</span><span class="s1">; x &lt; N; x++) {</span>
+            <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">y = </span><span class="s3">0</span><span class="s1">; y &lt; N; y++)</span>
+                <span class="s1">System.out.print(sol[x][y] + </span><span class="s4">&quot; &quot;</span><span class="s1">);</span>
+            <span class="s1">System.out.println();</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/* This function solves the Knight Tour problem 
+       using Backtracking.  This  function mainly 
+       uses solveKTUtil() to solve the problem. It 
+       returns false if no complete tour is possible, 
+       otherwise return true and prints the tour. 
+       Please note that there may be more than one 
+       solutions, this function prints one of the 
+       feasible solutions.  */</span>
+    <span class="s0">static boolean </span><span class="s1">solveKT() {</span>
+        <span class="s0">int </span><span class="s1">sol[][] = </span><span class="s0">new int</span><span class="s1">[</span><span class="s3">8</span><span class="s1">][</span><span class="s3">8</span><span class="s1">];</span>
+
+        <span class="s2">/* Initialization of solution matrix */</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">x = </span><span class="s3">0</span><span class="s1">; x &lt; N; x++)</span>
+            <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">y = </span><span class="s3">0</span><span class="s1">; y &lt; N; y++)</span>
+                <span class="s1">sol[x][y] = -</span><span class="s3">1</span><span class="s1">;</span>
+
+       <span class="s2">/* xMove[] and yMove[] define next move of Knight. 
+          xMove[] is for next value of x coordinate 
+          yMove[] is for next value of y coordinate */</span>
+        <span class="s0">int </span><span class="s1">xMove[] = {</span><span class="s3">2</span><span class="s1">, </span><span class="s3">1</span><span class="s1">, -</span><span class="s3">1</span><span class="s1">, -</span><span class="s3">2</span><span class="s1">, -</span><span class="s3">2</span><span class="s1">, -</span><span class="s3">1</span><span class="s1">, </span><span class="s3">1</span><span class="s1">, </span><span class="s3">2</span><span class="s1">};</span>
+        <span class="s0">int </span><span class="s1">yMove[] = {</span><span class="s3">1</span><span class="s1">, </span><span class="s3">2</span><span class="s1">, </span><span class="s3">2</span><span class="s1">, </span><span class="s3">1</span><span class="s1">, -</span><span class="s3">1</span><span class="s1">, -</span><span class="s3">2</span><span class="s1">, -</span><span class="s3">2</span><span class="s1">, -</span><span class="s3">1</span><span class="s1">};</span>
+
+        <span class="s2">// Since the Knight is initially at the first block</span>
+        <span class="s1">sol[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">] = </span><span class="s3">0</span><span class="s1">;</span>
+
+        <span class="s2">/* Start from 0,0 and explore all tours using 
+           solveKTUtil() */</span>
+        <span class="s0">if </span><span class="s1">(!solveKTUtil(</span><span class="s3">0</span><span class="s1">, </span><span class="s3">0</span><span class="s1">, </span><span class="s3">1</span><span class="s1">, sol, xMove, yMove)) {</span>
+            <span class="s1">System.out.println(</span><span class="s4">&quot;Solution does not exist&quot;</span><span class="s1">);</span>
+            <span class="s0">return false</span><span class="s1">;</span>
+        <span class="s1">} </span><span class="s0">else</span>
+            <span class="s1">printSolution(sol);</span>
+
+        <span class="s0">return true</span><span class="s1">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/* A recursive utility function to solve Knight 
+       Tour problem */</span>
+    <span class="s0">static boolean </span><span class="s1">solveKTUtil(</span><span class="s0">int </span><span class="s1">x, </span><span class="s0">int </span><span class="s1">y, </span><span class="s0">int </span><span class="s1">movei,</span>
+                               <span class="s0">int </span><span class="s1">sol[][], </span><span class="s0">int </span><span class="s1">xMove[],</span>
+                               <span class="s0">int </span><span class="s1">yMove[]) {</span>
+        <span class="s0">int </span><span class="s1">k, next_x, next_y;</span>
+        <span class="s0">if </span><span class="s1">(movei == N * N)</span>
+            <span class="s0">return true</span><span class="s1">;</span>
+
+        <span class="s2">/* Try all next moves from the current coordinate 
+            x, y */</span>
+        <span class="s0">for </span><span class="s1">(k = </span><span class="s3">0</span><span class="s1">; k &lt; </span><span class="s3">8</span><span class="s1">; k++) {</span>
+            <span class="s1">next_x = x + xMove[k];</span>
+            <span class="s1">next_y = y + yMove[k];</span>
+            <span class="s0">if </span><span class="s1">(isSafe(next_x, next_y, sol)) {</span>
+                <span class="s1">sol[next_x][next_y] = movei;</span>
+                <span class="s0">if </span><span class="s1">(solveKTUtil(next_x, next_y, movei + </span><span class="s3">1</span><span class="s1">,</span>
+                        <span class="s1">sol, xMove, yMove))</span>
+                    <span class="s0">return true</span><span class="s1">;</span>
+                <span class="s0">else</span>
+                    <span class="s1">sol[next_x][next_y] = -</span><span class="s3">1</span><span class="s1">;</span><span class="s2">// backtracking</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+
+        <span class="s0">return false</span><span class="s1">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/* Driver program to test above functions */</span>
+    <span class="s0">public static void </span><span class="s1">main(String args[]) {</span>
+        <span class="s1">solveKT();</span>
+    <span class="s1">}</span>
+<span class="s1">}</span></pre>
+</body>
+</html>

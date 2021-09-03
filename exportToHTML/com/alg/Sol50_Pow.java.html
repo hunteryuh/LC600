@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>Sol50_Pow.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Sol50_Pow.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Created by HAU on 8/21/2017.</span>
+ <span class="s2">*/</span>
+<span class="s0">public class </span><span class="s1">Sol50_Pow {</span>
+    <span class="s0">public static double </span><span class="s1">mypow(</span><span class="s0">double </span><span class="s1">x, </span><span class="s0">int </span><span class="s1">n){</span>
+        <span class="s0">long </span><span class="s1">N = (</span><span class="s0">long</span><span class="s1">) n;</span>
+        <span class="s0">if </span><span class="s1">( N &gt;= </span><span class="s3">0 </span><span class="s1">) </span><span class="s0">return </span><span class="s1">helper(x,N);</span>
+        <span class="s0">else return </span><span class="s3">1</span><span class="s1">/helper(x,-N);</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private static double </span><span class="s1">helper(</span><span class="s0">double </span><span class="s1">x,</span><span class="s0">long </span><span class="s1">i) {</span>
+        <span class="s0">if </span><span class="s1">( i == </span><span class="s3">0</span><span class="s1">) </span><span class="s0">return </span><span class="s3">1</span><span class="s1">;</span>
+        <span class="s0">double </span><span class="s1">res = helper(x, i/</span><span class="s3">2</span><span class="s1">);</span>
+        <span class="s1">res *= res;</span>
+        <span class="s0">if </span><span class="s1">(i % </span><span class="s3">2 </span><span class="s1">== </span><span class="s3">1</span><span class="s1">) res *= x;</span>
+        <span class="s0">return </span><span class="s1">res;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+        <span class="s0">double </span><span class="s1">x = </span><span class="s3">3</span><span class="s1">;</span>
+        <span class="s0">int </span><span class="s1">n = </span><span class="s3">5</span><span class="s1">;</span>
+        <span class="s0">int </span><span class="s1">i = Integer.MIN_VALUE;</span>
+        <span class="s1">System.out.println(mypow(x,i));</span>
+        <span class="s1">System.out.println(Integer.MIN_VALUE);</span>
+        <span class="s1">System.out.println(Integer.MAX_VALUE);</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>FB_MedianStream.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+FB_MedianStream.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg.other;</span>
+
+<span class="s0">import </span><span class="s1">java.util.PriorityQueue;</span>
+
+<span class="s2">/* 
+You're given a list of n integers arr[0..(n-1)]. You must compute a list output[0..(n-1)] such that, for each index i (between 0 and n-1, inclusive), output[i] is equal to the median of the elements arr[0..i] (rounded down to the nearest integer). 
+The median of a list of integers is defined as follows. If the integers were to be sorted, then: 
+If there are an odd number of integers, then the median is equal to the middle integer in the sorted order. 
+Otherwise, if there are an even number of integers, then the median is equal to the average of the two middle-most integers in the sorted order. 
+Signature 
+int[] findMedian(int[] arr) 
+Input 
+n is in the range [1, 1,000,000]. 
+Each value arr[i] is in the range [1, 1,000,000]. 
+Output 
+Return a list of n integers output[0..(n-1)], as described above. 
+Example 1 
+n = 4 
+arr = [5, 15, 1, 3] 
+output = [5, 10, 5, 4] 
+The median of [5] is 5, the median of [5, 15] is (5 + 15) / 2 = 10, the median of [5, 15, 1] is 5, and the median of [5, 15, 1, 3] is (3 + 5) / 2 = 4. 
+Example 2 
+n = 2 
+arr = [1, 2] 
+output = [1, 1] 
+The median of [1] is 1, the median of [1, 2] is (1 + 2) / 2 = 1.5 (which should be rounded down to 1). 
+ */</span>
+<span class="s0">public class </span><span class="s1">FB_MedianStream {</span>
+    <span class="s0">public int</span><span class="s1">[] findMedian(</span><span class="s0">int</span><span class="s1">[] arr) {</span>
+        <span class="s0">int </span><span class="s1">n = arr.length;</span>
+        <span class="s0">int</span><span class="s1">[] res = </span><span class="s0">new int</span><span class="s1">[n];</span>
+        <span class="s1">PriorityQueue&lt;Integer&gt; pq = </span><span class="s0">new </span><span class="s1">PriorityQueue&lt;&gt;();</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; n ; i++) {</span>
+            <span class="s1">pq.add(arr[i]);</span>
+            <span class="s0">int </span><span class="s1">size = pq.size();</span>
+
+            <span class="s0">int</span><span class="s1">[] temp = </span><span class="s0">new int</span><span class="s1">[size];</span>
+            <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">j = </span><span class="s3">0</span><span class="s1">; j&lt; size; j++) {</span>
+                <span class="s1">temp[j] = pq.poll();</span>
+            <span class="s1">}</span>
+            <span class="s0">if </span><span class="s1">(size % </span><span class="s3">2 </span><span class="s1">== </span><span class="s3">1</span><span class="s1">) {</span>
+                <span class="s1">res[i] = temp[ size / </span><span class="s3">2</span><span class="s1">];</span>
+            <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                <span class="s1">res[i] = (temp[size/</span><span class="s3">2</span><span class="s1">] + temp[size/</span><span class="s3">2</span><span class="s1">-</span><span class="s3">1</span><span class="s1">] )/</span><span class="s3">2</span><span class="s1">;</span>
+            <span class="s1">}</span>
+            <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">j = </span><span class="s3">0</span><span class="s1">; j &lt; size; j++) {</span>
+                <span class="s1">pq.add(temp[j]);</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">res;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

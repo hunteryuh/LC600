@@ -1,0 +1,115 @@
+<html>
+<head>
+<title>RotationalCipher.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+.s4 { color: #067d17;}
+.s5 { color: #0037a6;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+RotationalCipher.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg.other;</span>
+<span class="s2">/* 
+One simple way to encrypt a string is to &quot;rotate&quot; every alphanumeric character by a certain amount. Rotating a character means replacing it with another character that is a certain number of steps away in normal alphabetic or numerical order. 
+For example, if the string &quot;Zebra-493?&quot; is rotated 3 places, the resulting string is &quot;Cheud-726?&quot;. Every alphabetic character is replaced with the character 3 letters higher (wrapping around from Z to A), and every numeric character replaced with the character 3 digits higher (wrapping around from 9 to 0). Note that the non-alphanumeric characters remain unchanged. 
+Given a string and a rotation factor, return an encrypted string. 
+Signature 
+string rotationalCipher(string input, int rotationFactor) 
+Input 
+1 &lt;= |input| &lt;= 1,000,000 
+0 &lt;= rotationFactor &lt;= 1,000,000 
+Output 
+Return the result of rotating input a number of times equal to rotationFactor. 
+Example 1 
+input = Zebra-493? 
+rotationFactor = 3 
+output = Cheud-726? 
+Example 2 
+input = abcdefghijklmNOPQRSTUVWXYZ0123456789 
+rotationFactor = 39 
+output = nopqrstuvwxyzABCDEFGHIJKLM9012345678 
+ */</span>
+<span class="s0">public class </span><span class="s1">RotationalCipher {</span>
+    <span class="s1">String rotationalCipher(String input, </span><span class="s0">int </span><span class="s1">rotationFactor) {</span>
+        <span class="s2">// Write your code here</span>
+        <span class="s0">int </span><span class="s1">rletter = rotationFactor % </span><span class="s3">26</span><span class="s1">;</span>
+        <span class="s0">int </span><span class="s1">rdigit = rotationFactor % </span><span class="s3">10</span><span class="s1">;</span>
+        <span class="s0">char</span><span class="s1">[] chars = input.toCharArray();</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; chars.length; i++) {</span>
+            <span class="s0">char </span><span class="s1">c = chars[i];</span>
+            <span class="s0">if </span><span class="s1">(Character.isUpperCase(c)) {</span>
+                <span class="s0">int </span><span class="s1">offset = (c - </span><span class="s4">'A' </span><span class="s1">+ rotationFactor) % </span><span class="s3">26</span><span class="s1">;</span>
+                <span class="s1">chars[i] = (</span><span class="s0">char</span><span class="s1">) (</span><span class="s4">'A' </span><span class="s1">+ offset);</span>
+            <span class="s1">}</span>
+            <span class="s0">if </span><span class="s1">(Character.isLowerCase(c)) {</span>
+                <span class="s0">int </span><span class="s1">offset = ( c - </span><span class="s4">'a' </span><span class="s1">+ rotationFactor) % </span><span class="s3">26</span><span class="s1">;</span>
+                <span class="s1">chars[i] = (</span><span class="s0">char</span><span class="s1">) (</span><span class="s4">'a' </span><span class="s1">+ offset);</span>
+            <span class="s1">}</span>
+            <span class="s0">if </span><span class="s1">(Character.isDigit(c)) {</span>
+                <span class="s0">int </span><span class="s1">offset = (c - </span><span class="s4">'0' </span><span class="s1">+ rotationFactor) % </span><span class="s3">10</span><span class="s1">;</span>
+                <span class="s1">chars[i] = (</span><span class="s0">char</span><span class="s1">) (</span><span class="s4">'0' </span><span class="s1">+ offset);</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return new </span><span class="s1">String(chars);</span>
+    <span class="s1">}</span>
+
+
+
+    <span class="s2">// These are the tests we use to determine if the solution is correct.</span>
+    <span class="s2">// You can add your own at the bottom, but they are otherwise not editable!</span>
+    <span class="s0">int </span><span class="s1">test_case_number = </span><span class="s3">1</span><span class="s1">;</span>
+    <span class="s0">void </span><span class="s1">check(String expected, String output) {</span>
+        <span class="s0">boolean </span><span class="s1">result = (expected.equals(output));</span>
+        <span class="s0">char </span><span class="s1">rightTick = </span><span class="s4">'</span><span class="s5">\u2713</span><span class="s4">'</span><span class="s1">;</span>
+        <span class="s0">char </span><span class="s1">wrongTick = </span><span class="s4">'</span><span class="s5">\u2717</span><span class="s4">'</span><span class="s1">;</span>
+        <span class="s0">if </span><span class="s1">(result) {</span>
+            <span class="s1">System.out.println(rightTick + </span><span class="s4">&quot; Test #&quot; </span><span class="s1">+ test_case_number);</span>
+        <span class="s1">}</span>
+        <span class="s0">else </span><span class="s1">{</span>
+            <span class="s1">System.out.print(wrongTick + </span><span class="s4">&quot; Test #&quot; </span><span class="s1">+ test_case_number + </span><span class="s4">&quot;: Expected &quot;</span><span class="s1">);</span>
+            <span class="s1">printString(expected);</span>
+            <span class="s1">System.out.print(</span><span class="s4">&quot; Your output: &quot;</span><span class="s1">);</span>
+            <span class="s1">printString(output);</span>
+            <span class="s1">System.out.println();</span>
+        <span class="s1">}</span>
+        <span class="s1">test_case_number++;</span>
+    <span class="s1">}</span>
+    <span class="s0">void </span><span class="s1">printString(String str) {</span>
+        <span class="s1">System.out.print(</span><span class="s4">&quot;[</span><span class="s5">\&quot;</span><span class="s4">&quot; </span><span class="s1">+ str + </span><span class="s4">&quot;</span><span class="s5">\&quot;</span><span class="s4">]&quot;</span><span class="s1">);</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">run() {</span>
+        <span class="s1">String input_1 = </span><span class="s4">&quot;All-convoYs-9-be:Alert1.&quot;</span><span class="s1">;</span>
+        <span class="s0">int </span><span class="s1">rotationFactor_1 = </span><span class="s3">4</span><span class="s1">;</span>
+        <span class="s1">String expected_1 = </span><span class="s4">&quot;Epp-gsrzsCw-3-fi:Epivx5.&quot;</span><span class="s1">;</span>
+        <span class="s1">System.out.println(expected_1.indexOf(</span><span class="s4">&quot;Epi&quot;</span><span class="s1">));</span>
+        <span class="s1">String output_1 = rotationalCipher(input_1, rotationFactor_1);</span>
+        <span class="s1">check(expected_1, output_1);</span>
+
+        <span class="s1">String input_2 = </span><span class="s4">&quot;abcdZXYzxy-999.@&quot;</span><span class="s1">;</span>
+        <span class="s0">int </span><span class="s1">rotationFactor_2 = </span><span class="s3">200</span><span class="s1">;</span>
+        <span class="s1">String expected_2 = </span><span class="s4">&quot;stuvRPQrpq-999.@&quot;</span><span class="s1">;</span>
+        <span class="s1">String output_2 = rotationalCipher(input_2, rotationFactor_2);</span>
+        <span class="s1">check(expected_2, output_2);</span>
+
+        <span class="s2">// Add your own test cases here</span>
+
+    <span class="s1">}</span>
+
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+        <span class="s1">RotationalCipher r = </span><span class="s0">new </span><span class="s1">RotationalCipher();</span>
+        <span class="s1">r.run();</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

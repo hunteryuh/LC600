@@ -16,7 +16,10 @@ T = "abcd"
 Output: "cbad"
 Explanation:
 "a", "b", "c" appear in S, so the order of "a", "b", "c" should be "c", "b", and "a".
-Since "d" does not appear in S, it can be at any position in T. "dcba", "cdba", "cbda" are also valid outputs.*/
+Since "d" does not appear in S, it can be at any position in T. "dcba", "cdba", "cbda" are also valid outputs.
+
+interviewed by this one at 7/8/2021
+*/
 public class Sol791_CustomeSortString {
     public static String customSortString(String S, String T) {
         // Time Complexity: O(S.\text{length} + T.\text{length})O(S.length+T.length), the time it takes to iterate through S and T

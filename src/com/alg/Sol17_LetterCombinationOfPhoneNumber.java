@@ -42,8 +42,12 @@ public class Sol17_LetterCombinationOfPhoneNumber {
         String digits  = "23";
         //List<String> list = letterCombinations(digits);
         //System.out.println(list);
-        List<String> list2 = LetterCom2(digits);
-        System.out.println(list2);
+//        List<String> list2 = LetterCom2(digits);
+//        System.out.println(list2);
+
+        Sol17_LetterCombinationOfPhoneNumber s = new Sol17_LetterCombinationOfPhoneNumber();
+        List<String> l3 = s.letterComb(digits);
+        System.out.println(l3);
     }
 
     public static List<String> LetterCom2(String digits){
@@ -54,7 +58,8 @@ public class Sol17_LetterCombinationOfPhoneNumber {
         res.add("");
         for (int i = 0; i < digits.length(); i++){
             int t = digits.charAt(i) - '0';
-            while( res.peek().length() == i){
+//            int t = Character.getNumericValue(digits.charAt(i));
+            while (res.peek().length() == i){
                 String ss = res.remove(); // return the first
                 for (char c : maps[t].toCharArray()){
                     res.add( ss + c);
@@ -63,5 +68,34 @@ public class Sol17_LetterCombinationOfPhoneNumber {
 
         }
         return res;
+    }
+
+
+    // https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0017.%E7%94%B5%E8%AF%9D%E5%8F%B7%E7%A0%81%E7%9A%84%E5%AD%97%E6%AF%8D%E7%BB%84%E5%90%88.md
+    public List<String> letterComb(String digits) {
+        List<String> res = new ArrayList<>();
+        if (digits.isEmpty()) {
+            return res;
+        }
+        String[] dlmap = {
+                "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"
+        };
+        StringBuilder sb = new StringBuilder();
+        dfs(digits, dlmap, res, sb, 0);
+        return res;
+    }
+
+    private void dfs(String digits, String[] map, List<String> res, StringBuilder sb, int start) {
+        if (start == digits.length()) {
+            res.add(sb.toString());
+            return;
+        }
+        int index = digits.charAt(start) - '0';  // to track and convert the digit in the digits to the index in the map
+        String possibleLetters = map[index];
+        for (int i = 0; i < possibleLetters.length(); i++) {
+            sb.append(possibleLetters.charAt(i));
+            dfs(digits, map, res, sb, start + 1);
+            sb.deleteCharAt(sb.length() - 1);
+        }
     }
 }

@@ -43,7 +43,7 @@ public class Sol445_AddTwoNumbersII {
             if(!s2.empty()) sum += s2.pop();
             //list.val saves  the < 10 digit
             list.val = sum % 10;
-            // head savesthe carrier 进位
+            // head saves the carrier 进位
             ListNode head = new ListNode( sum / 10);
             head.next = list;
             list = head; // current node moving forward

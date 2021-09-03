@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>Sol231_PowerOf2.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Sol231_PowerOf2.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Created by HAU on 2/5/2018.</span>
+ <span class="s2">*/</span>
+<span class="s2">/*Given an integer, write a function to determine if it is a power of two.*/</span>
+<span class="s0">public class </span><span class="s1">Sol231_PowerOf2 {</span>
+    <span class="s2">// bit , O(1)</span>
+    <span class="s0">public static boolean </span><span class="s1">isPowerOfTwo(</span><span class="s0">int </span><span class="s1">n) {</span>
+        <span class="s0">if</span><span class="s1">( n &lt; </span><span class="s3">0</span><span class="s1">) </span><span class="s0">return false</span><span class="s1">;</span>
+        <span class="s0">return </span><span class="s1">(n^(n-</span><span class="s3">1</span><span class="s1">))== </span><span class="s3">0</span><span class="s1">;</span>
+    <span class="s1">}</span>
+    <span class="s2">// log(n)</span>
+    <span class="s0">public static boolean </span><span class="s1">isPowerof2(</span><span class="s0">int </span><span class="s1">n){</span>
+        <span class="s0">if </span><span class="s1">( n &lt;=</span><span class="s3">0</span><span class="s1">) </span><span class="s0">return false</span><span class="s1">;</span>
+        <span class="s0">while</span><span class="s1">( n%</span><span class="s3">2 </span><span class="s1">==</span><span class="s3">0</span><span class="s1">) n /=</span><span class="s3">2</span><span class="s1">;</span>
+        <span class="s0">return </span><span class="s1">n == </span><span class="s3">1</span><span class="s1">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">//One line java solution using bitCount</span>
+    <span class="s0">public static boolean </span><span class="s1">isP2(</span><span class="s0">int </span><span class="s1">n){</span>
+        <span class="s0">return </span><span class="s1">n&gt;</span><span class="s3">0 </span><span class="s1">&amp;&amp; Integer.bitCount(n) == </span><span class="s3">1</span><span class="s1">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>Sol1_TwoSum.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+.s4 { color: #067d17;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Sol1_TwoSum.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg;</span>
+
+<span class="s0">import </span><span class="s1">java.util.Arrays;</span>
+<span class="s0">import </span><span class="s1">java.util.HashMap;</span>
+<span class="s0">import </span><span class="s1">java.util.Map;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Created by HAU on 6/26/2017.</span>
+ <span class="s2">*/</span>
+<span class="s2">/* 
+Given an array of integers, return indices of the two numbers such that they add up to a specific target. 
+ 
+        You may assume that each input would have exactly one solution, and you may not use the same element twice. 
+ 
+        Example: 
+        Given nums = [2, 7, 11, 15], target = 9, 
+ 
+        Because nums[0] + nums[1] = 2 + 7 = 9, 
+        return [0, 1].*/</span>
+<span class="s0">public class </span><span class="s1">Sol1_TwoSum {</span>
+    <span class="s0">public static int</span><span class="s1">[] twoSum(</span><span class="s0">int</span><span class="s1">[] nums, </span><span class="s0">int </span><span class="s1">target) {</span>
+        <span class="s0">if </span><span class="s1">(nums == </span><span class="s0">null </span><span class="s1">|| nums.length &lt; </span><span class="s3">2</span><span class="s1">)</span>
+            <span class="s0">return null</span><span class="s1">;</span>
+        <span class="s0">int</span><span class="s1">[] res = </span><span class="s0">new int</span><span class="s1">[</span><span class="s3">2</span><span class="s1">];</span>
+        <span class="s0">int </span><span class="s1">n = nums.length;</span>
+        <span class="s2">//Arrays.sort(nums); // cannot sort, otherwise indices will be changed</span>
+
+        <span class="s2">// to get O(n) time, need to use Hashmap</span>
+        <span class="s1">HashMap&lt;Integer,Integer&gt; map = </span><span class="s0">new </span><span class="s1">HashMap&lt;&gt;();</span>
+        <span class="s0">for </span><span class="s1">( </span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; n; i++){</span>
+            <span class="s1">map.put(nums[i],i);</span>
+        <span class="s1">}</span>
+        <span class="s0">for </span><span class="s1">( </span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; n; i++){</span>
+            <span class="s0">if</span><span class="s1">(map.containsKey(target - nums[i]) &amp;&amp; map.get(target - nums[i]) != i ){</span>
+                <span class="s1">res[</span><span class="s3">0</span><span class="s1">] = i;</span>
+                <span class="s1">res[</span><span class="s3">1</span><span class="s1">] = map.get(target - nums[i]);</span>
+                <span class="s0">break</span><span class="s1">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">res;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static int</span><span class="s1">[] twoSum_brute(</span><span class="s0">int</span><span class="s1">[] nums, </span><span class="s0">int </span><span class="s1">target){</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; nums.length; i ++){</span>
+            <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">j = i + </span><span class="s3">1</span><span class="s1">; j &lt; nums.length;j++)</span>
+                <span class="s0">if </span><span class="s1">( nums[j] + nums[i] == target){</span>
+                    <span class="s0">return new int</span><span class="s1">[] {i,j};</span>
+                <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">throw new </span><span class="s1">IllegalArgumentException(</span><span class="s4">&quot;no solution&quot;</span><span class="s1">);</span>
+    <span class="s1">}</span>
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+        <span class="s0">int </span><span class="s1">nums[] = {</span><span class="s3">3</span><span class="s1">,</span><span class="s3">2</span><span class="s1">,</span><span class="s3">4</span><span class="s1">};</span>
+        <span class="s0">int </span><span class="s1">target = </span><span class="s3">6</span><span class="s1">;</span>
+        <span class="s0">int </span><span class="s1">res[] = twoSum2(nums,target);</span>
+
+        <span class="s1">System.out.println(Arrays.toString(res));</span>
+        <span class="s2">//System.out.println(Arrays.toString(twoSum_brute(nums,target)));</span>
+    <span class="s1">}</span>
+
+    <span class="s2">// hashmap + 1 loop</span>
+    <span class="s0">public static int</span><span class="s1">[] twoSum2(</span><span class="s0">int</span><span class="s1">[] nums, </span><span class="s0">int </span><span class="s1">target){</span>
+        <span class="s0">int</span><span class="s1">[] res = </span><span class="s0">new int</span><span class="s1">[</span><span class="s3">2</span><span class="s1">];</span>
+        <span class="s1">Map&lt;Integer,Integer&gt; map = </span><span class="s0">new </span><span class="s1">HashMap&lt;&gt;();</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i&lt; nums.length; i++){</span>
+            <span class="s0">if</span><span class="s1">(map.containsKey(target - nums[i])){</span>
+                <span class="s1">res[</span><span class="s3">0</span><span class="s1">] = map.get(target - nums[i]);</span>
+                <span class="s1">res[</span><span class="s3">1</span><span class="s1">] = i ;</span>
+                <span class="s0">return </span><span class="s1">res;</span>
+            <span class="s1">}</span>
+            <span class="s1">map.put(nums[i],i);</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">res;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

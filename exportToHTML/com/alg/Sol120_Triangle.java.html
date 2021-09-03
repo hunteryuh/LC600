@@ -1,0 +1,80 @@
+<html>
+<head>
+<title>Sol120_Triangle.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Sol120_Triangle.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg;</span>
+
+<span class="s0">import </span><span class="s1">java.util.ArrayList;</span>
+<span class="s0">import </span><span class="s1">java.util.Arrays;</span>
+<span class="s0">import </span><span class="s1">java.util.List;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Created by HAU on 7/16/2017.</span>
+ <span class="s2">*/</span>
+<span class="s2">/* 
+Given a triangle, find the minimum path sum from top to bottom. 
+        Each step you may move to adjacent numbers on the row below.*/</span>
+<span class="s0">public class </span><span class="s1">Sol120_Triangle {</span>
+    <span class="s0">public static int </span><span class="s1">minimumTotal_notadjacent(List&lt;List&lt;Integer&gt;&gt; triangle) {</span>
+        <span class="s0">int </span><span class="s1">result = </span><span class="s3">0</span><span class="s1">;</span>
+        <span class="s2">//List&lt;Integer&gt; min = new ArrayList&lt;&gt;();</span>
+        <span class="s0">for</span><span class="s1">(List t: triangle){</span>
+            <span class="s0">int </span><span class="s1">s = minnum(t);</span>
+            <span class="s2">//min.add(s);</span>
+            <span class="s1">result += s;</span>
+        <span class="s1">}</span>
+        <span class="s0">return  </span><span class="s1">result;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private static int </span><span class="s1">minnum(List&lt;Integer&gt; t) {</span>
+        <span class="s0">int </span><span class="s1">m = t.get(</span><span class="s3">0</span><span class="s1">);</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">num : t){</span>
+            <span class="s0">if </span><span class="s1">(num &lt; m){</span>
+                <span class="s1">m = num;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">m;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static int </span><span class="s1">minimumTotal(List&lt;List&lt;Integer&gt;&gt; triangle){</span>
+        <span class="s0">int</span><span class="s1">[] num = </span><span class="s0">new int</span><span class="s1">[triangle.size() + </span><span class="s3">1</span><span class="s1">];</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = triangle.size() - </span><span class="s3">1</span><span class="s1">; i &gt;=</span><span class="s3">0 </span><span class="s1">; i--){</span>
+            <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">j = </span><span class="s3">0</span><span class="s1">; j &lt; triangle.get(i).size() ; j++){</span>
+                <span class="s1">num[j] = triangle.get(i).get(j) + Math.min(num[j],num[j+</span><span class="s3">1</span><span class="s1">]);</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">num[</span><span class="s3">0</span><span class="s1">]; </span><span class="s2">// so smart and concise</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+        <span class="s1">ArrayList&lt;List&lt;Integer&gt;&gt; tri = </span><span class="s0">new </span><span class="s1">ArrayList&lt;List&lt;Integer&gt;&gt;();</span>
+        <span class="s1">List&lt;Integer&gt; l1 = Arrays.asList(</span><span class="s3">2</span><span class="s1">);</span>
+        <span class="s1">List&lt;Integer&gt; l2 = Arrays.asList(</span><span class="s3">3</span><span class="s1">,</span><span class="s3">4</span><span class="s1">);</span>
+        <span class="s1">List&lt;Integer&gt; l3 = Arrays.asList(</span><span class="s3">6</span><span class="s1">,</span><span class="s3">5</span><span class="s1">,</span><span class="s3">7</span><span class="s1">);</span>
+        <span class="s1">List&lt;Integer&gt; l4 = Arrays.asList(</span><span class="s3">4</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,</span><span class="s3">7</span><span class="s1">,</span><span class="s3">3</span><span class="s1">);</span>
+        <span class="s2">//System.out.println(l2);</span>
+        <span class="s1">tri.add(l1);</span>
+        <span class="s1">tri.add(l2);</span>
+        <span class="s1">tri.add(l3);</span>
+        <span class="s1">tri.add(l4);</span>
+        <span class="s1">System.out.println(tri);</span>
+        <span class="s0">int </span><span class="s1">t = minimumTotal(tri);</span>
+        <span class="s1">System.out.println(t);</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

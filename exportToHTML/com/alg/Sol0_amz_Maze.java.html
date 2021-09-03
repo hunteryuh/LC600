@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>Sol0_amz_Maze.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Sol0_amz_Maze.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg;</span>
+
+<span class="s0">import </span><span class="s1">java.util.LinkedList;</span>
+<span class="s0">import </span><span class="s1">java.util.Queue;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Created by HAU on 1/5/2018.</span>
+ <span class="s2">*/</span>
+<span class="s2">/*给个matrix,其中只有一格是9，其他格子是0或1， 
+0表示此路不通，1表示可以走，判断从（0,0) 点开始上下左右移动能否找到这个是9的格子*/</span>
+<span class="s0">public class </span><span class="s1">Sol0_amz_Maze {</span>
+
+    <span class="s0">private final static int</span><span class="s1">[] dx = {-</span><span class="s3">1</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">1</span><span class="s1">};</span>
+    <span class="s0">private final static int</span><span class="s1">[] dy = {</span><span class="s3">0</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,-</span><span class="s3">1</span><span class="s1">,</span><span class="s3">0</span><span class="s1">};</span>
+    <span class="s0">public static int </span><span class="s1">findCheese(</span><span class="s0">int</span><span class="s1">[][] matrix){</span>
+        <span class="s0">if</span><span class="s1">(matrix == </span><span class="s0">null </span><span class="s1">|| matrix.length == </span><span class="s3">0 </span><span class="s1">|| matrix[</span><span class="s3">0</span><span class="s1">].length ==</span><span class="s3">0</span><span class="s1">)</span>
+            <span class="s0">return </span><span class="s3">0</span><span class="s1">;</span>
+        <span class="s0">if </span><span class="s1">(matrix[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">] == </span><span class="s3">9</span><span class="s1">) </span><span class="s0">return </span><span class="s3">1</span><span class="s1">;</span>
+        <span class="s0">int </span><span class="s1">m = matrix.length;</span>
+        <span class="s0">int </span><span class="s1">n = matrix[</span><span class="s3">0</span><span class="s1">].length;</span>
+        <span class="s0">if </span><span class="s1">(matrix[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">] == </span><span class="s3">0</span><span class="s1">) </span><span class="s0">return </span><span class="s3">0</span><span class="s1">;</span>
+        <span class="s0">boolean</span><span class="s1">[][] visited = </span><span class="s0">new boolean</span><span class="s1">[m][n];</span>
+        <span class="s1">Queue&lt;Point&gt; q = </span><span class="s0">new </span><span class="s1">LinkedList&lt;&gt;();</span>
+        <span class="s1">q.add(</span><span class="s0">new </span><span class="s1">Point(</span><span class="s3">0</span><span class="s1">,</span><span class="s3">0</span><span class="s1">));</span>
+        <span class="s0">while </span><span class="s1">(!q.isEmpty()){</span>
+            <span class="s1">Point cur = q.poll();</span>
+            <span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0 </span><span class="s1">; i &lt; </span><span class="s3">4</span><span class="s1">; i++){</span>
+                <span class="s0">int </span><span class="s1">x = cur.x + dx[i];</span>
+                <span class="s0">int </span><span class="s1">y = cur.y + dy[i];</span>
+                <span class="s0">if </span><span class="s1">( x &lt; </span><span class="s3">0 </span><span class="s1">|| y &lt; </span><span class="s3">0 </span><span class="s1">|| x &gt;= m || y &gt;= m || matrix[x][y] == </span><span class="s3">0</span>
+                        <span class="s1">|| visited[x][y] ) </span><span class="s0">continue</span><span class="s1">;</span>
+                <span class="s0">if</span><span class="s1">(matrix[x][y] == </span><span class="s3">9 </span><span class="s1">) </span><span class="s0">return </span><span class="s3">1</span><span class="s1">;</span>
+                <span class="s0">else if</span><span class="s1">( matrix[x][y] == </span><span class="s3">1</span><span class="s1">){</span>
+                    <span class="s1">visited[x][y] = </span><span class="s0">true</span><span class="s1">;</span>
+                    <span class="s1">q.add(</span><span class="s0">new </span><span class="s1">Point(x,y));</span>
+
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s3">0</span><span class="s1">;</span>
+
+    <span class="s1">}</span>
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+        <span class="s0">int</span><span class="s1">[][] matrix = {</span>
+                <span class="s1">{</span><span class="s3">1</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,</span><span class="s3">1</span><span class="s1">},</span>
+                <span class="s1">{</span><span class="s3">1</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,</span><span class="s3">1</span><span class="s1">},</span>
+                <span class="s1">{</span><span class="s3">0</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">0</span><span class="s1">},</span>
+                <span class="s1">{</span><span class="s3">9</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,</span><span class="s3">0</span><span class="s1">}</span>
+        <span class="s1">};</span>
+        <span class="s1">System.out.println(findCheese(matrix));</span>
+    <span class="s1">}</span>
+    <span class="s0">static class </span><span class="s1">Point {</span>
+        <span class="s0">int </span><span class="s1">x;</span>
+        <span class="s0">int </span><span class="s1">y;</span>
+
+        <span class="s0">public </span><span class="s1">Point(</span><span class="s0">int </span><span class="s1">x, </span><span class="s0">int </span><span class="s1">y) {</span>
+            <span class="s0">this</span><span class="s1">.x = x;</span>
+            <span class="s0">this</span><span class="s1">.y = y;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

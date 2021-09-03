@@ -1,0 +1,117 @@
+<html>
+<head>
+<title>Sol61RotateList.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+.s4 { color: #067d17;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Sol61RotateList.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Created by HAU on 5/28/2017.</span>
+ <span class="s2">*/</span>
+
+<span class="s2">/*Given a list, rotate the list to the right by k places, where k is non-negative. 
+ 
+        For example: 
+        Given 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL and k = 2, 
+        return 4-&gt;5-&gt;1-&gt;2-&gt;3-&gt;NULL.*/</span>
+<span class="s0">public class </span><span class="s1">Sol61RotateList {</span>
+    <span class="s0">public static class </span><span class="s1">ListNode {</span>
+        <span class="s0">int </span><span class="s1">val;</span>
+        <span class="s1">ListNode next;</span>
+
+        <span class="s1">ListNode(</span><span class="s0">int </span><span class="s1">x) { val = x; }</span>
+    <span class="s1">}</span>
+    <span class="s0">public static </span><span class="s1">ListNode rotateRight(ListNode head, </span><span class="s0">int </span><span class="s1">k) {</span>
+        <span class="s0">if </span><span class="s1">(head == </span><span class="s0">null</span><span class="s1">) </span><span class="s0">return null</span><span class="s1">;</span>
+        <span class="s0">int </span><span class="s1">count = </span><span class="s3">1</span><span class="s1">;</span>
+        <span class="s1">ListNode last = head;</span>
+        <span class="s1">ListNode pre;</span>
+        <span class="s1">ListNode newhead = head;</span>
+        <span class="s0">while</span><span class="s1">(last.next!=</span><span class="s0">null</span><span class="s1">){</span>
+            <span class="s1">count++;</span>
+            <span class="s1">last = last.next;</span>
+
+        <span class="s1">}</span>
+        <span class="s0">if </span><span class="s1">(count==</span><span class="s3">1 </span><span class="s1">|| k==</span><span class="s3">0</span><span class="s1">) </span><span class="s0">return </span><span class="s1">head;</span>
+        <span class="s0">if </span><span class="s1">(k&gt;= count ) k %= count;</span>
+        <span class="s1">last.next = head;</span>
+        <span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s3">0</span><span class="s1">;i&lt;count-k;i++){</span>
+            <span class="s1">pre = newhead;</span>
+            <span class="s1">newhead = newhead.next;</span>
+            <span class="s0">if</span><span class="s1">(i==count-k-</span><span class="s3">1</span><span class="s1">) pre.next = </span><span class="s0">null</span><span class="s1">;</span>
+
+
+        <span class="s1">}</span>
+
+        <span class="s0">return </span><span class="s1">newhead;</span>
+
+
+    <span class="s1">}</span>
+        <span class="s2">// a reference below</span>
+<span class="s2">/*    if (head == null) 
+            return head; 
+ 
+    ListNode copyHead = head; 
+ 
+    int len = 1; 
+    while (copyHead.next != null) { 
+        copyHead = copyHead.next; 
+        len++; 
+    } 
+ 
+    copyHead.next = head; 
+ 
+    for (int i = len - k % len; i &gt; 1; i--) 
+    head = head.next; 
+ 
+    copyHead = head.next; 
+    head.next = null; 
+ 
+    return copyHead; 
+}*/</span>
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+
+        <span class="s1">ListNode h3 = </span><span class="s0">new </span><span class="s1">ListNode(</span><span class="s3">4</span><span class="s1">);</span>
+        <span class="s1">h3.next = </span><span class="s0">new </span><span class="s1">ListNode(</span><span class="s3">5</span><span class="s1">);</span>
+        <span class="s1">h3.next.next = </span><span class="s0">new </span><span class="s1">ListNode(</span><span class="s3">1</span><span class="s1">);</span>
+        <span class="s1">h3.next.next.next = </span><span class="s0">new </span><span class="s1">ListNode(</span><span class="s3">2</span><span class="s1">);</span>
+        <span class="s1">h3.next.next.next.next = </span><span class="s0">new </span><span class="s1">ListNode(</span><span class="s3">3</span><span class="s1">);</span>
+
+        <span class="s0">int </span><span class="s1">k =</span><span class="s3">2</span><span class="s1">;</span>
+        <span class="s1">ListNode newh3 = rotateRight(h3,k);</span>
+        <span class="s1">printList(newh3);</span>
+        <span class="s1">System.out.println(</span><span class="s4">&quot;&quot;</span><span class="s1">);</span>
+        <span class="s1">ListNode h1 = </span><span class="s0">new </span><span class="s1">ListNode(</span><span class="s3">9</span><span class="s1">);</span>
+        <span class="s1">printList(rotateRight(h1,</span><span class="s3">1</span><span class="s1">));</span>
+
+        <span class="s1">System.out.println(</span><span class="s4">&quot;&quot;</span><span class="s1">);</span>
+
+        <span class="s1">ListNode h2 = </span><span class="s0">new </span><span class="s1">ListNode(</span><span class="s3">1</span><span class="s1">);</span>
+        <span class="s1">h2.next = </span><span class="s0">new </span><span class="s1">ListNode(</span><span class="s3">2</span><span class="s1">);</span>
+        <span class="s1">printList(rotateRight(h2,</span><span class="s3">2</span><span class="s1">));</span>
+        <span class="s2">//printList(rotateRight(h2,3));</span>
+
+    <span class="s1">}</span>
+    <span class="s0">public static void </span><span class="s1">printList(ListNode node) {</span>
+        <span class="s0">while </span><span class="s1">(node != </span><span class="s0">null</span><span class="s1">) {</span>
+            <span class="s1">System.out.print(node.val + </span><span class="s4">&quot;-&gt;&quot;</span><span class="s1">);</span>
+            <span class="s1">node = node.next;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

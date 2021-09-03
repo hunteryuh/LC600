@@ -25,7 +25,7 @@ public class Sol56_MergeIntervals {
 
         for ( int i = 1; i < intervals.size(); i++){
             Interval cur = intervals.get(i);
-            if ( cur.start <= last.end){
+            if (cur.start <= last.end){
                 last.end = Math.max(last.end, cur.end);
             }else{
                 res.add(last);
@@ -56,29 +56,30 @@ public class Sol56_MergeIntervals {
         list.add(a2);
         list.add(a3);
         list.add(a4);
-        List<Interval> res = merge(list);
-//        for ( Interval i: res){
-//            System.out.println(i.start + ", "+ i.end);
-//        }
+        List<Interval> res = mergeAdv(list);
+        for ( Interval i: res){
+            System.out.println(i.start + ", "+ i.end);
+        }
 
 
-        int[][] intervals = {{1,3}, {2,6}, {8,10}, {15,18}};
-        int[][] result = mergeIntervals(intervals);
-        System.out.println(Arrays.deepToString(result));
+//        int[][] intervals = {{1,3}, {2,6}, {8,10}, {15,18}};
+//        int[][] result = mergeAdv(intervals);
+//        System.out.println(Arrays.deepToString(res));
+//        System.out.println(res.toString());
     }
 
-    //advanced style
+    //advanced style  https://www.jiuzhang.com/problem/merge-intervals/
     public static List<Interval> mergeAdv(List<Interval> intervals){
         List<Interval> ans = new ArrayList<>();
         intervals.sort(Comparator.comparing(i -> i.start));//lambda 匿名函数：输入i  返回i.start
 
         Interval last = null;
         for (Interval item: intervals){
-            if( last  == null || last.end < item.start){
-                ans.add(last);
+            if (last  == null || last.end < item.start){
+                ans.add(item);
                 last = item;
             }else {
-                last.end = Math.max(last.end, item.end);
+                last.end = Math.max(last.end, item.end); // Modify the element already in list
             }
         }
 
@@ -136,6 +137,11 @@ Explanation: Intervals [1,4] and [4,5] are considered overlapping.
         for(int[] avail: availability) {
             System.out.println(Arrays.toString(avail));
         }
+//        int[][] res = new int[list.size()][2];
+//        for (int i =0; i < list.size(); i++) {
+//            res[i] = list.get(i);
+//        }
+//        return res;
         return result.toArray(new int[result.size()][]);
 
     }

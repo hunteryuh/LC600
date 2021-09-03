@@ -1,0 +1,205 @@
+<html>
+<head>
+<title>Sol15_3Sum.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Sol15_3Sum.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Created by HAU on 7/4/2017.</span>
+ <span class="s2">*/</span>
+
+<span class="s0">import </span><span class="s1">java.util.ArrayList;</span>
+<span class="s0">import </span><span class="s1">java.util.Arrays;</span>
+<span class="s0">import </span><span class="s1">java.util.Collection;</span>
+<span class="s0">import </span><span class="s1">java.util.Collections;</span>
+<span class="s0">import </span><span class="s1">java.util.Comparator;</span>
+<span class="s0">import </span><span class="s1">java.util.HashMap;</span>
+<span class="s0">import </span><span class="s1">java.util.List;</span>
+<span class="s0">import </span><span class="s1">java.util.Map;</span>
+
+<span class="s2">/* 
+Given an array S of n integers, are there elements a, b, c in S such that 
+        a + b + c = 0? Find all unique triplets in the array which gives the sum of zero. 
+*/</span>
+<span class="s0">public class </span><span class="s1">Sol15_3Sum {</span>
+    <span class="s0">public static  </span><span class="s1">List&lt;List&lt;Integer&gt;&gt; threeSum(</span><span class="s0">int</span><span class="s1">[] nums) {</span>
+        <span class="s0">int </span><span class="s1">n = nums.length;</span>
+        <span class="s1">List&lt;List&lt;Integer&gt;&gt; list = </span><span class="s0">new </span><span class="s1">ArrayList&lt;List&lt;Integer&gt;&gt;();</span>
+        <span class="s1">Arrays.sort(nums);</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; n - </span><span class="s3">2</span><span class="s1">; i++){</span>
+            <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">j = i + </span><span class="s3">1</span><span class="s1">; j &lt; n - </span><span class="s3">1</span><span class="s1">; j++) {</span>
+                <span class="s2">//Arrays.sort(nums);</span>
+                <span class="s0">int </span><span class="s1">k = Arrays.binarySearch(nums,j + </span><span class="s3">1</span><span class="s1">, n, -nums[i] - nums[j]);</span>
+                <span class="s0">if </span><span class="s1">( k &gt; j){</span>
+                    <span class="s1">List&lt;Integer&gt; intlist = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;();</span>
+                    <span class="s1">intlist.add(nums[i]);</span>
+                    <span class="s1">intlist.add(nums[j]);</span>
+                    <span class="s1">intlist.add(nums[k]);</span>
+                    <span class="s0">if </span><span class="s1">(!list.contains(intlist)) {</span>
+                        <span class="s1">list.add(intlist);</span>
+                    <span class="s1">}</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">list;  </span><span class="s2">// time limit exceeded...</span>
+    <span class="s1">}</span>
+    <span class="s0">public static  </span><span class="s1">List&lt;List&lt;Integer&gt;&gt; ThreeSum_timeexceeded(</span><span class="s0">int</span><span class="s1">[] nums) {</span>
+        <span class="s0">int </span><span class="s1">n = nums.length;</span>
+        <span class="s1">List&lt;List&lt;Integer&gt;&gt; list = </span><span class="s0">new </span><span class="s1">ArrayList&lt;List&lt;Integer&gt;&gt;();</span>
+        <span class="s1">Arrays.sort(nums);</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; n - </span><span class="s3">2</span><span class="s1">; i++){</span>
+
+                <span class="s0">int </span><span class="s1">j = i + </span><span class="s3">1</span><span class="s1">;</span>
+                <span class="s0">int </span><span class="s1">k = n - </span><span class="s3">1</span><span class="s1">;</span>
+                <span class="s0">int </span><span class="s1">sum = </span><span class="s3">0 </span><span class="s1">- nums[i];</span>
+                <span class="s0">while </span><span class="s1">( j &lt; k) {</span>
+
+                    <span class="s0">if </span><span class="s1">( nums[j] + nums[k] == sum) {</span>
+                        <span class="s0">if </span><span class="s1">(!list.contains(Arrays.asList(nums[i], nums[j], nums[k]))) {</span>
+                            <span class="s1">list.add(Arrays.asList(nums[i], nums[j], nums[k]));  </span><span class="s2">// check if the triplet already exist</span>
+
+                        <span class="s1">}</span>
+                        <span class="s1">j++;</span>
+                        <span class="s1">k--;</span>
+                    <span class="s1">}</span><span class="s0">else if </span><span class="s1">( nums[j] + nums [k] &lt; sum){</span>
+                        <span class="s1">j++;</span>
+                    <span class="s1">}</span><span class="s0">else if </span><span class="s1">( nums[j] + nums[k] &gt; sum ){</span>
+                        <span class="s1">k--;</span>
+                    <span class="s1">}</span>
+                <span class="s1">}</span>
+
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">list;  </span><span class="s2">//Submission Result: Time Limit Exceeded</span>
+    <span class="s1">}</span>
+    <span class="s0">public static  </span><span class="s1">List&lt;List&lt;Integer&gt;&gt; ThreeSum(</span><span class="s0">int</span><span class="s1">[] nums) {</span>
+        <span class="s2">//O(n^2) time complexity</span>
+        <span class="s2">//外层for 执行n 次，里面俩层循一共也只有n 次，因为lo 和 hi 是单调变化的，一个从头往后，一个从后往前</span>
+        <span class="s0">int </span><span class="s1">n = nums.length;</span>
+        <span class="s1">List&lt;List&lt;Integer&gt;&gt; list = </span><span class="s0">new </span><span class="s1">ArrayList&lt;List&lt;Integer&gt;&gt;();</span>
+        <span class="s1">Arrays.sort(nums);</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; n - </span><span class="s3">2</span><span class="s1">; i++){</span>
+            <span class="s0">if </span><span class="s1">( i &gt; </span><span class="s3">0 </span><span class="s1">&amp;&amp; nums[i - </span><span class="s3">1</span><span class="s1">] == nums[i]){</span>
+                <span class="s0">continue</span><span class="s1">;</span>
+            <span class="s1">}</span>
+            <span class="s0">int </span><span class="s1">j = i + </span><span class="s3">1</span><span class="s1">;</span>
+            <span class="s0">int </span><span class="s1">k = n - </span><span class="s3">1</span><span class="s1">;</span>
+            <span class="s0">int </span><span class="s1">sum = </span><span class="s3">0 </span><span class="s1">- nums[i];</span>
+            <span class="s0">while </span><span class="s1">( j &lt; k) {</span>
+
+                <span class="s0">if </span><span class="s1">(  nums[j] + nums[k] == sum) {</span>
+                    <span class="s1">list.add(Arrays.asList(nums[i], nums[j], nums[k]));</span>
+                    <span class="s0">while </span><span class="s1">( j &lt; k &amp;&amp; nums[j] == nums[j+</span><span class="s3">1</span><span class="s1">]) j++;  </span><span class="s2">// skip the same values</span>
+                    <span class="s0">while </span><span class="s1">( j &lt; k &amp;&amp; nums[k] == nums[k-</span><span class="s3">1</span><span class="s1">]) k--;</span>
+
+                    <span class="s1">j++;</span>
+                    <span class="s1">k--;</span>
+                <span class="s1">}</span><span class="s0">else if </span><span class="s1">( nums[j] + nums[k] &lt; sum){</span>
+                    <span class="s1">j++;</span>
+                <span class="s1">}</span><span class="s0">else if </span><span class="s1">( nums[j] + nums[k] &gt; sum ){</span>
+                    <span class="s1">k--;</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">list;  </span><span class="s2">//passed</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+<span class="s2">//        int[] nums = { -1, 0 ,1 , 2, -1, -4};</span>
+<span class="s2">//        List&lt;List&lt;Integer&gt;&gt; list = threeSum(nums);</span>
+<span class="s2">//        System.out.println(list.toString());</span>
+
+<span class="s2">//        int[] p1 = { -1, 0 ,1 , 2, -1, -4};</span>
+<span class="s2">//        List&lt;List&lt;Integer&gt;&gt; list1 = ThreeSum(p1);</span>
+<span class="s2">//        System.out.println(list1.toString());</span>
+<span class="s2">//        System.out.println(list2.toString());</span>
+        <span class="s0">int</span><span class="s1">[] n = {</span><span class="s3">1</span><span class="s1">, </span><span class="s3">0</span><span class="s1">, -</span><span class="s3">1</span><span class="s1">,</span><span class="s3">2</span><span class="s1">,-</span><span class="s3">3</span><span class="s1">,</span><span class="s3">4</span><span class="s1">,</span><span class="s3">5</span><span class="s1">};</span>
+        <span class="s1">Sol15_3Sum s = </span><span class="s0">new </span><span class="s1">Sol15_3Sum();</span>
+        <span class="s1">List&lt;List&lt;Integer&gt;&gt; res = s.ThreeSumsquare(n);</span>
+        <span class="s1">System.out.println(res);</span>
+        <span class="s1">System.out.println(s.isTriplet(n));</span>
+
+        <span class="s0">int</span><span class="s1">[] p3 = {-</span><span class="s3">5</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,</span><span class="s3">4</span><span class="s1">,</span><span class="s3">4</span><span class="s1">,</span><span class="s3">4</span><span class="s1">};</span>
+        <span class="s1">List&lt;List&lt;Integer&gt;&gt; list3 = ThreeSum(p3);</span>
+        <span class="s1">System.out.println(list3.toString());</span>
+        <span class="s0">int</span><span class="s1">[] num2 = { </span><span class="s3">0</span><span class="s1">, </span><span class="s3">0</span><span class="s1">, </span><span class="s3">0</span><span class="s1">};</span>
+        <span class="s1">List&lt;List&lt;Integer&gt;&gt; listnum2 = ThreeSum(num2);</span>
+        <span class="s1">System.out.println(listnum2.toString());</span>
+    <span class="s1">}</span>
+
+    <span class="s2">// a*a + b* b = c*c  for unsorted integer array</span>
+    <span class="s0">public </span><span class="s1">List&lt;List&lt;Integer&gt;&gt; ThreeSumsquare(</span><span class="s0">int</span><span class="s1">[] nums) {</span>
+        <span class="s0">int </span><span class="s1">n = nums.length;</span>
+        <span class="s1">List&lt;List&lt;Integer&gt;&gt; res = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;();</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i&lt; n -</span><span class="s3">2</span><span class="s1">; i++) {</span>
+            <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">j = i + </span><span class="s3">1</span><span class="s1">; j&lt; n-</span><span class="s3">1</span><span class="s1">; j++) {</span>
+                <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">k = j + </span><span class="s3">1</span><span class="s1">; k &lt; n; k++) {</span>
+                    <span class="s0">if </span><span class="s1">(nums[i]*nums[i] + nums[j]*nums[j] == nums[k]*nums[k]) {</span>
+                        <span class="s1">res.add(Arrays.asList(nums[i], nums[j], nums[k]));</span>
+                    <span class="s1">}</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">res;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">// https://www.educative.io/edpresso/how-to-find-pythagorean-triplets-in-an-array</span>
+    <span class="s0">public boolean </span><span class="s1">isTriplet(</span><span class="s0">int</span><span class="s1">[] nums) {</span>
+        <span class="s0">int </span><span class="s1">n = nums.length;</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i&lt; n; i++) {</span>
+            <span class="s1">nums[i] = nums[i] * nums[i];</span>
+        <span class="s1">}</span>
+        <span class="s1">Arrays.sort(nums);</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = n-</span><span class="s3">1</span><span class="s1">; i &gt;= </span><span class="s3">2</span><span class="s1">; i--) {</span>
+            <span class="s0">int </span><span class="s1">j = </span><span class="s3">0</span><span class="s1">;</span>
+            <span class="s0">int </span><span class="s1">k = i - </span><span class="s3">1</span><span class="s1">;</span>
+            <span class="s0">while </span><span class="s1">(j &lt; k) {</span>
+                <span class="s0">if </span><span class="s1">(nums[j] + nums[k] == nums[i]) {</span>
+                    <span class="s0">return true</span><span class="s1">;</span>
+                <span class="s1">}</span>
+                <span class="s0">if </span><span class="s1">(nums[j] + nums[k] &lt; nums[i]) {</span>
+                    <span class="s1">j++;</span>
+                <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                    <span class="s1">k--;</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return false</span><span class="s1">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public boolean </span><span class="s1">isTriplet2(</span><span class="s0">int</span><span class="s1">[] nums) {</span>
+        <span class="s0">int </span><span class="s1">n = nums.length;</span>
+        <span class="s1">Map&lt;Integer, Integer&gt; map = </span><span class="s0">new </span><span class="s1">HashMap&lt;&gt;();</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i: nums) {</span>
+            <span class="s1">map.put(i, map.getOrDefault(i, </span><span class="s3">0</span><span class="s1">) + </span><span class="s3">1</span><span class="s1">);</span>
+        <span class="s1">}</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; n - </span><span class="s3">1</span><span class="s1">; i++) {</span>
+            <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">j = i + </span><span class="s3">1</span><span class="s1">; j &lt; n; j++) {</span>
+                <span class="s0">int </span><span class="s1">p = (nums[i] * nums[i] + nums[j] * nums[j]);</span>
+                <span class="s0">int </span><span class="s1">q = (</span><span class="s0">int</span><span class="s1">) Math.sqrt(p);</span>
+                <span class="s0">if </span><span class="s1">(q * q == p &amp;&amp; (map.containsKey(q) || map.containsKey(-q))) {</span>
+                    <span class="s0">return true</span><span class="s1">;</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return false</span><span class="s1">;</span>
+    <span class="s1">}</span>
+
+
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

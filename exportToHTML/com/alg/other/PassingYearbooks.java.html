@@ -1,0 +1,115 @@
+<html>
+<head>
+<title>PassingYearbooks.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+PassingYearbooks.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg.other;</span>
+
+<span class="s0">import </span><span class="s1">java.util.Arrays;</span>
+<span class="s0">import </span><span class="s1">java.util.HashSet;</span>
+<span class="s0">import </span><span class="s1">java.util.Set;</span>
+
+<span class="s2">/* 
+This question is from Facebook recruiting portal. 
+ 
+There are n students, numbered from 1 to n, each with their own yearbook. They would like to pass their yearbooks around and get them signed by other students. 
+You're given a list of n integers arr[1..n], which is guaranteed to be a permutation of 1..n (in other words, it includes the integers from 1 to n exactly once each, in some order). The meaning of this list is described below. 
+Initially, each student is holding their own yearbook. The students will then repeat the following two steps each minute: Each student i will first sign the yearbook that they're currently holding (which may either belong to themselves or to another student), and then they'll pass it to student arr[i]. It's possible that arr[i] = i for any given i, in which case student i will pass their yearbook back to themselves. Once a student has received their own yearbook back, they will hold on to it and no longer participate in the passing process. 
+It's guaranteed that, for any possible valid input, each student will eventually receive their own yearbook back and will never end up holding more than one yearbook at a time. 
+You must compute a list of n integers output, whose ith element is equal to the number of signatures that will be present in student i's yearbook once they receive it back.* 
+ 
+ 
+Signature 
+int[] findSignatureCounts(int[] arr) 
+Input 
+n is in the range [1, 100,000]. 
+Each value arr[i] is in the range [1, n], and all values in arr[i] are distinct. 
+Output 
+Return a list of n integers output, as described above. 
+ 
+Example 1 
+n = 2 
+arr = [2, 1] 
+output = [2, 2] 
+The first student will sign their own yearbook and pass it to the second, who will also sign it and pass it back to the first student, resulting in 2 signatures. Meanwhile, the second student's yearbook will similarly be signed both by themselves and then by the first student. 
+ 
+Example 2 
+n = 2 
+arr = [1, 2] 
+output = [1, 1] 
+Each student will simply pass their yearbook back to themselves, resulting in 1 signature each. 
+ 
+https://leetcode.com/discuss/interview-question/614096/facebook-interview-preparation-question-passing-yearbooks 
+ */</span>
+<span class="s0">public class </span><span class="s1">PassingYearbooks {</span>
+    <span class="s0">public int</span><span class="s1">[] findSignatureCounts(</span><span class="s0">int</span><span class="s1">[] arr) {</span>
+        <span class="s0">int</span><span class="s1">[] res = </span><span class="s0">new int</span><span class="s1">[arr.length];</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; arr.length; i++) {</span>
+            <span class="s0">if </span><span class="s1">(res[i] == </span><span class="s3">0</span><span class="s1">) {</span>
+                <span class="s1">Set&lt;Integer&gt; set = </span><span class="s0">new </span><span class="s1">HashSet&lt;&gt;();</span>
+                <span class="s0">int </span><span class="s1">cur = i;</span>
+                <span class="s0">while </span><span class="s1">(!set.contains(cur)) {</span>
+                    <span class="s1">set.add(cur);</span>
+                    <span class="s1">cur = arr[cur] - </span><span class="s3">1</span><span class="s1">;</span>
+                <span class="s1">}</span>
+                <span class="s0">for </span><span class="s1">(Integer a : set) {</span>
+                    <span class="s1">res[a] = set.size();</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">res;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public int</span><span class="s1">[] findSignatureCounts2(</span><span class="s0">int</span><span class="s1">[] arr) {</span>
+        <span class="s0">int</span><span class="s1">[] res = </span><span class="s0">new int</span><span class="s1">[arr.length];</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">1</span><span class="s1">; i &lt;= arr.length; i++) {</span>
+            <span class="s0">if </span><span class="s1">(res[i - </span><span class="s3">1</span><span class="s1">] == </span><span class="s3">0</span><span class="s1">) {</span>
+                <span class="s1">Set&lt;Integer&gt; set = </span><span class="s0">new </span><span class="s1">HashSet&lt;&gt;();</span>
+                <span class="s0">int </span><span class="s1">cur = i;</span>
+                <span class="s0">while </span><span class="s1">(!set.contains(cur)) {</span>
+                    <span class="s1">set.add(cur);</span>
+                    <span class="s1">cur = arr[cur - </span><span class="s3">1</span><span class="s1">];</span>
+                <span class="s1">}</span>
+                <span class="s1">set.forEach(a -&gt; res[a - </span><span class="s3">1</span><span class="s1">] = set.size());</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">res;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+        <span class="s1">PassingYearbooks p = </span><span class="s0">new </span><span class="s1">PassingYearbooks();</span>
+        <span class="s0">int</span><span class="s1">[] input = {</span><span class="s3">2</span><span class="s1">,</span><span class="s3">1</span><span class="s1">};</span>
+        <span class="s0">int</span><span class="s1">[] r = p.findSignatureCounts2(input);</span>
+        <span class="s0">int</span><span class="s1">[] r2 = p.findSigCount(input);</span>
+        <span class="s1">System.out.println(Arrays.toString(r));</span>
+        <span class="s1">System.out.println(Arrays.toString(r2));</span>
+    <span class="s1">}</span>
+
+    <span class="s2">// https://leetcode.com/discuss/interview-question/614096/facebook-interview-preparation-question-passing-yearbooks</span>
+    <span class="s0">public int</span><span class="s1">[] findSigCount(</span><span class="s0">int</span><span class="s1">[] arr) {</span>
+        <span class="s0">int</span><span class="s1">[] res = </span><span class="s0">new int</span><span class="s1">[arr.length];</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">1</span><span class="s1">; i &lt;= res.length; i++) {</span>
+            <span class="s0">int </span><span class="s1">signer = i;</span>
+            <span class="s0">do </span><span class="s1">{</span>
+                <span class="s1">res[i - </span><span class="s3">1</span><span class="s1">]++;</span>
+                <span class="s1">signer = arr[signer - </span><span class="s3">1</span><span class="s1">];</span>
+            <span class="s1">} </span><span class="s0">while </span><span class="s1">(signer != i);</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">res;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

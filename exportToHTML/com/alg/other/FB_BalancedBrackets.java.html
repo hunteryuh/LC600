@@ -1,0 +1,78 @@
+<html>
+<head>
+<title>FB_BalancedBrackets.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #067d17;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+FB_BalancedBrackets.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg.other;</span>
+
+<span class="s0">import </span><span class="s1">java.util.Stack;</span>
+
+<span class="s2">/* 
+A bracket is considered to be any one of the following characters: (, ), {, }, [, or ]. 
+We consider two brackets to be matching if the first element is an open-bracket, e.g., (, {, or [, and the second bracket is a close-bracket of the same type, e.g., ( and ), [ and ], and { and } are the only pairs of matching brackets. 
+Furthermore, a sequence of brackets is said to be balanced if the following conditions are met: 
+The sequence is empty, or 
+The sequence is composed of two, non-empty, sequences both of which are balanced, or 
+The first and last brackets of the sequence are matching, and the portion of the sequence without the first and last elements is balanced. 
+You are given a string of brackets. Your task is to determine whether each sequence of brackets is balanced. If a string is balanced, return true, otherwise, return false 
+Signature 
+bool isBalanced(String s) 
+Input 
+String s with length between 1 and 1000 
+Output 
+A boolean representing if the string is balanced or not 
+Example 1 
+s = {[()]} 
+output: true 
+Example 2 
+s = {}() 
+output: true 
+Example 3 
+s = {(}) 
+output: false 
+Example 4 
+s = ) 
+output: false 
+ 
+ */</span>
+<span class="s0">public class </span><span class="s1">FB_BalancedBrackets {</span>
+    <span class="s0">public boolean </span><span class="s1">isBalanced(String s) {</span>
+        <span class="s0">if </span><span class="s1">(s.isEmpty()) </span><span class="s0">return true</span><span class="s1">;</span>
+        <span class="s1">Stack&lt;Character&gt; stack = </span><span class="s0">new </span><span class="s1">Stack&lt;&gt;();</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">char </span><span class="s1">c : s.toCharArray()) {</span>
+            <span class="s0">if </span><span class="s1">(c == </span><span class="s3">'{' </span><span class="s1">|| c == </span><span class="s3">'(' </span><span class="s1">|| c == </span><span class="s3">'['</span><span class="s1">) {</span>
+                <span class="s1">stack.push(c);</span>
+            <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                <span class="s0">if </span><span class="s1">(!stack.isEmpty() &amp;&amp; isMatching(stack.peek(), c)) {</span>
+                    <span class="s1">stack.pop();</span>
+                <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                    <span class="s0">return false</span><span class="s1">;</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">stack.isEmpty();</span>
+
+    <span class="s1">}</span>
+
+    <span class="s0">private boolean </span><span class="s1">isMatching(Character c1, Character c2) {</span>
+        <span class="s0">if </span><span class="s1">(c1 == </span><span class="s3">'(' </span><span class="s1">&amp;&amp; c2 == </span><span class="s3">')'</span><span class="s1">) </span><span class="s0">return true</span><span class="s1">;</span>
+        <span class="s0">if </span><span class="s1">(c1 == </span><span class="s3">'{' </span><span class="s1">&amp;&amp; c2 == </span><span class="s3">'}'</span><span class="s1">) </span><span class="s0">return true</span><span class="s1">;</span>
+        <span class="s0">if </span><span class="s1">(c1 == </span><span class="s3">'[' </span><span class="s1">&amp;&amp; c2 == </span><span class="s3">']'</span><span class="s1">) </span><span class="s0">return true</span><span class="s1">;</span>
+        <span class="s0">return false</span><span class="s1">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

@@ -4,7 +4,11 @@ package com.alg;
  * Created by HAU on 6/12/2017.
  */
 /*Given s = "the sky is blue",
-        return "blue is sky the".*/
+        return "blue is sky the".
+
+        https://leetcode.com/problems/reverse-words-in-a-string-iii/
+
+ */
 public class Sol557_ReverseWordsInAStringIII {
 
 
@@ -42,7 +46,34 @@ public class Sol557_ReverseWordsInAStringIII {
     public static void main(String[] args) {
         String s = "how old are you";
 
-        System.out.println(reverseWds(s));
+//        System.out.println(reverseWds(s));
+        char[] out = s.toCharArray();
+        reverseString(out);
+        System.out.println(out);
+    }
+
+    public static void reverseString(char[] s) {
+        int start = 0;
+
+
+        reverseArray(s, 0, s.length - 1);
+        for(int i = 0; i < s.length; i++) {
+            if (s[i] == ' ') {
+                reverseArray(s, start, i - 1);
+                start = i + 1;
+            }
+        }
+        reverseArray(s, start, s.length - 1);
+    }
+
+    private static void reverseArray(char[] s, int start, int end) {
+        while (start < end) {
+            char temp = s[start];
+            s[start] = s[end];
+            s[end] = temp;
+            start++;
+            end--;
+        }
     }
 
 

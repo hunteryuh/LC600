@@ -94,7 +94,5 @@ public class Sol78_subsets {
         assert ref.equals(res);
         System.out.println(ref);
         System.out.println(res);
-
-
     }
 }

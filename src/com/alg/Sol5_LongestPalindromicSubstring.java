@@ -16,7 +16,7 @@ public class Sol5_LongestPalindromicSubstring {
             length = Math.max(helper(s,i,i),length);
             length = Math.max(helper(s,i,i+1),length);
             if ( length > end - start +1) {  // if found longer length, update start and end
-                start = i - (length - 1) / 2;
+                start = i - (length - 1) / 2;  //
                 end = i + length / 2;
             }
         }
@@ -28,7 +28,7 @@ public class Sol5_LongestPalindromicSubstring {
             i--;
             j++;
         }
-        return j-i-1;
+        return j-i-1;  // i and j are out of palindrome range, so minus 1
     }
 
     public static void main(String[] args) {
@@ -60,5 +60,35 @@ public class Sol5_LongestPalindromicSubstring {
             }
         }
         return longest;
+    }
+
+    // dp https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0005.%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2.md
+    public String longestPalin(String s) {
+        int maxL = 0;
+        int start = 0;
+        int end = 0;
+        int n = s.length();
+        boolean[][] dp = new boolean[n][n];
+        for (int i = n - 1; i >=0; i--) {
+            for (int j = i; j < n; j++) {
+                if (s.charAt(i) == s.charAt(j)) {
+                    if (j - i <= 1) {
+                        dp[i][j] = true;
+                    } else {
+                        if (dp[i+1][j-1]) {
+                            dp[i][j] = true;
+                        }
+                    }
+                    if (dp[i][j]) {
+                        if (j - i + 1 > maxL) {
+                            start = i;
+                            end = j;
+                            maxL = j - i + 1;
+                        }
+                    }
+                }
+            }
+        }
+        return s.substring(start, end + 1);
     }
 }

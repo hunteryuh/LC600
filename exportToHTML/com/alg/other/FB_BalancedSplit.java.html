@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>FB_BalancedSplit.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+FB_BalancedSplit.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg.other;</span>
+
+<span class="s0">import </span><span class="s1">java.util.Arrays;</span>
+
+<span class="s2">/* 
+Given an array of integers (which may include repeated integers), determine if there's a way to split the array into two subsequences A and B such that the sum of the integers in both arrays is the same, and all of the integers in A are strictly smaller than all of the integers in B. 
+Note: Strictly smaller denotes that every integer in A must be less than, and not equal to, every integer in B. 
+Signature 
+bool balancedSplitExists(int[] arr) 
+Input 
+All integers in array are in the range [0, 1,000,000,000]. 
+Output 
+Return true if such a split is possible, and false otherwise. 
+Example 1 
+arr = [1, 5, 7, 1] 
+output = true 
+We can split the array into A = [1, 1, 5] and B = [7]. 
+Example 2 
+arr = [12, 7, 6, 7, 6] 
+output = false 
+We can't split the array into A = [6, 6, 7] and B = [7, 12] since this doesn't satisfy the requirement that all integers in A are smaller than all integers in B. 
+ */</span>
+<span class="s0">public class </span><span class="s1">FB_BalancedSplit {</span>
+    <span class="s0">public boolean </span><span class="s1">balancedSplit(</span><span class="s0">int</span><span class="s1">[] arr) {</span>
+        <span class="s1">Arrays.sort(arr);</span>
+        <span class="s0">int </span><span class="s1">splitSum = </span><span class="s3">0</span><span class="s1">;</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i&lt; arr.length - </span><span class="s3">1</span><span class="s1">; i++) {</span>
+            <span class="s1">splitSum += arr[i];</span>
+        <span class="s1">}</span>
+
+        <span class="s0">int </span><span class="s1">n = arr.length;</span>
+        <span class="s0">int </span><span class="s1">rem = arr[n-</span><span class="s3">1</span><span class="s1">];</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = n - </span><span class="s3">2</span><span class="s1">; i &gt;= </span><span class="s3">0</span><span class="s1">; i--) {</span>
+            <span class="s0">if </span><span class="s1">(splitSum == rem &amp;&amp; arr[i] &lt; arr[i+</span><span class="s3">1</span><span class="s1">]) </span><span class="s0">return true</span><span class="s1">;</span>
+            <span class="s0">if </span><span class="s1">(splitSum &lt; rem) </span><span class="s0">break</span><span class="s1">;</span>
+            <span class="s1">splitSum -= arr[i];</span>
+            <span class="s1">rem += arr[i];</span>
+        <span class="s1">}</span>
+        <span class="s0">return false</span><span class="s1">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<html>
+<head>
+<title>Sol464_CanIWin.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Sol464_CanIWin.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg;</span>
+<span class="s2">/*In the &quot;100 game,&quot; two players take turns adding, to a running total, any integer from 1..10. The player who first causes the running total to reach or exceed 100 wins. 
+ 
+What if we change the game so that players cannot re-use integers? 
+ 
+For example, two players might take turns drawing from a common pool of numbers of 1..15 without replacement until they reach a total &gt;= 100. 
+ 
+Given an integer maxChoosableInteger and another integer desiredTotal, determine if the first player to move can force a win, assuming both players play optimally. 
+ 
+You can always assume that maxChoosableInteger will not be larger than 20 and desiredTotal will not be larger than 300. 
+ 
+Example 
+ 
+Input: 
+maxChoosableInteger = 10 
+desiredTotal = 11 
+ 
+Output: 
+false 
+ 
+Explanation: 
+No matter which integer the first player choose, the first player will lose. 
+The first player can choose an integer from 1 up to 10. 
+If the first player choose 1, the second player can only choose integers from 2 up to 10. 
+The second player will win by choosing 10 and get a total = 11, which is &gt;= desiredTotal. 
+Same with other integers chosen by the first player, the second player will always win.*/</span>
+
+<span class="s0">import </span><span class="s1">java.util.Arrays;</span>
+<span class="s0">import </span><span class="s1">java.util.HashMap;</span>
+
+<span class="s2">/* backtracking + memorization 
+* recursion + hashmap 
+* time: 2^n*/</span>
+<span class="s0">public class </span><span class="s1">Sol464_CanIWin {</span>
+    <span class="s0">public static boolean </span><span class="s1">canIWin(</span><span class="s0">int </span><span class="s1">maxChoosableInteger, </span><span class="s0">int </span><span class="s1">desiredTotal) {</span>
+        <span class="s0">if </span><span class="s1">((</span><span class="s3">1</span><span class="s1">+maxChoosableInteger)*maxChoosableInteger/</span><span class="s3">2 </span><span class="s1">&lt;desiredTotal){</span>
+            <span class="s0">return false</span><span class="s1">; </span><span class="s2">// desiredtotal too big</span>
+        <span class="s1">}</span>
+        <span class="s0">if</span><span class="s1">(desiredTotal &lt;= </span><span class="s3">0</span><span class="s1">) </span><span class="s0">return true</span><span class="s1">;</span>
+        <span class="s0">int</span><span class="s1">[] state = </span><span class="s0">new int</span><span class="s1">[maxChoosableInteger + </span><span class="s3">1</span><span class="s1">]; </span><span class="s2">// number is the same is index</span>
+        <span class="s0">return </span><span class="s1">canWin(state,desiredTotal, </span><span class="s0">new </span><span class="s1">HashMap&lt;String, Boolean&gt;());</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private static boolean </span><span class="s1">canWin(</span><span class="s0">int</span><span class="s1">[] state, </span><span class="s0">int </span><span class="s1">total, HashMap&lt;String, Boolean&gt; map) {</span>
+        <span class="s1">String key = Arrays.toString(state);</span><span class="s2">// convert the state array to a string</span>
+        <span class="s0">if</span><span class="s1">(map.containsKey(key)){</span>
+            <span class="s0">return </span><span class="s1">map.get(key);</span>
+        <span class="s1">}</span>
+        <span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">1</span><span class="s1">; i &lt; state.length; i++){</span>
+            <span class="s0">if</span><span class="s1">(state[i] == </span><span class="s3">0</span><span class="s1">){</span>
+                <span class="s1">state[i] = </span><span class="s3">1</span><span class="s1">;</span>
+                <span class="s0">if</span><span class="s1">(total - i &lt;= </span><span class="s3">0 </span><span class="s1">|| !canWin(state, total - i, map)){ </span><span class="s2">// or opponent cannot win</span>
+                    <span class="s1">map.put(key,</span><span class="s0">true</span><span class="s1">);</span>
+                    <span class="s1">state[i] = </span><span class="s3">0</span><span class="s1">;</span>
+                    <span class="s0">return true</span><span class="s1">;</span>
+                <span class="s1">}</span>
+                <span class="s1">state[i] = </span><span class="s3">0</span><span class="s1">; </span><span class="s2">// did not win at this i, reset its state</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s1">map.put(key,</span><span class="s0">false</span><span class="s1">);</span>
+        <span class="s0">return false</span><span class="s1">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

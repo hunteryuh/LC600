@@ -1,0 +1,126 @@
+<html>
+<head>
+<title>NumberOfSwapsToSortWhenOnlyAdjacetSwapAllowed.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+.s4 { color: #067d17;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+NumberOfSwapsToSortWhenOnlyAdjacetSwapAllowed.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg.other;</span>
+<span class="s2">/* 
+ 
+Given an array arr[] of non negative integers. We can perform a swap operation on any two adjacent elements in the array. 
+Find the minimum number of swaps needed to sort the array in ascending order. 
+ 
+Examples : 
+ 
+Input  : arr[] = {3, 2, 1} 
+Output : 3 
+We need to do following swaps 
+(3, 2), (3, 1) and (1, 2) 
+ 
+Input  : arr[] = {1, 20, 6, 4, 5} 
+Output : 5 
+) 
+There is an interesting solution to this problem. It can be solved using the fact that number of swaps needed is equal to number of 
+inversions. So we basically need to count inversions in array. 
+ 
+The fact can be established using below observations: 
+1) A sorted array has no inversions. 
+2) An adjacent swap can reduce one inversion. Doing x adjacent swaps can reduce x inversions in an array. 
+ 
+https://tutorialspoint.dev/algorithm/sorting-algorithms/number-swaps-sort-adjacent-swapping-allowed 
+https://www.geeksforgeeks.org/number-swaps-sort-adjacent-swapping-allowed/ 
+ 
+https://tutorialspoint.dev/data-structure/arrays/counting-inversions 
+ 
+ */</span>
+<span class="s0">public class </span><span class="s1">NumberOfSwapsToSortWhenOnlyAdjacetSwapAllowed {</span>
+    <span class="s2">// This function sorts the input array and returns the number of inversions in the array</span>
+    <span class="s0">public int </span><span class="s1">countSwaps(</span><span class="s0">int</span><span class="s1">[] arr) {</span>
+        <span class="s0">int </span><span class="s1">n = arr.length;</span>
+        <span class="s0">return </span><span class="s1">inversionCount(arr, </span><span class="s3">0</span><span class="s1">, n - </span><span class="s3">1</span><span class="s1">);</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private int </span><span class="s1">inversionCount(</span><span class="s0">int</span><span class="s1">[] a, </span><span class="s0">int </span><span class="s1">left, </span><span class="s0">int </span><span class="s1">right) {</span>
+        <span class="s0">if </span><span class="s1">(left &gt;= right) {</span>
+            <span class="s0">return </span><span class="s3">0</span><span class="s1">;</span>
+        <span class="s1">}</span>
+        <span class="s0">int </span><span class="s1">mid = left + (right-left)/</span><span class="s3">2</span><span class="s1">;</span>
+        <span class="s2">/* Inversion count will be sum of inversions in left-part, right-part 
+        and number of inversions in merging */</span>
+        <span class="s0">int </span><span class="s1">cnt = inversionCount(a, left, mid) + inversionCount(a, mid+</span><span class="s3">1</span><span class="s1">, right);</span>
+        <span class="s1">cnt += mergeSort(a, left, mid, right);</span>
+        <span class="s0">return </span><span class="s1">cnt;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/* 
+    Inversion Count for an array indicates – how far (or close) the array is from being sorted. If array is already sorted then inversion count is 0. If array is sorted in reverse order that inversion count is the maximum. 
+Formally speaking, two elements a[i] and a[j] form an inversion if a[i] &gt; a[j] and i &lt; j 
+ 
+Example: 
+The sequence 2, 4, 1, 3, 5 has three inversions (2, 1), (4, 1), (4, 3). 
+     */</span>
+
+    <span class="s0">private int </span><span class="s1">mergeSort(</span><span class="s0">int</span><span class="s1">[] a, </span><span class="s0">int </span><span class="s1">left, </span><span class="s0">int </span><span class="s1">mid, </span><span class="s0">int </span><span class="s1">right) {</span>
+        <span class="s0">int </span><span class="s1">cnt = </span><span class="s3">0</span><span class="s1">;</span>
+        <span class="s2">/* i is index for left subarray*/</span>
+        <span class="s0">int </span><span class="s1">i = left;</span>
+        <span class="s2">/* j is index for right subarray*/</span>
+        <span class="s0">int </span><span class="s1">j = mid+</span><span class="s3">1</span><span class="s1">;</span>
+        <span class="s2">/* k is index for resultant merged subarray*/</span>
+        <span class="s0">int </span><span class="s1">k = left;</span>
+        <span class="s0">int</span><span class="s1">[] b = </span><span class="s0">new int</span><span class="s1">[a.length];</span>
+        <span class="s0">while </span><span class="s1">(i &lt;= mid &amp;&amp; j &lt;= right) {</span>
+            <span class="s0">if </span><span class="s1">(a[i] &lt;= a[j]) {</span>
+                <span class="s1">b[k++] = a[i++];</span>
+            <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                <span class="s1">b[k++] = a[j++];</span>
+                <span class="s1">cnt += mid - i + </span><span class="s3">1</span><span class="s1">; </span><span class="s2">/* this is tricky -- see above explanation/diagram for merge()*/</span>
+                <span class="s2">// count how many items in left subarray is smaller then the current j, it is always the</span>
+                <span class="s2">// all elements from the current i to the index of mid</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s2">/* Copy the remaining elements of left subarray  (if there are any) to temp*/</span>
+        <span class="s0">while </span><span class="s1">(i &lt;= mid) {</span>
+            <span class="s1">b[k++] = a[i++];</span>
+        <span class="s1">}</span>
+        <span class="s2">/* Copy the remaining elements of right subarray  (if there are any) to temp*/</span>
+        <span class="s0">while </span><span class="s1">(j &lt;= right) {</span>
+            <span class="s1">b[k++] = a[j++];</span>
+        <span class="s1">}</span>
+        <span class="s2">/*Copy back the merged elements to original array*/</span>
+        <span class="s0">for</span><span class="s1">(i=left; i&lt;=right; i++) {</span>
+            <span class="s1">a[i] = b[i];</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">cnt;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+        <span class="s0">int </span><span class="s1">[]arr = {</span><span class="s3">1</span><span class="s1">, </span><span class="s3">20</span><span class="s1">, </span><span class="s3">6</span><span class="s1">, </span><span class="s3">4</span><span class="s1">, </span><span class="s3">5</span><span class="s1">};</span>
+        <span class="s0">int </span><span class="s1">n = arr.length;</span>
+
+        <span class="s1">NumberOfSwapsToSortWhenOnlyAdjacetSwapAllowed numberOfSwapsToSortWhenOnlyAdjacetSwapAllowed = </span><span class="s0">new </span><span class="s1">NumberOfSwapsToSortWhenOnlyAdjacetSwapAllowed();</span>
+        <span class="s0">int </span><span class="s1">res = numberOfSwapsToSortWhenOnlyAdjacetSwapAllowed.countSwaps(arr);</span>
+        <span class="s1">System.out.println(</span><span class="s4">&quot;Number of swaps is &quot; </span><span class="s1">+ res);</span>
+
+        <span class="s0">int</span><span class="s1">[] arr2 = {</span><span class="s3">3</span><span class="s1">, </span><span class="s3">2 </span><span class="s1">,</span><span class="s3">1</span><span class="s1">};</span>
+        <span class="s0">int </span><span class="s1">res2 = numberOfSwapsToSortWhenOnlyAdjacetSwapAllowed.countSwaps(arr2);</span>
+        <span class="s1">System.out.println(</span><span class="s4">&quot;Number of swaps is &quot; </span><span class="s1">+ res2);</span>
+
+
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

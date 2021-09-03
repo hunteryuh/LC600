@@ -1,0 +1,118 @@
+<html>
+<head>
+<title>Sol146_LRUCache.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Sol146_LRUCache.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg;</span>
+
+<span class="s0">import </span><span class="s1">java.util.HashMap;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Created by HAU on 11/27/2017.</span>
+ <span class="s2">*/</span>
+<span class="s2">/*Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and put. 
+ 
+get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1. 
+put(key, value) - Set or insert the value if the key is not already present. 
+When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item. 
+ 
+Follow up: 
+Could you do both operations in O(1) time complexity? 
+ 
+Example: 
+ 
+// LRUCache cache = new LRUCache( 2 / capacity / ); 
+ 
+/*        cache.put(1, 1); 
+        cache.put(2, 2); 
+        cache.get(1);       // returns 1 
+        cache.put(3, 3);    // evicts key 2 
+        cache.get(2);       // returns -1 (not found) 
+        cache.put(4, 4);    // evicts key 1 
+        cache.get(1);       // returns -1 (not found) 
+        cache.get(3);       // returns 3 
+        cache.get(4);       // returns 4*/</span>
+<span class="s2">// */</span>
+<span class="s2">/*The LRU cache is a hash table of keys and double linked nodes. 
+The hash table makes the time of get() to be O(1). 
+The list of double linked nodes make the nodes adding/removal operations O(1).*/</span>
+<span class="s0">public class </span><span class="s1">Sol146_LRUCache {</span>
+    <span class="s0">public class </span><span class="s1">LRUCache{</span>
+        <span class="s0">private class </span><span class="s1">Node{</span>
+            <span class="s1">Node prev;</span>
+            <span class="s1">Node next;</span>
+            <span class="s0">int </span><span class="s1">key;</span>
+            <span class="s0">int </span><span class="s1">value;</span>
+            <span class="s0">public </span><span class="s1">Node(</span><span class="s0">int </span><span class="s1">key, </span><span class="s0">int </span><span class="s1">value){</span>
+                <span class="s0">this</span><span class="s1">.key = key;</span>
+                <span class="s0">this</span><span class="s1">.value = value;</span>
+                <span class="s0">this</span><span class="s1">.prev = </span><span class="s0">null</span><span class="s1">;</span>
+                <span class="s0">this</span><span class="s1">.next = </span><span class="s0">null</span><span class="s1">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+
+        <span class="s0">private int </span><span class="s1">capacity;</span>
+        <span class="s0">private </span><span class="s1">HashMap&lt;Integer, Node&gt; map = </span><span class="s0">new </span><span class="s1">HashMap&lt;&gt;();</span>
+        <span class="s0">private </span><span class="s1">Node head = </span><span class="s0">new </span><span class="s1">Node(-</span><span class="s3">1</span><span class="s1">,-</span><span class="s3">1</span><span class="s1">);</span>
+        <span class="s0">private </span><span class="s1">Node tail = </span><span class="s0">new </span><span class="s1">Node(-</span><span class="s3">1</span><span class="s1">,-</span><span class="s3">1</span><span class="s1">);</span>
+
+        <span class="s0">public </span><span class="s1">LRUCache(</span><span class="s0">int </span><span class="s1">capacity) {</span>
+            <span class="s0">this</span><span class="s1">.capacity = capacity;</span>
+            <span class="s1">head.next = tail;</span>
+            <span class="s1">tail.prev = head;</span>
+
+        <span class="s1">}</span>
+
+        <span class="s0">public int </span><span class="s1">get(</span><span class="s0">int </span><span class="s1">key) {</span>
+            <span class="s0">if</span><span class="s1">(!map.containsKey(key)) </span><span class="s0">return </span><span class="s1">-</span><span class="s3">1</span><span class="s1">;</span>
+            <span class="s2">// remove current</span>
+            <span class="s1">Node cur = map.get(key);</span>
+            <span class="s1">cur.prev.next = cur.next;</span>
+            <span class="s1">cur.next.prev = cur.prev;</span>
+
+            <span class="s2">// move the cur to tail</span>
+            <span class="s1">moveToTail(cur);</span>
+            <span class="s0">return </span><span class="s1">map.get(key).value;</span>
+        <span class="s1">}</span>
+
+        <span class="s0">private void </span><span class="s1">moveToTail(Node cur) {</span>
+            <span class="s1">cur.prev = tail.prev;</span>
+            <span class="s1">tail.prev = cur;</span>
+            <span class="s1">cur.prev.next = cur;</span>
+            <span class="s1">cur.next = tail; </span><span class="s2">// move to the tail, dummy &quot;tail&quot;</span>
+        <span class="s1">}</span>
+
+        <span class="s0">public void </span><span class="s1">put(</span><span class="s0">int </span><span class="s1">key, </span><span class="s0">int </span><span class="s1">value) {</span>
+            <span class="s2">// the internal get method will update the key's position in the linked list</span>
+            <span class="s0">if </span><span class="s1">(get(key)!= -</span><span class="s3">1</span><span class="s1">){</span>
+                <span class="s1">map.get(key).value = value;</span>
+                <span class="s0">return</span><span class="s1">;</span><span class="s2">// why</span>
+            <span class="s1">}</span>
+            <span class="s0">if</span><span class="s1">(map.size() == capacity){</span>
+                <span class="s1">map.remove(head.next.key);</span>
+                <span class="s1">head.next = head.next.next;</span>
+                <span class="s1">head.next.prev = head;</span>
+            <span class="s1">}</span>
+            <span class="s1">Node insert = </span><span class="s0">new </span><span class="s1">Node(key,value);</span>
+            <span class="s1">map.put(key,insert);</span>
+            <span class="s1">moveToTail(insert);</span>
+
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

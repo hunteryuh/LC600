@@ -57,5 +57,52 @@ public class Sol18_4Sum {
         int[] p1 = {-1,0,1,2,-1,-4};
         int t1 = -1;
         System.out.println(fourSum(p1,t1));
+
+        Sol18_4Sum ss = new Sol18_4Sum();
+        List<List<Integer>> list = ss.fourSum2(p1, t1);
+        System.out.println(list);
+    }
+
+    public List<List<Integer>> fourSum2(int[] nums, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (nums == null || nums.length < 4) {
+            return res;
+        }
+
+        Arrays.sort(nums);
+        int n = nums.length;
+        for (int i = 0; i < n - 3; i++) {
+            if (i > 0 && nums[i] == nums[i-1]) {
+                //i++;   do nothing and continue; i++ already happened in the for loop
+                continue;
+            }
+            for (int j = i + 1; j < n - 2; j++) {
+                if (j > i + 1 && nums[j] == nums[j-1]) {
+                   // j++;
+                    continue;
+                }
+                int k = j + 1;
+                int m = n - 1;
+                while (k < m) {
+                    if (nums[i] + nums[j] + nums[k] + nums[m] == target) {
+                        List<Integer> sol = Arrays.asList(nums[i], nums[j], nums[k], nums[m]);
+                        res.add(sol);
+                        while (k < m && nums[k] == nums[k + 1]) {  //keep k < m
+                            k++;
+                        }
+                        while (m > k && nums[m] == nums[m - 1]) {
+                            m--;
+                        }
+                        k++;
+                        m--;
+                    } else if (nums[i] + nums[j] + nums[k] + nums[m] < target) {
+                        k++;
+                    } else {
+                        m--;
+                    }
+                }
+            }
+        }
+        return res;
     }
 }

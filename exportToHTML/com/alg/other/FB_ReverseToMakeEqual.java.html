@@ -1,0 +1,65 @@
+<html>
+<head>
+<title>FB_ReverseToMakeEqual.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+FB_ReverseToMakeEqual.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg.other;</span>
+
+<span class="s0">import </span><span class="s1">java.util.HashMap;</span>
+<span class="s0">import </span><span class="s1">java.util.Map;</span>
+
+<span class="s2">/* 
+Reverse to Make Equal 
+Given two arrays A and B of length N, determine if there is a way to make A equal to B by reversing any subarrays from array B any number of times. 
+Signature 
+bool areTheyEqual(int[] arr_a, int[] arr_b) 
+Input 
+All integers in array are in the range [0, 1,000,000,000]. 
+Output 
+Return true if B can be made equal to A, return false otherwise. 
+Example 
+A = [1, 2, 3, 4] 
+B = [1, 4, 3, 2] 
+output = true 
+After reversing the subarray of B from indices 1 to 3, array B will equal array A. 
+ */</span>
+<span class="s0">public class </span><span class="s1">FB_ReverseToMakeEqual {</span>
+    <span class="s0">public boolean </span><span class="s1">areTheyEqual(</span><span class="s0">int</span><span class="s1">[] a, </span><span class="s0">int</span><span class="s1">[] b) {</span>
+        <span class="s0">if </span><span class="s1">(a.length != b.length) </span><span class="s0">return false</span><span class="s1">;</span>
+        <span class="s1">Map&lt;Integer, Integer&gt; map = </span><span class="s0">new </span><span class="s1">HashMap&lt;&gt;();</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">num : a) {</span>
+            <span class="s1">map.put(num, map.getOrDefault(num, </span><span class="s3">0</span><span class="s1">) + </span><span class="s3">1</span><span class="s1">);</span>
+        <span class="s1">}</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">num : b) {</span>
+            <span class="s0">if </span><span class="s1">(!map.containsKey(num)) {</span>
+                <span class="s0">return false</span><span class="s1">;</span>
+            <span class="s1">}</span>
+            <span class="s1">map.put(num, map.get(num)  - </span><span class="s3">1</span><span class="s1">);</span>
+            <span class="s0">if </span><span class="s1">(map.get(num) &lt; </span><span class="s3">0</span><span class="s1">) {</span>
+                <span class="s0">return false</span><span class="s1">;</span>
+            <span class="s1">}</span>
+
+            <span class="s2">/* 
+            if (!map.containsKey(num) || map.get(num) == 0) return false; 
+            map.put(num, map.get(num) - 1); 
+             */</span>
+        <span class="s1">}</span>
+        <span class="s0">return true</span><span class="s1">;</span>
+
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

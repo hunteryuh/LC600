@@ -2,6 +2,7 @@ package com.alg;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by HAU on 6/10/2017.
@@ -66,5 +67,25 @@ public class Sol_subsets {
     public static void main(String[] args) {
         int[] nums = {1,2,3};
         System.out.println(subsets(nums) );
+        String t = Integer.toBinaryString(4).substring(1);
+        System.out.println(t);
+    }
+
+    // https://www.jiuzhang.com/problem/subsets/
+    // non-recursion
+    public List<List<Integer>> subsets2(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        Arrays.sort(nums);
+        int n = nums.length;
+        for (int i = 0 ; i < (1 << n); i++) {  //0..2^n - 1
+            List<Integer> sol = new ArrayList<>();
+            for (int j = 0; j < n; j++) {
+                if ((i & (1 << j)) != 0) {  // check which bit of the binary number is 1
+                    sol.add(nums[j]);
+                }
+            }
+            res.add(sol);
+        }
+        return res;
     }
 }

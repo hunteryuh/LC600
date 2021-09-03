@@ -1,0 +1,82 @@
+<html>
+<head>
+<title>FB_ReverseOperations.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+FB_ReverseOperations.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg.other;</span>
+<span class="s2">/* 
+You are given a singly-linked list that contains N integers. A subpart of the list is a contiguous set of even elements, bordered either by either end of the list or an odd element. For example, if the list is [1, 2, 8, 9, 12, 16], the subparts of the list are [2, 8] and [12, 16]. 
+Then, for each subpart, the order of the elements is reversed. In the example, this would result in the new list, [1, 8, 2, 9, 16, 12]. 
+The goal of this question is: given a resulting list, determine the original order of the elements. 
+Implementation detail: 
+You must use the following definition for elements in the linked list: 
+class Node { 
+    int data; 
+    Node next; 
+} 
+Signature 
+Node reverse(Node head) 
+Constraints 
+1 &lt;= N &lt;= 1000, where N is the size of the list 
+1 &lt;= Li &lt;= 10^9, where Li is the ith element of the list 
+Example 
+Input: 
+N = 6 
+list = [1, 2, 8, 9, 12, 16] 
+Output: 
+[1, 8, 2, 9, 16, 12] 
+ */</span>
+<span class="s0">public class </span><span class="s1">FB_ReverseOperations {</span>
+    <span class="s0">class </span><span class="s1">Node {</span>
+        <span class="s0">int </span><span class="s1">data;</span>
+        <span class="s1">Node next;</span>
+        <span class="s1">Node(</span><span class="s0">int </span><span class="s1">x) {</span>
+            <span class="s0">this</span><span class="s1">.data = x;</span>
+            <span class="s1">next = </span><span class="s0">null</span><span class="s1">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">Node reverse(Node head) {</span>
+        <span class="s1">Node dummy = </span><span class="s0">new </span><span class="s1">Node(</span><span class="s3">0</span><span class="s1">);</span>
+        <span class="s1">dummy.next = head;</span>
+        <span class="s1">Node prev = dummy;</span>
+        <span class="s1">Node curr = head;</span>
+
+        <span class="s0">while </span><span class="s1">(curr != </span><span class="s0">null</span><span class="s1">) {</span>
+            <span class="s0">if </span><span class="s1">(curr.data % </span><span class="s3">2 </span><span class="s1">== </span><span class="s3">0</span><span class="s1">) {</span>
+                <span class="s1">prev.next = reverseSubParts(curr);</span>
+            <span class="s1">}</span>
+            <span class="s1">prev = curr;</span>
+            <span class="s1">curr = curr.next;</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">dummy.next;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private </span><span class="s1">Node reverseSubParts(Node node) {</span>
+        <span class="s1">Node prev = </span><span class="s0">new </span><span class="s1">Node(</span><span class="s3">0</span><span class="s1">);</span>
+        <span class="s1">Node cur = node;</span>
+        <span class="s0">while </span><span class="s1">(cur != </span><span class="s0">null </span><span class="s1">&amp;&amp; cur.data % </span><span class="s3">2 </span><span class="s1">== </span><span class="s3">0</span><span class="s1">) {</span>
+            <span class="s1">Node temp = cur.next;</span>
+            <span class="s1">cur.next = prev;</span>
+            <span class="s1">prev = cur;</span>
+            <span class="s1">cur = temp;</span>
+        <span class="s1">}</span>
+        <span class="s1">node.next = cur;</span>
+        <span class="s0">return </span><span class="s1">prev;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

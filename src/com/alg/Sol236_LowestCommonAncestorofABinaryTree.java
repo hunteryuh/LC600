@@ -1,5 +1,12 @@
 package com.alg;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+
 /**
  * Created by HAU on 11/25/2017.
  */
@@ -20,6 +27,7 @@ public class Sol236_LowestCommonAncestorofABinaryTree {
         if(root == null || root == p || root == q) return root;
         TreeNode left = lowestCommonAncestor(root.left, p, q);
         TreeNode right = lowestCommonAncestor(root.right, p, q);
+
         if (left != null && right!= null){
             return root;
         }
@@ -72,5 +80,50 @@ public class Sol236_LowestCommonAncestorofABinaryTree {
         System.out.println(lowestCommonAncestor2(node1, node3, node7).val); //8
         System.out.println(lowestCommonAncestor(node1, node2, node7).val); //2
         System.out.println(lowestCommonAncestor2(node1, node2, node7).val); //2
+        Sol236_LowestCommonAncestorofABinaryTree ss = new Sol236_LowestCommonAncestorofABinaryTree();
+        List<Integer> paths = ss.findPathsBetweenTwoNodes(node1, node4, node7);
+        System.out.println(paths);
     }
+
+    // https://www.geeksforgeeks.org/print-path-between-any-two-nodes-in-a-binary-tree/
+    // https://codeforces.com/blog/entry/53220  dfs
+    public List<Integer> findPathsBetweenTwoNodes(TreeNode root, TreeNode n1, TreeNode n2) {
+        List<TreeNode> path1 = new ArrayList<>();
+        List<TreeNode> path2 = new ArrayList<>();
+        getPath(root, n1, path1);
+        getPath(root, n2, path2);
+        int i = 0;
+        int j = 0;
+        int lca = 0;
+        while (i < path1.size() || j < path2.size()) {
+            if (i == j && path1.get(i) == path2.get(j)) {
+                i++; j++;
+            } else {
+                lca = i -1;
+                break;
+            }
+        }
+        List<Integer> res = new ArrayList<>();
+        for (i = path1.size() - 1; i>lca; i--) {
+            res.add(path1.get(i).val);
+        }
+        for (i = lca; i < path2.size(); i++) {
+            res.add(path2.get(i).val);
+        }
+        return res;
+    }
+
+    private boolean getPath(TreeNode root, TreeNode node, List<TreeNode> list) {
+        if (root == null) return false;
+        list.add(root);
+        if (root == node) {
+            return true;
+        }
+        if (getPath(root.left, node, list) || getPath(root.right, node, list)) {
+            return true;
+        }
+        list.remove(list.size() - 1);
+        return false;
+    }
+
 }

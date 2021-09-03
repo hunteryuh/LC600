@@ -21,6 +21,7 @@ wordList = ["hot","dot","dog","lot","log","cog"]
 As one shortest transformation is "hit" -> "hot" -> "dot" -> "dog" -> "cog",
 return its length 5.
 
+https://leetcode.com/problems/word-ladder/
 */
 public class Sol127_WordLadder {
     public static int ladderLength(String beginWord, String endWord, List<String> wordList) {
@@ -60,10 +61,73 @@ public class Sol127_WordLadder {
         return 0;
     }
 
+    // https://www.jiuzhang.com/solutions/word-ladder 简单图最短路径问题
+
     public static void main(String[] args) {
         String start = "hit";
         String end = "cog";
         List<String> list = new ArrayList<>(Arrays.asList("hot","dot","dog","log","lot","cog"));
         System.out.println(ladderLength(start,end,list));
+
+        String start2 = "ymain";
+        String end2 = "oecij";
+        List<String> list2 = new ArrayList<>(Arrays.asList("ymann","yycrj","oecij","ymcnj","yzcrj","yycij","xecij","yecij","ymanj","yzcnj","ymain"));
+        Sol127_WordLadder s = new Sol127_WordLadder();
+        System.out.println(s.ladderLength2(start2, end2, list2));
+
+    }
+
+
+    public int ladderLength2(String beginWord, String endWord, List<String> wordList) {
+        if (endWord.length() != beginWord.length()) {
+            return 0;
+        }
+        Set<String> wordSet = new HashSet<>(wordList);
+        Set<String> visited = new HashSet<>();
+        Queue<String> queue = new LinkedList<String>();
+        queue.offer(beginWord);
+        int res = 1;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            res++;
+            for (int i = 0; i < size; i++) {
+                String word = queue.poll();
+                for (String neigh : getAvailableWords(word, wordSet)) {
+                    if (!visited.contains(neigh)) {
+                        queue.offer(neigh);
+                        visited.add(neigh);
+                        if (neigh.equals(endWord)) {
+                            return res;
+                        }
+                    }
+                }
+            }
+
+        }
+        return 0;
+    }
+
+    /*
+    "ymain"
+"oecij"
+["ymann","yycrj","oecij","ymcnj","yzcrj","yycij","xecij","yecij","ymanj","yzcnj","ymain"]
+     */
+    // time : 25 * L * L  ( length of word in the dic)
+    private List<String> getAvailableWords(String word, Set<String> wordList) {
+        List<String> words = new ArrayList<>();
+        for (int c = 0; c < word.length(); c++) {
+            char cur = word.charAt(c);
+            for (char i = 'a'; i <= 'z'; i++) { //  i can be equal to 'z'
+                if (cur != i) {
+                    char[] newCharArray = word.toCharArray();
+                    newCharArray[c] = i;
+                    String newWord = new String(newCharArray);
+                    if (wordList.contains(newWord)) {
+                        words.add(newWord);
+                    }
+                }
+            }
+        }
+        return words;
     }
 }

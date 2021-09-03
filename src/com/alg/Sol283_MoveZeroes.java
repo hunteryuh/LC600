@@ -54,4 +54,22 @@ public class Sol283_MoveZeroes {
         }
 
     }
+
+    // https://leetcode.com/problems/move-zeroes/discuss/72011/Simple-O(N)-Java-Solution-Using-Insert-Index
+    public void move0s(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return;
+        }
+        int j = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == 0) {
+                continue;
+            }
+            int temp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = temp;
+            j++;
+        }
+    }
+
 }

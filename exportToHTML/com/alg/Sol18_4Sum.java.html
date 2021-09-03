@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>Sol18_4Sum.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Sol18_4Sum.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg;</span>
+
+<span class="s0">import </span><span class="s1">java.util.ArrayList;</span>
+<span class="s0">import </span><span class="s1">java.util.Arrays;</span>
+<span class="s0">import </span><span class="s1">java.util.List;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Created by HAU on 7/7/2017.</span>
+ <span class="s2">*/</span>
+
+<span class="s2">/*Given an array S of n integers, are there elements a, b, c, and d in S 
+        such that a + b + c + d = target? Find all unique quadruplets in the array 
+        which gives the sum of target. 
+ 
+        Note: The solution set must not contain duplicate quadruplets.*/</span>
+<span class="s0">public class </span><span class="s1">Sol18_4Sum {</span>
+    <span class="s0">public static </span><span class="s1">List&lt;List&lt;Integer&gt;&gt; fourSum(</span><span class="s0">int</span><span class="s1">[] nums, </span><span class="s0">int </span><span class="s1">target) {</span>
+        <span class="s0">int </span><span class="s1">n = nums.length;</span>
+        <span class="s1">List&lt;List&lt;Integer&gt;&gt; list = </span><span class="s0">new </span><span class="s1">ArrayList&lt;List&lt;Integer&gt;&gt;();</span>
+        <span class="s1">Arrays.sort(nums);</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; n - </span><span class="s3">3</span><span class="s1">; i++) {</span>
+            <span class="s0">if </span><span class="s1">( i &gt; </span><span class="s3">0 </span><span class="s1">&amp;&amp; nums[i - </span><span class="s3">1</span><span class="s1">] == nums[i]){</span>
+                <span class="s0">continue</span><span class="s1">;</span>
+            <span class="s1">}</span>
+            <span class="s0">for </span><span class="s1">( </span><span class="s0">int </span><span class="s1">j = i + </span><span class="s3">1</span><span class="s1">; j &lt; n - </span><span class="s3">2</span><span class="s1">; j++){</span>
+                <span class="s0">if </span><span class="s1">( j &gt; i + </span><span class="s3">1 </span><span class="s1">&amp;&amp; nums[j-</span><span class="s3">1</span><span class="s1">] == nums[j]){</span>
+                    <span class="s0">continue</span><span class="s1">;</span>
+                <span class="s1">}</span>
+                <span class="s0">int </span><span class="s1">k = j + </span><span class="s3">1</span><span class="s1">;</span>
+                <span class="s0">int </span><span class="s1">m = n - </span><span class="s3">1</span><span class="s1">;</span>
+                <span class="s0">int </span><span class="s1">sum = target - nums[i] - nums[j];</span>
+                <span class="s0">while </span><span class="s1">( k &lt; m){</span>
+                    <span class="s0">if </span><span class="s1">( nums[k] + nums[m] == sum){</span>
+                        <span class="s1">list.add(Arrays.asList(nums[i],nums[j],nums[k],nums[m]));</span>
+                        <span class="s0">while </span><span class="s1">( k &lt; m &amp;&amp; nums[k] == nums[k+</span><span class="s3">1</span><span class="s1">]) k++;</span>
+                        <span class="s0">while </span><span class="s1">( k &lt; m &amp;&amp; nums[m] == nums[m-</span><span class="s3">1</span><span class="s1">]) m--;</span>
+
+                        <span class="s1">k++;</span>
+                        <span class="s1">m--;</span>
+                    <span class="s1">}</span><span class="s0">else if </span><span class="s1">( nums[k] + nums[m] &lt; sum){</span>
+                        <span class="s1">k++;</span>
+                    <span class="s1">}</span><span class="s0">else if </span><span class="s1">( nums[m] + nums[k] &gt; sum ) {</span>
+                        <span class="s1">m--;</span>
+                    <span class="s1">}</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">list;</span>
+    <span class="s1">}</span>
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+
+        <span class="s0">int</span><span class="s1">[] p3 = {-</span><span class="s3">5</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">4</span><span class="s1">,-</span><span class="s3">2</span><span class="s1">,-</span><span class="s3">4</span><span class="s1">,</span><span class="s3">0</span><span class="s1">};</span>
+        <span class="s0">int </span><span class="s1">target = </span><span class="s3">0</span><span class="s1">;</span>
+
+        <span class="s1">List&lt;List&lt;Integer&gt;&gt; list3 = fourSum(p3,target);</span>
+        <span class="s1">System.out.println(list3.toString());</span>
+        <span class="s0">int</span><span class="s1">[] p1 = {-</span><span class="s3">1</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,</span><span class="s3">2</span><span class="s1">,-</span><span class="s3">1</span><span class="s1">,-</span><span class="s3">4</span><span class="s1">};</span>
+        <span class="s0">int </span><span class="s1">t1 = -</span><span class="s3">1</span><span class="s1">;</span>
+        <span class="s1">System.out.println(fourSum(p1,t1));</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

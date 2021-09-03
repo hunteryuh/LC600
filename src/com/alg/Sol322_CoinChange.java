@@ -1,5 +1,8 @@
 package com.alg;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Created by HAU on 11/2/2017.
  */
@@ -47,6 +50,35 @@ public class Sol322_CoinChange {
             return -1;
         }
         return f[amount];
+    }
+
+    // bfs solution
+    public int coinChange3(int[] coins, int amount) {
+        if (amount == 0) return 0;
+        Queue<Integer> q = new LinkedList<>();
+        boolean[] visited = new boolean[amount + 1];
+        q.offer(amount);
+        visited[amount] = true;
+        int curLevel = 1;
+        while (!q.isEmpty()) {
+            int size = q.size();
+            for (int i = 0; i< size; i++) {
+                int target = q.poll();
+                for (int coin: coins) {
+                    int rem = target - coin;
+                    if (rem == 0) {
+                        return curLevel;
+                    } else if (rem > 0) {
+                        if (!visited[rem]) {
+                            q.offer(rem);
+                            visited[rem] = true;
+                        }
+                    }
+                }
+            }
+            curLevel++;
+        }
+        return -1;
     }
 
 

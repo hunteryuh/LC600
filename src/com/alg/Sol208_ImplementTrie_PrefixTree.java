@@ -4,6 +4,8 @@ package com.alg;
  * Created by HAU on 11/30/2017.
  */
 /*Implement a trie with insert, search, and startsWith methods.*/
+
+    // https://leetcode.com/problems/implement-trie-prefix-tree/solution/
 public class Sol208_ImplementTrie_PrefixTree {
     class TrieNode{
         public char val;
@@ -15,6 +17,13 @@ public class Sol208_ImplementTrie_PrefixTree {
             node.val = c;
         }
     }
+
+    // simplified
+    class Node {
+        public boolean isEnd;
+        public Node[] children = new Node[26];  // must define as a new array to avoid null pointer when at ws.children
+    }
+
     class Trie {
         private TrieNode root;
         /** Initialize your data structure here. */

@@ -1,7 +1,9 @@
 package com.alg;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.List;
 
 /**
@@ -32,7 +34,7 @@ public class Sol47_PermutionsII {
 去重复的方法是传递一个visited数组，把排序后相同的元素看成一个cluster，假如nums[i] == nums[i - 1]，
 但i-1没有被访问过，说明整个cluster不被访问，跳过整个cluster。
 
-Time complexity - O(n!), Space Complexity - O(n)。*/
+Time complexity - O(n*n!), Space Complexity - O(n)。*/
     private static void dfs(int[] nums, List<List<Integer>> res, List<Integer> sol, boolean[] used) {
         if(sol.size() == nums.length){
             res.add(new ArrayList<>(sol));
@@ -55,8 +57,37 @@ Time complexity - O(n!), Space Complexity - O(n)。*/
         }
     }
 
+    // https://www.jiuzhang.com/problem/permutations-ii/
     public static void main(String[] args) {
         int[] nums= {1,2,1};
         System.out.println(permuteUnique(nums));
+    }
+
+    public List<List<Integer>> permuteUnique2(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        boolean[] visited = new boolean[nums.length];
+        Deque<Integer> pm = new ArrayDeque<>();
+        Arrays.sort(nums);  // need to sort first
+        dfs2(res, pm, nums, visited);
+        return res;
+    }
+
+    private void dfs2(List<List<Integer>> res, Deque<Integer> pm, int[] nums, boolean[] visited) {
+        if (pm.size() == nums.length) {
+            res.add(new ArrayList<>(pm));
+            return;
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (visited[i]) continue;
+            if (i > 0 && nums[i] == nums[i-1] && !visited[i-1]) continue;
+
+            pm.add(nums[i]);
+            visited[i] = true;
+            dfs2(res, pm, nums, visited);
+
+            pm.removeLast();
+            visited[i] = false;
+        }
     }
 }

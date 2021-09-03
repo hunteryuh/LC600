@@ -1,0 +1,133 @@
+<html>
+<head>
+<title>MinimumNumberOfSwapsRequiredToSortAnArray.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+MinimumNumberOfSwapsRequiredToSortAnArray.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg.other;</span>
+
+<span class="s0">import </span><span class="s1">java.util.Arrays;</span>
+<span class="s0">import </span><span class="s1">java.util.HashMap;</span>
+
+<span class="s2">/* 
+https://www.geeksforgeeks.org/minimum-number-swaps-required-sort-array/ 
+ 
+Given an array of n distinct elements, find the minimum number of swaps required to sort the array. 
+ 
+Examples: 
+ 
+Input : {4, 3, 2, 1} 
+Output : 2 
+Explanation : Swap index 0 with 3 and 1 with 2 to 
+              form the sorted array {1, 2, 3, 4}. 
+ 
+Input : {1, 5, 4, 3, 2} 
+Output : 2 
+ */</span>
+<span class="s0">public class </span><span class="s1">MinimumNumberOfSwapsRequiredToSortAnArray {</span>
+
+
+    <span class="s2">// Return the minimum number</span>
+    <span class="s2">// of swaps required to sort the array</span>
+    <span class="s0">public int </span><span class="s1">minSwaps(</span><span class="s0">int</span><span class="s1">[] arr, </span><span class="s0">int </span><span class="s1">N) {</span>
+        <span class="s0">int </span><span class="s1">ans = </span><span class="s3">0</span><span class="s1">;</span>
+        <span class="s0">int</span><span class="s1">[] temp = Arrays.copyOfRange(arr, </span><span class="s3">0</span><span class="s1">, N);</span>
+        <span class="s1">Arrays.sort(temp);</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; N; i++)</span>
+        <span class="s1">{</span>
+
+            <span class="s2">// This is checking whether</span>
+            <span class="s2">// the current element is</span>
+            <span class="s2">// at the right place or not</span>
+            <span class="s0">if </span><span class="s1">(arr[i] != temp[i])</span>
+            <span class="s1">{</span>
+                <span class="s1">ans++;</span>
+                <span class="s2">// Swap the current element</span>
+                <span class="s2">// with the right index</span>
+                <span class="s2">// so that arr[0] to arr[i] is sorted</span>
+                <span class="s1">swap(arr, i, indexOf(arr, temp[i]));</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">ans;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public int </span><span class="s1">indexOf(</span><span class="s0">int</span><span class="s1">[] arr, </span><span class="s0">int </span><span class="s1">ele) {</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; arr.length; i++) {</span>
+            <span class="s0">if </span><span class="s1">(arr[i] == ele) {</span>
+                <span class="s0">return </span><span class="s1">i;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">-</span><span class="s3">1</span><span class="s1">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">// Return the minimum number</span>
+    <span class="s2">// of swaps required to sort the array</span>
+    <span class="s0">public int </span><span class="s1">minSwapsOptimized(</span><span class="s0">int</span><span class="s1">[] arr, </span><span class="s0">int </span><span class="s1">N)</span>
+    <span class="s1">{</span>
+
+        <span class="s0">int </span><span class="s1">ans = </span><span class="s3">0</span><span class="s1">;</span>
+        <span class="s0">int</span><span class="s1">[] temp = Arrays.copyOfRange(arr, </span><span class="s3">0</span><span class="s1">, N);</span>
+
+        <span class="s2">// Hashmap which stores the</span>
+        <span class="s2">// indexes of the input array</span>
+        <span class="s1">HashMap&lt;Integer, Integer&gt; h</span>
+                <span class="s1">= </span><span class="s0">new </span><span class="s1">HashMap&lt;Integer, Integer&gt;();</span>
+
+        <span class="s1">Arrays.sort(temp);</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; N; i++) {</span>
+            <span class="s1">h.put(arr[i], i);</span>
+        <span class="s1">}</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; N; i++) {</span>
+
+            <span class="s2">// This is checking whether</span>
+            <span class="s2">// the current element is</span>
+            <span class="s2">// at the right place or not</span>
+            <span class="s0">if </span><span class="s1">(arr[i] != temp[i]) {</span>
+                <span class="s1">ans++;</span>
+                <span class="s0">int </span><span class="s1">init = arr[i];</span>
+
+                <span class="s2">// If not, swap this element</span>
+                <span class="s2">// with the index of the</span>
+                <span class="s2">// element which should come here</span>
+                <span class="s1">swap(arr, i, h.get(temp[i]));</span>
+
+                <span class="s2">// Update the indexes in</span>
+                <span class="s2">// the hashmap accordingly</span>
+                <span class="s1">h.put(init, h.get(temp[i]));</span>
+                <span class="s1">h.put(temp[i], i);</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">ans;</span>
+    <span class="s1">}</span>
+    <span class="s0">public void </span><span class="s1">swap(</span><span class="s0">int</span><span class="s1">[] arr, </span><span class="s0">int </span><span class="s1">i, </span><span class="s0">int </span><span class="s1">j) {</span>
+        <span class="s0">int </span><span class="s1">temp = arr[i];</span>
+        <span class="s1">arr[i] = arr[j];</span>
+        <span class="s1">arr[j] = temp;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">// Driver program to test the above function</span>
+    <span class="s0">public static void </span><span class="s1">main(String[] args)</span>
+            <span class="s0">throws </span><span class="s1">Exception</span>
+    <span class="s1">{</span>
+        <span class="s0">int</span><span class="s1">[] a = { </span><span class="s3">101</span><span class="s1">, </span><span class="s3">758</span><span class="s1">, </span><span class="s3">315</span><span class="s1">, </span><span class="s3">730</span><span class="s1">, </span><span class="s3">472</span><span class="s1">, </span><span class="s3">619</span><span class="s1">, </span><span class="s3">460</span><span class="s1">, </span><span class="s3">479 </span><span class="s1">};</span>
+        <span class="s0">int</span><span class="s1">[] b = a.clone();</span>
+        <span class="s0">int </span><span class="s1">n = a.length;</span>
+        <span class="s2">// Output will be 5</span>
+        <span class="s1">System.out.println(</span><span class="s0">new </span><span class="s1">MinimumNumberOfSwapsRequiredToSortAnArray().minSwaps(a, n));</span>
+        <span class="s1">System.out.println(</span><span class="s0">new </span><span class="s1">MinimumNumberOfSwapsRequiredToSortAnArray().minSwapsOptimized(b, n));</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<html>
+<head>
+<title>Sol_subsets.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Sol_subsets.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg;</span>
+
+<span class="s0">import </span><span class="s1">java.util.ArrayList;</span>
+<span class="s0">import </span><span class="s1">java.util.Arrays;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Created by HAU on 6/10/2017.</span>
+ <span class="s2">*/</span>
+<span class="s2">/*recursion (program implementation): function call the function itself 程序实现： 函数 的自我调用 
+recursion 算法 ： 如何 把规模为N的问题，通过 处理之后，变成规模为N-1的问题*/</span>
+<span class="s2">// depth first search : standard solution for problems of &quot;all possible&quot;</span>
+    <span class="s2">// backtracking  回溯, one step for depth first search</span>
+
+<span class="s2">//bread first search, layer + layer enumeration, not so good for this case</span>
+    <span class="s2">// space needed is big for first layer</span>
+
+
+<span class="s0">public class </span><span class="s1">Sol_subsets {</span>
+
+    <span class="s0">public static </span><span class="s1">ArrayList&lt;ArrayList&lt;Integer&gt;&gt; subsets(</span><span class="s0">int</span><span class="s1">[] nums){</span>
+        <span class="s1">ArrayList&lt;ArrayList&lt;Integer&gt;&gt; result = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;();</span>
+        <span class="s0">if </span><span class="s1">(nums == </span><span class="s0">null</span><span class="s1">){</span>
+            <span class="s0">return </span><span class="s1">result;</span>
+        <span class="s1">}</span>
+        <span class="s0">if </span><span class="s1">(nums.length == </span><span class="s3">0</span><span class="s1">){</span>
+            <span class="s1">result.add(</span><span class="s0">new </span><span class="s1">ArrayList&lt;Integer&gt;());</span>
+            <span class="s0">return </span><span class="s1">result;</span>
+        <span class="s1">}</span>
+
+        <span class="s1">Arrays.sort(nums);</span>
+
+        <span class="s2">//[1,2] == [2,1], no duplicate subsets</span>
+        <span class="s2">// find all subsets starting from empty sets</span>
+        <span class="s2">// all subsets start from empty set []</span>
+        <span class="s2">// all string start with &quot;&quot;  ( empty string)</span>
+        <span class="s1">ArrayList&lt;Integer&gt; subset = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;();</span>
+        <span class="s1">helper(nums, </span><span class="s3">0</span><span class="s1">, subset, result);</span>
+
+        <span class="s0">return </span><span class="s1">result;</span>
+
+    <span class="s1">}</span>
+
+    <span class="s2">// 1. definition of recursion: in nums, find all subsets starting from subset, put in results</span>
+    <span class="s0">private static void </span><span class="s1">helper(</span><span class="s0">int</span><span class="s1">[] nums,</span>
+                               <span class="s0">int </span><span class="s1">offset,</span>
+                               <span class="s1">ArrayList&lt;Integer&gt; subset,</span>
+                               <span class="s1">ArrayList&lt;ArrayList&lt;Integer&gt;&gt; result){</span>
+        <span class="s2">// 2. break-down of recursion</span>
+        <span class="s2">// wrong: result.add(subset)</span>
+        <span class="s2">// clone operation:  deep copy</span>
+        <span class="s1">result.add(</span><span class="s0">new </span><span class="s1">ArrayList&lt;Integer&gt;(subset));</span><span class="s2">//??</span>
+
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = offset; i &lt; nums.length; i++){</span>
+            <span class="s1">subset.add(nums[i]);</span>
+            <span class="s2">// [] -&gt; [1]</span>
+            <span class="s2">// find all subsets starting from [1]</span>
+            <span class="s1">helper(nums,i+</span><span class="s3">1</span><span class="s1">, subset, result);</span>
+            <span class="s2">// now subset is [1]</span>
+            <span class="s2">// do backtracing: [1]-&gt;[]</span>
+            <span class="s1">subset.remove(subset.size()-</span><span class="s3">1</span><span class="s1">);</span>
+        <span class="s1">}</span>
+
+        <span class="s2">//3. outlet of recursion</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+        <span class="s0">int</span><span class="s1">[] nums = {</span><span class="s3">1</span><span class="s1">,</span><span class="s3">2</span><span class="s1">,</span><span class="s3">3</span><span class="s1">};</span>
+        <span class="s1">System.out.println(subsets(nums) );</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<html>
+<head>
+<title>FB_QueueRemovals.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+FB_QueueRemovals.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.alg.other;</span>
+
+<span class="s0">import </span><span class="s1">java.util.ArrayList;</span>
+<span class="s0">import </span><span class="s1">java.util.LinkedList;</span>
+<span class="s0">import </span><span class="s1">java.util.List;</span>
+<span class="s0">import </span><span class="s1">java.util.Queue;</span>
+
+<span class="s2">/* 
+You're given a list of n integers arr, which represent elements in a queue (in order from front to back). You're also given an integer x, and must perform x iterations of the following 3-step process: 
+Pop x elements from the front of queue (or, if it contains fewer than x elements, pop all of them) 
+Of the elements that were popped, find the one with the largest value (if there are multiple such elements, take the one which had been popped the earliest), and remove it 
+For each one of the remaining elements that were popped (in the order they had been popped), decrement its value by 1 if it's positive (otherwise, if its value is 0, then it's left unchanged), and then add it back to the queue 
+Compute a list of x integers output, the ith of which is the 1-based index in the original array of the element which had been removed in step 2 during the ith iteration. 
+Signature 
+int[] findPositions(int[] arr, int x) 
+Input 
+x is in the range [1, 316]. 
+n is in the range [x, x*x]. 
+Each value arr[i] is in the range [1, x]. 
+Output 
+Return a list of x integers output, as described above. 
+Example 
+n = 6 
+arr = [1, 2, 2, 3, 4, 5] 
+x = 5 
+output = [5, 6, 4, 1, 2] 
+The initial queue is [1, 2, 2, 3, 4, 5] (from front to back). 
+In the first iteration, the first 5 elements are popped off the queue, leaving just [5]. Of the popped elements, the largest one is the 4, which was at index 5 in the original array. The remaining elements are then decremented and added back onto the queue, whose contents are then [5, 0, 1, 1, 2]. 
+In the second iteration, all 5 elements are popped off the queue. The largest one is the 5, which was at index 6 in the original array. The remaining elements are then decremented (aside from the 0) and added back onto the queue, whose contents are then [0, 0, 0, 1]. 
+In the third iteration, all 4 elements are popped off the queue. The largest one is the 1, which had the initial value of 3 at index 4 in the original array. The remaining elements are added back onto the queue, whose contents are then [0, 0, 0]. 
+In the fourth iteration, all 3 elements are popped off the queue. Since they all have an equal value, we remove the one that was popped first, which had the initial value of 1 at index 1 in the original array. The remaining elements are added back onto the queue, whose contents are then [0, 0]. 
+In the final iteration, both elements are popped off the queue. We remove the one that was popped first, which had the initial value of 2 at index 2 in the original array. 
+ */</span>
+<span class="s0">public class </span><span class="s1">FB_QueueRemovals {</span>
+    <span class="s0">class </span><span class="s1">Position {</span>
+        <span class="s0">int </span><span class="s1">index;</span>
+        <span class="s0">int </span><span class="s1">value;</span>
+        <span class="s1">Position(</span><span class="s0">int </span><span class="s1">index, </span><span class="s0">int </span><span class="s1">value) {</span>
+            <span class="s0">this</span><span class="s1">.index = index;</span>
+            <span class="s0">this</span><span class="s1">.value = value;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+    <span class="s0">public int</span><span class="s1">[] findPositions(</span><span class="s0">int</span><span class="s1">[] arr, </span><span class="s0">int </span><span class="s1">x) {</span>
+        <span class="s0">int</span><span class="s1">[] res = </span><span class="s0">new int</span><span class="s1">[x];</span>
+        <span class="s1">Queue&lt;Position&gt; queue = </span><span class="s0">new </span><span class="s1">LinkedList&lt;&gt;();</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; arr.length; i++) {</span>
+            <span class="s1">queue.offer(</span><span class="s0">new </span><span class="s1">Position(i + </span><span class="s3">1</span><span class="s1">, arr[i]));</span>
+        <span class="s1">}</span>
+
+        <span class="s1">List&lt;Position&gt; popped = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;();</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; x; i++) {</span>
+            <span class="s2">// step 1: pop x elements</span>
+            <span class="s1">popped.clear();</span>
+            <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">j= </span><span class="s3">0</span><span class="s1">; j &lt; x &amp;&amp; !queue.isEmpty(); j++) {</span>
+                <span class="s1">popped.add(queue.poll());</span>
+            <span class="s1">}</span>
+            <span class="s2">// step2: find largest and add an item in the result</span>
+            <span class="s0">int </span><span class="s1">max = </span><span class="s3">0</span><span class="s1">;</span>
+            <span class="s0">int </span><span class="s1">maxIndex = Integer.MAX_VALUE;</span>
+            <span class="s0">for </span><span class="s1">(Position p : popped) {</span>
+                <span class="s0">if </span><span class="s1">(p.value &gt; max) {</span>
+                    <span class="s1">max = p.value;</span>
+                    <span class="s1">maxIndex = p.index;</span>
+                <span class="s1">} </span><span class="s0">else if </span><span class="s1">(p.value == max) {</span>
+                    <span class="s1">maxIndex = Math.min(maxIndex, p.index);</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+            <span class="s1">res[i] = maxIndex;</span>
+            <span class="s2">// step 3: decrement and add back except for the largest one</span>
+            <span class="s0">for </span><span class="s1">(Position p : popped) {</span>
+                <span class="s0">if </span><span class="s1">(p.index != maxIndex) {</span>
+                    <span class="s1">Position updatedP = </span><span class="s0">new </span><span class="s1">Position(p.index, p.value == </span><span class="s3">0</span><span class="s1">? </span><span class="s3">0</span><span class="s1">: p.value - </span><span class="s3">1</span><span class="s1">);</span>
+                    <span class="s1">queue.offer(updatedP);</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+
+
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">res;</span>
+
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>
