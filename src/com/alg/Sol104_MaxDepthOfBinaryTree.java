@@ -1,5 +1,8 @@
 package com.alg;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Created by HAU on 8/26/2017.
  */
@@ -54,5 +57,33 @@ public class Sol104_MaxDepthOfBinaryTree {
         TreeNode n0 = new TreeNode(5);
         n0.left = new TreeNode(2);
         System.out.println(maxDepth(n0));
+    }
+
+    public int maxDepthbfs(TreeNode root) {
+        if (root == null) return 0;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        int res = 0;
+        while (!queue.isEmpty()) {
+            res++;
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+        }
+        return res;
+    }
+
+    public int maxDepthR(TreeNode root) {
+        if (root == null) return 0;
+        int leftDepth = maxDepthR(root.left);
+        int rightDepth = maxDepthR(root.right);
+        return 1 + Math.max(leftDepth, rightDepth);
     }
 }

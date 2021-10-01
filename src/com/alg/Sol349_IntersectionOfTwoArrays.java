@@ -57,4 +57,47 @@ public class Sol349_IntersectionOfTwoArrays {
         }
         return ans;
     }
+
+    public int[] intersection3(int[] nums1, int[] nums2) {
+        Set<Integer> set1 = new HashSet<>();
+        for (int i : nums1) {
+            set1.add(i);
+        }
+        Set<Integer> cs = new HashSet<>();
+        for (int i : nums2) {
+            if (set1.contains(i)) {
+                cs.add(i);
+            }
+        }
+
+        int index = 0;
+        int[] r = new int[cs.size()];
+        for (int i : cs) {
+            r[index] = i;
+            index++;
+        }
+        return r;
+    }
+
+    public int[] intersection4(int[] nums1, int[] nums2) {
+        Set<Integer> set1 = new HashSet<>();
+        for (int i : nums1) {
+            set1.add(i);
+        }
+
+        Set<Integer> set2 = new HashSet<>();
+        for (int i : nums2) {
+            set2.add(i);
+        }
+
+        set1.retainAll(set2);
+
+        int index = 0;
+        int[] r = new int[set1.size()];
+        for (int i : set1) {
+            r[index] = i;
+            index++;
+        }
+        return r;
+    }
 }

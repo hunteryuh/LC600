@@ -42,6 +42,80 @@ public class Sol28_Implement_strStr {
         String target = "bcd";
         String toString = "testnew";
         System.out.println(strStr(source,target));
+
+        Sol28_Implement_strStr ss = new Sol28_Implement_strStr();
+        System.out.println(ss.strStr2(source, target));
         System.out.println(strReplace(source,target,toString));
+    }
+
+    public int strStr2(String haystack, String needle) {
+        if (needle.length() == 0) {
+            return 0;
+        }
+        if (needle.length() > haystack.length()) {
+            return -1;
+        }
+        int n = haystack.length();
+        int m = needle.length();
+        for (int i = 0; i <= n - m; i++) {
+            int j = 0;
+//            if (haystack.charAt(i) != needle.charAt(j)) {
+//                continue;
+//            }
+//            for (j = 0; j < m; j++) {
+//                if (haystack.charAt(i + j) != needle.charAt(j)) {
+//                    break;
+//                }
+//            }
+            // start one-by-one character comparison only if first and last characters of sliding window
+            // match the needle's first and last characters - it improves performance a lot!
+            if (haystack.charAt(i) == needle.charAt(j) && haystack.charAt(i + m -1) == needle.charAt(m-1)) {
+                while (j < m && haystack.charAt(i + j) == needle.charAt(j)) {
+                    j++;
+                }
+            }
+            if (j == m) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    // kmp
+    public void getNext(int[] next, String s){
+        int j = -1;
+        next[0] = j;
+        for (int i = 1; i<s.length(); i++){
+            while(j>=0 && s.charAt(i) != s.charAt(j+1)){
+                j=next[j];
+            }
+
+            if(s.charAt(i)==s.charAt(j+1)){
+                j++;
+            }
+            next[i] = j;
+        }
+    }
+    public int strStrKMP(String haystack, String needle) {
+        if (needle.length()==0){
+            return 0;
+        }
+
+        int[] next = new int[needle.length()];
+        getNext(next, needle);
+        int j = -1;
+        for(int i = 0; i<haystack.length();i++){
+            while(j>=0 && haystack.charAt(i) != needle.charAt(j+1)){
+                j = next[j];
+            }
+            if(haystack.charAt(i)==needle.charAt(j+1)){
+                j++;
+            }
+            if(j==needle.length()-1){
+                return (i-needle.length()+1);
+            }
+        }
+
+        return -1;
     }
 }

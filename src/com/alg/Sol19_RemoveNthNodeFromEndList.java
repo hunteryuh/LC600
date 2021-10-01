@@ -51,4 +51,20 @@ public class Sol19_RemoveNthNodeFromEndList {
 Time complexity : O(L)O(L). The algorithm makes one traversal of the list of LL nodes. Therefore time complexity is O(L)O(L).
 
 Space complexity : O(1)O(1). We only used constant extra space.*/
+    public ListNode removeNthFromTheEnd(ListNode head, int n) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode fast = dummy;
+        ListNode slow = dummy;
+        while (n > 0) {
+            fast = fast.next;
+            n--;
+        }
+        while (fast.next != null) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        slow.next = slow.next.next;
+        return dummy.next;
+    }
 }

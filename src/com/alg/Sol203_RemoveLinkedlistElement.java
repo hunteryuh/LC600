@@ -18,12 +18,12 @@ public class Sol203_RemoveLinkedlistElement {
         }
     }
     public static ListNode removeElements(ListNode head, int val) {
-        if ( head == null) return null;
+        if (head == null) return null;
         ListNode cur = head;
         while (cur.next != null){
-            if(cur.next.val == val){
+            if (cur.next.val == val){
                 cur.next = cur.next.next;
-            }else{
+            } else {
                 cur = cur.next;
             }
         }
@@ -31,8 +31,25 @@ public class Sol203_RemoveLinkedlistElement {
     }
 
     public static ListNode removeEle(ListNode head, int val){
-        if ( head == null) return null;
+        if (head == null) return null;
         head.next = removeEle(head.next,val);
         return head.val == val? head.next : head;
+    }
+
+    public ListNode removeElements2(ListNode head, int val) {
+        if (head == null) return head;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode pre = dummy;
+        ListNode cur = head;
+        while (cur != null) {
+            if (cur.val == val) {
+                pre.next = cur.next;
+            } else {
+                pre = cur;  // only move pre when not val to avoid [7,7,7,7] vase
+            }
+            cur = cur.next;
+        }
+        return dummy.next;
     }
 }

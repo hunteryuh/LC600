@@ -1,5 +1,8 @@
 package com.alg;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Created by HAU on 8/26/2017.
  */
@@ -13,7 +16,7 @@ Given a binary tree, find its minimum depth.
 */
 
 
-public class Sol104_MinimumDepthOfBinaryTree {
+public class Sol111_MinimumDepthOfBinaryTree {
     public static class TreeNode{
         int val;
         TreeNode left;
@@ -40,5 +43,30 @@ public class Sol104_MinimumDepthOfBinaryTree {
         n0.right = new TreeNode (15);
         n0.right.right = new TreeNode (25);
         System.out.println(minDepth(n0));
+    }
+
+    public int minDepthbfs(TreeNode root) {
+        if (root == null) return 0;
+        int res = 0;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            res++;
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                if (node.left == null && node.right == null) {
+                    return res;
+                }
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+        }
+        return res;
     }
 }

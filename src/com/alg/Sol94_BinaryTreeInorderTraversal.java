@@ -26,7 +26,7 @@ public class Sol94_BinaryTreeInorderTraversal {
 
     private static void helper(TreeNode root, List<Integer> res) {
         if (root!= null){
-            if ( root.left != null){
+            if (root.left != null){
                 helper(root.left, res);
             }
             res.add(root.val);
@@ -42,7 +42,7 @@ public class Sol94_BinaryTreeInorderTraversal {
         Stack<TreeNode> stack = new Stack<>();
         TreeNode cur = root;
         while (cur != null || !stack.isEmpty()){
-            while ( cur!=null){
+            while (cur !=null) {
                 stack.push(cur);
                 cur = cur.left;
             }

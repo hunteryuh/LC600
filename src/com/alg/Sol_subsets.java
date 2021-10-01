@@ -40,6 +40,7 @@ public class Sol_subsets {
         return result;
 
     }
+    // https://www.jiuzhang.com/problem/subsets/
 
     // 1. definition of recursion: in nums, find all subsets starting from subset, put in results
     private static void helper(int[] nums,

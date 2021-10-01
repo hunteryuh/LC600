@@ -1,5 +1,8 @@
 package com.alg;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by HAU on 11/29/2017.
  */
@@ -21,7 +24,7 @@ public class Sol142_LinkedListCycleII {
     }
     public static ListNode detectCycle(ListNode head) {
         // two pointer
-        if ( head == null || head.next == null) return null;
+        if (head == null || head.next == null) return null;
         ListNode fast = head, slow = head;
         while(fast!= null && fast.next!= null){
             fast = fast.next.next;
@@ -36,6 +39,17 @@ public class Sol142_LinkedListCycleII {
                 return slow;
             }
 
+        }
+        return null;
+    }
+    // hashset
+    public ListNode getCycleEntrance(ListNode head) {
+        Set<ListNode> set = new HashSet<>();
+        while (head != null) {
+            if(!set.add(head)) {
+                return head;
+            }
+            head = head.next;
         }
         return null;
     }

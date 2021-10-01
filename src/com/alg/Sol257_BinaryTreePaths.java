@@ -41,6 +41,7 @@ public class Sol257_BinaryTreePaths {
         // leaf
         if (root.left == null && root.right == null) {
             paths.add(root.val + "");
+//            paths.add(Integer.toString(root.val));
         }
 
         // 2. split
@@ -69,5 +70,33 @@ public class Sol257_BinaryTreePaths {
 
         System.out.println(binaryTreePaths(root));
 
+    }
+
+    public List<String> binaryTreePaths2(TreeNode root) {
+        List<String> res = new ArrayList<>();
+        if (root == null) return res;
+        dfs(root, res, new ArrayList<>());
+        return res;
+    }
+
+    private void dfs(TreeNode root, List<String> res, List<Integer> path) {
+        path.add(root.val);
+        if (root.left == null && root.right == null) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < path.size() - 1; i++) {
+                sb.append(path.get(i)).append("->");
+            }
+            sb.append(path.get(path.size() - 1));
+            res.add(sb.toString());
+            return;
+        }
+        if (root.left != null) {
+            dfs(root.left, res, path);
+            path.remove(path.size() - 1);
+        }
+        if (root.right != null) {
+            dfs(root.right, res, path);
+            path.remove(path.size() - 1);
+        }
     }
 }

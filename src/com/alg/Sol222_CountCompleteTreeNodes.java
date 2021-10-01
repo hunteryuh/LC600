@@ -23,7 +23,7 @@ public class Sol222_CountCompleteTreeNodes {
     public static int countNodes(TreeNode root){
         int leftDepth = getLeftHeight(root);
         int rightDepth = getRightHeight(root);
-        if ( leftDepth == rightDepth){
+        if (leftDepth == rightDepth) {
             return (1 << leftDepth) - 1;  // 2 ^ n - 1
         }else{
             return 1 + countNodes(root.left) + countNodes(root.right);
@@ -44,5 +44,13 @@ public class Sol222_CountCompleteTreeNodes {
             dep++;
         }
         return dep;
+    }
+
+    public int countNodes2(TreeNode root) {
+        if (root == null) return 0;
+        int l = countNodes(root.left);
+        int r = countNodes(root.right);
+        int res = 1 + l + r;
+        return res;
     }
 }

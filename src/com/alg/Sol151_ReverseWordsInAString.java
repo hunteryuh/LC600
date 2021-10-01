@@ -39,7 +39,7 @@ In this example \d is the regular expression; the extra backslash is required fo
         String[] words = s.trim().split(" +"); // one or more whitespace " "
         //System.out.println();
         Collections.reverse(Arrays.asList(words)); // Arrays.asList(array) return a list view of the specified array
-        //System.out.println(words);
+//        System.out.println(Arrays.deepToString(words));
         return String.join(" ",words);
     }
 
@@ -70,6 +70,7 @@ In this example \d is the regular expression; the extra backslash is required fo
 
     public static void main(String[] args) {
         String s = "how old are you";
+//        System.out.println(reverseWords(s));
         System.out.println(reverseWs(s));
         System.out.println(reverseWords(s));
         String t = " ";
@@ -80,5 +81,16 @@ In this example \d is the regular expression; the extra backslash is required fo
         System.out.println(sca);
     }
 
-
+    public String reserveWords(String s) {
+        //"ab  cd de"
+        String[] strings = s.trim().split(" +");
+        int n = strings.length;
+        StringBuilder sb = new StringBuilder();
+        for (int i = n-1 ; i >= 0; i--) {
+            sb.append(strings[i]);
+            sb.append(" ");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        return sb.toString();
+    }
 }

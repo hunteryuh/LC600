@@ -1,7 +1,9 @@
 package com.alg;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by HAU on 7/11/2017.
@@ -65,5 +67,34 @@ public class Sol1002_FindCommonChars {
         String[] arr = {"bella", "lable", "roller"};
         System.out.println(commonChars(arr));
         System.out.println(findCommonChars(arr));
+    }
+
+    public List<String> commonChars2(String[] words) {
+        Map<Character, Integer> freq = new HashMap<>();
+        for (char c : words[0].toCharArray()) {
+            freq.put(c, freq.getOrDefault(c, 0) + 1);
+        }
+        for (int i = 1; i < words.length; i++) {
+            Map<Character, Integer> curFreq = new HashMap<>();
+            String s = words[i];
+            for (char c: s.toCharArray()) {
+                curFreq.put(c, curFreq.getOrDefault(c, 0) + 1);
+            }
+            for (char c : freq.keySet()) {
+                if (curFreq.containsKey(c)) {
+                    freq.put(c, Math.min(freq.get(c), curFreq.get(c)));
+                } else {
+                    freq.put(c, 0);
+                }
+            }
+        }
+        List<String> r = new ArrayList<>();
+        for (char c: freq.keySet()) {
+            while (freq.get(c) > 0) {
+                r.add(Character.toString(c));
+                freq.put(c, freq.get(c) - 1);
+            }
+        }
+        return r;
     }
 }

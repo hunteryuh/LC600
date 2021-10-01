@@ -43,22 +43,6 @@ public class Sol20_ValidParentheses {
         System.out.println(isValid(s));
     }
     // method 2
-    public static boolean isValidPt(String s){
-        Stack<Character> stack = new Stack<>();
-        for (char c : s.toCharArray()){
-            if (c == '('){
-                stack.push(')');
-            }else if(c == '['){
-                stack.push(']');
-            }else if(c =='{'){
-                stack.push('}');
-            }else if (stack.isEmpty() || stack.pop()!= c){
-                return false;
-            }
-        }
-        return stack.isEmpty();
-    }
-
     public boolean isValidP(String s) {
         Deque<Character> stack = new LinkedList<>();
         for (int i = 0; i < s.length(); i++) {

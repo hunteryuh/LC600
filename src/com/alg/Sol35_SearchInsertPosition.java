@@ -30,4 +30,36 @@ public class Sol35_SearchInsertPosition {
         int target = 5;
         System.out.println(searchInsert(nums,target));
     }
+
+    public int searchInsert2(int[] nums, int target) {
+        // brute force
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] >= target) {
+                return i;
+            }
+        }
+        return nums.length;
+    }
+
+    public int searchInsert3(int[] nums, int target){
+        int start = 0;
+        int end = nums.length - 1;
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            if (nums[mid] > target) {
+                end = mid;
+            } else if (nums[mid] < target) {
+                start = mid;
+            } else {
+                return mid;
+            }
+        }
+        if (nums[start] >= target) {
+            return start;
+        }
+        if (nums[end] >= target) {
+            return end;
+        }
+        return end + 1;
+    }
 }

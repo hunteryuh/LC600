@@ -69,7 +69,7 @@ public class Sol15_3Sum {
     }
 
     // https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0015.%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C.md
-    public static  List<List<Integer>> ThreeSum(int[] nums) {
+    public static List<List<Integer>> ThreeSum(int[] nums) {
         //O(n^2) time complexity
         //外层for 执行n 次，里面俩层循一共也只有n 次，因为lo 和 hi 是单调变化的，一个从头往后，一个从后往前
         int n = nums.length;
@@ -90,16 +90,16 @@ public class Sol15_3Sum {
             int sum = 0 - nums[i];
             while ( j < k) {
 
-                if (  nums[j] + nums[k] == sum) {
+                if (nums[j] + nums[k] == sum) {
                     list.add(Arrays.asList(nums[i], nums[j], nums[k]));
-                    while ( j < k && nums[j] == nums[j+1]) j++;  // skip the same values
-                    while ( j < k && nums[k] == nums[k-1]) k--;
+                    while (j < k && nums[j] == nums[j+1]) j++;  // skip the same values
+                    while (j < k && nums[k] == nums[k-1]) k--;
 
                     j++;
                     k--;
-                }else if ( nums[j] + nums[k] < sum){
+                } else if (nums[j] + nums[k] < sum){
                     j++;
-                }else if ( nums[j] + nums[k] > sum ){
+                } else if (nums[j] + nums[k] > sum ){
                     k--;
                 }
             }

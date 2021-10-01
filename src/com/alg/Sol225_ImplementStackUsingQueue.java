@@ -1,6 +1,9 @@
 package com.alg;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Created by HAU on 11/29/2017.
@@ -46,4 +49,30 @@ public class Sol225_ImplementStackUsingQueue {
         }
     }
 
+    class MyStack2 {
+
+        private Deque<Integer> q = new ArrayDeque<>();
+        public MyStack2() {
+
+        }
+
+        public void push(int t) {
+            q.addLast(t);
+            int n = q.size();
+            while (n-- > 1) {
+                q.addLast(q.pollFirst());
+            }
+        }
+        public int pop() {
+            return q.pollFirst();
+        }
+
+        public int top() {
+            return q.peek();
+        }
+
+        public boolean empty() {
+            return q.isEmpty();
+        }
+    }
 }

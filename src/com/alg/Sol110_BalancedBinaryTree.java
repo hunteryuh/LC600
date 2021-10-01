@@ -55,7 +55,24 @@ public class Sol110_BalancedBinaryTree {
         node3.left = node6;
         node5.left = node7;
         System.out.println(isBalanced(node1));
+    }
 
+    public boolean isBalanced2(TreeNode root) {
+        // height difference no more than one
+        if (root == null) return true;
+        if (!isBalanced2(root.left) || !isBalanced2(root.right)) {
+            return false;
+        }
+        if (Math.abs(height(root.left) - height(root.right)) > 1) {
+            return false;
+        }
+        return true;
+    }
+    private int height(TreeNode root) {
+        if (root == null) return 0;
+        int leftHeight = height(root.left);
+        int rightHeight = height(root.right);
+        return 1 + Math.max(leftHeight, rightHeight);
     }
 
  /*   public static boolean isBalanced(TreeNode root) {

@@ -40,7 +40,7 @@ public class Sol144_BinaryTreePreorderTraversal {
 
         // Divide
         List<Integer> left = preorderTraversal(root.left);
-        List<Integer> right = preorderTraversal(root.left);
+        List<Integer> right = preorderTraversal(root.right);
 
         // Conquer  (merge)
         result.add(root.val);
@@ -67,9 +67,9 @@ public class Sol144_BinaryTreePreorderTraversal {
     public static List<Integer> preorderTra(TreeNode root){
         List<Integer> res = new LinkedList<>();
         Stack<TreeNode> stack = new Stack<>();
-        while(root != null){
+        while (root != null){
             res.add(root.val);
-            if ( root.right != null){
+            if (root.right != null){
                 stack.push(root.right);
             }
             root = root.left;

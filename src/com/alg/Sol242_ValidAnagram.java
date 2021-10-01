@@ -66,7 +66,7 @@ public class Sol242_ValidAnagram {
         int[] alpha = new int[26]; //'z'-'a'+1 = 26
         for(char c:s.toCharArray()) alpha[c - 'a']++;
         for(char c:t.toCharArray()) alpha[c - 'a']--;
-        for(int i: alpha) if(i != 0) return false;
+        for(int i: alpha) if (i!= 0) return false;
         return true;
     }
     // version 3 using array

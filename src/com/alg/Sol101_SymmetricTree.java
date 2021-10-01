@@ -20,9 +20,13 @@ But the following [1,2,2,null,3,null,3] is not:
    / \
   2   2
    \   \
-   3    3*/
+   3    3*
+
+
+   https://leetcode.com/problems/symmetric-tree//
+ */
 public class Sol101_SymmetricTree {
-    public static class TreeNode{
+    public static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
@@ -30,34 +34,41 @@ public class Sol101_SymmetricTree {
             val = x;
         }
     }
+
     public boolean isSymmetric(TreeNode root) {
         // recursive,  he total run time is O(n)O(n), where nn is the total number of nodes in the tree.
         return isMirror(root,root);
     }
 
     private boolean isMirror(TreeNode t1, TreeNode t2) {
-        if(t1 == null && t2 == null){
+        if (t1 == null && t2 == null){
             return true;
-        }else if (t1 == null || t2 == null){
+        } else if (t1 == null || t2 == null) {
             return false;
         }
-        return(t1.val == t2.val && isMirror(t1.left,t2.right) && isMirror(t2.left,t1.right));
+        return (t1.val == t2.val && isMirror(t1.left,t2.right) && isMirror(t2.left,t1.right));
     }
+
     // iterative
-    public boolean isSymtree2(TreeNode root){
-        Queue<TreeNode> q = new LinkedList<>();
-        q.add(root);
-        q.add(root);
-        while (!q.isEmpty()){
-            TreeNode n1 = q.poll();
-            TreeNode n2 = q.poll();
-            if( n1 == null && n2 == null) continue;
-            if (n1 == null || n2 == null) return false;
-            if( n1.val != n2.val) return false;
-            q.add(n1.left);
-            q.add(n2.right);
-            q.add(n1.right);
-            q.add(n2.left);
+    public boolean isSymmetric3(TreeNode root) {
+        if (root == null) return true;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root.left);
+        queue.offer(root.right);
+
+        while (!queue.isEmpty()) {
+            TreeNode n1 = queue.poll();
+            TreeNode n2 = queue.poll();
+            if (n1 == null && n2 == null) {
+                continue;
+            }
+            if (n1 == null || n2 == null || n1.val != n2.val) {
+                return false;
+            }
+            queue.offer(n1.left);
+            queue.offer(n2.right);
+            queue.offer(n1.right);
+            queue.offer(n2.left);
         }
         return true;
     }
@@ -71,4 +82,6 @@ public class Sol101_SymmetricTree {
         root.right = temp;
         return;
     }
+
+
 }

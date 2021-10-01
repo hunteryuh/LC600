@@ -22,7 +22,7 @@ public class Sol541_ReverseStringII {
         return new String(r);  // use char[] to build a string
     }
     private static void swapK(char[] r, int i, int j) {
-        while ( i < j) {
+        while (i < j) {
             char c = r[i];
             r[i] = r[j];
             r[j] = c;
@@ -35,7 +35,27 @@ public class Sol541_ReverseStringII {
         String s = "abcdefghj";
         int k = 3;
         System.out.println(reverseStr(s,k));
+    }
 
+    public String reverseString(String s, int k) {
+        char[] res = s.toCharArray();
+        for (int i = 0; i < s.length(); i += 2*k) {
+            int end = i + k - 1;
+            if (end > s.length() - 1) {
+                end = s.length() - 1;
+            }
+            swap(res, i, end);
+        }
+        return  new String(res);
 
+    }
+    private void swap(char[] s, int i, int j) {
+        while (i < j) {
+            s[i] ^= s[j];
+            s[j] ^= s[i];
+            s[i] ^= s[j];
+            i++;
+            j--;
+        }
     }
 }

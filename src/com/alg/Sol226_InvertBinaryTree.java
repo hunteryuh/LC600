@@ -26,7 +26,7 @@ public class Sol226_InvertBinaryTree {
     }
     public static TreeNode invertTree(TreeNode root) {
         // recursion  time O(n), space O(n)
-        if ( root == null){
+        if (root == null) {
             return root;
         }
         TreeNode right = invertTree(root.right);
@@ -37,7 +37,7 @@ public class Sol226_InvertBinaryTree {
     }
     // iterative
     public static TreeNode mirrorTree(TreeNode root){
-        if ( root == null) return root;
+        if (root == null) return root;
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
         while(!queue.isEmpty()){

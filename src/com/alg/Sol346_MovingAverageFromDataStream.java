@@ -1,9 +1,17 @@
 package com.alg;
 
+import java.util.Deque;
+import java.util.LinkedList;
+
 /**
  * Created by HAU on 12/7/2017.
  */
 /*Given a stream of integers and a window size, calculate the moving average of all integers in the sliding window.
+
+Implement the MovingAverage class:
+
+    MovingAverage(int size) Initializes the object with the size of the window size.
+    double next(int val) Returns the moving average of the last size values of the stream.
 
 For example,
 
@@ -26,7 +34,7 @@ public class Sol346_MovingAverageFromDataStream {
         }
 
         public double next(int val) {
-            if(n < window.length) n++;
+            if (n < window.length) n++;
             sum -= window[insert];
             sum += val;
             window[insert] = val;
@@ -40,4 +48,21 @@ public class Sol346_MovingAverageFromDataStream {
  * MovingAverage obj = new MovingAverage(size);
  * double param_1 = obj.next(val);
  */
+    class MovingAverage2{
+        int n, sum;
+        private Deque<Integer> queue;
+        public MovingAverage2(int size) {
+            queue = new LinkedList<>();
+            this.n = size;
+        }
+
+        public double next(int val) {
+            queue.add(val);
+            sum += val;
+            if (queue.size() > n) {
+                sum -= queue.poll();
+            }
+            return (double)sum/Math.min(n, queue.size());
+        }
+    }
 }

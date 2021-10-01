@@ -39,4 +39,26 @@ public class Sol209_MinimumSizeSubarraySum {
         int s = 7;
         System.out.println(minSubArrayLen(s, nums));
     }
+
+    public int minSubArrayLength(int target, int[] nums) {
+        int res = nums.length + 1;
+        int sum = 0;
+        int sublength = 0;
+        int start = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            while (sum >= target) {
+                sublength = i - start + 1;
+                if (sublength < res) {
+                    res = sublength;
+                }
+                sum -= nums[start];
+                start++;
+            }
+        }
+        if (res == nums.length + 1) {
+            return 0;
+        }
+        return res;
+    }
 }

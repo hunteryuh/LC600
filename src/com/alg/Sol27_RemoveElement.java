@@ -105,13 +105,4 @@ public class Sol27_RemoveElement {
         }
         return n;
     }
-
-
-
-
-
-
-
-
-
 }
