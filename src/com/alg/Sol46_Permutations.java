@@ -101,26 +101,26 @@ public class Sol46_Permutations {
         }
     }
 
-//    public List<List<Integer>> permutet(int[] nums) {
-//        // write your code here
-//        List<List<Integer>> res = new ArrayList<>();
-//        List<Integer> sol = new ArrayList<>();
-//        dfst(res, sol, nums, 0);
-//        return res;
-//    }
-//
-//    private void dfst(List<List<Integer>> res, List<Integer> sol, int[] nums, int start) {
-//        if (sol.size() == nums.length) {
-//            res.add(new ArrayList<>(sol));
-//            return;
-//        }
-//        for (int i = 0; i < nums.length; i++) {  // needs to start with 0, so no need to pass "start"
-//            if (!sol.contains(nums[i])) {
-//                sol.add(nums[i]);
-//                dfst(res, sol, nums, i + 1);
-//                sol.remove(sol.size() - 1);
-//            }
-//
-//        }
-//    }
+    public List<List<Integer>> permute4(int[] nums) {
+        // write your code here
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> sol = new ArrayList<>();
+        dfst(res, sol, nums);
+        return res;
+    }
+
+    private void dfst(List<List<Integer>> res, List<Integer> sol, int[] nums) {
+        if (sol.size() == nums.length) {
+            res.add(new ArrayList<>(sol));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {  // needs to start with 0, so no need to pass "start"
+            if (!sol.contains(nums[i])) {
+                sol.add(nums[i]);
+                dfst(res, sol, nums);
+                sol.remove(sol.size() - 1);
+            }
+
+        }
+    }
 }

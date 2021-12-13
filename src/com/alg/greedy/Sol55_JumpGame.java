@@ -1,4 +1,4 @@
-package com.alg;
+package com.alg.greedy;
 
 /**
  * Created by HAU on 2/9/2018.
@@ -17,8 +17,8 @@ public class Sol55_JumpGame {
     public static boolean canJump(int[] nums) {
         // greedy
         int last = nums.length - 1;
-        for(int i = last; i >=0 ; i--){
-            if( i + nums[i] >= last){
+        for (int i = last; i >=0 ; i--) {
+            if ( i + nums[i] >= last) {
                 last = i;
             }
         }
@@ -60,5 +60,23 @@ public class Sol55_JumpGame {
         System.out.println(canJump(nums));
         System.out.println(canJ(nums));
         System.out.println(canJ2(nums));
+    }
+
+    // https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0055.%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F.md
+    // greedy 2
+    public boolean canJump2(int[] nums) {
+        if (nums.length == 1) {
+            return true;
+        }
+        //覆盖范围
+        int coverRange = nums[0];
+        //在覆盖范围内更新最大的覆盖范围
+        for (int i = 0; i <= coverRange; i++) {
+            coverRange = Math.max(coverRange, i + nums[i]);
+            if (coverRange >= nums.length - 1) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -14,8 +14,8 @@ public class Sol112_PathSum {
    }
 
    public static boolean hasPathSum(TreeNode root, int sum){
-       if ( root == null) return false;
-       if   (root.left == null && root.right == null){
+       if (root == null) return false;
+       if (root.left == null && root.right == null) {
            return root.val == sum;
        }
        boolean left = hasPathSum(root.left, sum - root.val);
@@ -35,10 +35,32 @@ public class Sol112_PathSum {
 
         TreeNode root = new TreeNode(10);
         root.left = new TreeNode(8);
-        root.right = new TreeNode(2);
+//        root.right = new TreeNode(2);
         root.left.left = new TreeNode(3);
         root.left.right = new TreeNode(5);
-        root.right.left = new TreeNode(2);
-        System.out.println(hasPathSum(root, sum));
+//        root.right.left = new TreeNode(2);
+        System.out.println(hasPathSum(root, 10));
+
+        Sol112_PathSum ss = new Sol112_PathSum();
+        System.out.println(ss.hasPathSum2(root, 10));
+    }
+
+    public boolean hasPathSum2(TreeNode root, int targetSum) {
+        if (root == null) {
+            return false;
+        }
+        int newTarget = targetSum - root.val;
+        if (root.left == null && root.right == null) {
+            return newTarget == 0;
+        }
+        if (root.left != null) {
+            boolean left = hasPathSum2(root.left, newTarget);
+            if (left) return true;
+        }
+        if (root.right != null) {
+            boolean right = hasPathSum2(root.right, newTarget);
+            if (right) return true;
+        }
+        return false;
     }
 }

@@ -91,6 +91,8 @@ public class Sol17_LetterCombinationOfPhoneNumber {
             return;
         }
         int index = digits.charAt(start) - '0';  // to track and convert the digit in the digits to the index in the map
+//        int index = Integer.parseInt(String.valueOf(digits.charAt(start)));
+//        int index = Character.getNumericValue(digits.charAt(start));
         String possibleLetters = map[index];
         for (int i = 0; i < possibleLetters.length(); i++) {
             sb.append(possibleLetters.charAt(i));

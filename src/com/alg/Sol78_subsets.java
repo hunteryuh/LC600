@@ -62,6 +62,10 @@ public class Sol78_subsets {
         // clone operation:  deep copy
         result.add(new ArrayList<Integer>(subset));//??
 
+        if (offset >= nums.length) { //终止条件可不加 因为 offset >= nums.size()，本层for循环本来也结束了。
+            return;
+        }
+
         for (int i = offset; i < nums.length; i++){
             subset.add(nums[i]);
             // [] -> [1]

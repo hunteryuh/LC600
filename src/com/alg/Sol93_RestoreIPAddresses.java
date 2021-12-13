@@ -1,6 +1,7 @@
 package com.alg;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /*
@@ -66,5 +67,56 @@ public class Sol93_RestoreIPAddresses {
             return false;
         }
         return true;
+    }
+
+
+    public List<String> restoreIpAddresses2(String s) {
+        List<String> res = new ArrayList<>();
+        if (s == null || s.length() < 4 || s.length() > 4 * 3) {
+            return res;
+        }
+        dfs2(s, res, new LinkedList<String>(), 0);
+        return res;
+    }
+    private void dfs2(String s, List<String> res, LinkedList<String> sol, int start) {
+        if (start == s.length() && sol.size() == 4) {
+            StringBuilder sb = new StringBuilder();
+            for (String c : sol) {
+                sb.append(c).append(".");
+            }
+            sb.deleteCharAt(sb.length() - 1);
+            res.add(sb.toString());
+            return;
+        }
+        for (int i = start; i < s.length(); i++) {
+            if (sol.size() >= 4) {
+                return;
+            }
+            if (isPossible(s, start, i)) {
+                sol.add(s.substring(start, i + 1));
+                dfs2(s, res, sol, i + 1);
+                sol.removeLast();
+            }
+        }
+    }
+    // start and end included
+    private boolean isPossible(String s, int start, int end) {
+        if (end - start > 2) {
+            return false;
+        }
+        if (end - start > 0 && s.charAt(start) == '0') {
+            return false;
+        }
+        if (Integer.parseInt(s.substring(start, end + 1)) > 255) {
+            return false;
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        String s = "010010";
+        Sol93_RestoreIPAddresses ss = new Sol93_RestoreIPAddresses();
+        List<String> res = ss.restoreIpAddresses2(s);
+        System.out.println(res);
     }
 }

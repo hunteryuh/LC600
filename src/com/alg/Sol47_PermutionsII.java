@@ -4,7 +4,9 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by HAU on 11/30/2017.
@@ -36,7 +38,7 @@ public class Sol47_PermutionsII {
 
 Time complexity - O(n*n!), Space Complexity - O(n)。*/
     private static void dfs(int[] nums, List<List<Integer>> res, List<Integer> sol, boolean[] used) {
-        if(sol.size() == nums.length){
+        if (sol.size() == nums.length) {
             res.add(new ArrayList<>(sol));
             return;
         }
@@ -44,7 +46,7 @@ Time complexity - O(n*n!), Space Complexity - O(n)。*/
             if(used[i]) continue;
             if(i>0 && nums[i] == nums[i-1] && !used[i-1]) continue;
             //when a number has the same value with its previous,
-            // we can use this number only if his previous is used
+            // we can use this number only if its previous is used
             /*比如，给出一个排好序的数组，[1,2,2]，那么第一个2和第二2如果在结果中互换位置，
             我们也认为是同一种方案，所以我们强制要求相同的数字，原来排在前面的，在结果
             当中也应该排在前面，这样就保证了唯一性。所以当前面的2还没有使用的时候，就
@@ -61,6 +63,8 @@ Time complexity - O(n*n!), Space Complexity - O(n)。*/
     public static void main(String[] args) {
         int[] nums= {1,2,1};
         System.out.println(permuteUnique(nums));
+        Sol47_PermutionsII ss = new Sol47_PermutionsII();
+        System.out.println(ss.permuteUnique3(nums));
     }
 
     public List<List<Integer>> permuteUnique2(int[] nums) {
@@ -85,7 +89,36 @@ Time complexity - O(n*n!), Space Complexity - O(n)。*/
             pm.add(nums[i]);
             visited[i] = true;
             dfs2(res, pm, nums, visited);
+            pm.removeLast();
+            visited[i] = false;
+        }
+    }
 
+    // use set for de-duplication at each layer
+    public List<List<Integer>> permuteUnique3(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        boolean[] visited = new boolean[nums.length];
+        Deque<Integer> pm = new ArrayDeque<>();
+//        Arrays.sort(nums);  // no need to sort first if using a set to do de-duplication
+        dfs3(res, pm, nums, visited);
+        return res;
+    }
+
+    private void dfs3(List<List<Integer>> res, Deque<Integer> pm, int[] nums, boolean[] visited) {
+        if (pm.size() == nums.length) {
+            res.add(new ArrayList<>(pm));
+            return;
+        }
+
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (set.contains(nums[i])) continue;
+            if (visited[i]) continue;
+            set.add(nums[i]); // nums[i], meaning the value, not the position i
+
+            pm.add(nums[i]);
+            visited[i] = true;
+            dfs3(res, pm, nums, visited);
             pm.removeLast();
             visited[i] = false;
         }

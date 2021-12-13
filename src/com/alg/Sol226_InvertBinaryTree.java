@@ -1,5 +1,7 @@
 package com.alg;
 
+import apple.laf.JRSUIUtils;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -16,15 +18,7 @@ to
  / \   / \
 9   6 3   1*/
 public class Sol226_InvertBinaryTree {
-    public static class TreeNode{
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode (int x){
-            val = x;
-        }
-    }
-    public static TreeNode invertTree(TreeNode root) {
+    public TreeNode invertTree(TreeNode root) {
         // recursion  time O(n), space O(n)
         if (root == null) {
             return root;
@@ -35,8 +29,21 @@ public class Sol226_InvertBinaryTree {
         root.right = left;
         return root;
     }
+
+    public TreeNode invertTree2(TreeNode root) {
+        if (root == null) return root;
+        invertTree2(root.left);
+        invertTree2(root.right);
+        swapLeftRight(root);
+        return root;
+    }
+    private void swapLeftRight(TreeNode root) {
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+    }
     // iterative
-    public static TreeNode mirrorTree(TreeNode root){
+    public TreeNode mirrorTree(TreeNode root){
         if (root == null) return root;
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);

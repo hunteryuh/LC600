@@ -25,7 +25,6 @@ public class Sol235_LowestCommonAncestorofABinarySearchTree {
     }
 
     public TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
-
         // traverse
         TreeNode node = root;
         int pV = p.val;
@@ -40,6 +39,15 @@ public class Sol235_LowestCommonAncestorofABinarySearchTree {
                 return node;
             }
         }
-        return null;
+        return root;
+    }
+
+    public TreeNode lowestCommonAncestor3(TreeNode root, TreeNode p , TreeNode q) {
+        if (root.val > p.val && root.val > q.val) {
+            return lowestCommonAncestor3(root.left, p, q);
+        } else if (root.val < p.val && root.val < q.val) {
+            return lowestCommonAncestor3(root.right, p , q);
+        }
+        return root;
     }
 }

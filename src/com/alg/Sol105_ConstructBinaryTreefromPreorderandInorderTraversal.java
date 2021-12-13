@@ -7,9 +7,20 @@ import java.util.Map;
  * Created by HAU on 11/21/2017.
  */
 /*Given preorder and inorder traversal of a tree, construct the binary tree.
-
+https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
 Note:
-You may assume that duplicates do not exist in the tree.*/
+You may assume that duplicates do not exist in the tree.
+
+Constraints:
+
+1 <= preorder.length <= 3000
+inorder.length == preorder.length
+-3000 <= preorder[i], inorder[i] <= 3000
+preorder and inorder consist of unique values.
+Each value of inorder also appears in preorder.
+preorder is guaranteed to be the preorder traversal of the tree.
+inorder is guaranteed to be the inorder traversal of the tree.
+*/
 public class Sol105_ConstructBinaryTreefromPreorderandInorderTraversal {
     public static class TreeNode{
         int val;
@@ -58,4 +69,34 @@ public class Sol105_ConstructBinaryTreefromPreorderandInorderTraversal {
         root.right = maphelper(preorder,prestart+numsleft + 1, preend, inorder,inRoot+1, inend, inMap);
         return root;
     }
+
+    public TreeNode buildTreeWithPreAndInOrderArray(int[] preorder, int[] inorder) {
+        int length = preorder.length;
+        if (length == 0 || inorder.length != length) return null;
+        return helper(preorder, 0, length, inorder, 0, length);
+    }
+
+    private TreeNode helper(int[] preorder, int preLeft, int preRight, int[] inorder, int inLeft, int inRight) {
+        if (inLeft >= inRight) {
+            return null;
+        }
+        if (inLeft + 1 == inRight) {
+            return new TreeNode(inorder[inLeft]);
+        }
+        int rootVal = preorder[preLeft];
+        int rootIndexInInOrder = 0;
+        for (int i = 0; i < inRight; i++) {
+            if (inorder[i] == rootVal) {
+                rootIndexInInOrder = i;
+                break;
+            }
+        }
+        TreeNode root = new TreeNode(rootVal);
+        int newLength = rootIndexInInOrder - inLeft;
+        root.left = helper(preorder, preLeft + 1, preLeft + 1 + newLength, inorder, inLeft, rootIndexInInOrder);
+//        root.right = helper(preorder, preRight - (inRight - rootIndexInInOrder -1), preRight, inorder, rootIndexInInOrder + 1, inRight);
+        root.right = helper(preorder, preLeft + 1 + newLength , preRight, inorder, rootIndexInInOrder + 1, inRight);
+        return root;
+    }
+
 }

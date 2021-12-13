@@ -1,4 +1,4 @@
-package com.alg;
+package com.alg.greedy;
 
 import java.util.*;
 
@@ -18,12 +18,12 @@ public class Sol56_MergeIntervals {
        Interval(int s, int e) { start = s; end = e; }
    }
     public static List<Interval> merge(List<Interval> intervals) {
-        if ( intervals == null || intervals.size() <= 1) return intervals;
+        if (intervals == null || intervals.size() <= 1) return intervals;
         List<Interval> res = new ArrayList<>();
         Collections.sort(intervals, new IntervalComparator());
         Interval last = intervals.get(0);
 
-        for ( int i = 1; i < intervals.size(); i++){
+        for (int i = 1; i < intervals.size(); i++){
             Interval cur = intervals.get(i);
             if (cur.start <= last.end){
                 last.end = Math.max(last.end, cur.end);
@@ -159,6 +159,44 @@ Explanation: Intervals [1,4] and [4,5] are considered overlapping.
                 res.get(res.size() - 1)[1] = Math.max(res.get(res.size() - 1)[1], cur[1]);
             }
         }
+
+        return res.toArray(new int[res.size()][]);
+    }
+
+    // https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0056.%E5%90%88%E5%B9%B6%E5%8C%BA%E9%97%B4.md
+    public int[][] merge0(int[][] intervals) {
+        List<int[]> res = new LinkedList<>();
+        Arrays.sort(intervals, (o1, o2) -> Integer.compare(o1[0], o2[0]));
+
+        int start = intervals[0][0];
+        for (int i = 1; i < intervals.length; i++) {
+            if (intervals[i][0] > intervals[i - 1][1]) {
+                res.add(new int[]{start, intervals[i - 1][1]});
+                start = intervals[i][0];
+            } else {
+                intervals[i][1] = Math.max(intervals[i][1], intervals[i - 1][1]);
+            }
+        }
+        res.add(new int[]{start, intervals[intervals.length - 1][1]});
+        return res.toArray(new int[res.size()][]);
+    }
+
+    public int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals, (o1, o2) -> (o1[0] - o2[0]));
+        List<int[]> res = new ArrayList<>();
+        int start = intervals[0][0];
+        int n = intervals.length;
+        for (int i = 1; i < n; i++) {
+            if (intervals[i][0] > intervals[i-1][1]) {
+                res.add(intervals[i-1]);
+                start = intervals[i][0]; // update start
+            } else {
+                int end = Math.max(intervals[i-1][1], intervals[i][1]);
+                intervals[i][0] = start;
+                intervals[i][1] = end;
+            }
+        }
+        res.add(intervals[n-1]);
 
         return res.toArray(new int[res.size()][]);
     }

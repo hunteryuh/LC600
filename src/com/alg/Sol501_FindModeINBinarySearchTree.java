@@ -50,7 +50,9 @@ public class Sol501_FindModeINBinarySearchTree {
         for(int i = 0; i < res.length;i++){
             res[i] = list.get(i);
         }
-        return res;
+//        return list.stream().mapToInt(Integer::intValue).toArray();
+        return list.stream().mapToInt(i -> i).toArray();
+//        return res;
     }
 
     private void inorder(TreeNode node){
@@ -62,7 +64,7 @@ public class Sol501_FindModeINBinarySearchTree {
     // no map
 
     public static List<Integer> ans = new ArrayList<>();
-    public static Integer pre;
+    private static TreeNode pre = null;
     public static int maxCount = 0, curCount = 0;
     public static int[] findM2(TreeNode root){
         traverse(root);
@@ -74,9 +76,9 @@ public class Sol501_FindModeINBinarySearchTree {
 
     }
     private static void traverse(TreeNode root){
-        if ( root == null) return;
+        if (root == null) return;
         traverse(root.left);
-        if (pre != null && root.val == pre){
+        if (pre != null && root.val == pre.val){
             curCount++;
         }else curCount = 1;
 
@@ -84,10 +86,11 @@ public class Sol501_FindModeINBinarySearchTree {
             ans.add(root.val);
         } else if ( curCount > maxCount){
             maxCount = curCount;
-            ans = new ArrayList<>();
+//            ans = new ArrayList<>();
+            ans.clear();
             ans.add(root.val);
         }
-        pre = root.val;
+        pre = root;
         traverse(root.right);
     }
 

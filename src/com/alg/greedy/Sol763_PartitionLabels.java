@@ -1,4 +1,4 @@
-package com.alg;
+package com.alg.greedy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class Sol763_PartitionLabels {
         int anchor = 0;
         for(int i = 0; i < S.length(); i++){
             j = Math.max(j, last[S.charAt(i)-'a']);
-            if( j == i){
+            if (j == i) {
                 res.add(j + 1 - anchor);
                 anchor = i + 1;
             }

@@ -10,20 +10,32 @@ which has the largest sum.
 For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
 the contiguous subarray [4,-1,2,1] has the largest sum = 6.
 */
-public class Sol53MaximumSubarray {
+public class Sol53_MaximumSubarray {
     public static int maxSubArray(int[] nums){
         if (nums.length ==0) return 0;
-        int sum = nums[0];
-        int result = nums[0];
+        int currentSubarray = nums[0];
+        int maxSubarray = nums[0];
 
         int n = nums.length;
         for(int i = 1; i<n; i++){
-            sum = Math.max(sum+nums[i],nums[i]);
-            result = Math.max(sum,result);
+            currentSubarray = Math.max(currentSubarray+nums[i],nums[i]);
+            maxSubarray = Math.max(currentSubarray, maxSubarray);
         }
-        return result;
+        return maxSubarray;
+    }
 
-
+    public int maxSubArray2(int[] nums) {
+        if (nums.length ==0) return 0;
+        int sum = nums[0];
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            count += nums[i];
+            sum = Math.max(sum,  count);
+            if (count <= 0) {
+                count = 0;
+            }
+        }
+        return sum;
     }
 
 
@@ -65,5 +77,35 @@ public class Sol53MaximumSubarray {
             }
         }
         return maxsum;
+    }
+
+    public int maxSubarray(int[] nums) {
+        int res = nums[0];
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            count += nums[i];
+            if (count > res) {
+                res = count;
+            }
+            if (count <= 0) {
+                count = 0;
+            }
+        }
+        return res;
+    }
+
+    // brute force
+    public int maxSub(int[] nums) {
+        int max = nums[0];
+        for (int i = 0; i < nums.length; i++) {
+            int cur = 0;
+            for (int j = i; j < nums.length; j++) {
+                cur += nums[j];
+                if (cur > max) {
+                    max = cur;
+                }
+            }
+        }
+        return max;
     }
 }

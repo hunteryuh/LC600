@@ -3,6 +3,7 @@ package com.alg;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -110,5 +111,35 @@ public class Sol39_CombinationSum {
             unique[i] = candidates[i];
         }
         return unique;
+    }
+
+    // use sum instead of remaining sum
+    public List<List<Integer>> combinationSum3(int[] candidates, int target) {
+        List<Integer> sol = new ArrayList<>();
+        List<List<Integer>> res = new ArrayList<>();
+        if (candidates == null || candidates.length == 0 || target <= 0) {
+            return res;
+        }
+        Arrays.sort(candidates);
+        dfs(candidates, target, sol, res, 0, 0);
+        return res;
+    }
+
+    private void dfs(int[] candidates, int target, List<Integer> sol, List<List<Integer>> res, int sum, int start) {
+        if (sum > target) {
+            return;
+        }
+        if (sum == target) {
+            res.add(new ArrayList<>(sol));
+            return;
+        }
+
+        for (int i = start; i < candidates.length; i++) {
+            sum += candidates[i];
+            sol.add(candidates[i]);
+            dfs(candidates, target, sol, res, sum, i);
+            sum -= candidates[i];
+            sol.remove(sol.size() - 1);
+        }
     }
 }

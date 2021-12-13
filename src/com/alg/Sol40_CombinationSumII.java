@@ -2,7 +2,10 @@ package com.alg;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by HAU on 7/22/2017.
@@ -29,12 +32,12 @@ public class Sol40_CombinationSumII {
     }
 
     private static void helper(int[] candidates, int index, ArrayList<Integer> subset, int target, ArrayList<List<Integer>> result) {
-        if (target == 0){
+        if (target == 0) {
             ArrayList<Integer> tmp = new ArrayList<>(subset);
             result.add(tmp);
             return;
         }
-        for ( int i = index; i < candidates.length; i++){
+        for (int i = index; i < candidates.length; i++){
             if (candidates[i] > target) return;  // array is sorted
             // "continue the while loop" by satisfied "if (i > cur && cand[i] == cand[i - 1])".
             //You see, in your case [1,1,1], if you need a sum of 2, you will not skip the third 1 because
@@ -42,9 +45,10 @@ public class Sol40_CombinationSumII {
             // What I mean in my first comment, for example, [1,1,1,2], we want a sum of 4, we have add [1, 1(second), 2] to the result set,
             // then back from the recursion, when i > cur, that is, i point to the third 1, this time we skip the third 1,
             // just to avoid another [1,1(third), 2] added to the result set.
+            // 要对同一树层使用过的元素进行跳过
             if (i > index && candidates[i] == candidates[i - 1]) continue; // candidate may have duplicate numbers
             subset.add(candidates[i]);
-            helper(candidates,i + 1,subset,target - candidates[i],result);  // i + 1, only be used once
+            helper(candidates,i + 1, subset,target - candidates[i], result);  // i + 1, only be used once
             subset.remove(subset.size() - 1);
         }
 
@@ -79,7 +83,77 @@ public class Sol40_CombinationSumII {
             sol.add(candidates[i]);
             dfs(candidates, sol, target - candidates[i], results, i + 1);
             sol.remove(sol.size() - 1);
-
         }
     }
+
+    // use set for each layer de-duplication, no need of used[]
+    public List<List<Integer>> combinationSum3(int[] candidates, int target) {
+        LinkedList<Integer> sol = new LinkedList<>();
+        List<List<Integer>> res = new ArrayList<>();
+        if (candidates == null || candidates.length == 0 || target < 0) {
+            return res;
+        }
+        Arrays.sort(candidates);
+//        boolean[] used = new boolean[candidates.length];
+        dfs3(candidates, target, sol, res, 0, 0);
+        return res;
+    }
+
+    private void dfs3(int[] candidates, int target, LinkedList<Integer> sol, List<List<Integer>> res, int start, int sum) {
+        if (sum == target) {
+            res.add(new ArrayList<>(sol));
+            return;
+        }
+        Set<Integer> set = new HashSet<>();
+        for (int i = start; i < candidates.length; i++) {
+            if (set.contains(candidates[i])) {
+                continue;
+            }
+            sum += candidates[i];
+            if (sum > target) return;
+            set.add(candidates[i]);
+//            used[i] = true;
+            sol.addLast(candidates[i]);
+            dfs3(candidates, target, sol, res, i + 1, sum);
+            sum -= candidates[i];
+//            used[i] = false;
+            sol.removeLast();
+        }
+    }
+
+    public List<List<Integer>> combinationSum4(int[] candidates, int target) {
+        LinkedList<Integer> sol = new LinkedList<>();
+        List<List<Integer>> res = new ArrayList<>();
+        if (candidates == null || candidates.length == 0 || target < 0) {
+            return res;
+        }
+        Arrays.sort(candidates);
+        boolean[] used = new boolean[candidates.length];
+        dfs4(candidates, target, sol, res, 0, 0, used);
+        return res;
+    }
+
+    private void dfs4(int[] candidates, int target, LinkedList<Integer> sol, List<List<Integer>> res, int start, int sum, boolean[] used) {
+        if (sum == target) {
+            res.add(new ArrayList<>(sol));
+            return;
+        }
+        for (int i = start; i < candidates.length; i++) {
+            // used[i - 1] == true，说明同一树支candidates[i - 1]使用过
+            // used[i - 1] == false，说明同一树层candidates[i - 1]使用过
+            // 要对同一树层使用过的元素进行跳过
+            if (i > 0 && candidates[i] == candidates[i-1] && !used[i-1]) {
+                continue;
+            }
+            sum += candidates[i];
+            if (sum > target) return;
+            used[i] = true;
+            sol.addLast(candidates[i]);
+            dfs4(candidates, target, sol, res, i + 1, sum, used);
+            sum -= candidates[i];
+            used[i] = false;
+            sol.removeLast();
+        }
+    }
+
 }

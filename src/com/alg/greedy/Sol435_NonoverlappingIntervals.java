@@ -1,4 +1,4 @@
-package com.alg;
+package com.alg.greedy;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -60,6 +60,10 @@ public class Sol435_NonoverlappingIntervals {
         System.out.println(eraseOverlapIntervals(ia));
         System.out.println(eraseOverlap(ia));
 
+        int[][] intervals = { {1,100}, {11,22}, {1,11}, {2,12}};
+        Sol435_NonoverlappingIntervals ss = new Sol435_NonoverlappingIntervals();
+        System.out.println(ss.eraseOverlapIntervals3(intervals));
+
     }
     // method 2, sort by start
     public static int eraseOverlap(Interval[] intervals){
@@ -88,5 +92,47 @@ public class Sol435_NonoverlappingIntervals {
         public int compare(Interval a, Interval b){
             return a.start - b.start;
         }
+    }
+
+    public int eraseOverlapIntervals(int[][] intervals) {
+        // Arrays.sort(intervals, (i1, i2) -> i1[1] - i2[1]); // sort by right end; works as well, preserve order for equal case
+        Arrays.sort(intervals, (i1, i2) ->
+                i1[1] == i2[1] ?  i1[0] - i2[0] : i1[1] - i2[1]); // sort by right end, if equal, sort by left end; does not change the result
+        int nonOver = 1;  // initiate as 1
+        int currentEnd = intervals[0][1];
+        for (int i = 1; i < intervals.length; i++) {
+            if (intervals[i][0] >= currentEnd) {
+                nonOver++;
+                currentEnd = intervals[i][1];
+            }
+        }
+        return intervals.length - nonOver;
+
+    }
+
+    //按左边排序，不管右边顺序。相交的时候取最小的右边。
+    public int eraseOverlapIntervals3(int[][] intervals) {
+        if (intervals == null || intervals.length == 0) {
+            return 0;
+        }
+        int n = intervals.length;
+//        Arrays.sort(intervals, Comparator.comparingInt(i -> i[0]));
+        Arrays.sort(intervals, ((o1, o2) -> {
+            if (o1[0] == o2[0]) {
+                return o1[1] - o2[1];
+            }
+            return o1[0] - o2[0];
+        }));
+        int remove = 0;
+        int end = intervals[0][1];
+        for (int i = 1; i < n; i++) {
+            if (intervals[i][0] < end) {
+                remove++;
+                end = Math.min(end, intervals[i][1]);
+            } else {
+                end = intervals[i][1];
+            }
+        }
+        return remove;
     }
 }

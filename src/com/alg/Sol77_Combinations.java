@@ -32,13 +32,13 @@ public class Sol77_Combinations {
     }
 
     private static void dfs(List<List<Integer>> res, List<Integer> temp, int n, int k, int start) {
-        if ( k == 0){
+        if (k == 0) {
             res.add(new ArrayList<>(temp));
             return;
         }
-        for ( int i = start; i <= n; i++){
+        for (int i = start; i <= n; i++){
             temp.add(i);
-            dfs(res,temp,n,k-1,i+1);
+            dfs(res, temp, n,k-1,i+1);
             temp.remove(temp.size() - 1);
         }
     }
@@ -58,14 +58,36 @@ public class Sol77_Combinations {
     }
 
     private static void dfs2(List<List<Integer>> res, List<Integer> list, int n, int k, int pos) {
-        if(list.size() == k){
+        if (list.size() == k) {
             res.add(new ArrayList<>(list));
             return;
         }
+
         for ( int i = pos; i <= n; i++){
             list.add(i);
             dfs2(res,list,n,k,i+1);
             list.remove(list.size() - 1);
+        }
+    }
+
+    // not using global variable, added optimization for the "breadth" search of the for loop
+    public List<List<Integer>> combine3(int n, int k) {
+        List<Integer> sol = new ArrayList<>();
+        List<List<Integer>> res = new ArrayList<>();
+        dfs3(n, k, sol, res, 1);
+        return res;
+    }
+
+    private void dfs3(int n, int k, List<Integer> sol, List<List<Integer>> res, int start) {
+        if (sol.size() == k) {
+            res.add(new ArrayList<>(sol));
+            return;
+        }
+//        for (int i = start; i <=n; i++) {
+        for (int i = start; i <=n - (k - sol.size()) + 1; i++) {  // optimized, i can start at most n - (k-existing size) + 1
+            sol.add(i);
+            dfs3(n, k, sol, res, i + 1);
+            sol.remove(sol.size() - 1);
         }
     }
 }

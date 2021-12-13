@@ -43,14 +43,47 @@ public class Sol113_PathSumII {
     private static void dfs(TreeNode root, int sum, List<Integer> sol, List<List<Integer>> res) {
         if(root == null) return;
         sol.add(root.val);
-        if( root.left == null && root.right == null && sum == root.val){
+        if (root.left == null && root.right == null && sum == root.val) {
             res.add(new LinkedList<>(sol));
             // no return here;
             //sol.remove(sol.size() - 1);
-        }else{
+        } else {
             dfs(root.left,sum - root.val,sol, res);
             dfs(root.right,sum - root.val,sol, res);
         }
         sol.remove(sol.size() - 1); // remove the last integer
+    }
+
+    /*
+    https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0112.%E8%B7%AF%E5%BE%84%E6%80%BB%E5%92%8C.md
+    如果需要搜索整颗二叉树且不用处理递归返回值，递归函数就不要返回值。（这种情况就是本文下半部分介绍的113.路径总和ii）
+如果需要搜索整颗二叉树且需要处理递归返回值，递归函数就需要返回值。 （这种情况我们在236. 二叉树的最近公共祖先中介绍）
+如果要搜索其中一条符合条件的路径，那么递归一定需要返回值，因为遇到符合条件的路径了就要及时返回。（112 pathSum 的情况）
+     */
+
+    public List<List<Integer>> pathSums(TreeNode root, int sum) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+        LinkedList<Integer> sol = new LinkedList<>();
+        dfs(root, sum, res, sol);
+        return res;
+    }
+
+    private void dfs(TreeNode root, int target, List<List<Integer>> res, LinkedList<Integer> sol) {
+        sol.add(root.val);
+        if (root.left == null && root.right == null && target == root.val) {
+            res.add(new ArrayList<>(sol));
+            return;
+        }
+        if (root.left != null) {
+            dfs(root.left, target - root.val, res, sol);
+            sol.removeLast();
+        }
+        if (root.right != null) {
+            dfs(root.right, target - root.val, res, sol);
+            sol.removeLast();
+        }
     }
 }

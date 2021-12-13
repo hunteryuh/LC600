@@ -1,4 +1,8 @@
 package com.alg;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /*
 You are playing the Bulls and Cows game with your friend.
 
@@ -66,9 +70,31 @@ public class Sol299_BullsAndCows {
     }
 
     public static void main(String[] args) {
-        String secret = "1807";
-        String guess = "7810";
+        String secret = "1122";
+        String guess = "1222";
         Sol299_BullsAndCows s = new Sol299_BullsAndCows();
-        System.out.println(s.getHint(secret, guess));
+        System.out.println(s.getHints(secret, guess));
+    }
+
+    public String getHints(String secret, String guess) {
+        int[] counts = new int[10];
+        int[] countg = new int[10];
+        int n = secret.length();
+        int bulls = 0;
+        int cows = 0;
+        for (int i = 0; i < n; i++) {
+            char s = secret.charAt(i);
+            char g = guess.charAt(i);
+            if (s == g) {
+                bulls++;
+            } else {
+                counts[s - '0']++;
+                countg[g - '0']++;
+            }
+        }
+        for (int i = 0; i < counts.length; i++) {
+            cows += Math.min(counts[i], countg[i]);
+        }
+        return bulls+"A"+cows+"B";
     }
 }

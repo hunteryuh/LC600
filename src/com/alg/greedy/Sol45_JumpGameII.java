@@ -1,4 +1,4 @@
-package com.alg;
+package com.alg.greedy;
 
 /**
  * Created by HAU on 2/9/2018.
@@ -25,7 +25,11 @@ public class Sol45_JumpGameII {
         int curFarthest = 0;
         for(int i = 0; i < nums.length - 1; i++){
             curFarthest = Math.max(curFarthest, i + nums[i]);
-            if ( i == curEnd){
+//            if (curFarthest >= nums.length - 1) {
+//                jumps++;
+//                break; //return jumps;
+//            }
+            if (i == curEnd) {
                 jumps++;
                 curEnd = curFarthest;
             }
@@ -44,14 +48,14 @@ public class Sol45_JumpGameII {
         int end = 0;
         int step = 0;
         for(int i = 1; i < nums.length ; i++){
-            if( i > end){
+            if (i > end) {
                 step++;
                 end = maxReach;
-                if ( end >= nums.length - 1){
+                if (end >= nums.length - 1) {
                     return step;
                 }
             }
-            maxReach = Math.max(maxReach,i + nums[i]);
+            maxReach = Math.max(maxReach, i + nums[i]);
 
         }
         return step;

@@ -2,6 +2,7 @@ package com.alg;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -143,6 +144,44 @@ public class Sol131_PalindromePartitioning {
             start = pos + 1;
         }
         res.add(result);
+    }
+
+    public List<List<String>> partition2(String s) {
+        List<List<String>> res = new ArrayList<>();
+        LinkedList<String> sol = new LinkedList<>();
+        if (s == null || s.length() == 0) {
+            return res;
+        }
+        dfs(s, sol, res, 0);
+        return res;
+    }
+
+    private void dfs(String s, LinkedList<String> sol, List<List<String>> res, int start) {
+        if (start == s.length()) {
+            res.add(new ArrayList<>(sol));
+            return;
+        }
+
+        for (int i = start; i < s.length(); i++) {
+            if (isPalin(s, start, i)) {
+                sol.add(s.substring(start, i + 1));
+                dfs(s, sol, res, i + 1);
+                sol.removeLast();
+            } else {
+                continue;
+            }
+        }
+    }
+
+    private boolean isPalin(String s, int start, int end) {
+        while (start < end) {
+            if (s.charAt(start) != s.charAt(end)) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+        return true;
     }
 
 }

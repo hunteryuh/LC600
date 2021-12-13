@@ -72,7 +72,7 @@ public class Sol138_CopyListWithRandomPointer {
             RandomListNode tmp = head.next;
             head.next = tmp.next;
             head = head.next;
-            if ( tmp.next != null){
+            if (tmp.next != null) {
                 tmp.next = tmp.next.next;
             }
         }
@@ -80,7 +80,7 @@ public class Sol138_CopyListWithRandomPointer {
     }
 
     private static void copyRandom(RandomListNode head) {
-        while ( head != null){
+        while (head != null){
             if (head.next.random != null){
                 head.next.random = head.random.next;
             }

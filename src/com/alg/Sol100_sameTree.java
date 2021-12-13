@@ -9,7 +9,7 @@ Given two binary trees, write a function to check if they are equal or not.
         Two binary trees are considered equal if they are structurally
         identical and the nodes have the same value.*/
 public class Sol100_sameTree {
-    public static class TreeNode{
+    public static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;

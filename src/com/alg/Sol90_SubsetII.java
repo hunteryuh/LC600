@@ -41,8 +41,8 @@ public class Sol90_SubsetII {
 
     private static void helper(int[] nums, int start, List<Integer> subset, ArrayList<List<Integer>> result) {
         result.add(new ArrayList<>(subset));
-        for ( int i = start; i < nums.length; i++){
-            if ( i != start && nums[i] == nums[i-1]) continue;  // key step to remove the duplicate sets in the result
+        for (int i = start; i < nums.length; i++){
+            if (i != start && nums[i] == nums[i-1]) continue;  // key step to remove the duplicate sets in the result
             subset.add(nums[i]);
             helper(nums, i + 1, subset, result);
             subset.remove(subset.size() - 1);

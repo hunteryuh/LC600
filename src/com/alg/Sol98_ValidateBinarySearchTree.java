@@ -99,7 +99,7 @@ public class Sol98_ValidateBinarySearchTree {
         Stack<TreeNode> stack = new Stack<>();
         TreeNode pre = null, cur = root;
         while (cur!= null || !stack.isEmpty() ){
-            while (cur!= null){
+            while (cur!= null) {
                 stack.push(cur);
                 cur = cur.left;
             }

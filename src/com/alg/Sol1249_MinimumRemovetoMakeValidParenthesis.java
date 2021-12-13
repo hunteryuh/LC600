@@ -35,7 +35,7 @@ Output: "a(b(c)d)"
 
 medium
 
-interviewed by  this one at 7/8/2021
+interviewed by facebook this one at 7/8/2021
  */
 public class Sol1249_MinimumRemovetoMakeValidParenthesis {
     // https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses/discuss/419702/Java-O(n)-solution-without-Stack
