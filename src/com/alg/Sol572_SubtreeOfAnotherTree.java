@@ -25,8 +25,11 @@ public class Sol572_SubtreeOfAnotherTree {
         if (isSame(root, subRoot)) {
             return true;
         }
-        boolean isLeftSub = isSame(root.left, subRoot);
-        boolean isRightSub = isSame(root.right, subRoot);
+        if (root == null) {
+            return false;
+        } // subroot is not null: constraint
+        boolean isLeftSub = isSubtree(root.left, subRoot);
+        boolean isRightSub = isSubtree(root.right, subRoot);
         return isLeftSub || isRightSub;
     }
     private boolean isSame(TreeNode node1, TreeNode node2) {
@@ -38,7 +41,6 @@ public class Sol572_SubtreeOfAnotherTree {
         }
         return isSame(node1.left, node2.left) && isSame(node1.right, node2.right);
     }
-
 
     public boolean isSubtree2(TreeNode root, TreeNode subRoot) {
         if (root == null && subRoot == null){

@@ -18,7 +18,7 @@ public class Sol55_JumpGame {
         // greedy
         int last = nums.length - 1;
         for (int i = last; i >=0 ; i--) {
-            if ( i + nums[i] >= last) {
+            if (i + nums[i] >= last) {
                 last = i;
             }
         }
@@ -79,4 +79,32 @@ public class Sol55_JumpGame {
         }
         return false;
     }
+
+    public boolean canJump3(int[] nums) {
+        int max = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (i <= max) {
+                max = Math.max(max, i + nums[i]);
+            }
+        }
+        return max >= nums.length - 1;
+    }
+
+    // recursion
+    public boolean canJump4(int[] nums) {
+        return canJumpFromPosition(0, nums);
+    }
+
+    private boolean canJumpFromPosition(int pos, int[] nums) {
+        if (pos == nums.length - 1) return true;
+        int furthest = Math.min(nums.length - 1, pos + nums[pos]);
+        for (int i = pos + 1; i <= furthest; i++) {
+            if (canJumpFromPosition(i, nums)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }

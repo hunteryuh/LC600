@@ -1,6 +1,8 @@
 package com.alg;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
@@ -51,5 +53,81 @@ public class Sol739_DailyTemperatures {
         int[] T = {73, 74, 75, 71, 69, 72, 76, 73};
         System.out.println(Arrays.toString(dailyTemperatures(T)));
         System.out.println(Arrays.toString(dailyTemp2(T)));
+    }
+
+    // monotonic stack
+    // https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0739.%E6%AF%8F%E6%97%A5%E6%B8%A9%E5%BA%A6.md
+    public int[] dailyTemperatures2(int[] temperatures) {
+        int n = temperatures.length;
+        int[] res = new int[n];
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < n; i++) {
+            if (stack.isEmpty()) {
+                stack.push(i);
+                continue;
+            }
+            if (temperatures[i] <= temperatures[stack.peek()]) {
+                stack.push(i);
+            } else {
+                while (!stack.isEmpty() && temperatures[i] > temperatures[stack.peek()]) {
+                    res[stack.peek()] = i - stack.peek();
+                    stack.pop();
+                }
+                stack.push(i);
+            }
+        }
+        return res;
+    }
+    // remove redundant branches above to get the following
+
+    public int[] dailyTemperatures3(int[] temperatures) {
+        int n = temperatures.length;
+        int[] res = new int[n];
+        Deque<Integer> stack = new ArrayDeque<>();
+        for (int i = 0; i < n; i++) {
+            //  取出下标进行元素值的比较
+            while (!stack.isEmpty() && temperatures[i] > temperatures[stack.peek()]) {
+                res[stack.peek()] = i - stack.peek();
+                stack.pop();
+            }
+            stack.push(i);
+        }
+        return res;
+    }
+
+    public int[] dailyTemperaturesWithDetails(int[] temperatures) {
+        int n = temperatures.length;
+        int[] res = new int[n];
+        Stack<Integer> stack = new Stack<>();
+        stack.push(0);
+        for (int i = 1; i < n; i++) {
+            //  取出下标进行元素值的比较
+            if (temperatures[i] <= temperatures[stack.peek()]) {
+                stack.push(i);
+            } else {
+                while (!stack.isEmpty() && temperatures[i] > temperatures[stack.peek()]) {
+                    res[stack.peek()] = i - stack.peek();
+                    stack.pop();
+                }
+                stack.push(i);
+            }
+        }
+        return res;
+    }
+
+    //反向
+    // arraydeque  iteration direction is different from Stack
+    public int[] dailyT(int[] tmp) {
+        int n = tmp.length;
+        int[] res = new int[n];
+        Deque<Integer> stack = new ArrayDeque<>();
+        for (int i = n-1; i >=0; i--) {
+            while (!stack.isEmpty() && tmp[i] >= tmp[stack.peek()]) {
+                stack.pop();
+            }
+            res[i] = stack.isEmpty() ? 0: stack.peek() - 1;
+            stack.push(i);
+        }
+        return res;
     }
 }

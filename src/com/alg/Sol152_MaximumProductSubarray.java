@@ -39,12 +39,15 @@ public class Sol152_MaximumProductSubarray {
     }
 
     public static void main(String[] args) {
-        int[] n= {2,3,-2,4};
+        int[] n = {2,3,-2,4};
         //System.out.println(maxProduct(n)); //6
         //System.out.println(maxProSub(n));
         int[] x = {0,2};
-        System.out.println(maxProSub(x));
-        System.out.println(maxProSub(n));
+//        System.out.println(maxProSub(x));
+//        System.out.println(maxProSub(n));
+        int[] nums = {-4,-3,-2};
+        Sol152_MaximumProductSubarray ss = new Sol152_MaximumProductSubarray();
+        ss.maxProduct1(nums);
     }
     // simpler method 2
     public static int maxProSub(int[] nums){
@@ -57,9 +60,41 @@ public class Sol152_MaximumProductSubarray {
             // wrong max =  Math.max(max * nums[i],min* nums[i]); // could be itself.
             min = Math.min(nums[i], Math.min(min * nums[i],temp* nums[i]));
             // wrong:min = Math.min(min * nums[i],temp* nums[i]);
-            if ( max > res){
+            if (max > res) {
                 res = max;
             }
+        }
+        return res;
+    }
+
+    // brute force
+    public int maxProduct_br(int[] nums) {
+        int res = nums[0];
+        for (int i = 0; i < nums.length; i++) {
+            int cur = 1;
+            for (int j = i; j < nums.length; j++) {
+                cur = cur * nums[j];
+                res = Math.max(cur, res);
+
+            }
+        }
+        return res;
+    }
+
+    // dp with O(1) space
+    public int maxProduct1(int[] nums) {
+        int res = nums[0];
+        int maxP = nums[0];
+        int minP = nums[0];
+        int n = nums.length;
+        for (int i = 1; i < n; i++) {
+            int previousMaxp = maxP;
+            maxP = Math.max(nums[i], Math.max(maxP * nums[i], minP * nums[i]));
+            System.out.println(i + " maxP is " + maxP);
+            // to calculate minP, need the maxP of previous step, so we need to cache the maxP using a temp variable
+            minP = Math.min(nums[i], Math.min(previousMaxp * nums[i], minP * nums[i]));
+            System.out.println(i + "minP is " + minP);
+            res = Math.max(maxP, res);
         }
         return res;
     }

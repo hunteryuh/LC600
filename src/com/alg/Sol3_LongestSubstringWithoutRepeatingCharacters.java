@@ -31,10 +31,10 @@ public class Sol3_LongestSubstringWithoutRepeatingCharacters {
         Set<Character> set = new HashSet<>();
         while (i < n && j < n){
             // try to extend the sliding window [i,j]
-            if (!set.contains(s.charAt(j))){
+            if (!set.contains(s.charAt(j))) {
                 set.add(s.charAt(j++));
                 result = Math.max(j-i, result);
-            }else{
+            } else {
                 set.remove(s.charAt(i++));
             }
         }
@@ -43,35 +43,35 @@ public class Sol3_LongestSubstringWithoutRepeatingCharacters {
 
     public static int lengthOfLongestSubstring(String s) {
 
-        /* The reason is that if s[j] have a duplicate in the range [i, j) with index j'​ ,
+        /* The reason is that if s[j] have a duplicate in the range [i, j) with index j',
             we don't need to increase i little by little. We can skip all the elements in the range [i, j']
             and let i to be j' + 1 directly.
         */
         if ( s == null || s.length() == 0) return 0;
         if (s.length() == 1) return 1;
-        int n = s.length();
-        int result = 0;
 
-
-        HashMap<Character,Integer> map = new HashMap<>();
-        for (int i = 0, j = 0; j < n ; j ++){
-            if (map.containsKey(s.charAt(j))) {
-                i = Math.max(i, map.get(s.charAt(j)));
+        HashMap<Character, Integer> map = new HashMap<>();  // current index of character
+        int res = 0;
+        int pre = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char cur = s.charAt(i);
+            if (map.containsKey(cur)) {
+                pre = Math.max(pre, map.get(cur) + 1);
             }
-            map.put(s.charAt(j), j + 1);
-            result = Math.max(result, j + 1 - i);
+            map.put(cur, i);
+            res = Math.max(res, i - pre + 1);
         }
-        return result;
+        return res;
     }
 
     public static void main(String[] args) {
-        String s = "pwwkew";
-        System.out.println(lengthOfLongestSubstring3(s));
-        System.out.println(lengthOfLongestSubstring(s));
-        String s2 = " abcabcdb";
-        System.out.println(lengthOfLongestSubstring(s2));
-        String s3 = "bbb";
-        System.out.println(lengthOfLongestSubstring(s3));
+//        String s = "pwwkew";
+//        System.out.println(lengthOfLongestSubstring3(s));
+//        System.out.println(lengthOfLongestSubstring(s));
+//        String s2 = " abcabcdb";
+//        System.out.println(lengthOfLongestSubstring(s2));
+//        String s3 = "bbb";
+//        System.out.println(lengthOfLongestSubstring(s3));
         String s4 = "tmmuxzt";
         System.out.println(lengthOfLongestSubstring(s4));
         System.out.println(lengthOfLongestSubstring4(s4));
@@ -83,7 +83,7 @@ public class Sol3_LongestSubstringWithoutRepeatingCharacters {
         int res = 0;
         int[] index = new int[128];
         for (int j = 0, i = 0; j < n; j++){
-            i = Math.max(index[s.charAt(j)],i);
+            i = Math.max(index[s.charAt(j)], i);
             res = Math.max(res, j - i + 1);
             index[s.charAt(j)] = j + 1;
         }

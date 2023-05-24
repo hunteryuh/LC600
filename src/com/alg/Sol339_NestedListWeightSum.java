@@ -7,8 +7,8 @@ import java.util.List;
  */
 public class Sol339_NestedListWeightSum {
     public interface NestedInteger {
-        //public NestedInteger();
-      // @return true if this NestedInteger holds a single integer,
+        // public NestedInteger();
+        // @return true if this NestedInteger holds a single integer,
              // rather than a nested list.
               public boolean isInteger();
 

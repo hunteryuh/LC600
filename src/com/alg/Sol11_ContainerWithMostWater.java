@@ -24,9 +24,9 @@ public class Sol11_ContainerWithMostWater {
         int hi = n - 1;
         int s = 0;
 
-        while ( lo < hi){
+        while (lo < hi) {
             s = Math.max(s,Math.min(height[hi], height[lo]) * ( hi - lo) );
-            if ( height[lo] < height[hi]) lo++;
+            if (height[lo] < height[hi]) lo++;
             else hi--;
         }
         return s;
@@ -39,5 +39,14 @@ public class Sol11_ContainerWithMostWater {
         System.out.println(maxArea(h2));
         int[] h0 = {2,2,2,2,2};
         System.out.println(maxArea(h0));
+    }
+
+    // brute force
+    public int maxArea_bf(int[] height) {
+        int maxarea = 0;
+        for (int i = 0; i < height.length; i++)
+            for (int j = i + 1; j < height.length; j++)
+                maxarea = Math.max(maxarea, Math.min(height[i], height[j]) * (j - i));
+        return maxarea;
     }
 }

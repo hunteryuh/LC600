@@ -35,4 +35,14 @@ public class Sol371_SumOfTwoIntegers {
     public static int getSum1(int a, int b){
         return b == 0? a : getSum(a^b, (a&b)<< 1);
     }
+
+    public int getSum3(int a , int b) {
+        while ( b!= 0) {
+            int sumNoCarry = a ^ b;
+            int carry = (a & b) << 1;
+            a = sumNoCarry;
+            b = carry;
+        }
+        return a;
+    }
 }

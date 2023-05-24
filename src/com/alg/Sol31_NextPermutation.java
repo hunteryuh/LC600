@@ -161,4 +161,6 @@ public class Sol31_NextPermutation {
 
     }
 
+    
+
 }

@@ -40,14 +40,31 @@ public class Sol9_PalindromeNumber {
         }
         return res;
     }
+
+    // below will cause overflow, but overflow still returns false anyway
+    public boolean isPanlindrome3(int x) {
+        if (x < 0 || (x != 0 && x % 10 == 0)) return false;
+        int reverse = 0;
+        while (x > reverse) {
+            reverse = reverse * 10 + x % 10;
+            x /= 10;
+        }
+        return reverse == x || x == reverse / 10;   // even || odd
+    }
+    // no overflow
     public static boolean isPalindrome_2(int x) {
         if (x<0 || (x!=0 && x%10==0)) return false;
         int rev = 0;
         while (x>rev){
-            rev = rev*10 + x%10;
+            rev = rev * 10 + x % 10;
             x = x/10;
         }
         return (x==rev || x==rev/10);
+        // 12321
+        // 1232 1
+        // 123 12
+        // 12 123
+        //12 == 123/10
     }
 
     public static void main(String[] args) {

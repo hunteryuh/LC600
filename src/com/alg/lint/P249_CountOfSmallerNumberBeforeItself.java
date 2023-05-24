@@ -1,6 +1,5 @@
 package com.alg.lint;
 
-import javafx.collections.transformation.SortedList;
 
 import java.util.ArrayList;
 import java.util.Arrays;

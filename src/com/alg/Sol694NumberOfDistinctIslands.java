@@ -96,9 +96,7 @@ public class Sol694NumberOfDistinctIslands {
         return set.size();
     }
     private static void dfs(int[][] grid, int i, int j, String dir, StringBuilder sb) {
-        //grid[i][j] =0;
-
-        if ( i >=0 && j >=0 && i < grid.length && j < grid[0].length && grid[i][j] == 1){
+        if (i >=0 && j >=0 && i < grid.length && j < grid[0].length && grid[i][j] == 1){
             sb.append(dir);
             grid[i][j] = 0;
             dfs(grid,i+1,j,"D",sb);

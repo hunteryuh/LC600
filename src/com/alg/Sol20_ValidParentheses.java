@@ -10,8 +10,6 @@ import java.util.Stack;
  */
 public class Sol20_ValidParentheses {
     public static boolean isValid(String s) {
-
-
         HashMap<Character, Character> map = new HashMap<Character, Character>();
         map.put('(', ')');
         map.put('[', ']');

@@ -26,6 +26,7 @@ Output: 3
  */
 public class Sol887_SuperEggDrop {
     //https://leetcode.com/problems/super-egg-drop/discuss/159055/Java-DP-solution-from-O(KN2)-to-O(KNlogN)
+    // dp[k][n] = min(1 + max(dp[k - 1][i - 1], dp[k][n - i])) i = 1...n
     public int superEggDrop(int K, int N) {
         int[][] memo = new int[K+1][N+1];
         return helper(K, N, memo);
@@ -66,7 +67,7 @@ public class Sol887_SuperEggDrop {
 
     // https://leetcode.com/problems/super-egg-drop/discuss/158974/C%2B%2BJavaPython-2D-and-1D-DP-O(KlogN)
     // dp[M][K]means that, given K eggs and M moves,
-    //what is the maximum number of floor that we can check.
+    // what is the maximum number of floor that we can check.
 
     public int superEggDrop2(int K, int N) {
         int[][] dp = new int[N + 1][K + 1];

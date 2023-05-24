@@ -6,7 +6,8 @@ import java.util.PriorityQueue;
 /**
  * Created by HAU on 1/24/2018.
  */
-/*Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+/*Merge k sorted linked lists and return it as one sorted list.
+Analyze and describe its complexity.
 
 */
 public class Sol23_MergeKSortedLists {
@@ -28,37 +29,40 @@ public class Sol23_MergeKSortedLists {
 
     suppose there are k lists and n elements in each list
 
-    solution 1: heap sort, time O(nk * log k), with O(k) heap memeory
+    solution 1: heap sort, time O(nk * log k), with O(k) heap memory
 
 Space: O(N)
 
     O(n) Creating a new linked list costs O(n) space.
     O(k) The code above present applies in-place method which cost O(1) space. And the priority queue (often implemented with heaps) costs O(k) space (it's far less than N in most situations).
 */
-        PriorityQueue<ListNode> pq = new PriorityQueue<>(lists.length, new Comparator<ListNode>() {
-            @Override
-            public int compare(ListNode o1, ListNode o2) {
-                if(o1.val < o2.val)
-                    return -1;
-                else if( o1.val == o2.val){
-                    return 0;
-                }else{
-                    return 1;
-                } //Override the compare function, sort by the head of the lists in ascending order
-            }
-        });
+//        PriorityQueue<ListNode> pq = new PriorityQueue<>(lists.length, new Comparator<ListNode>() {
+//            @Override
+//            public int compare(ListNode o1, ListNode o2) {
+//                if(o1.val < o2.val)
+//                    return -1;
+//                else if( o1.val == o2.val){
+//                    return 0;
+//                }else{
+//                    return 1;
+//                } //Override the compare function, sort by the head of the lists in ascending order
+//            }
+//        });
+        PriorityQueue<ListNode> pq = new PriorityQueue<>(
+                (n1, n2) -> { return n1.val - n2.val;}
+        );
         ListNode dummy = new ListNode(0);
         ListNode tail = dummy;
-        for(ListNode node : lists){
-            if(node != null){
+        for(ListNode node : lists) {
+            if (node != null) {
                 pq.add(node); // all head nodes of the lists
             }
         }
-        while(!pq.isEmpty()){
+        while(!pq.isEmpty()) {
             tail.next = pq.poll();  // get all smallest nodes in the polling
             tail = tail.next;
-            if ( tail.next != null){
-                pq.add(tail.next);  // add all other nodes in the list one by one
+            if (tail.next != null) {
+                pq.offer(tail.next);  // add all other nodes in the list one by one
             }
         }
         return dummy.next;

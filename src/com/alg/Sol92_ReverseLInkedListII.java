@@ -48,4 +48,34 @@ public class Sol92_ReverseLInkedListII {
             node = node.next;
         }
     }
+
+    // redo
+    public ListNode reverseBetween2(ListNode head, int left, int right) {
+        ListNode cur = head;
+        ListNode pre = null;
+        int index = 1;
+        while (index < left) {
+            pre = cur;
+            cur = cur.next;
+            index++;
+        }
+        // pre = 1; cur = 2;
+        ListNode beforeHead = pre;
+        ListNode curHead = cur;
+        while (index <= right) {
+            ListNode temp = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = temp;
+            index++;
+        }
+
+        curHead.next = cur;
+        if (beforeHead == null) {
+            return pre;
+        }
+        beforeHead.next = pre;
+        return head;
+
+    }
 }

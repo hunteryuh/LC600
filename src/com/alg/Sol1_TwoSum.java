@@ -28,10 +28,10 @@ public class Sol1_TwoSum {
         // to get O(n) time, need to use Hashmap
         HashMap<Integer,Integer> map = new HashMap<>();
         for ( int i = 0; i < n; i++){
-            map.put(nums[i],i);
+            map.put(nums[i], i);
         }
-        for ( int i = 0; i < n; i++){
-            if(map.containsKey(target - nums[i]) && map.get(target - nums[i]) != i ){
+        for (int i = 0; i < n; i++){
+            if (map.containsKey(target - nums[i]) && map.get(target - nums[i]) != i) {
                 res[0] = i;
                 res[1] = map.get(target - nums[i]);
                 break;
@@ -40,15 +40,46 @@ public class Sol1_TwoSum {
         return res;
     }
 
+    // O(n^2)
     public static int[] twoSum_brute(int[] nums, int target){
         for (int i = 0; i < nums.length; i ++){
             for (int j = i + 1; j < nums.length;j++)
-                if ( nums[j] + nums[i] == target){
+                if (nums[j] + nums[i] == target) {
                     return new int[] {i,j};
                 }
         }
         throw new IllegalArgumentException("no solution");
     }
+
+    // O(nlogn)
+    public int[] twoSum3(int[] nums, int target) {
+        int[] ctl = nums.clone();
+        Arrays.sort(nums);
+        int left = 0;
+        int right = nums.length - 1;
+        while (nums[left] + nums[right] != target) {
+            if (nums[left] + nums[right] > target) {
+                right--;
+            } else {
+                left++;
+            }
+        }
+        int[] res = new int[2];
+        for (int i = 0; i < ctl.length; i++) {
+            if (ctl[i] == nums[left]) {
+                res[0]= i;
+                break;
+            }
+        }
+        for (int i = ctl.length - 1; i >= 0; i--) {
+            if (ctl[i] == nums[right]) {
+                res[1] = i;
+                break;
+            }
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         int nums[] = {3,2,4};
         int target = 6;
@@ -62,13 +93,13 @@ public class Sol1_TwoSum {
     public static int[] twoSum2(int[] nums, int target){
         int[] res = new int[2];
         Map<Integer,Integer> map = new HashMap<>();
-        for (int i = 0; i< nums.length; i++){
-            if(map.containsKey(target - nums[i])){
+        for (int i = 0; i < nums.length; i++){
+            if (map.containsKey(target - nums[i])){
                 res[0] = map.get(target - nums[i]);
                 res[1] = i ;
                 return res;
             }
-            map.put(nums[i],i);
+            map.put(nums[i], i);
         }
         return res;
     }

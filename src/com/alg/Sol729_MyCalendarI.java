@@ -2,6 +2,7 @@ package com.alg;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 /**
  * Created by HAU on 2/1/2018.
@@ -32,16 +33,41 @@ public class Sol729_MyCalendarI {
             calendar = new ArrayList<>();
         }
 
+        // O(n^2)
         public boolean book(int start, int end) {
             for(int[] cal: calendar) {
-                if (cal[0] < end && cal[1] > start) {
+                if (cal[0] < end && cal[1] > start) { // newStart< oldEnd && newEnd > oldStart
                     return false;
                 }
             }
             calendar.add(new int[]{start,end});
             return true;
         }
+
     }
+
+    // TreeMap, sort by the key: start time, value: end time
+    class MyCalendar2 {
+        TreeMap<Integer, Integer> map;
+
+        public MyCalendar2() {
+            map = new TreeMap<>();
+        }
+
+        // n Log n
+        public boolean book(int start, int end) {
+            Integer leftStart = map.floorKey(start); // greatest key which is <= start
+            Integer rightStart = map.ceilingKey(start); // >= start
+            if ((leftStart == null || map.get(leftStart) <= start)  && (
+                 rightStart == null || end <= rightStart
+                )) {
+                map.put(start, end);
+                return true;
+            }
+            return false;
+        }
+    }
+
 }
 
 /**

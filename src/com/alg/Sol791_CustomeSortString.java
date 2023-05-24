@@ -24,16 +24,16 @@ public class Sol791_CustomeSortString {
     public static String customSortString(String S, String T) {
         // Time Complexity: O(S.\text{length} + T.\text{length})O(S.length+T.length), the time it takes to iterate through S and T
         int[] count = new int[26];
-        for(char c: T.toCharArray()){
+        for (char c: T.toCharArray()) {
             count[c - 'a']++;
         }
         StringBuilder sb = new StringBuilder();
-        for(char c: S.toCharArray()){
-            while( count[c - 'a']-- > 0 ){
+        for (char c: S.toCharArray()) {
+            while (count[c - 'a']-- > 0 ){
                 sb.append(c);
             }
         }
-        for(char i = 'a' ; i <= 'z'; i++){
+        for (char i = 'a' ; i <= 'z'; i++){
             while (count[i - 'a']-- > 0){
                 sb.append(i);
             }

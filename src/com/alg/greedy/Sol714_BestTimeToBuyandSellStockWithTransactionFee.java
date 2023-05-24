@@ -48,12 +48,12 @@ public class Sol714_BestTimeToBuyandSellStockWithTransactionFee {
         int n = prices.length;
         int[][] dp = new int[n][2];
 
-        dp[0][0] = 0; // cash
-        dp[0][1] = - prices[0];
+        dp[0][0] = 0; // balance without holding a stock
+        dp[0][1] = - prices[0]; // balance with holding a stock  // - fee if with comment of line 56 below for buying
 
         for (int i = 1; i < n; i++) {
             dp[i][0] = Math.max(dp[i-1][0], dp[i-1][1] + prices[i] - fee);
-            dp[i][1] = Math.max(dp[i-1][1], dp[i-1][0] - prices[i]);
+            dp[i][1] = Math.max(dp[i-1][1], dp[i-1][0] - prices[i]);  // or dp[i-1][0] - prices[i] - fee if fee is not handled in dp[][0]
         }
         return dp[n-1][0];
     }

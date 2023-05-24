@@ -1,7 +1,7 @@
 package com.alg;
 
 /**
- * Created by HAU on 6/12/2017.
+ Given the head of a singly linked list, reverse the list, and return the reversed list.
  */
 public class Sol206_ReverseLinkedlist {
     public static class ListNode {
@@ -11,7 +11,7 @@ public class Sol206_ReverseLinkedlist {
         ListNode(int x) { val = x; }
     }
     public static ListNode reverseList(ListNode head){
-        if ( head == null || head.next == null){
+        if (head == null || head.next == null){
             return head;
         }
 
@@ -24,7 +24,7 @@ public class Sol206_ReverseLinkedlist {
     }
     public static ListNode reverseIter(ListNode head){
         ListNode prev = null;
-        while (head != null){
+        while (head != null) {
             ListNode temp = head.next;
             head.next = prev;
             prev = head;

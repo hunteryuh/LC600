@@ -28,13 +28,11 @@ public class Sol16_3SumClosest {
 
             int j = i + 1;
             int k = n - 1;
-
-            while ( j < k) {
-                res = Math.abs(res - target) < Math.abs( nums[i] + nums[j]+ nums[k] - target)? res:nums[i] + nums[j]+ nums[k];
-                if (  res == target) {
+            while (j < k) {
+                res = Math.abs(res - target) < Math.abs(nums[i] + nums[j]+ nums[k] - target)? res:nums[i] + nums[j]+ nums[k];
+                if (res == target) {
                     return target;
                 }else if ( nums[i] + nums[j] + nums[k] < target){
-
                     j++;
                 }else if ( nums[i] + nums[j] + nums[k] > target ){
                     k--;
@@ -60,7 +58,7 @@ public class Sol16_3SumClosest {
                     if (res == target) return res;
                     }
 
-                if ( sum < target ){
+                if (sum < target){
                     j++;
                 }else k--;
             }

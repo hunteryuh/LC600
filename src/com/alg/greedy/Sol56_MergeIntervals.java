@@ -35,6 +35,7 @@ public class Sol56_MergeIntervals {
         res.add(last);
         return res;
     }
+
     public static class IntervalComparator implements Comparator<Interval> {
         @Override
         public int compare(Interval a, Interval b){
@@ -75,10 +76,10 @@ public class Sol56_MergeIntervals {
 
         Interval last = null;
         for (Interval item: intervals){
-            if (last  == null || last.end < item.start){
+            if (last  == null || last.end < item.start) {
                 ans.add(item);
                 last = item;
-            }else {
+            } else {
                 last.end = Math.max(last.end, item.end); // Modify the element already in list
             }
         }
@@ -104,7 +105,7 @@ Explanation: Intervals [1,4] and [4,5] are considered overlapping.
     public static int[][] mergeIntervals(int[][] intervals) {
         Arrays.sort(intervals, Comparator.comparing(i -> i[0]));
 
-        LinkedList<int[]> result = new LinkedList<>();
+        LinkedList<int[]> result = new LinkedList<>(); // linkedlist to getLast
 
         for (int[] interval : intervals) {
             if (result.isEmpty() || result.getLast()[1] < interval[0]) {

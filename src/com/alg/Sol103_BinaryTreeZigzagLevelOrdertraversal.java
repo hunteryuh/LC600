@@ -127,4 +127,59 @@ public class Sol103_BinaryTreeZigzagLevelOrdertraversal {
         }
         return res;
     }
+
+    // zigzag level order with reverse of each level
+    public List<List<Integer>> zigzagLevelOrder3(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) return res;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            List<Integer> level = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                level.add(node.val);
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+            if (res.size() % 2 == 1) {
+                Collections.reverse(level);
+            }
+            res.add(level);
+
+        }
+        return res;
+    }
+
+    public List<List<Integer>> zigzagLevelOrder4(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) return res;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            LinkedList<Integer> level = new LinkedList<>();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                if (res.size() % 2 == 0) {
+                    level.addLast(node.val);  // if list, level.add(node.val)
+                } else {
+                    level.addFirst(node.val);  // if list, level.add(0, node.val)
+                }
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+            res.add(level);
+        }
+        return res;
+    }
 }

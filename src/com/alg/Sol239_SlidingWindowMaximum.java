@@ -1,5 +1,6 @@
 package com.alg;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -23,6 +24,9 @@ Window position                Max
  1  3  -1  -3  5 [3  6  7]      7
 Therefore, return the max sliding window as [3,3,5,5,6,7]*/
 public class Sol239_SlidingWindowMaximum {
+
+    // time O(N)
+    // Let's use a deque (double-ended queue), the structure which pops from / pushes to either side with the same O(1)\mathcal{O}(1)O(1) performance.
     public static int[] maxSlidingWindow(int[] nums, int k) {
         if (nums == null || nums.length == 0) {
             return new int[0];
@@ -39,13 +43,49 @@ public class Sol239_SlidingWindowMaximum {
                 deque.pollLast();  // same as removeLast
             }
             deque.offerLast(i);  // add the end of the list, same as offer, addLast
-            if ( i >= k - 1){
+            if ( i >= k - 1) {
+                // You want to ensure the deque window only has decreasing elements. That way, the leftmost element is always the largest.
                 res[i-k+1] = nums[deque.peekFirst()]; // same as peek, check the first element in the queue
             }
 
         }
         return res;
     }
+
+    public int[] maxSlidingWindow_2(int[] a, int k) {
+        if (a == null || k <= 0) {
+            return new int[0];
+        }
+        int n = a.length;
+        int[] res = new int[n-k+1];
+        int ri = 0;
+        // store index
+        Deque<Integer> q = new ArrayDeque<>();
+        for (int i = 0; i < a.length; i++) {
+            int startWindowIndex = i - k + 1;
+            // remove numbers out of range k; 左出q,保证窗口大小k-1
+            while (!q.isEmpty() && i - q.peekFirst() >= k) {
+                q.pollFirst();
+            }
+            // remove smaller numbers in k range as they are useless; 右出q，保证递减队列
+            while (!q.isEmpty() && a[q.peekLast()] < a[i]) {
+                q.pollLast();
+            }
+            // q contains index... r contains content； 进q, 此时q.size == k
+            q.offer(i); // q.offerLast(i);
+            // 使用q 左边最大值
+            if (startWindowIndex >= 0) {
+                res[startWindowIndex] = a[q.peekFirst()];
+            }
+        }
+        return res;
+    }
+
+    // sliding window
+    // monotonic queue
+    // decreasing, store the index >=
+    // pq O(nlogn)
+
 
     public static void main(String[] args) {
         int[] nums = {1,-3,-1,-3,5,3,6,9};

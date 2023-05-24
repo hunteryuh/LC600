@@ -14,7 +14,11 @@ only alphanumeric characters and ignoring cases.
         Note:
         Have you consider that the string might be empty? This is a good question to ask during an interview.
 
-        For the purpose of this problem, we define empty string as valid palindrome.*/
+        For the purpose of this problem, we define empty string as valid palindrome.
+
+        https://leetcode.com/problems/valid-palindrome/
+
+ */
 public class Sol125ValidPalindrome {
     public static boolean isPalindrome(String s) {
         //boolean res = false;
@@ -35,6 +39,18 @@ public class Sol125ValidPalindrome {
         }
 
         return true;  // time limit exceeded...
+    }
+
+    public boolean isPalindrome0(String s) {
+        int i = 0;
+        int j = s.length() - 1;
+        while (i < j) {
+            while (i < j && !Character.isLetterOrDigit(s.charAt(i))) i++;
+            while (i < j && !Character.isLetterOrDigit(s.charAt(j))) j--;
+            if (Character.toLowerCase(s.charAt(i)) != Character.toLowerCase(s.charAt(j))) return false;
+            i++; j--;
+        }
+        return true;
     }
 
     public static boolean isPalindrome1L(String s) {
@@ -67,7 +83,20 @@ public class Sol125ValidPalindrome {
         String t = "race a car";
         System.out.println(isPalindrome1L(s));
         System.out.println(isPalindrome(t));
+    }
 
+    public boolean isPalindrome1(String s) {
+        StringBuilder builder = new StringBuilder();
 
+        for (char ch : s.toCharArray()) {
+            if (Character.isLetterOrDigit(ch)) {
+                builder.append(Character.toLowerCase(ch));
+            }
+        }
+
+        String filteredString = builder.toString();
+        String reversedString = builder.reverse().toString();
+
+        return filteredString.equals(reversedString);
     }
 }

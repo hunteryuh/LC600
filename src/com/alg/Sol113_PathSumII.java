@@ -36,12 +36,12 @@ public class Sol113_PathSumII {
         //dfs
         List<List<Integer>> res = new LinkedList<>();
         List<Integer> sol = new LinkedList<>();
-        dfs(root,sum,sol,res);
+        dfs(root, sum, sol, res);
         return res;
     }
 
     private static void dfs(TreeNode root, int sum, List<Integer> sol, List<List<Integer>> res) {
-        if(root == null) return;
+        if (root == null) return;
         sol.add(root.val);
         if (root.left == null && root.right == null && sum == root.val) {
             res.add(new LinkedList<>(sol));
@@ -51,6 +51,20 @@ public class Sol113_PathSumII {
             dfs(root.left,sum - root.val,sol, res);
             dfs(root.right,sum - root.val,sol, res);
         }
+        sol.remove(sol.size() - 1); // remove the last integer
+    }
+
+    private static void dfs2(TreeNode root, int sum, List<Integer> sol, List<List<Integer>> res) {
+        if (root == null) return;
+        sol.add(root.val);
+        if (root.left == null && root.right == null && sum == root.val) {
+            res.add(new LinkedList<>(sol));
+            // no return here;
+            //sol.remove(sol.size() - 1);
+        }
+        dfs(root.left,sum - root.val,sol, res);
+        dfs(root.right,sum - root.val,sol, res);
+
         sol.remove(sol.size() - 1); // remove the last integer
     }
 
@@ -67,23 +81,23 @@ public class Sol113_PathSumII {
             return res;
         }
         LinkedList<Integer> sol = new LinkedList<>();
-        dfs(root, sum, res, sol);
+        preorderdfs(root, sum, res, sol);
         return res;
     }
 
-    private void dfs(TreeNode root, int target, List<List<Integer>> res, LinkedList<Integer> sol) {
+    private void preorderdfs(TreeNode root, int target, List<List<Integer>> res, LinkedList<Integer> sol) {
         sol.add(root.val);
         if (root.left == null && root.right == null && target == root.val) {
             res.add(new ArrayList<>(sol));
             return;
         }
         if (root.left != null) {
-            dfs(root.left, target - root.val, res, sol);
-            sol.removeLast();
+            preorderdfs(root.left, target - root.val, res, sol);
+            sol.removeLast();  // 回溯
         }
         if (root.right != null) {
-            dfs(root.right, target - root.val, res, sol);
-            sol.removeLast();
+            preorderdfs(root.right, target - root.val, res, sol);
+            sol.removeLast();  // 回溯
         }
     }
 }

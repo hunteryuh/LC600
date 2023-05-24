@@ -2,7 +2,9 @@ package com.alg;
 /*
 According to Wikipedia's article: "The Game of Life, also known simply as Life, is a cellular automaton devised by the British mathematician John Horton Conway in 1970."
 
-The board is made up of an m x n grid of cells, where each cell has an initial state: live (represented by a 1) or dead (represented by a 0). Each cell interacts with its eight neighbors (horizontal, vertical, diagonal) using the following four rules (taken from the above Wikipedia article):
+The board is made up of an m x n grid of cells, where each cell has an initial state:
+live (represented by a 1) or dead (represented by a 0). Each cell interacts with its eight neighbors (horizontal, vertical, diagonal)
+using the following four rules (taken from the above Wikipedia article):
 
 Any live cell with fewer than two live neighbors dies as if caused by under-population.
 Any live cell with two or three live neighbors lives on to the next generation.
@@ -60,11 +62,9 @@ public class Sol289_GameOfLife {
     public void gameOfLifeInPlace(int[][] board) {
         int m = board.length;
         int n = board[0].length;
-//        int toLive = 3;
-//        int toDie = -1;
         for (int i = 0; i < m ; i++) {
             for (int j = 0; j < n ; j++) {
-                int lnc = liveNeighborCount(board, i, j);
+                int lnc = liveNeighborCountInPlace(board, i, j);
                 if (board[i][j] == 0) {
                     if (lnc == 3) {
                         board[i][j] = toLive;

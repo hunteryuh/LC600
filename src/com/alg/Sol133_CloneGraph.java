@@ -46,7 +46,61 @@ public class Sol133_CloneGraph {
         UndirectedGraphNode(int x) {
             label = x; neighbors = new ArrayList<UndirectedGraphNode>();
         }
-    };
+    }
+
+    // 2nd trial with bfs
+    class Node {
+        public int val;
+        public List<Node> neighbors;
+        public Node() {
+            val = 0;
+            neighbors = new ArrayList<Node>();
+        }
+        public Node(int _val) {
+            val = _val;
+            neighbors = new ArrayList<Node>();
+        }
+        public Node(int _val, ArrayList<Node> _neighbors) {
+            val = _val;
+            neighbors = _neighbors;
+        }
+    }
+    public Node cloneGraph(Node node) {
+        // copy nodes
+        if (node == null) return null;
+        // copy edges
+        List<Node> allNodes = getAllNodes(node);
+        Map<Node, Node> map = new HashMap<>();
+        for (Node nd: allNodes) {
+            map.put(nd, new Node(nd.val, new ArrayList<>()));
+        }
+        for (Node nd: map.keySet()) {
+            Node cl = map.get(nd);
+            for (Node nb: nd.neighbors) {
+                cl.neighbors.add(map.get(nb));
+            }
+        }
+        return map.get(node);
+    }
+
+    private List<Node> getAllNodes(Node node) {
+//        List<Node> list = new ArrayList<>();
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(node);
+        Set<Node> set = new HashSet<>();
+        set.add(node);
+        while (!queue.isEmpty()) {
+            Node cur = queue.poll();
+//            list.add(cur);
+            for (Node nb: cur.neighbors) {
+                if (set.contains(nb)) continue;
+                set.add(nb);
+                queue.offer(nb);
+            }
+        }
+        return new ArrayList<>(set);
+    }
+
     private static Map<Integer,UndirectedGraphNode> map = new HashMap<>();
     public static UndirectedGraphNode cloneGraph0(UndirectedGraphNode node) {
 
@@ -56,7 +110,7 @@ public class Sol133_CloneGraph {
         }
         UndirectedGraphNode cloned = new UndirectedGraphNode(node.label);
         map.put(cloned.label, cloned);
-        for(UndirectedGraphNode neighbor: node.neighbors){
+        for (UndirectedGraphNode neighbor: node.neighbors) {
             cloned.neighbors.add(cloneGraph0(neighbor));
         }
         return cloned;

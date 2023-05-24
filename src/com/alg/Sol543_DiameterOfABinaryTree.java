@@ -3,7 +3,8 @@ package com.alg;
 /**
  * Created by HAU on 1/16/2018.
  */
-/*Given a binary tree, you need to compute the length of the diameter of the tree. The diameter of a binary tree is the length of the longest path between any two nodes in a tree. This path may or may not pass through the root.
+/*Given a binary tree, you need to compute the length of the diameter of the tree.
+The diameter of a binary tree is the length of the longest path between any two nodes in a tree. This path may or may not pass through the root.
 
 Example:
 Given a binary tree
@@ -18,26 +19,19 @@ Note: The length of path between two nodes is represented by the number of edges
 
 */
 public class Sol543_DiameterOfABinaryTree {
-    public static class TreeNode{
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode (int x){
-            val = x;
-        }
-    }
-    static int ans;
+
+    static int diameter;
     public static int diameterOfBinaryTree(TreeNode root) {
-        ans = 0;
+        diameter = 0;
         depth(root);
-        return ans ;
+        return diameter;
     }
 
     private static int depth(TreeNode node) {
-        if ( node == null) return 0;
+        if (node == null) return 0;
         int L = depth(node.left);
         int R = depth(node.right);
-        ans = Math.max(ans, L + R );
+        diameter = Math.max(diameter, L + R);
         // ans = Math.max(ans, L + R + 1 );
         // If we knew the maximum length arrows L, R for each child, then the best path touches L + R + 1 nodes.
         return Math.max(L,R) + 1;

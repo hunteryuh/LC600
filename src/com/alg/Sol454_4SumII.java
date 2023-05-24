@@ -40,7 +40,7 @@ Space complexity: O(n^2)*/
         for(int i: A){
             for(int j:B){
                 int t = i + j;
-                if( map.containsKey(-1* t)){
+                if(map.containsKey(-1* t)) {
                     count += map.get(-1*t);
                 }
                 //            res += map.getOrDefault(-1 * t), 0);

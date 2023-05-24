@@ -5,6 +5,7 @@ import java.util.*;
 /**
  * Created by HAU on 7/21/2017.
  */
+// https://leetcode.com/problems/contains-duplicate/
 public class Sol217_ContainsDuplicate {
     public static boolean containsDuplicate(int[] nums) {
         Set<Integer> set = new HashSet<>();

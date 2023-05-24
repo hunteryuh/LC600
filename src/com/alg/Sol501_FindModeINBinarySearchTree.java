@@ -42,7 +42,7 @@ public class Sol501_FindModeINBinarySearchTree {
         inorder(root);
         List<Integer> list = new LinkedList<>();
         for(int key: map.keySet()){
-            if(map.get(key) == max){
+            if (map.get(key) == max){
                 list.add(key);
             }
         }
@@ -56,10 +56,10 @@ public class Sol501_FindModeINBinarySearchTree {
     }
 
     private void inorder(TreeNode node){
-        if( node.left != null) inorder(node.left);
+        if(node.left != null) inorder(node.left);
         map.put(node.val, map.getOrDefault(node.val,0)+1);
         max = Math.max(max, map.get(node.val));
-        if ( node.right!= null) inorder(node.right);
+        if (node.right!= null) inorder(node.right);
     }
     // no map
 
@@ -78,13 +78,13 @@ public class Sol501_FindModeINBinarySearchTree {
     private static void traverse(TreeNode root){
         if (root == null) return;
         traverse(root.left);
-        if (pre != null && root.val == pre.val){
+        if (pre != null && root.val == pre.val) {
             curCount++;
-        }else curCount = 1;
+        } else curCount = 1;
 
-        if ( curCount == maxCount){
+        if (curCount == maxCount){
             ans.add(root.val);
-        } else if ( curCount > maxCount){
+        } else if (curCount > maxCount){
             maxCount = curCount;
 //            ans = new ArrayList<>();
             ans.clear();

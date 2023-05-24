@@ -105,6 +105,14 @@ public class Sol332_ReconstructItinerary {
         Sol332_ReconstructItinerary ss = new Sol332_ReconstructItinerary();
         List<String> res = ss.findItinerary2(tickets);
         System.out.println(res);
+
+        List<List<String>> tickets2 = new ArrayList<>();
+        tickets2.add(Arrays.asList("JFK", "AAA"));
+        tickets2.add(Arrays.asList("JFK", "BBB"));
+        tickets2.add(Arrays.asList("BBB", "CCC"));
+        tickets2.add(Arrays.asList("CCC", "JFK"));
+        List<String> r2 = ss.findItinerary3(tickets2);
+        System.out.println(r2);  // [JFK, BBB, CCC, JFK, AAA]
     }
 
     //https://leetcode.com/problems/reconstruct-itinerary/discuss/138641/Logical-Thinking-with-Clear-Java-Code
@@ -148,12 +156,14 @@ public class Sol332_ReconstructItinerary {
     }
 
     // https://leetcode.com/problems/reconstruct-itinerary/discuss/348511/JAVA-DFS
-
+    // The essential step is that starting from the fixed starting vertex (airport 'JFK'), we keep following the ordered and unused edges
+    // (flights) until we get stuck at certain vertex where we have no more unvisited outgoing edges.
+    // The point that we got stuck would be the last airport that we visit. And then we follow the visited vertex (airport) backwards, we would obtain the final itinerary.
     Map<String, PriorityQueue<String>> map = new HashMap<>();
     List<String> route = new ArrayList<>();
 
     public List<String> findItinerary3(List<List<String>> tickets) {
-        for(List<String> ticket: tickets) {
+        for (List<String> ticket: tickets) {
             if(!map.containsKey(ticket.get(0))) {
                 PriorityQueue<String> pq = new PriorityQueue<>();
                 pq.add(ticket.get(1));
@@ -163,12 +173,15 @@ public class Sol332_ReconstructItinerary {
                 map.get(ticket.get(0)).add(ticket.get(1));
             }
         }
+//        for (List<String> ticket: tickets) {
+//            map.computeIfAbsent(ticket.get(0), k -> new PriorityQueue<String>()).add(ticket.get(1));
+//        }
         visit("JFK");
         return route;
     }
 
     public void visit(String airport) {
-        while(map.containsKey(airport) && !map.get(airport).isEmpty()) {
+        while (map.containsKey(airport) && !map.get(airport).isEmpty()) {
             PriorityQueue<String> dests = map.get(airport);
             String dest = dests.poll();
             visit(dest);

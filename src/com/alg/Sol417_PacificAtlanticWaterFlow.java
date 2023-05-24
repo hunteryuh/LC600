@@ -4,9 +4,11 @@ import sun.awt.image.ImageWatched;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 /*
 You are given an m x n integer matrix heights representing the height of each unit cell in a continent. The Pacific ocean touches the continent's left and top edges, and the Atlantic ocean touches the continent's right and bottom edges.
@@ -41,6 +43,7 @@ public class Sol417_PacificAtlanticWaterFlow {
         boolean[][] aVisited = new boolean[m][n];
         Queue<List<Integer>> pq = new LinkedList<>();
         Queue<List<Integer>> aq = new LinkedList<>();
+        // the key is to start from all boundaries and add them to the queue before bfs
         for (int i = 0; i < m; i++) {
             pVisited[i][0] = true;
             pq.offer(Arrays.asList(i,0));
@@ -54,6 +57,7 @@ public class Sol417_PacificAtlanticWaterFlow {
             aq.offer(Arrays.asList(m-1, i));
         }
 
+        // put the visited array and queue as bfs parameters and update visited array
         bfs(heights, m, n, pVisited, pq);
         bfs(heights, m, n, aVisited, aq);
 
@@ -123,5 +127,79 @@ public class Sol417_PacificAtlanticWaterFlow {
         }
     }
 
+
+    // not working
+//    public List<List<Integer>> canFlow(int[][] heights) {
+//        List<List<Integer>> res = new ArrayList<>();
+//        Set<List<Integer>> setP = new HashSet<>();
+//        Set<List<Integer>> setA = new HashSet<>();
+//
+//        int m = heights.length;
+//        int n = heights[0].length;
+//        for (int i = 0; i <m; i++) {
+//            for (int j = 0; j < n; j++) {
+//                bfs2p(heights, i, j, setP);
+//                bfs2a(heights, i, j, setA);
+//            }
+//        }
+//        for (List<Integer> list : setP) {
+//            if (setA.contains(list)) {
+//                res.add(list);
+//            }
+//        }
+//        return res;
+//    }
+//
+//    private void bfs2p(int[][] heights, int x, int y, Set<List<Integer>> set) {
+//        Queue<int[]> queue = new LinkedList<>();
+//        int m = heights.length;
+//        int n = heights[0].length;
+//        boolean[][] visited = new boolean[m][n];
+//        queue.offer(new int[]{x, y});
+//        visited[x][y] = true;
+//        int[][] dirs = {{-1, 0}, {0, 1}, { 0,-1}, {1, 0}};
+//        while (!queue.isEmpty()) {
+//            int[] cur = queue.poll();
+//            int curx = cur[0];
+//            int cury = cur[1];
+//            for (int[] dir: dirs) {
+//                int newx = curx + dir[0];
+//                int newy = cury + dir[1];
+//                if (newx < 0 || newy < 0 || newx >=m || newy >= n) continue;
+//                if (visited[newx][newy]) continue;
+//                if (newy == 0 || newx == 0) set.add(Arrays.asList(x, y));
+//                if (heights[newx][newy] <= heights[curx][cury]) {
+//                    visited[newx][newy] = true;
+//                    queue.offer(new int[]{newx, newy});
+//                }
+//            }
+//        }
+//    }
+//
+//    private void bfs2a(int[][] heights, int x, int y, Set<List<Integer>> set) {
+//        Queue<int[]> queue = new LinkedList<>();
+//        int m = heights.length;
+//        int n = heights[0].length;
+//        boolean[][] visited = new boolean[m][n];
+//        queue.offer(new int[]{x, y});
+//        visited[x][y] = true;
+//        int[][] dirs = {{-1, 0}, {0, 1}, { 0,-1}, {1, 0}};
+//        while (!queue.isEmpty()) {
+//            int[] cur = queue.poll();
+//            int curx = cur[0];
+//            int cury = cur[1];
+//            for (int[] dir: dirs) {
+//                int newx = curx + dir[0];
+//                int newy = cury + dir[1];
+//                if (newx < 0 || newy < 0 || newx >=m || newy >= n) continue;
+//                if (visited[newx][newy]) continue;
+//                if (newy == n-1 || newx == m-1) set.add(Arrays.asList(x, y));
+//                if (heights[newx][newy] <= heights[curx][cury]) {
+//                    visited[newx][newy] = true;
+//                    queue.offer(new int[]{newx, newy});
+//                }
+//            }
+//        }
+//    }
 
 }

@@ -23,12 +23,13 @@ public class Sol74_SearchA2DMatrix {
             return false;
         int i = 0;
         int j = matrix[0].length - 1;
-        while ( i < matrix.length && j >=0){
-            if(matrix[i][j] == target)
+        // from top right corner to bottom left corner
+        while ( i < matrix.length && j >=0) {
+            if (matrix[i][j] == target)
                 return true;
-            else if( matrix[i][j] > target){
+            else if (matrix[i][j] > target) {
                 j--;
-            }else{
+            } else {
                 i++;
             }
         }
@@ -49,7 +50,7 @@ public class Sol74_SearchA2DMatrix {
             return false;
         int start = 0, rows = matrix.length, cols = matrix[0].length;
         int end = rows*cols - 1;
-        while ( start <= end){
+        while (start <= end) {
             int mid = (start + end )/2;
             if ( matrix[mid/cols][mid%cols] == target){
                 return true;

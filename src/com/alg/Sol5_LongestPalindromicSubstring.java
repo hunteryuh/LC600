@@ -12,7 +12,7 @@ public class Sol5_LongestPalindromicSubstring {
         if ( n==0) return "";
         int start = 0, end = 0;
         int length = 0;
-        for (int i = 0; i < n - 1; i++){
+        for (int i = 0; i < n - 1; i++) {
             length = Math.max(helper(s,i,i),length);
             length = Math.max(helper(s,i,i+1),length);
             if ( length > end - start +1) {  // if found longer length, update start and end
@@ -29,6 +29,30 @@ public class Sol5_LongestPalindromicSubstring {
             j++;
         }
         return j-i-1;  // i and j are out of palindrome range, so minus 1
+    }
+
+    // 中心扩散法 时间 O(n^2) space: O(1)
+    public String longestPalin2(String s) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            helpersb(s, i, 0, sb);
+            helpersb(s, i, 1, sb);
+        }
+        return sb.toString();
+    }
+
+    private void helpersb(String s, int start, int offset, StringBuilder sb) {
+        int left = start;
+        int right = start + offset;
+        while (left >= 0 && right <s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+        String cur = s.substring(left + 1, right);
+        if (cur.length() > sb.length()) {
+            sb.setLength(0);
+            sb.append(cur);
+        }
     }
 
     public static void main(String[] args) {
@@ -63,14 +87,15 @@ public class Sol5_LongestPalindromicSubstring {
     }
 
     // dp https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0005.%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2.md
+    // 布尔类型的dp[i][j]：表示区间范围[i,j] （注意是左闭右闭）的子串是否是回文子串，如果是dp[i][j]为true，否则为false。
     public String longestPalin(String s) {
         int maxL = 0;
         int start = 0;
         int end = 0;
         int n = s.length();
         boolean[][] dp = new boolean[n][n];
-        for (int i = n - 1; i >=0; i--) {
-            for (int j = i; j < n; j++) {
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = i; j < n; j++) {  // i <= j
                 if (s.charAt(i) == s.charAt(j)) {
                     if (j - i <= 1) {
                         dp[i][j] = true;

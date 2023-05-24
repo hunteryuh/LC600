@@ -109,7 +109,7 @@ public class Sol435_NonoverlappingIntervals {
         return intervals.length - nonOver;
 
     }
-
+    // https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0435.%E6%97%A0%E9%87%8D%E5%8F%A0%E5%8C%BA%E9%97%B4.md
     //按左边排序，不管右边顺序。相交的时候取最小的右边。
     public int eraseOverlapIntervals3(int[][] intervals) {
         if (intervals == null || intervals.length == 0) {
@@ -134,5 +134,25 @@ public class Sol435_NonoverlappingIntervals {
             }
         }
         return remove;
+    }
+
+    public int eraseOverlapIntervals2(int[][] intervals) {
+        Arrays.sort(intervals, (i1,i2) -> Integer.compare(i1[0], i2[0]));
+        // sort by start
+        if (intervals.length == 0) return 0;
+        int n = intervals.length;
+        int toRemove = 0;
+        int end = intervals[0][1];
+        for (int i = 1; i < n; i++) {
+            int[] cur = intervals[i];
+            if (cur[0] < end) {
+                toRemove++;
+                end = Math.min(cur[1], end);
+            } else {
+                end = cur[1];
+            }
+        }
+        return toRemove;
+
     }
 }

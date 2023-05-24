@@ -14,6 +14,8 @@ import java.util.List;
 
         Note: The solution set must not contain duplicate quadruplets.*/
 public class Sol18_4Sum {
+
+    // Time O(n^3)
     public static List<List<Integer>> fourSum(int[] nums, int target) {
         int n = nums.length;
         List<List<Integer>> list = new ArrayList<List<Integer>>();
@@ -101,6 +103,75 @@ public class Sol18_4Sum {
                         m--;
                     }
                 }
+            }
+        }
+        return res;
+    }
+
+
+    // O N^(k-1)
+    public List<List<Integer>> fourSum_k(int[] nums, int target) {
+        Arrays.sort(nums);
+        return kSum(nums, 0, 4, target);
+    }
+    private List<List<Integer>> kSum (int[] nums, int start, int k, int target) {
+        int len = nums.length;
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+
+        //optimize start
+        if (start == nums.length) return res;
+        int average_value = target / k;
+        if (nums[start] > average_value || nums[nums.length - 1] < average_value) return res;
+        // optimize end
+        if (k == 2) { //two pointers from left and right  // two sum
+            return twoSum(nums, target, start);
+//            int left = start, right = len - 1;
+//            while(left < right) {
+//                int sum = nums[left] + nums[right];
+//                if(sum == target) {
+//                    List<Integer> path = new ArrayList<Integer>();
+//                    path.add(nums[left]);
+//                    path.add(nums[right]);
+//                    res.add(path);
+//                    while(left < right && nums[left] == nums[left + 1]) left++;
+//                    while(left < right && nums[right] == nums[right - 1]) right--;
+//                    left++;
+//                    right--;
+//                } else if (sum < target) { //move left
+//                    left++;
+//                } else { //move right
+//                    right--;
+//                }
+//            }
+        } else {
+            for(int i = start; i < len - (k - 1); i++) {
+                if(i > start && nums[i] == nums[i - 1]) continue;
+                List<List<Integer>> temp = kSum(nums, i + 1, k - 1, target - nums[i]);
+                for(List<Integer> t : temp) {
+                    t.add(0, nums[i]);
+//                    res.add(t);
+                }
+                res.addAll(temp); // or at line 143
+            }
+        }
+        return res;
+    }
+
+    private List<List<Integer>> twoSum(int[] nums, int target, int start) {
+        List<List<Integer>> res = new ArrayList<>();
+        int i = start;
+        int j = nums.length - 1;
+        while ( i < j ) {
+            int sum = nums[i] + nums[j];
+            if (sum < target) i++;
+            else if (sum > target) j--;
+            else {
+                List<Integer> temp = new ArrayList<>();
+                temp.add(nums[i++]);
+                temp.add(nums[j--]);
+                res.add(temp);
+                while (i < j && nums[i-1] == nums[i]) i++;
+                while (i < j && nums[j+1] == nums[j]) j--;
             }
         }
         return res;

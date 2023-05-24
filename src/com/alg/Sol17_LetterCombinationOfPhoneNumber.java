@@ -19,7 +19,7 @@ public class Sol17_LetterCombinationOfPhoneNumber {
         ArrayList<String> result = new ArrayList<>();
         if (digits == null || digits.length() == 0) return result;
         StringBuilder sb = new StringBuilder();
-        dfs(digits,map,sb,result,0);
+        dfs(digits, map, sb, result,0);
         return result;
     }
 
@@ -30,9 +30,9 @@ public class Sol17_LetterCombinationOfPhoneNumber {
         }
         char c = digits.charAt(index);
         String letters = map[c-'0'];
-        for (int i = 0; i < letters.length();i++){
+        for (int i = 0; i < letters.length(); i++) {
             sb.append(letters.charAt(i));
-            dfs(digits,map,sb,result,index + 1);
+            dfs(digits, map, sb, result,index + 1);
             sb.deleteCharAt(sb.length() - 1);
 
         }

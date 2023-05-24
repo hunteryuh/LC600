@@ -36,24 +36,21 @@ public class Sol107_BinaryTreeLevelOrderTraversalII {
     public static List<List<Integer>> levelOrderBottom(TreeNode root) {
         //bfs approach
         Queue<TreeNode> queue = new LinkedList<>();
-        List<List<Integer>> res = new LinkedList<>();
-        if( root == null){
+        List<List<Integer>> res = new ArrayList<>();
+        if(root == null) {
             return res;
         }
-        queue.add(root);
+        queue.offer(root);
         while(!queue.isEmpty()){
             int levelNum = queue.size();
-            List<Integer> subList = new LinkedList<>();
+            List<Integer> level = new ArrayList<>();
             for(int i = 0; i < levelNum;i++){
-                if(queue.peek().left != null){
-                    queue.add(queue.peek().left);
-                }
-                if(queue.peek().right != null){
-                    queue.add(queue.peek().right);
-                }
-                subList.add(queue.poll().val);
+                TreeNode cur = queue.poll();
+                level.add(cur.val);
+                if (cur.left != null) queue.offer(cur.left);
+                if (cur.right != null) queue.offer(cur.right);
             }
-            res.add(0,subList);
+            res.add(0, level);
         }
         return res;
     }

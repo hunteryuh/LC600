@@ -1,4 +1,7 @@
 package com.alg;
+
+import java.util.Arrays;
+
 /*
 Given an integer array nums of size n, return the minimum number of moves required to make all array elements equal.
 
@@ -33,5 +36,16 @@ public class Sol453_MinimumMovesToEqualArrayElements {
         int[] nums = {3,2,1};
         Sol453_MinimumMovesToEqualArrayElements ss = new Sol453_MinimumMovesToEqualArrayElements();
         System.out.println(ss.minMoves(nums));
+    }
+
+    //https://leetcode.com/problems/minimum-moves-to-equal-array-elements/solution/
+    // sort, nlogn
+    public int minMoves2(int[] nums) {
+        Arrays.sort(nums);
+        int count = 0;
+        for (int i = nums.length - 1; i > 0; i--) {
+            count += nums[i] - nums[0];
+        }
+        return count;
     }
 }

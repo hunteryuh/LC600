@@ -20,7 +20,7 @@ public class Sol151_ReverseWordsInAString {
                 sb.append(arr[i]).append(" ");
         }
         //if (sb.length() == 0) return "";
-        return sb.length()==0 ? "": sb.substring(0,sb.length() - 1);
+        return sb.length()==0 ? "": sb.substring(0, sb.length() - 1);
     }
 
     public static String reverseWds(String s){
@@ -40,7 +40,7 @@ In this example \d is the regular expression; the extra backslash is required fo
         //System.out.println();
         Collections.reverse(Arrays.asList(words)); // Arrays.asList(array) return a list view of the specified array
 //        System.out.println(Arrays.deepToString(words));
-        return String.join(" ",words);
+        return String.join(" ", words);
     }
 
     // in-place

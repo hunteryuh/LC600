@@ -30,7 +30,7 @@ public class Sol0_amz_Maze {
                 if ( x < 0 || y < 0 || x >= m || y >= m || matrix[x][y] == 0
                         || visited[x][y] ) continue;
                 if(matrix[x][y] == 9 ) return 1;
-                else if( matrix[x][y] == 1){
+                else if(matrix[x][y] == 1) {
                     visited[x][y] = true;
                     q.add(new Point(x,y));
 

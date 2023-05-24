@@ -1,6 +1,8 @@
 package com.alg.other;
 /*
-We have N different apps with different user growth rates. At a given time t, measured in days, the number of users using an app is g^t (for simplicity we'll allow fractional users), where g is the growth rate for that app. These apps will all be launched at the same time and no user ever uses more than one of the apps. We want to know how many total users there are when you add together the number of users from each app.
+We have N different apps with different user growth rates. At a given time t, measured in days, the number of users using an app is
+ g^t (for simplicity we'll allow fractional users), where g is the growth rate for that app.
+ These apps will all be launched at the same time and no user ever uses more than one of the apps. We want to know how many total users there are when you add together the number of users from each app.
 After how many full days will we have 1 billion total users across the N apps?
 Signature
 int getBillionUsersDay(float[] growthRates)

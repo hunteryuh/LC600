@@ -25,25 +25,38 @@ public class Sol141_LinkedListCycle {
     public static boolean hasCycle(ListNode head){
         // using hashtable, O(n) time, O(n) space
         Set<ListNode> set = new HashSet<>();
-        while (head!= null){
-            if (set.contains(head)){
+        while (head!= null) {
+            if (set.contains(head)) {
                 return true;
-            }else{
+            } else {
                 set.add(head);
             }
             head = head.next;
         }
         return false;
     }
+
+    public boolean hasCycle_1(ListNode head) {
+        if (head == null || head.next == null) return false;
+        Set<ListNode> set = new HashSet<>();
+        while (head != null) {
+            if (!set.add(head)) {
+                return true;
+            }
+            head = head.next;
+        }
+        return false;
+    }
+
     public static boolean hasCycle2(ListNode head){
         // two pointers,
-        if ( head == null || head.next == null){
+        if (head == null || head.next == null) {
             return false;
         }
         ListNode slow = head;
         ListNode fast = head.next;
-        while ( slow!= fast){
-            if ( fast == null || fast.next == null){
+        while (slow!= fast) {
+            if (fast == null || fast.next == null) {
                 return false;
             }
             slow = slow.next;

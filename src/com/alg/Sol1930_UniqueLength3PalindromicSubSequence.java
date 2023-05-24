@@ -13,6 +13,8 @@ A palindrome is a string that reads the same forwards and backwards.
 A subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.
 
 For example, "ace" is a subsequence of "abcde".
+
+// related to 730
  */
 public class Sol1930_UniqueLength3PalindromicSubSequence {
     // https://leetcode.com/problems/unique-length-3-palindromic-subsequences/discuss/1330309/Java-17-lines-code-Easy-to-understand-String-built-in-functions

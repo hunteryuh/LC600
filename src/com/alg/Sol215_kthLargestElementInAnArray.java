@@ -18,18 +18,17 @@ public class Sol215_kthLargestElementInAnArray {
         //O(nlog n ) time, O(1) space
         Arrays.sort(nums);
         return nums[n-k];
-
-
     }
+
     public static int findKthLarget(int[] nums, int k){
         shuffle(nums);
         int n = nums.length;
         int s = n - k;
         int lo = 0;
         int hi = n - 1;
-        while ( lo < hi){
+        while (lo < hi) {
             int j = partition(nums,lo, hi);
-            if ( j < s) lo = j + 1; //pivot is too small
+            if (j < s) lo = j + 1; //pivot is too small
             else if (j > s) hi = j - 1;
             else break;
         }
@@ -41,9 +40,9 @@ public class Sol215_kthLargestElementInAnArray {
     private static int partition(int[] nums, int lo, int hi) {
         int i = lo;
         int j = hi + 1;
-        while (true){
-            while ( i < hi && nums[++i] < nums[lo]);
-            while ( j > lo && nums[lo] < nums[--j]);
+        while (true) {
+            while (i < hi && nums[++i] < nums[lo]);
+            while (j > lo && nums[lo] < nums[--j]);
             // put nums that are <= pivot to the left
             // put nums that are  > pivot to the right
             if ( i >= j) break;
@@ -58,13 +57,15 @@ public class Sol215_kthLargestElementInAnArray {
         nums[i] = nums[j];
         nums[j] = tmp;
     }
-    private static void shuffle(int[] nums){
+
+    private static void shuffle(int[] nums) {
         for (int i = 1 ; i < nums.length; i++){  //i can start 1, as 0 is always swapped with 0
             int r = (int) Math.random() * (i+1);
             swap(nums,i,r);
         }
     }
-    private static void shuffle_2(int[] nums){
+
+    private static void shuffle_2(int[] nums) {
         Random random = new Random();
         for (int i = 1 ; i < nums.length; i++){
             int r = random.nextInt( i + 1);
@@ -76,12 +77,14 @@ public class Sol215_kthLargestElementInAnArray {
         int[] nums = { 1,4,2,6,5,0};
         System.out.println(findKthLarget(nums,2));
     }
-    // with priorityqueue, time Nlogk
+    // with priorityqueue, time N*logk
+    // 0 1 2 4 5 6
+    // 1  4  -> 4 , 2, -> 4 , 6
     public static int findKthLarge(int[] nums, int k){
         PriorityQueue<Integer> pq = new PriorityQueue<>();
         for (int n : nums){
             pq.add(n);
-            if(pq.size() > k){
+            if (pq.size() > k) {
                 pq.poll();
             }
         }

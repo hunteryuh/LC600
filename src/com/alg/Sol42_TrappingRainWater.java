@@ -1,5 +1,8 @@
 package com.alg;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 /**
  * Created by HAU on 9/23/2017.
  */
@@ -44,7 +47,7 @@ public class Sol42_TrappingRainWater {
         System.out.println(maxRainWater(n));
     }
     // method 2 dp
-    /*Time complexity: O(n)O(n).
+    /*Time complexity: O(n).
 We store the maximum heights upto a point using 2 iterations of O(n) each.
 We finally update \text{ans}ans using the stored values in O(n).
 
@@ -90,6 +93,49 @@ Space complexity: O(n) extra space.*/
             if ( maxSeenFromleft < height[i]){
                 maxSeenFromleft = height[i];
             }
+        }
+        return res;
+    }
+    // arraydeque, left in left out
+    public int trap2(int[] height) {
+        int n = height.length;
+        int[] leftMax = new int[n];
+        int[] rightMax = new int[n];
+        for (int i = 0; i < n; i++) {
+            if (i == 0) {
+                leftMax[i] = height[i];
+                continue;
+            }
+            leftMax[i] = Math.max(leftMax[i-1], height[i]);
+        }
+        for (int i = n-1; i>=0; i--) {
+            if (i == n-1) {
+                rightMax[i] = height[i];
+                continue;
+            }
+            rightMax[i] = Math.max(height[i], rightMax[i+1]);
+        }
+        int res = 0;
+        for (int i = 0; i < n; i++) {
+            res += Math.min(leftMax[i], rightMax[i]) - height[i];
+        }
+        return res;
+    }
+
+    // monotonic stack
+    public int trap3(int[] height) {
+        Deque<Integer> stack = new ArrayDeque<>();
+        int res = 0;
+        for (int i = 0; i < height.length; i++) {
+            int cur = height[i];
+            while (!stack.isEmpty() && cur > height[stack.peek()]) {
+                int bottom = stack.pop();
+                if (stack.isEmpty()) break;
+                int hi = Math.min(height[stack.peek()], cur) - height[bottom];
+                int width = i - stack.peek() - 1;
+                res += hi * width;
+            }
+            stack.push(i);
         }
         return res;
     }

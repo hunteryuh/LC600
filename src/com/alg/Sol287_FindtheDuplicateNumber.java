@@ -1,5 +1,9 @@
 package com.alg;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by HAU on 7/20/2017.
  */
@@ -12,7 +16,7 @@ package com.alg;
     // O(N) in the below
 public class Sol287_FindtheDuplicateNumber {
     public static int findDuplicate(int[] nums){
-        //is the same as find the cycle entry pointin linkedlist!
+        //is the same as find the cycle entry point in linkedlist!
 
         int slow = nums[0];
         int fast = nums[nums[0]];
@@ -42,7 +46,7 @@ public class Sol287_FindtheDuplicateNumber {
             }
             if ( count <= mid) {
                 lo = mid + 1;
-            }else hi = mid;
+            } else hi = mid;
         }
         return lo;
     }
@@ -57,5 +61,27 @@ public class Sol287_FindtheDuplicateNumber {
         int[] a = {1,3,2,4,2};
         System.out.println(findDuplicate(a));
         System.out.println(findDup_bs(a));
+    }
+
+    // sort O(nlogn)
+    public int findDuplicate2(int[] nums) {
+        Arrays.sort(nums);
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] == nums[i-1]) {
+                return nums[i];
+            }
+        }
+        return -1;
+    }
+
+    // Set O(n)
+    public int findDuplicate3(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for (int num: nums) {
+            if (!set.add(num)) {
+                return num;
+            }
+        }
+        return -1;
     }
 }

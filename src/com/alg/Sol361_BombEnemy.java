@@ -20,29 +20,43 @@ return 3. (Placing a bomb at (1,1) kills 3 enemies)
 public class Sol361_BombEnemy {
     public static int maxKilledEnemies(char[][] grid) {
         /*Walk through the matrix. At the start of each non-wall-streak (row-wise or column-wise),
-        count the number of hits in that streak and remember it. O(mn) time, O(n) space.*/
-        if(grid == null || grid.length == 0 ||  grid[0].length == 0) return 0;
+        count the number of hits in that streak and remember it. O(mn) time, O(n) space.
+         dynamic programming
+        */
+        if (grid == null || grid.length == 0 ||  grid[0].length == 0) return 0;
         int m = grid.length;
         int n = grid[0].length;
         int res = 0;
         int rowhits = 0;
         int[] colhits = new int[n];
-        for(int i = 0; i < m; i++){
-            for(int j = 0; j < n;j++){
-                if( j==0 || grid[i][j-1] == 'W'){
+        for (int i = 0; i < m; i++){
+            for (int j = 0; j < n;j++) {
+                // reset the hits on the row if necessary
+                if (j==0 || grid[i][j-1] == 'W'){
                     rowhits = 0;
-                    for(int k = j; k<n && grid[i][k]!= 'W';k++){
-                        rowhits += (grid[i][k] == 'E')? 1:0;
+                    for (int k = j; k < n ; k++) {
+                        if (grid[i][k] == 'W') {
+                            // stop the scan when we hit the wall
+                            break;
+                        } else if (grid[i][k] == 'E') {
+                            rowhits += 1;
+                        }
+
                     }
                 }
-                if(i==0 || grid[i-1][j] == 'W'){
+                // reset the hits on the column, if necessary
+                if (i == 0 || grid[i-1][j] == 'W') {
                     colhits[j] = 0;
-                    for(int k = i; k<m && grid[k][j] != 'W';k++){
-                        colhits[j] += (grid[k][j] == 'E')? 1: 0;
+                    for (int k = i; k < m; k++) {
+                        if (grid[k][j] == 'W') {
+                            break;
+                        } else if (grid[k][j] == 'E') {
+                            colhits[j] += 1;
+                        }
                     }
                 }
-                if(grid[i][j] == '0'){
-                    res = Math.max(res,rowhits + colhits[j]);
+                if (grid[i][j] == '0') {
+                    res = Math.max(res, rowhits + colhits[j]);
                 }
             }
         }

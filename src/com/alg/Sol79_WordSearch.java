@@ -79,4 +79,44 @@ public class Sol79_WordSearch {
         //System.out.println(exist(board,w2));
         System.out.println(exist(board,w3));
     }
+
+    public boolean exist2(char[][] board, String word) {
+        int m = board.length;
+        int n = board[0].length;
+        if (word == null || word.length() == 0) return true;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n ; j++) {
+                if (dfs(word, board, i, j, 0)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+
+    }
+
+    private boolean dfs(String word, char[][] board, int x, int y, int start) {
+        int m = board.length;
+        int n = board[0].length;
+        if (start == word.length()) return true;
+        if (x < 0 || x >= m || y < 0 || y >=n) return false;
+        if (word.charAt(start) == board[x][y]) {
+            start++;
+            char c = board[x][y];
+            board[x][y] = '*';
+            if (
+                    dfs(word, board, x + 1, y, start) ||
+                            dfs(word, board, x - 1, y, start) ||
+                            dfs(word, board, x, y+1, start) ||
+                            dfs(word, board, x, y -1 , start) ) {
+                return true; // side effect: the last matched char would be overwritten as '*'
+            }
+
+            // back track the start position and the char at x,y
+            start--;
+            board[x][y] = c;
+
+        }
+        return false;
+    }
 }

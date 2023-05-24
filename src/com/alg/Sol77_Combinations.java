@@ -47,6 +47,9 @@ public class Sol77_Combinations {
         int n = 4, k = 3;
         System.out.println(combine(n,k));
         System.out.println(combine2(n,k));
+
+        Sol77_Combinations ss = new Sol77_Combinations();
+        ss.rollDice(2);
     }
     // methods 2, slightly different in the dfs
     public static List<List<Integer>> combine2(int n, int k) {
@@ -63,7 +66,7 @@ public class Sol77_Combinations {
             return;
         }
 
-        for ( int i = pos; i <= n; i++){
+        for (int i = pos; i <= n; i++){
             list.add(i);
             dfs2(res,list,n,k,i+1);
             list.remove(list.size() - 1);
@@ -90,4 +93,27 @@ public class Sol77_Combinations {
             sol.remove(sol.size() - 1);
         }
     }
+
+    // doordash dice roll dice
+    // Write a function that takes n number of dice/die and returns all possible permutations of result. For example, when you have n=2 dice, we want to return: [(1,1), (1,2),(1,3)...(6,5),(6,6)]
+    public List<List<Integer>> rollDice(int n) {
+        List<Integer> sol = new ArrayList<>();
+        List<List<Integer>> res = new ArrayList<>();
+        roll(n, sol, res);
+        System.out.println(res);
+        return res;
+    }
+
+    private void roll(int n, List<Integer> sol, List<List<Integer>> res) {
+        if (n == 0) {
+            res.add(new ArrayList<>(sol));
+            return;
+        }
+        for (int i = 1; i <= 6; i++) {
+            sol.add(i);
+            roll(n - 1, sol, res);
+            sol.remove(sol.size() - 1);
+        }
+    }
+
 }

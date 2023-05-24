@@ -36,21 +36,22 @@ public class Sol560_SubarraySumEqualsK {
         System.out.println(subarraySum(nums,k));
     }
     // hashmap, time O(n)
+    // presum  - presum = target, 要找的是map里是否存在presum - target
     public static int subArraySum(int[] nums, int k){
-        Map<Integer,Integer> map = new HashMap<>();
+        Map<Integer,Integer> preSum = new HashMap<>();
         // key: sum;  value: occurence of the sum
-        map.put(0,1);
+        preSum.put(0,1);
         int sum = 0;
         int count = 0;
-        for( int i = 0; i < nums.length; i++){
+        for(int i = 0; i < nums.length; i++){
             sum += nums[i];
-            count += map.getOrDefault(sum - k, 0);
-            //if ( map.containsKey(sum - k)
+            count += preSum.getOrDefault(sum - k, 0);
+            //if ( preSum.containsKey(sum - k)
             //{
-            //  count += map.get(sum - k);
+            //  count += preSum.get(sum - k);
             //}
             //
-            map.put(sum, map.getOrDefault(sum,0) + 1);
+            preSum.put(sum, preSum.getOrDefault(sum,0) + 1);
         }
         return count;
     }

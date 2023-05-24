@@ -21,7 +21,7 @@ public class Sol270_ClosestBinarySearchTreeValue {
     }
     public static int closestValue(TreeNode root, double target) {
         int v1 = root.val;
-        TreeNode c =  target<v1? root.left: root.right;
+        TreeNode c =  target<v1 ? root.left: root.right;
         if(c == null) return v1;
         int v2 = closestValue(c,target);
         return Math.abs(target - v1) < Math.abs(target - v2)? v1 : v2;
@@ -54,12 +54,33 @@ public class Sol270_ClosestBinarySearchTreeValue {
     }
     public static int closestVal(TreeNode root, double target){
         int res = root.val;
-        while ( root!= null){
-            if( Math.abs( target - res) > Math.abs(target-root.val)){
+        while (root!= null) {
+            if (Math.abs(target - res) > Math.abs(target-root.val)) {
                 res = root.val;
             }
             root = root.val < target ? root.right:root.left;
         }
         return res;
+    }
+
+    // recursive 2  , dfs
+    int res = 0;
+    double min = Double.MAX_VALUE;
+    public int closestValue2(TreeNode root, double target) {
+        helper(root, target);
+        return res;
+    }
+
+    private void helper(TreeNode root, double target) {
+        if (root == null) return;
+        if (Math.abs(root.val - target) < min) {
+            res = root.val;
+            min = Math.abs(root.val - target);
+        }
+        if (root.val < target) {
+            helper(root.right, target);
+        } else {
+            helper(root.left, target);
+        }
     }
 }

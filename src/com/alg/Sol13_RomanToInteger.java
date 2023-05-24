@@ -54,7 +54,7 @@ public class Sol13_RomanToInteger {
     }
 
     public static void main(String[] args) {
-        String s1 = "IV";
+        String s1 = "IV";  // -1 + 5
         String s2 = "MCMIV";
         System.out.println(romanToInt(s1));
         System.out.println(romanToInt(s2));

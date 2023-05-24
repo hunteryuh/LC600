@@ -22,7 +22,7 @@ public class Sol138CopyListWithRandomPointer {
         }
     }
     private static void copyNext(ListNode head){
-        while ( head != null){
+        while (head != null){
             ListNode newNode = new ListNode(head.val);
             newNode.random = head.random;
             newNode.next = head.next;
@@ -32,27 +32,27 @@ public class Sol138CopyListWithRandomPointer {
 
     }
     private static void copyRandom(ListNode head){
-        while (head != null){
-            if (head.next.random != null){
+        while (head != null) {
+            if (head.next.random != null) {
                 head.next.random = head.random.next;
             }
             head = head.next.next;
         }
     }
-    private static ListNode splitList( ListNode head){
+    private static ListNode splitList(ListNode head) {
         ListNode newHead = head.next;
-        while ( head != null){
+        while (head != null) {
             ListNode temp = head.next;
             head.next = temp.next;
             head = head.next;
-            if(temp.next != null){
+            if (temp.next != null) {
                 temp.next = head.next; // temp.next = temp.next.next
             }
         }
         return newHead;
     }
     public static ListNode copyRandomList(ListNode head){
-        if ( head == null) return null;
+        if (head == null) return null;
         copyNext(head);
         copyRandom(head);
         return splitList(head);

@@ -19,6 +19,10 @@ Given binary tree [1,null,2,3],
    3
 return [1,2,3].
 
+preorder 先序  根左右
+inorder 中序  左根右
+postorder 后序 左右根
+
 Note: Recursive solution is trivial, could you do it iteratively?*/
 public class Sol144_BinaryTreePreorderTraversal {
     // recursive
@@ -53,14 +57,14 @@ public class Sol144_BinaryTreePreorderTraversal {
     // method 2 with a helper to traverse
     public static List<Integer> preOrderTra(TreeNode root){
         List<Integer> res = new LinkedList<>();
-        prehelper(root,res);
+        prehelper(root, res);
         return res;
     }
     private static void prehelper(TreeNode root, List<Integer> list){
         if(root == null) return;
         list.add(root.val);
-        prehelper(root.left,list);
-        prehelper(root.right,list);
+        prehelper(root.left, list);
+        prehelper(root.right, list);
     }
 
     // method 3, iterative
@@ -80,7 +84,7 @@ public class Sol144_BinaryTreePreorderTraversal {
         return res;
     }
 
-    // method 4, iterative
+    // method 4, iterative, preferred
     public static List<Integer> preorderTraversal2(TreeNode root) {
         List<Integer> result = new ArrayList<>();
         if (root == null) return result;
@@ -90,6 +94,7 @@ public class Sol144_BinaryTreePreorderTraversal {
             TreeNode node = stack.pop();
             result.add(node.val);
             if (node.right != null) stack.push(node.right);
+            // stack first in last out, so add right first so that left can be popped first
             if (node.left != null) stack.push(node.left);
         }
         return result;

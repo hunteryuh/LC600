@@ -29,8 +29,9 @@ public class Sol443_StringCompression {
         for (int read = 0; read < chars.length; read++){
             if (read + 1 == chars.length || chars[read + 1] != chars[read]){
                 chars[write++] = chars[anchor];
-                if (read > anchor){
-                    for (char c:("" + (read - anchor + 1)).toCharArray()){
+                if (read > anchor) {
+//                    Integer.toString(read-anchor + 1)
+                    for (char c: ("" + (read - anchor + 1)).toCharArray()){
                         chars[write++] = c;
                     }
                 }
@@ -38,6 +39,23 @@ public class Sol443_StringCompression {
             }
         }
         return write;
+    }
+
+    public int compress2(char[] chars) {
+        int indexAns = 0, index = 0;
+        while(index < chars.length){
+            char currentChar = chars[index];
+            int count = 0;
+            while(index < chars.length && chars[index] == currentChar){
+                index++;
+                count++;
+            }
+            chars[indexAns++] = currentChar;
+            if(count != 1)
+                for(char c : Integer.toString(count).toCharArray())
+                    chars[indexAns++] = c;
+        }
+        return indexAns;
     }
 
     public static void main(String[] args) {

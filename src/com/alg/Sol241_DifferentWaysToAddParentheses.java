@@ -58,6 +58,7 @@ public class Sol241_DifferentWaysToAddParentheses {
 
             }
         }
+        // if there is no operator
         if (res.isEmpty()) {
             res.add(Integer.valueOf(input));
         }

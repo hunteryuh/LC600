@@ -35,6 +35,7 @@ public class Sol105_ConstructBinaryTreefromPreorderandInorderTraversal {
         return helper6(inorder,0,inorder.length - 1, preorder, 0,preorder.length - 1);
     }
 
+    // O(n^2)
     private TreeNode helper6(int[] inorder, int instart, int inend, int[] preorder, int prestart, int preend){
         if (instart > inend) return null;
         TreeNode root = new TreeNode(preorder[prestart]);
@@ -50,7 +51,7 @@ public class Sol105_ConstructBinaryTreefromPreorderandInorderTraversal {
     }
 
 //
-    // with hashmap
+    // with hashmap, time O(n)
     public static TreeNode buildTreewithMap(int[] preorder, int[] inorder){
         Map<Integer, Integer> inMap = new HashMap<>();
         for (int i = 0; i < inorder.length; i++){
@@ -96,6 +97,27 @@ public class Sol105_ConstructBinaryTreefromPreorderandInorderTraversal {
         root.left = helper(preorder, preLeft + 1, preLeft + 1 + newLength, inorder, inLeft, rootIndexInInOrder);
 //        root.right = helper(preorder, preRight - (inRight - rootIndexInInOrder -1), preRight, inorder, rootIndexInInOrder + 1, inRight);
         root.right = helper(preorder, preLeft + 1 + newLength , preRight, inorder, rootIndexInInOrder + 1, inRight);
+        return root;
+    }
+
+    // preOrder性质优化解法
+    int[] preorder; int[] inorder;
+    int preOrderIndex;
+    Map<Integer, Integer> map = new HashMap<>();
+    public TreeNode buildTree2(int[] preorder, int[] inorder) {
+        this.preorder = preorder;
+        this.inorder = inorder;
+        this.preOrderIndex = 0;
+        int n = preorder.length;
+        for (int i = 0; i < n; i++) map.put(inorder[i], i);
+        return helperBuilder(0, n- 1);
+    }
+    private TreeNode helperBuilder(int instart, int inend) { // only pass the bound for th inorder traversal
+        if (instart > inend) return null;
+        TreeNode root = new TreeNode(preorder[preOrderIndex++]);  // only increasing
+        int index = map.get(root.val);
+        root.left = helperBuilder(instart, index  - 1);
+        root.right = helperBuilder(index + 1, inend);
         return root;
     }
 

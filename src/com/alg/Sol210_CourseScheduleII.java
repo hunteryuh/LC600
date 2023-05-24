@@ -1,7 +1,10 @@
 package com.alg;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 
 /**
@@ -25,6 +28,43 @@ There are a total of 2 courses to take. To take course 1 you should have finishe
 There are a total of 4 courses to take. To take course 3 you should have finished both courses 1 and 2. Both courses 1 and 2 should be taken after you finished course 0. So one correct course order is [0,1,2,3].
 Another correct ordering is[0,2,1,3]..*/
 public class Sol210_CourseScheduleII {
+
+    // bfs using Map to store the graph
+    public int[] findOrderCourseScheduleII(int numCourses, int[][] prerequisites) {
+        int[] res = new int[numCourses]; // to store the result array
+        int[] indegrees = new int[numCourses];
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+
+        for (int i = 0; i < numCourses; i++) {
+            graph.put(i, new ArrayList<>());
+        }
+        for (int i = 0; i < prerequisites.length; i++) {
+            graph.get(prerequisites[i][1]).add(prerequisites[i][0]);
+            indegrees[prerequisites[i][0]]++;
+        }
+
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < numCourses; i++) {
+            if (indegrees[i] == 0) {
+                queue.offer(i);
+            }
+        }
+        int count = 0;
+        while (!queue.isEmpty()) {
+            int cur = queue.poll();
+            res[count++] = cur;
+            for (int next: graph.get(cur)) {
+                if(--indegrees[next] == 0) {
+                    queue.offer(next);
+                }
+            }
+        }
+        if (count != numCourses) {
+            return new int[0];
+        }
+        return res;
+    }
+
     public static int[] findOrder(int numCourses, int[][] prerequisites) {
         // breadth first search
         int len = prerequisites.length;
@@ -34,12 +74,11 @@ public class Sol210_CourseScheduleII {
         int index = 0;
         for (int i = 0; i < len; i++){
             pCount[prerequisites[i][0]]++;  // count for number of prerequisties for each course
-
         }
 
         //store courses that have no prerequisites
         Queue<Integer> queue = new LinkedList<>();
-        for(int i = 0; i < numCourses; i++){
+        for (int i = 0; i < numCourses; i++){
             if(pCount[i] == 0) {
                 queue.add(i);
                 resultOrder[index] = i;

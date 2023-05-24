@@ -1,5 +1,7 @@
 package com.alg;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Stack;
 
 /*
@@ -39,14 +41,15 @@ interviewed by facebook this one at 7/8/2021
  */
 public class Sol1249_MinimumRemovetoMakeValidParenthesis {
     // https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses/discuss/419702/Java-O(n)-solution-without-Stack
+    // two pass
     public String minRemoveToMakeValid(String s) {
         boolean[] remove = new boolean[s.length()];
         int open = 0;
-        for(int i = 0; i< s.length(); i++) {
+        for (int i = 0; i< s.length(); i++) {
             char c = s.charAt(i);
             if (c == '(') {
                 open++;
-            } else if( c == ')') {
+            } else if (c == ')') {
                 if (open > 0) {
                     open--;
                 } else {
@@ -122,5 +125,31 @@ public class Sol1249_MinimumRemovetoMakeValidParenthesis {
         while (!st.empty())
             sb.setCharAt(st.pop(), '*');
         return sb.toString().replaceAll("\\*", "");
+    }
+
+    // rolling state, use stack to store index
+    public String minRemoveToMakeValid4(String s) {
+        Stack<Integer> st = new Stack<>();
+        Set<Integer> indicesToRemove = new HashSet<>();
+        for (int i = 0; i < s.length(); ++i) {
+            if (s.charAt(i) == '(') st.push(i);
+            else if (s.charAt(i) == ')') {
+                if (st.isEmpty()) {
+                    indicesToRemove.add(i);
+                } else {
+                    st.pop();
+                }
+            }
+        }
+        while (!st.empty()) {
+            indicesToRemove.add(st.pop());
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            if (!indicesToRemove.contains(i)) {
+                sb.append(s.charAt(i));
+            }
+        }
+        return sb.toString();
     }
 }

@@ -91,4 +91,41 @@ Otherwise, interleave the characters in the order described above.*/
         return sb.toString();
     }
 
+    // method 2.1 priority queue
+
+    public String reorgString2(String s) {
+        Map<Character, Integer> freqMap = new HashMap<>();
+        for (char c: s.toCharArray()) {
+            freqMap.put(c, freqMap.getOrDefault(c, 0) + 1);
+            if (freqMap.get(c) > ( s.length() + 1 ) / 2 ) {
+                // more than half
+                // odd: abb   3 + 1 )/2 = 2
+                // even: aabb 4 + 1) / 2 = 2  abab
+                return "";
+            }
+        }
+        // sort by count DESC.
+        PriorityQueue<Character> pq = new PriorityQueue<>((a,b) -> freqMap.get(b) - freqMap.get(a));
+        for (char c: freqMap.keySet()) {
+            pq.add(c);
+        }
+        StringBuilder sb = new StringBuilder();
+        while (pq.size() >= 2) {
+            char c1 = pq.poll();
+            char c2 = pq.poll();
+            sb.append(c1).append(c2);
+            freqMap.put(c1, freqMap.get(c1) - 1);
+            if (freqMap.get(c1) > 0) {
+                pq.add(c1);
+            }
+            freqMap.put(c2, freqMap.get(c2) - 1);
+            if (freqMap.get(c2) > 0) {
+                pq.add(c2);
+            }
+        }
+        if (pq.size() > 0) {
+            sb.append(pq.poll());
+        }
+        return sb.toString();
+    }
 }

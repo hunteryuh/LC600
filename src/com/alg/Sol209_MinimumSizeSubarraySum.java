@@ -61,4 +61,48 @@ public class Sol209_MinimumSizeSubarraySum {
         }
         return res;
     }
+    // two pointers, with while
+    public int minSubArrayLen3(int target, int[] nums) {
+        int n = nums.length;
+        int i = 0, j = 0;
+        int currSum = 0;
+        int minLen = Integer.MAX_VALUE;
+
+        while (j < n) {
+            currSum += nums[j];
+            while (currSum >= target) {
+                minLen = Math.min(minLen, j - i + 1);
+                currSum -= nums[i];
+                i++;
+            }
+            j++;
+        }
+
+        return (minLen != Integer.MAX_VALUE) ? minLen : 0;
+    }
+
+
+    // nlogn
+    public int minSubArrayLen2(int s, int[] nums) {
+        int i = 1, j = nums.length, min = 0;
+        while (i <= j) {
+            int mid = (i + j) / 2;
+            if (windowExist(mid, nums, s)) {
+                j = mid - 1;
+                min = mid;
+            } else i = mid + 1;
+        }
+        return min;
+    }
+
+
+    private boolean windowExist(int size, int[] nums, int s) {
+        int sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (i >= size) sum -= nums[i - size];
+            sum += nums[i];
+            if (sum >= s) return true;
+        }
+        return false;
+    }
 }

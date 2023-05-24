@@ -2,6 +2,7 @@ package com.alg;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -39,7 +40,7 @@ public class Sol78_subsets {
             return result;
         }
 
-        Arrays.sort(nums);
+//        Arrays.sort(nums); // no need to sort if no duplicate
 
         //[1,2] == [2,1], no duplicate subsets
         // find all subsets starting from empty sets
@@ -98,5 +99,24 @@ public class Sol78_subsets {
         assert ref.equals(res);
         System.out.println(ref);
         System.out.println(res);
+    }
+
+    public List<List<Integer>> subsets2(int[] nums) {
+        LinkedList<Integer> sol = new LinkedList<>();
+        List<List<Integer>> res = new ArrayList<>();
+        if (nums == null || nums.length == 0) return res;
+
+        dfs(nums, res, sol, 0);
+        return res;
+    }
+
+    private void dfs(int[] nums, List<List<Integer>> res, LinkedList<Integer> sol, int start) {
+        res.add(new ArrayList<>(sol));
+
+        for (int i = start; i < nums.length; i++) {
+            sol.add(nums[i]);
+            dfs(nums, res, sol, i + 1);
+            sol.removeLast();
+        }
     }
 }

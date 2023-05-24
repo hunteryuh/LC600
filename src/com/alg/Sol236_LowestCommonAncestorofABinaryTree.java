@@ -2,10 +2,12 @@ package com.alg;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * Created by HAU on 11/25/2017.
@@ -15,23 +17,17 @@ import java.util.Queue;
 According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes v and w as the lowest node
 in T that has both v and w as descendants (where we allow a node to be a descendant of itself).”*/
 public class Sol236_LowestCommonAncestorofABinaryTree {
-    public static class TreeNode{
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode(int x){
-            val = x;
-        }
-    }
+
+    // https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/discuss/1672355/Java-or-Intuition-or-Explanation
     public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if(root == null || root == p || root == q) return root;
+        if (root == null || root == p || root == q) return root;
         TreeNode left = lowestCommonAncestor(root.left, p, q);
         TreeNode right = lowestCommonAncestor(root.right, p, q);
 
-        if (left != null && right!= null){
+        if (left != null && right!= null) { // which means p,q exist below different subtrees;
             return root;
         }
-        return left != null? left: right;
+        return left != null? left: right; // which means p,q exist below the same subtree;
         //  return left == null ? right : right == null ? left : root;
     }
 
@@ -41,7 +37,7 @@ public class Sol236_LowestCommonAncestorofABinaryTree {
         }
         TreeNode left = lowestCommonAncestor(root.left, p, q);
         TreeNode right = lowestCommonAncestor(root.right, p, q);
-        if (left != null && right!= null){
+        if (left != null && right!= null) {
             return root;
         }
 
@@ -124,6 +120,27 @@ public class Sol236_LowestCommonAncestorofABinaryTree {
         }
         list.remove(list.size() - 1);
         return false;
+    }
+
+    // parent pointer, iterative
+    Map<TreeNode, TreeNode> parents = new HashMap<>();
+    public TreeNode lowestCA(TreeNode root, TreeNode p, TreeNode q) {
+        dfs(null, root);
+        Set<TreeNode> ancestors = new HashSet<>();
+        while (p != null) {
+            ancestors.add(p);
+            p = parents.get(p);
+        }
+        while (!ancestors.contains(q)) {
+            q = parents.get(q);
+        }
+        return q;
+    }
+    private void dfs(TreeNode par, TreeNode cur) {
+        if (cur == null) return;
+        parents.put(cur, par);
+        dfs(cur, cur.left);
+        dfs(cur, cur.right);
     }
 
 }

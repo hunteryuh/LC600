@@ -1,4 +1,9 @@
 package com.alg;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
+
 /*
 Serialization is converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment.
 
@@ -134,6 +139,47 @@ public class Sol449_SerializeAndDeserializeBST {
         TreeNode droot = new Codec().deserialize2(tree);
         System.out.println(droot.val);
         System.out.println(droot.left.val);
+    }
+
+    // serialize
+    public String serialize(TreeNode root) {
+        if (root == null) return "";
+        String res = String.valueOf(root.val);
+        if (root.left != null) res += "," + serialize(root.left);
+        if (root.right != null) res += "," + serialize(root.right);
+        return res;
+    }
+    // deserialize  反序列化
+    public TreeNode deserialize(String data) {
+        if (data.isEmpty()) return null;
+        Queue<String> queue = new LinkedList<>(Arrays.asList(data.split(",")));
+        return dfs(queue, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+    private TreeNode dfs(Queue<String> queue, int lower, int upper) {
+        if (queue.isEmpty()) return null;
+        String s = queue.peek();
+        int val = Integer.parseInt(s);
+        if (val < lower || val > upper) return null;  // use bound to check if it is a subtree
+        queue.poll();
+        TreeNode cur = new TreeNode(val);
+        cur.left = dfs(queue, lower, val);
+        cur.right = dfs(queue, val, upper);
+        return cur;
+    }
+    // use bst preorder 递增的性质，只维持upper bound
+    public TreeNode deserialize3(String data) {
+        if (data == null || data.length() == 0) return null;
+        int[] arr = Arrays.stream(data.split(",")).mapToInt(Integer::valueOf).toArray();
+        TreeNode root = bstFromPreOrder(arr, Integer.MAX_VALUE);
+        return root;
+    }
+    int i = 0; // global variable
+    private TreeNode bstFromPreOrder(int[] arr, int upper) {
+        if (i == arr.length || arr[i] > upper) return null;
+        TreeNode root = new TreeNode(arr[i++]);
+        root.left = bstFromPreOrder(arr, root.val);
+        root.right = bstFromPreOrder(arr, upper);
+        return root;
     }
 
 }

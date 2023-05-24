@@ -30,10 +30,10 @@ public class Sol0_amz_GCDofArray {
         return n1 + n2;
     }
     private static int findGCD(int a, int b){
-        while( b!= 0){
+        while (b!= 0) {
             int temp = a;
             a = b;
-            b = temp % a;
+            b = temp % b;
         }
         return a; //( if b == 0) return a
     }

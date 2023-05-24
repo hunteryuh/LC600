@@ -1,7 +1,9 @@
 package com.alg;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /*
 Given a binary tree, return all root-to-leaf paths.
@@ -99,4 +101,50 @@ public class Sol257_BinaryTreePaths {
             path.remove(path.size() - 1);
         }
     }
+
+    // dfs 2
+    public List<String> binaryTreePaths3(TreeNode root) {
+        List<String> res = new ArrayList<>();
+        if (root != null) helper(root, String.valueOf(root.val), res);
+        return res;
+    }
+
+    private void helper(TreeNode root, String path, List<String> res) {
+        if (root.left == null && root.right == null) res.add(path);
+        if (root.left != null) {
+            helper(root.left, path + "->" + root.left.val, res);
+        }
+        if (root.right != null) {
+            helper(root.right, path + "->" + root.right.val, res);
+        }
+    }
+
+    // bfs- Queue
+    public List<String> binaryTreePaths4(TreeNode root) {
+        List<String> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        Queue<String> path = new LinkedList<>();
+        path.offer(root.val + "->");
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            TreeNode cur = queue.poll();
+            String item = path.poll(); // one node paired with one path
+            if (cur.left == null && cur.right == null) {
+                res.add(item);
+            }
+            if (cur.left != null) {
+                queue.offer(cur.left);
+                path.offer(item + "->" + cur.left.val);
+            }
+            if (cur.right != null) {
+                queue.offer(cur.right);
+                path.offer(item  + "->" + cur.right.val);
+            }
+        }
+        return res;
+    }
+
 }

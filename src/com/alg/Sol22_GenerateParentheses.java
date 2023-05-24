@@ -26,14 +26,14 @@ public class Sol22_GenerateParentheses {
     }
 
     private static void backtrack(List<String> res, String cur, int open, int close, int max) {
-        if(cur.length() == max * 2){
+        if (cur.length() == max * 2){
             res.add(cur);
             return;
         }
-        if (open < max){
+        if (open < max) {
             backtrack(res, cur + "(", open + 1, close,max);
         }
-        if (close < open){
+        if (close < open) {
             backtrack(res, cur + ")", open, close + 1, max);
         }
     }
@@ -55,7 +55,7 @@ public class Sol22_GenerateParentheses {
     //
     //核心区别就是我们使用 StringBuilder 替代了 String，注意这里是需要重新设置长度的，这样才能保证回溯正确。
     private static void dfs(List<String> res, StringBuilder sb, int leftb, int rightb, int n) {
-        if(sb.length() == 2 * n) {
+        if (sb.length() == 2 * n) {
             res.add(sb.toString());
             return;
         }

@@ -24,9 +24,9 @@ public class Sol463_IslandPerimeter {
         for (int i = 0; i < grid.length; i++){
             for (int j = 0; j < grid[0].length; j++){
                 if (grid[i][j] == 1){
-                    res += 4;
-                    if ( i > 0 && grid[i-1][j] == 1) res -=2;
-                    if ( j > 0 && grid[i][j-1] == 1) res -=2;
+                    res += 4;  // count border
+                    if (i > 0 && grid[i-1][j] == 1) res -=2;  // count up
+                    if (j > 0 && grid[i][j-1] == 1) res -=2; // count left
                 }
             }
         }
@@ -41,5 +41,26 @@ public class Sol463_IslandPerimeter {
                 {1,1,0,0}
         };
         System.out.println(islandPerimeter(grid));
+    }
+
+    public int islandPerimeter2(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n ; j++) {
+                if (grid[i][j] == 1) {
+                    return dfs(grid, i, j);
+                }
+            }
+        }
+        return 0;
+    }
+
+    private int dfs(int[][] grid, int x, int y) {
+        if ( x < 0 || x >= grid.length || y < 0 || y >= grid[0].length || grid[x][y] == 0) return 1; // find water at the neighbor, return 1
+        if (grid[x][y] == -1) return 0;
+        grid[x][y] = -1;
+        int res = dfs(grid, x + 1, y) + dfs(grid, x - 1, y) + dfs(grid, x, y+1) + dfs(grid, x, y - 1);
+        return res;
     }
 }

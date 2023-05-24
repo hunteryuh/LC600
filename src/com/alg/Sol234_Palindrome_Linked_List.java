@@ -5,7 +5,9 @@ package com.alg;
  */
 
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -30,13 +32,33 @@ public class Sol234_Palindrome_Linked_List {
         if (head== null || head.next == null) return true;
         String ori = "";
         String rev = "";
-        while (head!=null){
-            ori +=head.val;
+        while (head != null) {
+            ori += head.val;
             rev = head.val + rev;
             head = head.next;
         }
         return ori.equals(rev);   //O(n) time, O(n) space  string usage
         //    // 反向字串與正向字串相等就是回文陣列
+    }
+
+    public boolean isPalindromeList(ListNode head) {
+        List<Integer> list = new ArrayList<>();
+        while (head != null) {
+            list.add(head.val);
+            head = head.next;
+        }
+        int n = list.size();
+        int left = 0;
+        int right = n - 1;
+        while (left < right) {
+            if (!list.get(left).equals(list.get(right))) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+
     }
     public static boolean isPld2(ListNode head){
         if (head == null || head.next == null) return true;
@@ -131,5 +153,16 @@ public class Sol234_Palindrome_Linked_List {
         }
 
         return slow;
+    }
+
+    // end of first half: if even, the end of half; if odd, the middle of the whole
+    private ListNode endOfFirstHalf(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow; // 1-2-3   1-2-3-4
     }
 }

@@ -26,13 +26,13 @@ public class Sol138_CopyListWithRandomPointer {
         Map<RandomListNode, RandomListNode> map = new HashMap<>();
         //first step: copy all nodes;
         RandomListNode node = head;
-        while ( node != null){
+        while (node != null) {
             map.put(node, new RandomListNode(node.label));
             node = node.next;
         }
         // 2nd step: assign next and random pointer
         node = head; // put the pointer at the head
-        while(node != null){
+        while(node != null) {
             map.get(node).next = map.get(node.next);
             map.get(node).random = map.get(node.random);
             node = node.next;

@@ -51,9 +51,11 @@ public class Sol170_TwoSumIII_DataStructureDesign {
         }
 
         // method 2, jus tone hashmap
+        //O(1) add
         public void add2(int number){
-            map.put(number, map.containsKey(number)? map.get(number) + 1 : 1);
+            map.put(number, map.getOrDefault(number, 0) + 1);
         }
+        //O(n) find
         public boolean find2(int val){
             for (Map.Entry entry: map.entrySet()){
                 int n1 = (int)entry.getKey();

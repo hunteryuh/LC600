@@ -7,7 +7,7 @@ package com.alg;
 
     // https://leetcode.com/problems/implement-trie-prefix-tree/solution/
 public class Sol208_ImplementTrie_PrefixTree {
-    class TrieNode{
+    class TrieNode {
         public char val;
         public boolean isWord;
         public TrieNode[] children = new TrieNode[26];
@@ -37,7 +37,7 @@ public class Sol208_ImplementTrie_PrefixTree {
             TrieNode ws = root;
             for (int i = 0; i < word.length(); i++){
                 char c = word.charAt(i);
-                if(ws.children[c - 'a'] == null){
+                if(ws.children[c - 'a'] == null) {
                     ws.children[c - 'a'] = new TrieNode(c);
                 }
                 ws = ws.children[c - 'a'];
@@ -65,6 +65,52 @@ public class Sol208_ImplementTrie_PrefixTree {
                 ws = ws.children[c - 'a'];
             }
             return true;
+        }
+    }
+
+    class Trie2 {
+        private TrieNode2 root;
+
+        public Trie2() {
+            root = new TrieNode2();
+        }
+
+        public void insert(String word) {
+            TrieNode2 node = root;
+            for (char c: word.toCharArray()) {
+                if (node.children[c-'a'] == null) {
+                    node.children[c - 'a'] = new TrieNode2();
+                }
+                node = node.children[c - 'a'];
+            }
+            node.isEnd = true;
+        }
+
+        public boolean search(String word) {
+            TrieNode2 node = root;
+            for (char c : word.toCharArray()) {
+                if (node.children[c - 'a'] == null) return false;
+                node = node.children[c - 'a'];
+            }
+            return node.isEnd;
+        }
+
+        public boolean startsWith(String prefix) {
+            TrieNode2 node = root;
+            for (char c : prefix.toCharArray()) {
+                if (node.children[c - 'a'] == null) return false;
+                node = node.children[c - 'a'];
+            }
+            return true;
+        }
+    }
+
+    class TrieNode2 {
+        TrieNode2[] children;
+        boolean isEnd;
+
+        public TrieNode2() {
+            children = new TrieNode2[26];
         }
     }
 }

@@ -1,4 +1,8 @@
 package com.alg;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /*
 Given two integer arrays inorder and postorder where inorder is the inorder traversal of a binary tree and postorder is the postorder traversal of the same tree, construct and return the binary tree.
 
@@ -62,6 +66,29 @@ public class Sol106_ConstructBinaryTreeFromInorderAndPostorderTraversal {
         TreeNode root = new TreeNode(rootVal);
         root.left = helper(inorder, inLeft, rootIndex, postorder, postLeft, postLeft + rootIndex - inLeft);
         root.right = helper(inorder, rootIndex + 1, inRight, postorder, postLeft + rootIndex - inLeft,postRight - 1);
+        return root;
+    }
+
+    int[] inorder;
+    int[] postorder;
+    int n;
+    Map<Integer, Integer> map = new HashMap<>();
+    public  TreeNode buildTree2(int[] inorder, int[] postorder) {
+        this.inorder = inorder;
+        this.postorder = postorder;
+        n = inorder.length;
+        for (int i = 0; i < n; i++) {
+            map.put(inorder[i], i);
+        }
+        return helper(0, n-1, 0, n-1);
+    }
+    private TreeNode helper(int inStart, int inEnd, int postStart, int postEnd) {
+        if (inStart > inEnd) return null;
+        TreeNode root = new TreeNode(postorder[postEnd]);
+        int inIndex = map.get(root.val);
+        int rightTreeSize = inEnd - inIndex;  // use inend not postend to get right tree size
+        root.left = helper(inStart, inIndex - 1, postStart, postEnd - rightTreeSize - 1);
+        root.right = helper(inIndex + 1, inEnd, postEnd - rightTreeSize, postEnd - 1);
         return root;
     }
 

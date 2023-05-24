@@ -39,4 +39,34 @@ public class Sol153_FindMinimumInRotatedSortedArray {
         System.out.println(findMin(nums2));
         System.out.println(findMin(nums3));
     }
+
+    public int findMin2(int[] nums) {
+        int lo = 0, hi = nums.length - 1;
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (nums[mid] < nums[hi]) {
+                hi = mid;  // we are looking for min, so "mid" could be the potential anser
+            } else {  //nums[mid] > nums[hi]
+                lo = mid + 1;  //  mid cannot be the min value, so skip lo = mid
+            }
+        }
+        return nums[lo];
+        // can use test cases with {1,2} or {2,1} to test edge case when there are 2 number left
+    }
+
+    public int findMin3(int[] nums) {
+        int n = nums.length;
+        int left = 0;
+        int right = n - 1;
+        while (left + 1 < right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] < nums[right]) {
+                right = mid;
+            } else {
+                left = mid;  // worry the edge later
+            }
+        }
+
+        return Math.min(nums[left], nums[right]);
+    }
 }

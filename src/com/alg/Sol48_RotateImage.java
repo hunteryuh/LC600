@@ -3,51 +3,25 @@ package com.alg;
 import java.util.Arrays;
 
 /**
- * Created by HAU on 7/7/2017.
- */
+ You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
 
-/*You are given an n x n 2D matrix representing an image.
 
-        Rotate the image by 90 degrees (clockwise).
+ You have to rotate the image in-place, which means you have to modify the
+ input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation.
 
         Follow up:
         Could you do this in-place?*/
 public class Sol48_RotateImage {
-    public static void rotate_notworking(int[][] matrix) {
-        if (matrix.length != matrix[0].length) return;
+    // https://leetcode.com/problems/rotate-image/solution/
+    public void rotate2(int[][] matrix) {
         int n = matrix.length;
-        int m = n;
-        for ( int i = 0; i < m/2; i++,n--){
-            for (int j = i; j < n-1; j++){
-                int tmp = matrix[i][j];
-                matrix[i][j] = matrix[j][n-1];
-                matrix[j][n-1] = matrix[n-1][n-1-j];
-                matrix[n-1][n-1-j] = matrix[n-1-j][i];
-                matrix[n-1-j][i] = tmp;
-
-//                int temp = matrix[0][0];
-//                matrix[0][0] = matrix[0][3];
-//                matrix[0][3] = matrix[3][3];
-//                matrix[3][3] = matrix[3][0];
-//                matrix[3][0] = temp;
-//
-//                int t2 = matrix[1][1];  //test for 5 x 5, at this step n = 4
-//                matrix[1][1] = matrix[1][3];
-//                matrix[1][3] = matrix[3][3]; /////
-//                matrix[3][3] = matrix[3][1];
-//                matrix[3][1] = tmp;
-//
-                int t4 = matrix[1][2];
-                matrix[1][2]= matrix[2][3];
-                matrix[2][3]= matrix[3][2];  ///// how to generalize?!
-                matrix[3][2]= matrix[2][1];
-                matrix[2][1]= t4;
-
-//                int t3 = matrix[0][2];
-//                matrix[0][2] = matrix[2][3];
-//                matrix[2][3] = matrix[3][1];
-//                matrix[3][1] = matrix[1][0];
-//                matrix[1][0] = t3;
+        for (int i = 0; i < (n + 1) / 2; i ++) {
+            for (int j = 0; j < n / 2; j++) {
+                int temp = matrix[n - 1 - j][i];
+                matrix[n - 1 - j][i] = matrix[n - 1 - i][n - j - 1];
+                matrix[n - 1 - i][n - j - 1] = matrix[j][n - 1 -i];
+                matrix[j][n - 1 - i] = matrix[i][j];
+                matrix[i][j] = temp;
             }
         }
     }
@@ -55,6 +29,7 @@ public class Sol48_RotateImage {
     public static void rotate(int[][] matrix) {
         if (matrix.length != matrix[0].length) return;
         int n = matrix.length;
+        // mirror along y = x
         for ( int i = 0; i < n; i++) {
             for (int j = i; j < n; j++) {
                 int tmp = matrix[i][j];
@@ -62,6 +37,7 @@ public class Sol48_RotateImage {
                 matrix[j][i] = tmp;
             }
         }
+        // mirror along y = n/2
         for ( int i = 0; i < n; i++) {
             for (int j = 0; j < n/2; j++) {
                 int tmp = matrix[i][j];

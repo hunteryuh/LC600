@@ -39,7 +39,7 @@ public class Sol0_amz_KClosestPoints {
                      int diff = getDist(o2,origin) - getDist(o1,origin);
                      if (diff == 0){
                          diff = o2.x - o1.x;
-                         if ( diff == 0){
+                         if (diff == 0) {
                              diff = o2.y - o1.y;
                          }
                      }
@@ -48,7 +48,7 @@ public class Sol0_amz_KClosestPoints {
             });
             for( int i = 0; i < points.length; i++){
                 pq.add(points[i]);
-                if ( pq.size() > k){
+                if (pq.size() > k) {
                     pq.poll();
 
                 }

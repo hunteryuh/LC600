@@ -16,10 +16,10 @@ public class Sol0_amz_TwoSumCount {
         }
         int count = 0;
         Set<Integer> set = new HashSet<>();
-        for(int n: nums){
+        for (int n: nums) {
             set.add(n);
         }
-        for(int n: nums){
+        for(int n: nums) {
             if(set.contains(target-n)){
                 count++;
             }

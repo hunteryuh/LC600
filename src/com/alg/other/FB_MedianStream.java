@@ -27,6 +27,7 @@ The median of [1] is 1, the median of [1, 2] is (1 + 2) / 2 = 1.5 (which should 
  */
 public class FB_MedianStream {
     public int[] findMedian(int[] arr) {
+        // n2 logn ?
         int n = arr.length;
         int[] res = new int[n];
         PriorityQueue<Integer> pq = new PriorityQueue<>();
@@ -48,5 +49,27 @@ public class FB_MedianStream {
             }
         }
         return res;
+    }
+
+    // two heaps: nlogn time. O(n) space
+    public int[] findMedian2(int[] arr) {
+        PriorityQueue<Integer> large =new PriorityQueue<Integer>((n1, n2) -> n2 - n1);
+        PriorityQueue<Integer> small =new PriorityQueue<Integer>();
+        int[] output = new int[arr.length];
+        for(int i =0;i<arr.length;i++){
+            if((i+1)%2 ==0){
+                large.add(arr[i]);
+                small.add(large.poll());
+                output[i] = (int)((small.peek()+ large.peek())/2);
+                //System.out.println(i+" "+output[i]);
+            }
+            else{
+                small.add(arr[i]);
+                large.add(small.poll());
+                output[i] = large.peek();
+                //System.out.println(i+" "+ arr[i]+"  "+output[i]);
+            }
+        }
+        return output;
     }
 }

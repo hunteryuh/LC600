@@ -1,6 +1,8 @@
 package com.alg;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Created by HAU on 11/27/2017.
@@ -32,13 +34,15 @@ Example:
 The hash table makes the time of get() to be O(1).
 The list of double linked nodes make the nodes adding/removal operations O(1).*/
 public class Sol146_LRUCache {
+    // Hashmap + DoubleLinkedList
     public class LRUCache{
-        private class Node{
-            Node prev;
-            Node next;
+        class DLinkedNode {
             int key;
             int value;
-            public Node(int key, int value){
+            DLinkedNode prev;
+            DLinkedNode next;
+
+            public DLinkedNode(int key, int value){
                 this.key = key;
                 this.value = value;
                 this.prev = null;
@@ -47,51 +51,157 @@ public class Sol146_LRUCache {
         }
 
         private int capacity;
-        private HashMap<Integer, Node> map = new HashMap<>();
-        private Node head = new Node(-1,-1);
-        private Node tail = new Node(-1,-1);
+        private int size;
+        private HashMap<Integer, DLinkedNode> cache = new HashMap<>();
+        private DLinkedNode head = new DLinkedNode(-1,-1);
+        private DLinkedNode tail = new DLinkedNode(-1,-1);
 
         public LRUCache(int capacity) {
             this.capacity = capacity;
             head.next = tail;
             tail.prev = head;
-
         }
 
         public int get(int key) {
-            if(!map.containsKey(key)) return -1;
-            // remove current
-            Node cur = map.get(key);
-            cur.prev.next = cur.next;
-            cur.next.prev = cur.prev;
+            DLinkedNode node = cache.get(key);
+            if (node == null) return -1;
 
-            // move the cur to tail
-            moveToTail(cur);
-            return map.get(key).value;
+            // move the accessed node to the head;
+            moveToHead(node);
+
+            return node.value;
+        }
+        private void moveToHead(DLinkedNode node){
+            /**
+             * Move certain node in between to the head.
+             */
+            removeNode(node);
+            addNode(node);
         }
 
-        private void moveToTail(Node cur) {
-            cur.prev = tail.prev;
-            tail.prev = cur;
-            cur.prev.next = cur;
-            cur.next = tail; // move to the tail, dummy "tail"
+        private void removeNode(DLinkedNode node){
+            DLinkedNode before = node.prev;
+            DLinkedNode after = node.next;
+            before.next = after;
+            after.prev = before;
+        }
+
+        private void addNode(DLinkedNode node){
+            DLinkedNode after = head.next;
+            head.next = node;
+            node.prev = head;
+            node.next = after;
+            after.prev = node;
         }
 
         public void put(int key, int value) {
-            // the internal get method will update the key's position in the linked list
-            if (get(key)!= -1){
-                map.get(key).value = value;
-                return;// why
+            DLinkedNode node = cache.get(key);
+            if (node == null) {
+                DLinkedNode newNode = new DLinkedNode(key, value);
+                cache.put(key, newNode);
+                addNode(newNode);
+                ++size;
+                if (size > capacity) {
+                    // pop the tail
+                    DLinkedNode tail = popTail();
+                    cache.remove(tail.key);
+                    size--;
+                }
+            } else {
+                node.value = value;
+                moveToHead(node);
             }
-            if(map.size() == capacity){
-                map.remove(head.next.key);
-                head.next = head.next.next;
-                head.next.prev = head;
-            }
-            Node insert = new Node(key,value);
-            map.put(key,insert);
-            moveToTail(insert);
+        }
 
+        private DLinkedNode popTail() {
+            // pop the current tail
+            DLinkedNode node = tail.prev;
+            removeNode(node);
+            return node;
+        }
+
+//        private void moveToTail(Node cur) {
+//            cur.prev = tail.prev;
+//            tail.prev = cur;
+//            cur.prev.next = cur;
+//            cur.next = tail; // move to the tail, dummy "tail"
+//        }
+
+//        public void put(int key, int value) {
+//            // the internal get method will update the key's position in the linked list
+//            // get 这个方法会把key挪到最末端，因此，不需要再调用 move_to_tail
+//            if (get(key)!= -1){
+//                map.get(key).value = value;
+//                return;
+//            }
+//            if (map.size() == capacity) {
+//                map.remove(head.next.key);
+//                head.next = head.next.next;
+//                head.next.prev = head;
+//            }
+//            Node insert = new Node(key,value);
+//            map.put(key,insert);
+//            moveToTail(insert);
+//
+//        }
+    }
+
+    // https://leetcode.com/problems/lru-cache/discuss/45939/Laziest-implementation%3A-Java's-LinkedHashMap-takes-care-of-everything
+    public class LRUCache2{
+        int capacity;
+        LinkedHashMap<Integer, Integer> map;
+
+        public LRUCache2(int capacity) {
+            this.capacity = capacity;
+            // by passing in true, we turned on access-order, whereas the default was insertion-order.
+            // 这个参数实现了LRU，不管是get还是put, 都会放到latest.
+            this.map = new LinkedHashMap<Integer, Integer>(capacity, 0.75f, true) {
+                 public boolean removeEldestEntry(Map.Entry eldest) {
+                     return size() > capacity;
+                 }
+            };
+        }
+        public int get(int key) {
+            return map.getOrDefault(key, -1);
+        }
+        public void put(int key, int value) {
+            map.put(key, value);
+        }
+    }
+
+
+    // https://www.jiuzhang.com/problem/lru-cache/
+    // 用LinkedHashMap模拟Queue记录每个entry被用的先后顺序：
+    // (1) 任何被get或被set的元素都会被移到LinkedHashMap的最后；
+    // (2) 若新插入元素后，LinkedHashMap超出capacity，则移除首位元素。
+    public class LRUCache_lh {
+        Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
+        int cap;
+
+        public LRUCache_lh(int capacity) {
+            cap = capacity;
+        }
+
+        public int get(int key) {
+            if (!map.containsKey(key))
+                return -1;
+
+            int val = map.remove(key);
+            map.put(key, val);
+            return val;
+        }
+
+        public void set(int key, int value) {
+            if (map.containsKey(key)) {
+                map.remove(key);
+                map.put(key, value);
+                return;
+            }
+
+            map.put(key, value);
+
+            if (map.size() > cap)
+                map.remove(map.entrySet().iterator().next().getKey());
         }
     }
 

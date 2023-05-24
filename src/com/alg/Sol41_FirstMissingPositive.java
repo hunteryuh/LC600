@@ -12,11 +12,11 @@ and [3,4,-1,1] return 2.
 Your algorithm should run in O(n) time and uses constant space.*/
 public class Sol41_FirstMissingPositive {
     /*The basic idea is to traversal and try to move the current value to position whose index is exactly the value (swap them).
-    Then travelsal again to find the first unusal value, which can not be corresponding to its index.*/
+    Then travesal again to find the first unusual value, which can not be corresponding to its index.*/
     public static int firstMissingPositive(int[] nums) {
         int i = 0;
         int n = nums.length;
-        while ( i < n){
+        while (i < n) {
             // If the current value is in the range of (0,length) and it's not at its correct position,
             // swap it to its correct position.
             // Else just continue;
@@ -77,7 +77,7 @@ public class Sol41_FirstMissingPositive {
         int i = 0;
         while (i < n) {
             if (nums[i] > 0 && nums[i] <= n && nums[nums[i] - 1] != nums[i]) {
-                swap(nums, i, nums[i] - 1);
+                swap(nums, i, nums[i] - 1);  //交换使得第i位存放数值i + 1 and i不加1
             } else {
                 i++;
             }

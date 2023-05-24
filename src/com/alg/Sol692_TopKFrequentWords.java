@@ -1,5 +1,6 @@
 package com.alg;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,6 +20,7 @@ public class Sol692_TopKFrequentWords {
         for (String word : words){
             count.put(word, count.getOrDefault(word,0) + 1);
         }
+        // min heap
         PriorityQueue<String> pq = new PriorityQueue<>(
                 (a,b)-> count.get(a) == count.get(b)?
                         b.compareTo(a) : count.get(a) - count.get(b)
@@ -28,11 +30,12 @@ public class Sol692_TopKFrequentWords {
         //For example, when min-heap has "abc", "abd", "bun", min-heap should have them in this order to be removed: "bob", "bun", "ban".
         for (String word: count.keySet()){
             pq.add(word);
-            if(pq.size() > k){
+            if (pq.size() > k) {
                 pq.poll();
             }
         }
         LinkedList<String> list = new LinkedList<>();
+//        ArrayList<String> list2 = new ArrayList<>();
         while (!pq.isEmpty()){
             list.addFirst(pq.poll());
         }

@@ -3,7 +3,9 @@ package com.alg;
 import com.sun.org.apache.xpath.internal.SourceTree;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -29,14 +31,9 @@ https://www.jiuzhang.com/solution/binary-tree-serialization/
 
 
 public class Sol297_SerializeAndDeserializeBinaryTree {
-  public static class TreeNode {
-      int val;
-      TreeNode left;
-      TreeNode right;
-      TreeNode(int x) { val = x; }
-  }
+
   public static class Codec {
-      public static String serialize_with_nulls(TreeNode root){
+      public static String serialize_with_nulls(TreeNode root) {
           if (root == null)
               return "{}";
           StringBuilder sb = new StringBuilder();
@@ -68,7 +65,7 @@ public class Sol297_SerializeAndDeserializeBinaryTree {
           for(int i = 0; i < queue.size(); i++){
               TreeNode node = queue.get(i);
                   //sb.append(node.val + ",");
-              if ( node == null) continue;
+              if (node == null) continue;
               queue.add(node.left);
               queue.add(node.right);
           }
@@ -134,8 +131,6 @@ public class Sol297_SerializeAndDeserializeBinaryTree {
           int index = 0;
           boolean left = true;
           for (int i = 1; i < vals.length; i++){
-              //TreeNode node = queue.poll();
-              //if (node == null) continue;
               if (!vals[i].equals("#")){
                   TreeNode node = new TreeNode(Integer.parseInt(vals[i]));
                   if (left){
@@ -145,7 +140,7 @@ public class Sol297_SerializeAndDeserializeBinaryTree {
                   }
                   queue.add(node);
               }
-              if (!left) {
+              if (!left) {  // get the current parent node to add child node
                   index++;
               }
               left = !left;
@@ -154,11 +149,9 @@ public class Sol297_SerializeAndDeserializeBinaryTree {
               System.out.println(t.val);
           }
           return root;
-
-
       }
-      public static void main(String args[])
-      {
+
+      public static void main(String args[]) {
         /* creating a binary tree and entering
          the nodes */
 /*          TreeNode node = new TreeNode(10);
@@ -173,6 +166,79 @@ public class Sol297_SerializeAndDeserializeBinaryTree {
           serialize(node);*/
           String data = "{10,5,30,4,#,20,38}";
           deserialize(data);
+      }
+
+      // https://leetcode.com/problems/serialize-and-deserialize-binary-tree/discuss/1659686/Java-oror-BFS
+      // Encodes a tree to a single string.
+      public String serialize2(TreeNode root) {
+
+          List<String> l = new ArrayList<>();
+          Queue<TreeNode> q = new LinkedList<>();
+          q.add(root);
+
+          while(!q.isEmpty()) {
+              TreeNode n = q.poll();
+              if (n != null) {
+                  l.add("" + n.val);
+                  q.add(n.left);
+                  q.add(n.right);
+              } else {
+                  l.add("#");
+              }
+          }
+
+          return  String.join(",", l);  // no need to deal with first or last char
+      }
+
+      // Decodes your encoded data to tree.
+      public TreeNode deserialize2(String data) {
+
+          String[] nodes = data.split(",");
+          if (nodes[0].equals("#")) return null;  //root is null
+          TreeNode root = new TreeNode(Integer.parseInt(nodes[0]));
+          Queue<TreeNode> queue = new LinkedList<>();
+          queue.offer(root);
+          for (int i = 1; i < nodes.length; i += 2) {
+              TreeNode node = queue.poll();
+              if (!nodes[i].equals("#")) {
+                  node.left = new TreeNode(Integer.parseInt(nodes[i]));
+                  queue.offer(node.left);
+              }
+              if (!nodes[i+1].equals("#")) {
+                  node.right = new TreeNode(Integer.parseInt(nodes[i+1]));
+                  queue.offer(node.right);
+              }
+
+          }
+          return root;
+      }
+
+
+      // recursion, preorder
+      public String serialize3(TreeNode root) {
+          if (root == null) return "#";
+          return root.val + "," + serialize3(root.left) + "," + serialize3(root.right);
+      }
+
+      public String serialize3_1(TreeNode root) {
+          if (root == null) return "#";
+          StringBuilder sb = new StringBuilder();
+          sb.append(root.val);
+          sb.append(",").append(serialize3_1(root.left));
+          sb.append(",").append(serialize3_1(root.right));
+          return sb.toString();
+      }
+      public TreeNode deserialize3(String data) {
+          Queue<String> queue = new LinkedList<>(Arrays.asList(data.split(",")));
+          return helper(queue);
+      }
+      private TreeNode helper(Queue<String> queue) {
+          String s = queue.poll();
+          if (s.equals("#")) return null;
+          TreeNode root = new TreeNode(Integer.valueOf(s));
+          root.left = helper(queue);
+          root.right = helper(queue);
+          return root;
       }
   }
 

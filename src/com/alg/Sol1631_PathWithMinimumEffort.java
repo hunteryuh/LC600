@@ -125,4 +125,31 @@ public class Sol1631_PathWithMinimumEffort {
 
     }
 
+    // dijkstra 稀疏图，只有4个方向，所有结果都丢进queue, 不做判断
+    public int minEffortPath2(int[][] heights) {
+        int m = heights.length;
+        int n = heights[0].length;
+        boolean[][] visited = new boolean[m][n];
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> (a[2] - b[2]));
+        pq.offer(new int[]{0, 0, 0});
+        while (!pq.isEmpty()) {
+            int[] cur = pq.poll();
+            visited[cur[0]][cur[1]] = true;
+            if (cur[0] == m - 1 && cur[1] == n - 1) {
+                return cur[2];
+            }
+            for (int[] d : dir) {
+                int x = cur[0] + d[0];
+                int y = cur[1] + d[1];
+                if (x < 0 || x >= m || y < 0 || y >= n) continue;
+                if (visited[x][y]) continue;
+                int diff = Math.abs(heights[x][y] - heights[cur[0]][cur[1]]);
+                pq.offer(new int[]{x, y, Math.max(diff, cur[2])});
+            }
+        }
+        return -1;
+    }
+
+    //
+
 }

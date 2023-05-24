@@ -50,9 +50,9 @@ public class Sol4_MedianofTwoSortedArrays {
 
     public static double findMedianlogn(int[] a, int[] b){
         int total = a.length + b.length;
-        if ( total % 2 == 0){
+        if (total % 2 == 0){
             return (findkth(total/2, a,b,0,0) + findkth(total/2 + 1, a,b,0,0) )/2.0;
-        }else{
+        } else {
             return findkth(total/2 + 1, a,b,0,0);
         }
     }
@@ -67,10 +67,10 @@ public class Sol4_MedianofTwoSortedArrays {
         int m2 = s2 + k/2 - 1;
         int mid1 = m1 < a.length ? a[m1] : Integer.MAX_VALUE;
         int mid2 = m2 < b.length ? b[m2] : Integer.MAX_VALUE;
-        if ( mid1 < mid2){
-            return findkth(k-k/2,a,b, m1 + 1, s2);
+        if (mid1 < mid2) {
+            return findkth(k-k/2,a,b, m1 + 1, s2); // Check: aRight + bLeft
         }else{
-            return findkth(k-k/2, a,b,s1, m2 + 1);
+            return findkth(k-k/2, a,b,s1, m2 + 1); // Check: bRight + aLeft
         }
 
     }

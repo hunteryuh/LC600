@@ -1,6 +1,8 @@
 package com.alg;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by HAU on 7/16/2017.
@@ -16,60 +18,84 @@ import java.util.Arrays;
         A simple improvement uses O(m + n) space, but still not the best solution.
         Could you devise a constant space solution?*/
 public class Sol73_SetMatrixZeroes {
-    public static void setZeroes(int[][] matrix){
+    public static void setZeroes(int[][] matrix) {
         boolean row = false, col = false;
-        for (int i = 0; i < matrix.length; i++){
-            for (int j = 0; j < matrix[0].length; j++){
-                if ( matrix[i][j] == 0 ){
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                if (matrix[i][j] == 0) {
                     matrix[0][j] = 0;
                     matrix[i][0] = 0;
-                    if ( i == 0) row = true;
-                    if ( j==0) col = true;
+                    if (i == 0) row = true;
+                    if (j == 0) col = true;
                 }
             }
 
         }
-        for (int i = 1; i < matrix.length;i++){
-            if (matrix[i][0] == 0){
-                for (int j = 1;j < matrix[0].length;j++){
+        for (int i = 1; i < matrix.length; i++) {
+            if (matrix[i][0] == 0) {
+                for (int j = 1; j < matrix[0].length; j++) {
                     matrix[i][j] = 0;
                 }
             }
         }
 
-        for (int j = 1; j < matrix[0].length;j++){
-            if (matrix[0][j] == 0){
-                for (int i = 1;i < matrix.length;i++){
+        for (int j = 1; j < matrix[0].length; j++) {
+            if (matrix[0][j] == 0) {
+                for (int i = 1; i < matrix.length; i++) {
                     matrix[i][j] = 0;
                 }
             }
         }
-/*        if (row){
-            for ( int j = 0; j< matrix[0].length; j++){
+        if (row){
+            for (int j = 0; j< matrix[0].length; j++){
                 matrix[0][j] = 0;
             }
         }
-        if (col){
-            for ( int i = 0; i< matrix.length; i++){
+        if (col) {
+            for (int i = 0; i< matrix.length; i++){
                 matrix[i][0] = 0;
             }
-        }*/
+        }
     }
 
     public static void main(String[] args) {
-        int[][] t= new int[4][5];
-        for(int[] row: t){
-            Arrays.fill(row,1);
+        int[][] t = new int[4][5];
+        for (int[] row : t) {
+            Arrays.fill(row, 1);
         }
         t[2][1] = 0;
         //t[1][1] = 0;
         setZeroes(t);
         System.out.println();
-        for ( int i = 0; i<t.length;i++){
-            for (int j = 0; j < t[0].length;j++){
-                System.out.print(t[i][j]+ " ");
+        for (int i = 0; i < t.length; i++) {
+            for (int j = 0; j < t[0].length; j++) {
+                System.out.print(t[i][j] + " ");
             }
             System.out.println();
         }
+    }
+
+    // with additional memory approach
+    public void setZeroes2(int[][] matrix) {
+        int R = matrix.length;
+        int C = matrix[0].length;
+        Set<Integer> rows = new HashSet<Integer>();
+        Set<Integer> cols = new HashSet<Integer>();
+        for (int i = 0; i < R; i++) {
+            for (int j = 0; j < C; j++) {
+                if (matrix[i][j] == 0) {
+                    rows.add(i);
+                    cols.add(j);
+                }
+            }
+        }
+        for (int i = 0; i < R; i++) {
+            for (int j = 0; j < C; j++) {
+                if (rows.contains(i) || cols.contains(j)) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+
     }
 }

@@ -23,9 +23,10 @@ public class Sol0_amz_LRUCache {
         for(int i = 0; i < arr.length; i++){
             if (cache.contains(arr[i])){
                 cache.remove(new Integer(arr[i])); // deep copy
-            }else{
+                // Removes the first occurrence of the specified element from this list
+            } else {
                 count++;
-                if( size == cache.size()){
+                if (size == cache.size()){
                     cache.remove(0);
                 }
             }

@@ -10,8 +10,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /*
 Given an array S of n integers, are there elements a, b, c in S such that
@@ -82,20 +84,19 @@ public class Sol15_3Sum {
                 continue;
             }
             */
-            if ( i > 0 && nums[i - 1] == nums[i]){
+            if (i > 0 && nums[i - 1] == nums[i]) {  // or i != 0
                 continue;
             }
             int j = i + 1;
             int k = n - 1;
             int sum = 0 - nums[i];
             while ( j < k) {
-
                 if (nums[j] + nums[k] == sum) {
                     list.add(Arrays.asList(nums[i], nums[j], nums[k]));
                     while (j < k && nums[j] == nums[j+1]) j++;  // skip the same values
                     while (j < k && nums[k] == nums[k-1]) k--;
 
-                    j++;
+                    j++;  // increase j to a different nums[j]
                     k--;
                 } else if (nums[j] + nums[k] < sum){
                     j++;
@@ -187,6 +188,26 @@ public class Sol15_3Sum {
             }
         }
         return false;
+    }
+
+    // "no -sort" time: O(n^2)
+    public List<List<Integer>> threeSum_nosort(int[] nums) {
+        Set<List<Integer>> res = new HashSet<>();
+        Set<Integer> dups = new HashSet<>();
+        Map<Integer, Integer> seen = new HashMap<>();
+        for (int i = 0; i < nums.length; ++i)
+            if (dups.add(nums[i])) {
+                for (int j = i + 1; j < nums.length; ++j) {
+                    int complement = -nums[i] - nums[j];
+                    if (seen.containsKey(complement) && seen.get(complement) == i) {
+                        List<Integer> triplet = Arrays.asList(nums[i], nums[j], complement);
+                        Collections.sort(triplet);
+                        res.add(triplet);
+                    }
+                    seen.put(nums[j], i);
+                }
+            }
+        return new ArrayList(res);
     }
 
 

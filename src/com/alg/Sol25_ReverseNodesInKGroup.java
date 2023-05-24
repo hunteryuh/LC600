@@ -16,7 +16,10 @@ Given this linked list: 1->2->3->4->5
 
 For k = 2, you should return: 2->1->4->3->5
 
-For k = 3, you should return: 3->2->1->4->5*/
+For k = 3, you should return: 3->2->1->4->5
+
+microsoft 2/2/2022
+*/
 public class Sol25_ReverseNodesInKGroup {
 
     public static class ListNode {
@@ -36,9 +39,9 @@ public class Sol25_ReverseNodesInKGroup {
             cur = cur.next;
             count++;
         }
-        if ( count == k){
+        if (count == k) {
             cur = reverseKGroup1(cur,k); // reverse list whose head is ((k+1)th node
-            while(count >0){
+            while(count > 0) {
                 ListNode tmp = head.next;
                 head.next = cur;
                 cur = head;
@@ -75,7 +78,7 @@ public class Sol25_ReverseNodesInKGroup {
         }
         // now nk = nk;
         // reverse list from n1 to nk
-        ListNode nkplus = nk.next;
+//        ListNode nkplus = nk.next;
         ListNode n1 = node0.next;
         ListNode pre = null;
         ListNode curr = node0.next;

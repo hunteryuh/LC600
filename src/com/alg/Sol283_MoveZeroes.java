@@ -18,13 +18,11 @@ Given an array nums, write a function to move all 0's
 public class Sol283_MoveZeroes {
     public static void moveZeroes(int[] nums){
         int n = nums.length;
-
-        for (int i = 0, j = 0; i < n; i++){
+        for (int i = 0, j = 0; i < n; i++) {
            if (nums[i] != 0){
                swap(nums, i, j++);
            }
         }
-
         // space O(1), time O(n)
     }
 
@@ -42,9 +40,8 @@ public class Sol283_MoveZeroes {
     }
 
     public static void moveZeroes2(int[] nums){
-
         int j = 0;
-        for(int i = 0; i < nums.length; i++){
+        for (int i = 0; i < nums.length; i++) {
             if(nums[i] != 0){
                 int tmp = nums[j];
                 nums[j] = nums[i];

@@ -7,16 +7,10 @@ import java.util.Stack;
  * Created by HAU on 11/26/2017.
  */
 public class Sol98_ValidateBinarySearchTree {
-    public static class TreeNode{
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode(int x){
-            val = x;
-        }
-    }
+
+    // inorder recursive
     static TreeNode prev;
-    public static boolean isValidBST(TreeNode root) {
+    public boolean isValidBST(TreeNode root) {
         // use in-order traversal
         if (root == null) return true;
         if (!isValidBST(root.left)) {
@@ -41,7 +35,7 @@ public class Sol98_ValidateBinarySearchTree {
         //    /
         //   3
         TreeNode node1 = new TreeNode(8);
-        TreeNode node2 = new TreeNode(4);
+        TreeNode node2 = new TreeNode(2);
         TreeNode node3 = new TreeNode(10);
         TreeNode node4 = new TreeNode(1);
         TreeNode node5 = new TreeNode(5);
@@ -50,27 +44,39 @@ public class Sol98_ValidateBinarySearchTree {
 
         node1.left = node2;
         node1.right = node3;
-        node2.left = node4;
-        node2.right = node5;
-        node3.left = node6;
-        node5.left = node7;
-        System.out.println(isValidBST(node1));
-        System.out.println(isValidBST2(node1));
+//        node2.left = node4;
+//        node2.right = node5;
+//        node3.left = node6;
+//        node5.left = node7;
+
+        Sol98_ValidateBinarySearchTree ss = new Sol98_ValidateBinarySearchTree();
+        System.out.println(ss.isValidBST(node1));
+//        System.out.println(ss.isValidBST2(node1));
 
 
     }
-    public static boolean isValidBST2(TreeNode root) {
-        return isValidBST2(root, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
+    public boolean isValidBST2(TreeNode root) {
+        return isValidBST2(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
 
-    public static boolean isValidBST2(TreeNode p, double min, double max){
+    public boolean isValidBST2(TreeNode p, long min, long max){
         if (p == null)
             return true;
-
         if (p.val <= min || p.val >= max)
             return false;
 
         return isValidBST2(p.left, min, p.val) && isValidBST2(p.right, p.val, max);
+    }
+
+    public boolean isValidBST4(TreeNode root) {
+        return isValidBST4(root, null, null);
+    }
+
+    private boolean isValidBST4(TreeNode root, Integer max, Integer min) {
+        if (root == null) return true;
+        if (max != null && root.val >= max) return false;
+        if (min != null && root.val <= min) return false;
+        return isValidBST4(root.left, root.val, min) && isValidBST4(root.right, max, root.val);
     }
 
     //in order traversal method 2
@@ -78,7 +84,7 @@ public class Sol98_ValidateBinarySearchTree {
         Stack<TreeNode> stack = new Stack<>();
         TreeNode cur = root, pre = null;
         while (!stack.isEmpty() || cur != null){
-            if (cur!= null){
+            if (cur!= null) {
                 stack.push(cur);
                 cur = cur.left;
             } else {
@@ -111,5 +117,16 @@ public class Sol98_ValidateBinarySearchTree {
             cur = cur.right;
         }
         return true;
+    }
+
+    // recursive inorder
+    private long pre = Long.MIN_VALUE;
+    public boolean isValidBST6(TreeNode root) {
+        if (root == null) return true;
+        boolean left = isValidBST6(root.left);
+        if (!left) return false;
+        if (root.val <= pre) return false;
+        pre = root.val;
+        return isValidBST6(root.right);
     }
 }

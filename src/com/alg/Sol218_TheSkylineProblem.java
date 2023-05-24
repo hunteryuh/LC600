@@ -48,7 +48,7 @@ public class Sol218_TheSkylineProblem {
             if ( h[1] > 0){
                 maxHeap.add(h[1]);  // same as offer, O(log n )
                 cur = maxHeap.peek();  //O(1), same as element(), examine the value
-            }else{  //  poll() or remove(), O(log n)
+            } else {  //  poll() or remove(), O(log n)
                 maxHeap.remove(-h[1]); // remove by value O(n )
                 cur = maxHeap.peek() == null ? 0: maxHeap.peek();
             }

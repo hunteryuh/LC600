@@ -22,7 +22,7 @@ public class Sol173_BinarySearchTreeIterator {
     }
     private Stack<TreeNode> stack = new Stack<>();
 
-    public class BSTIterator{
+    public class BSTIterator {
         public BSTIterator(TreeNode root) {
             pushAllNodes(root);
         }
@@ -39,7 +39,7 @@ public class Sol173_BinarySearchTreeIterator {
             return node.val;
         }
         private void pushAllNodes(TreeNode node){
-            while(node!=null){
+            while (node!=null) {
                 stack.push(node);
                 node = node.left;
             }

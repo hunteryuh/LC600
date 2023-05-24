@@ -1,5 +1,7 @@
 package com.alg.greedy;
 
+import java.util.Arrays;
+
 /**
  * Created by HAU on 2/9/2018.
  */
@@ -59,5 +61,20 @@ public class Sol45_JumpGameII {
 
         }
         return step;
+    }
+
+    // dp
+    public int jump3(int[] nums) {
+        int[] dp = new int[nums.length]; // min steps to reach i
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+        for (int i = 1; i < nums.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (j + nums[j] >= i) {
+                    dp[i] = Math.min(dp[i], dp[j] + 1);
+                }
+            }
+        }
+        return dp[nums.length - 1];
     }
 }

@@ -18,26 +18,48 @@ public class Sol21_MergeTwoSortedLists {
             val = x;
         }
     }
+
     public static ListNode merge2Lists(ListNode l1, ListNode l2){
         ListNode head = new ListNode(0); // dummy node for head
         ListNode p = head;
 
-        while ( l1 != null && l2!= null){
-            if (l1.val < l2.val){
+        while (l1 != null && l2!= null) {
+            if (l1.val < l2.val) {
                 p.next = l1;
                 l1 = l1.next;
-            }else{
+            } else {
                 p.next = l2;
                 l2 = l2.next;
             }
-            p = p.next;
+            p = p.next;  // move the pointer for both cases
         }
-        if (l1 != null){
+        if (l1 != null) {
             p.next = l1;
-        }else{
+        } else {
             p.next = l2;
         }
         return head.next;
+    }
+
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode dummy = new ListNode(0);
+        ListNode p = dummy;
+        while (list1 != null && list2 != null) {
+            if (list1.val < list2.val) {
+                p.next = list1;
+                list1 = list1.next;
+            } else {
+                p.next = list2;
+                list2 = list2.next;
+            }
+            p = p.next;
+        }
+        if (list1 == null) {
+            p.next = list2;
+        } else {
+            p.next = list1;
+        }
+        return dummy.next;
     }
 
     public static void main(String[] args) {
@@ -49,7 +71,7 @@ public class Sol21_MergeTwoSortedLists {
         h2.next = new ListNode(7);
         ListNode m = merge2Lists(h1,h2);
 
-        while (m!= null){
+        while (m!= null) {
             System.out.println(m.val);
             m = m.next;
         }

@@ -141,7 +141,6 @@ public class Sol76_MinimumWindowSubstring {
         int count = 0;
         int length = s.length() + 1;
         int minLeft = 0;
-        String res = "";
         for (int right = 0; right < s.length(); right++) {
             char c = s.charAt(right);
             if (tMap.containsKey(c)) {
@@ -168,7 +167,55 @@ public class Sol76_MinimumWindowSubstring {
 
         }
 
-        if (length == s.length() + 1)  return "";
+        if (length == s.length() + 1)  return "";   // to avoid trivial case "a", "b" where no loop is run
         return s.substring(minLeft, minLeft + length);
+    }
+
+    // redo 1/6/2022
+    public String minWindow_3(String s, String t) {
+        if (s == null || t == null || t.length() > s.length() ) return "";
+        Map<Character, Integer> tMap = new HashMap<>();
+        for (int i = 0; i < t.length(); i++) {
+            char c = t.charAt(i);
+            tMap.put(c, tMap.getOrDefault(c, 0) + 1);
+        }
+
+        int left = 0;
+        int length = s.length() + 1;
+        int matchSize = 0;
+        int resLeft = 0;
+        Map<Character, Integer> sMap = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (tMap.containsKey(c)) {
+                sMap.put(c, sMap.getOrDefault(c, 0) + 1);
+                if (sMap.get(c).equals(tMap.get(c) )) {
+                //if (sMap.get(c) == tMap.get(c)) { // wrong, has to use .equals for Number object
+                    // There is a trick, with Integer between -128 and 127,
+                    // references will be the same as autoboxing uses Integer.valueOf() which caches small integers.
+                    matchSize++;
+                }
+            }
+
+            while (matchSize == tMap.size()) {
+                // length = Math.min(i - left + 1, length);
+                // resLeft = left;
+                if (i - left + 1 < length) {
+                    length = i - left + 1;
+                    resLeft = left;
+                }
+
+                char cd = s.charAt(left);
+                if (tMap.containsKey(cd)) {
+                    sMap.put(cd, sMap.get(cd) - 1);
+                    if (sMap.get(cd) < tMap.get(cd)) {
+                        matchSize--;
+                    }
+                }
+                left++;
+            }
+        }
+        if (length > s.length()) return "";
+        return s.substring(resLeft, resLeft + length);
     }
 }
