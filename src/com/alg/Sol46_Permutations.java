@@ -21,24 +21,24 @@ import java.util.List;
         [3,2,1]
         ]*/
 public class Sol46_Permutations {
-    public static List<List<Integer>> permute(int[] nums){
+    public  List<List<Integer>> permute(int[] nums){
         List<List<Integer>> res = new ArrayList<>();
         helper(res, new ArrayList<>(), nums);
         return res;
     }
 
     // https://www.jiuzhang.com/problem/permutations/
-    private static void helper(List<List<Integer>> res, List<Integer> list, int[] nums) {
+    private  void helper(List<List<Integer>> res, List<Integer> list, int[] nums) {
         if (list.size() == nums.length){
             res.add(new ArrayList<>(list));
-        }else{
-            for( int i = 0; i < nums.length; i++){
-                if (list.contains(nums[i])) continue;  // go to the next iteration
-                list.add(nums[i]);
-                helper(res,list,nums);
-                list.remove(list.size()-1);  //backtracking
+            return;
+        }
 
-            }
+        for (int i = 0; i < nums.length; i++) {
+            if (list.contains(nums[i])) continue;  // go to the next iteration
+            list.add(nums[i]);
+            helper(res,list,nums);
+            list.remove(list.size()-1);  //backtracking
         }
     }
 

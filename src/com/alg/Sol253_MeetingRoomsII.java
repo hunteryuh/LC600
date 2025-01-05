@@ -26,6 +26,8 @@ import java.util.PriorityQueue;
 import java.util.TreeMap;
 
 public class Sol253_MeetingRoomsII {
+
+    // priority queue, NlogN time
     public int minMeetingRooms(int[][] intervals) {
         Arrays.sort(intervals, (a, b) -> (a[0] - b[0])); // sort by start time
         // minHeap, O(1) time to get minimum
@@ -33,6 +35,18 @@ public class Sol253_MeetingRoomsII {
         pq.offer(intervals[0]);
         for (int i = 1; i < intervals.length; i++) {
             if (pq.peek()[1] <= intervals[i][0]) {
+                pq.poll();
+            }
+            pq.offer(intervals[i]);
+        }
+        return pq.size();
+    }
+
+    public int minMeetingRooms_pq(int[][] intervals) {
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]); // sort by start time
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[1] - b[1]); // add to minHeap sorted by endtime
+        for (int i = 0; i < intervals.length; i++) {
+            if (!pq.isEmpty() && pq.peek()[1] <= intervals[i][0]) {
                 pq.poll();
             }
             pq.offer(intervals[i]);
@@ -111,7 +125,7 @@ public class Sol253_MeetingRoomsII {
 
 
 
-    // leetcode answer2
+    // leetcode answer2, sort both start times and end times, use 2 pointers
     public int minMeetingRooms_2(int[][] intervals) {
 
         // Check for the base case. If there are no intervals, return 0
@@ -157,5 +171,26 @@ public class Sol253_MeetingRoomsII {
         }
 
         return usedRooms;
+    }
+
+    // same as approach above with for loop
+    public int minMeetingRooms_2_1(int[][] intervals) {
+        int[] starts = new int[intervals.length];
+        int[] ends = new int[intervals.length];
+        for (int i = 0; i < intervals.length; i++) {
+            starts[i] = intervals[i][0];
+            ends[i] = intervals[i][1];
+        }
+        Arrays.sort(starts);
+        Arrays.sort(ends);
+        int rooms = 0, endsItr = 0;
+        for (int i = 0; i < starts.length; i++) {
+            if (starts[i] < ends[endsItr]) {
+                rooms++;
+            } else {
+                endsItr++;
+            }
+        }
+        return rooms;
     }
 }

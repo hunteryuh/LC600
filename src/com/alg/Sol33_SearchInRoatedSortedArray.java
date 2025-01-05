@@ -13,7 +13,7 @@ package com.alg;
         You may assume no duplicate exists in the array.*/
 
 public class Sol33_SearchInRoatedSortedArray {
-    public static int search(int[] nums, int target){
+    public static int search(int[] nums, int target) {
         int lo = 0;
         int hi = nums.length - 1;
         while (lo <= hi) {

@@ -52,7 +52,6 @@ import java.util.TreeSet;
  * obj.leave(p);
  */
 public class Sol855_ExamRoom {
-
     class ExamRoom {
 
         int capacity;

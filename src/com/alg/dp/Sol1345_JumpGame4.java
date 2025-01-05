@@ -55,6 +55,7 @@ public class Sol1345_JumpGame4 {
         int step = 0;
         while (!queue.isEmpty()) {
             int size = queue.size();
+            // iterate the layer
             for (int i = 0; i < size; i++) {
                 int value = queue.poll();
                 if (value == len - 1) return step; // reached to last index

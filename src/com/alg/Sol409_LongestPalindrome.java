@@ -1,6 +1,7 @@
 package com.alg;
 
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by HAU on 9/4/2017.
@@ -14,8 +15,8 @@ public class Sol409_LongestPalindrome {
         HashSet<Character> set = new HashSet<>();
         int count = 0;
         for (char c: s.toCharArray()){
-            if (set.contains(c)){
-                set.remove(c);
+            if (set.contains(c)){ // set contains
+                set.remove(c);  // set remove
                 count++;
             }else{
                 set.add(c);
@@ -25,6 +26,18 @@ public class Sol409_LongestPalindrome {
         return count*2 + 1;
 
     }
+
+    public int longestPalindrome3(String s) {
+        Set<Character> set = new HashSet<>();
+        for (char c : s.toCharArray()) {
+            if (set.contains(c)) set.remove(c);
+            else set.add(c);
+        }
+
+        int odd = set.size();
+        return s.length() - (odd == 0 ? 0 : odd - 1);
+    }
+
 
     public static int longestPalindrome2(String s){
         boolean[] map = new boolean[128];

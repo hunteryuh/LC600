@@ -1,4 +1,8 @@
 package com.alg;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /*
 Given n orders, each order consist in pickup and delivery services.
 
@@ -68,8 +72,53 @@ public class Sol1359_CountValidPickupAndDeliveryOptions {
             ans %= MOD;
         }
 
-        return (int)ans;
+        return (int) ans;
+    }
+
+    // https://leetcode.com/problems/count-all-valid-pickup-and-delivery-options/solutions/516940/Simple-Java-DP/
+    private int mod = (int) Math.pow(10,9) + 7;
+    long[] dp = new long[501];
+    public int countOrders3(int n) {
+        dp[1]=1L;
+        dp[2]=6L;
+        for (int i=3;i<=n;i++) {
+            int spaceCount = (i-1)*2 + 1;
+            long val = (spaceCount)*(spaceCount+1)/2;
+            dp[i] = (dp[i-1]*val)%mod;
+        }
+        return (int) dp[n];
     }
 
     // method 3 return factorial(2*n) // 2**n % 1_000_000_007
+
+    public int countOrders4(int n) {
+        List<List<String>> res = new ArrayList<>();
+        int[] visited = new int[n + 1];
+        findAllPossibleOrders(n, res, new ArrayList<String>(), visited);
+        return res.size();
+    }
+
+    // if pick up order can be descending or ascending
+    private void findAllPossibleOrders(int n, List<List<String>> res, ArrayList<String> path, int[] visited) {
+        if (path.size() == n * 2) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = 1; i <= n; i++) {
+            if (visited[i] == 0) {
+                visited[i]++;
+                path.add("P" + i);
+                findAllPossibleOrders(n, res, path, visited);
+                visited[i]--;
+                path.remove(path.size() - 1);
+            }
+            if (visited[i] == 1) {
+                visited[i]++;
+                path.add("D" + i);
+                findAllPossibleOrders(n, res, path, visited);
+                visited[i]--;
+                path.remove(path.size() - 1);
+            }
+        }
+    }
 }

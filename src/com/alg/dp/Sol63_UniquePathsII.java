@@ -26,7 +26,7 @@ public class Sol63_UniquePathsII {
         return dp[width-1];
     }
 
-    public static int uqPathwithObj(int[][] obsgrid){
+    public static int uqPathwithObj(int[][] obsgrid) {
         // 2d table for dp
         // no extra space
         int m = obsgrid.length;
@@ -35,7 +35,7 @@ public class Sol63_UniquePathsII {
             for (int j = 0; j < n; j++) {
                 if (obsgrid[i][j] == 1) {
                     obsgrid[i][j] = 0;
-                } else if ( i ==0 && j == 0) {
+                } else if (i ==0 && j == 0) {
                     obsgrid[i][j] = 1;
                 } else if (i == 0) {
                     obsgrid[i][j] = obsgrid[i][j-1]; // first row, row 0

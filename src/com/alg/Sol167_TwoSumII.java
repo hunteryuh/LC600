@@ -19,13 +19,13 @@ public class Sol167_TwoSumII {
         if( num == null || num.length < 2) return indice;
         int left  =0;
         int right = num.length - 1;
-        while ( left < right){
+        while (left < right) {
             int sum = num[left] + num[right];
-            if( sum == target){
+            if(sum == target) {
                 indice[0] = left + 1;
                 indice[1] = right + 1;
                 break;
-            }else if( sum > target){
+            } else if(sum > target) {
                 right--;
             }else{
                 left++;

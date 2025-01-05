@@ -1,9 +1,5 @@
 package com.alg;
 
-/**
- * Created by HAU on 7/6/2017.
- */
-
 /*
 Given n non-negative integers a1, a2, ..., an,
 where each represents a point at coordinate (i, ai).
@@ -13,19 +9,24 @@ with x-axis forms a container, such that the container contains the most water.
 
         Note: You may not slant the container and n is
         at least 2.
+
+        https://leetcode.com/problems/container-with-most-water/
 */
 
 
 public class Sol11_ContainerWithMostWater {
+    // https://leetcode.com/problems/container-with-most-water/editorial/
     public static int maxArea(int[] height){
         int n = height.length;
-        if ( n < 2) return 0;
+        if (n < 2) return 0;
         int lo = 0;
         int hi = n - 1;
         int s = 0;
 
         while (lo < hi) {
-            s = Math.max(s,Math.min(height[hi], height[lo]) * ( hi - lo) );
+            int minHeight = Math.min(height[lo], height[hi]);
+            int width = hi - lo;
+            s = Math.max(s, minHeight * width);
             if (height[lo] < height[hi]) lo++;
             else hi--;
         }

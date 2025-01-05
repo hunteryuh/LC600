@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Stack;
 
-/**
- * Created by HAU on 7/31/2017.
- */
-
 /*Given an absolute path for a file (Unix-style), simplify it.
 
         For example,
@@ -48,9 +44,9 @@ public class Sol71_SimplifyPath {
         //String result = "/";
         String[] arr = path.split("/+"); // will split blank if use "/"
         ArrayList<String> p = new ArrayList<>();
-        for (String s : arr){
-            if(s.equals("..")){
-                if(p.size() > 0){
+        for (String s : arr) {
+            if (s.equals("..")) {
+                if (p.size() > 0) {
                     p.remove(p.size() - 1);
                 }
             }
@@ -65,11 +61,11 @@ public class Sol71_SimplifyPath {
         if (p.size() == 0){
             return "/";
         }
-        for (String s: p){
+        for (String s: p) {
             res.append("/").append(s);
         }
         return res.toString();
-//        if (result.length() > 1){
+//        if (result.length() > 1) {
 //            result = result.substring(0,result.length() - 1);
 //        }
 //
@@ -81,7 +77,7 @@ public class Sol71_SimplifyPath {
             return "";
         }
 
-        Stack<String> stack = new Stack<String>();
+        Stack<String> stack = new Stack<>();
 
         int i = 0;
         while (i < path.length()) {
@@ -166,8 +162,6 @@ public class Sol71_SimplifyPath {
         String p3 = "/home//foo/";
         System.out.println(simplifyPath(p3));
         System.out.println(simplifyPathWithStack(p3));
-
-
 
         String p = "/";
         System.out.println(simplifyPath(p));

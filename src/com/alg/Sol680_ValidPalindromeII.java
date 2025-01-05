@@ -3,7 +3,8 @@ package com.alg;
 /**
  * Created by HAU on 1/9/2018.
  */
-/*Given a non-empty string s, you may delete at most one character. Judge whether you can make it a palindrome.
+/*Given a non-empty string s, you may delete at most one character.
+Judge whether you can make it a palindrome.
 
 Example 1:
 Input: "aba"
@@ -20,9 +21,9 @@ public class Sol680_ValidPalindromeII {
         if (s == null || s.length() == 0) return true;
         int n = s.length();
         int i = 0, j = n - 1;
-        while ( i < j ){
+        while (i < j) {
             if (s.charAt(i) != s.charAt(j)) {
-                return isPalindrome(s,i+1,j) || isPalindrome(s,i,j-1);
+                return isPalindrome(s,i+1, j) || isPalindrome(s, i,j-1);
             }
             i++;
             j--;
@@ -32,9 +33,10 @@ public class Sol680_ValidPalindromeII {
 
 
     private static boolean isPalindrome(String s, int i, int j ){
-        while( i<j && i >= 0 && j <= s.length() - 1){
-            if(s.charAt(i) != s.charAt(j)) return false;
-            i++;j--;
+        while (i < j && i >= 0 && j <= s.length() - 1) {
+            if (s.charAt(i) != s.charAt(j)) return false;
+            i++;
+            j--;
         }
         return true;
     }

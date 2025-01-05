@@ -73,14 +73,13 @@ public class Sol528_RandomPickWithWeight {
 
     public int pickIndex() {
         double target = this.totalSum * Math.random();
-        int i = 0;
         // run a linear search to find the target zone
-        for (; i < this.prefixSums.length; ++i) {
+        for (int i = 0; i < this.prefixSums.length; ++i) {
             if (target < this.prefixSums[i])
                 return i;
         }
         // to have a return statement, though this should never happen.
-        return i - 1;
+        return -1;
     }
 
     public int pickIndex_binarysearch() {
@@ -100,4 +99,40 @@ public class Sol528_RandomPickWithWeight {
         return low;
 
     }
+
+    class Solution2 {
+        int[] prefixSum;
+        int total;
+        public Solution2(int[] w) {
+            prefixSum = new int[w.length];
+            int presum = 0;
+            for (int i = 0; i < w.length; i++) {
+                presum = presum + w[i];
+                prefixSum[i] = presum;
+            }
+            total = presum;
+        }
+
+        public int pickIndex2() {
+            double target = total * Math.random(); // random() : [0, 1)
+            int left = 0;
+            int right = prefixSum.length - 1;
+            while (left + 1 < right) {
+                int mid = left + (right - left) / 2;
+                if (target > prefixSum[mid]) {
+                    left = mid;
+                } else if (target < prefixSum[mid]) {
+                    right = mid;
+                } else {
+                    right = mid;
+                }
+            }
+            if (target < prefixSum[left]) {
+                return left; // first index that with value larger than target
+                // find the first prefix sum that is larger than our target offset.
+            }
+            return right;
+        }
+    }
+
 }

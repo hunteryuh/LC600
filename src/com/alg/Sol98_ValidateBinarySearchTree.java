@@ -83,7 +83,7 @@ public class Sol98_ValidateBinarySearchTree {
     public boolean isValidBST0(TreeNode root){
         Stack<TreeNode> stack = new Stack<>();
         TreeNode cur = root, pre = null;
-        while (!stack.isEmpty() || cur != null){
+        while (!stack.isEmpty() || cur != null) {
             if (cur!= null) {
                 stack.push(cur);
                 cur = cur.left;

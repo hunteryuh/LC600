@@ -94,7 +94,7 @@ public class Sol77_Combinations {
         }
     }
 
-    // doordash dice roll dice
+    // doordash dice roll dice; dice permutation
     // Write a function that takes n number of dice/die and returns all possible permutations of result. For example, when you have n=2 dice, we want to return: [(1,1), (1,2),(1,3)...(6,5),(6,6)]
     public List<List<Integer>> rollDice(int n) {
         List<Integer> sol = new ArrayList<>();

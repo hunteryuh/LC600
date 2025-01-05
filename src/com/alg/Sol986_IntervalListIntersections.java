@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
-You are given two lists of closed intervals, firstList and secondList, where firstList[i] = [starti, endi] and secondList[j] = [startj, endj]. Each list of intervals is pairwise disjoint and in sorted order.
+You are given two lists of closed intervals, firstList and secondList,
+where firstList[i] = [starti, endi] and secondList[j] = [startj, endj].
+Each list of intervals is pairwise disjoint and in sorted order.
 
 Return the intersection of these two interval lists.
 
@@ -48,6 +50,7 @@ public class Sol986_IntervalListIntersections {
             if (left <= right) {
                 res.add(new int[]{left, right});
             }
+            // remove the interval with the smallest endpoint
             if (firstList[i][1] < secondList[j][1]) {
                 i++;
             } else {

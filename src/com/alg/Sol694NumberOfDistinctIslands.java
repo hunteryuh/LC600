@@ -12,12 +12,12 @@ import java.util.Set;
 Count the number of distinct islands. An island is considered to be the same as another
 if and only if one island can be translated (and not rotated or reflected) to equal the other.*/
 public class Sol694NumberOfDistinctIslands {
-
+    //https://leetcode.com/problems/number-of-distinct-islands/solutions/108475/java-very-elegant-and-concise-dfs-solution-beats-100/
     static int[][] dirs= {{1,0},{-1,0},{0,1},{0,-1}};
     public  static int numDistinctIslands(int[][] grid) {
         //int[][] dirs = {{1,0},{-1,0},{0,1},{0,-1}};
         Set<String> set = new HashSet<>();
-        int res = 0;
+//        int res = 0;
 
         for(int i = 0; i < grid.length; i++){
             for (int j = 0; j < grid[0].length ; j++){
@@ -25,14 +25,14 @@ public class Sol694NumberOfDistinctIslands {
                     StringBuilder sb = new StringBuilder();
                     dfshelper(grid,i,j,0,0,sb);
                     String s = sb.toString();
-                    if(!set.contains(s)){
-                        res++;
-                        set.add(s);
-                    }
+//                    if(!set.contains(s)){
+//                        set.add(s);
+//                    }
+                    set.add(s);
                 }
             }
         }
-        return res;
+        return set.size();
     }
 
     private  static void dfshelper(int[][] grid, int i, int j, int xp, int yp, StringBuilder sb) {

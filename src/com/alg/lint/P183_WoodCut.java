@@ -15,6 +15,7 @@ public class P183_WoodCut {
      * @param k: An integer
      * @return: The maximum length of the small pieces
      */
+    // time: O(n.log(Max))
     public static int woodCut(int[] L, int k) {
         // write your code here
         if (L == null || L.length == 0) {

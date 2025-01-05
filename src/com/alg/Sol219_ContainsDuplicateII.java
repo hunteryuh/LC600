@@ -28,7 +28,7 @@ public class Sol219_ContainsDuplicateII {
             if(map.containsKey(nums[i])){
                 if(i - map.get(nums[i]) <= k) return true;
             }
-            map.put(nums[i],i);
+            map.put(nums[i], i); //if > k, update the index with the last seen index
         }
         return false;
     }

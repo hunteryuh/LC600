@@ -14,6 +14,7 @@ If the target is not found in the array, return [-1, -1].
 For example,
 Given [5, 7, 7, 8, 8, 10] and target value 8,
 return [3, 4].*/
+    // Find First and Last Position of Element in Sorted Array
 public class Sol34_SearchForARange {
     // linear scan, O(n)
     public static int[] searchRange(int[] nums, int target) {
@@ -26,7 +27,7 @@ public class Sol34_SearchForARange {
         }
         if(res[0] == -1) return res;
         for(int j = nums.length - 1; j >=0; j--){
-            if (res[j] == target){
+            if (res[j] == target) {
                 res[1] = j;
                 break;
             }
@@ -48,9 +49,9 @@ public class Sol34_SearchForARange {
     private static int insertIndex(int[] nums, int target, boolean b) {
         int lo = 0;
         int hi = nums.length - 0;  // -1 does not work for single element array
-        while( lo < hi){
+        while (lo < hi) {
             int mid = ( lo + hi) / 2;
-            if ( nums[mid] > target || (b && nums[mid] == target)){
+            if (nums[mid] > target || (b && nums[mid] == target)) {
                 hi = mid;
             }else{
                 lo = mid + 1;
@@ -66,10 +67,11 @@ public class Sol34_SearchForARange {
         }
         int left = binarySearch(nums, target, true);
         int right = binarySearch(nums, target, false);
+        // count = right -left + 1
         return new int[]{left, right};
-
     }
 
+    // find the occurrence of a target in the sorted array
     private static int binarySearch(int[] nums, int target, boolean first) {
         int start = 0;
         int end = nums.length - 1;

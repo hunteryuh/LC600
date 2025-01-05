@@ -112,6 +112,26 @@ public class Sol146_LRUCache {
                 moveToHead(node);
             }
         }
+          // rewrite put with map size
+//        public void put(int key, int value) {
+//            if (map.containsKey(key)) {
+//                Node node = map.get(key);
+//                node.value = value;
+//                deleteNode(node);
+//                addToHead(node);
+//                return;
+//            }
+//            Node node = new Node(key, value);
+//            map.put(key, node);
+//            addToHead(node);
+//            // size++;
+//            if (map.size() > capacity) {
+//                Node end = tail.prev;
+//                map.remove(end.key);
+//                deleteNode(end);
+//                // size--;
+//            }
+//        }
 
         private DLinkedNode popTail() {
             // pop the current tail
@@ -156,7 +176,8 @@ public class Sol146_LRUCache {
             // by passing in true, we turned on access-order, whereas the default was insertion-order.
             // 这个参数实现了LRU，不管是get还是put, 都会放到latest.
             this.map = new LinkedHashMap<Integer, Integer>(capacity, 0.75f, true) {
-                 public boolean removeEldestEntry(Map.Entry eldest) {
+                @Override
+                public boolean removeEldestEntry(Map.Entry eldest) {
                      return size() > capacity;
                  }
             };
@@ -202,6 +223,7 @@ public class Sol146_LRUCache {
 
             if (map.size() > cap)
                 map.remove(map.entrySet().iterator().next().getKey());
+//                map.remove(map.keySet().iterator().next());
         }
     }
 

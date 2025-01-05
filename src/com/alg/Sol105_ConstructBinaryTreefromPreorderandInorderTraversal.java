@@ -51,7 +51,7 @@ public class Sol105_ConstructBinaryTreefromPreorderandInorderTraversal {
     }
 
 //
-    // with hashmap, time O(n)
+    // with hashmap, time O(n), get the node value to inorder index beforehand
     public static TreeNode buildTreewithMap(int[] preorder, int[] inorder){
         Map<Integer, Integer> inMap = new HashMap<>();
         for (int i = 0; i < inorder.length; i++){

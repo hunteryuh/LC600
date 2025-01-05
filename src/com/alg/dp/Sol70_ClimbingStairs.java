@@ -1,8 +1,5 @@
 package com.alg.dp;
 
-/**
- * Created by HAU on 8/23/2017.
- */
 /*You are climbing a stair case. It takes n steps to reach to the top.
 
         Each time you can either climb 1 or 2 steps.

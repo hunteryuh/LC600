@@ -33,12 +33,7 @@ Constraints:
 
  */
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Sol759_EmployeeFreeTime {
 
@@ -55,6 +50,7 @@ public class Sol759_EmployeeFreeTime {
     };
 
     // using TreeMap
+    // https://leetcode.com/problems/employee-free-time/solutions/175081/sweep-line-java-with-explanations/
     public List<Interval> employeeFreeTime(List<List<Interval>> schedule) {
         List<Interval> res = new ArrayList<>();
         Map<Integer, Integer> map = new TreeMap<>(); // sorted map, key: time point; value: score
@@ -64,13 +60,14 @@ public class Sol759_EmployeeFreeTime {
                 map.put(interval.end, map.getOrDefault(interval.end, 0) - 1);
             }
         }
-        int start = -1;
+        int start = -1;  // non-overlapping interval start point.
         int score = 0; // when the sum of the points become 0 then we've found a new non-overlapping start point.
         for (int point : map.keySet()) {
             score += map.get(point);
             if (score == 0 /*&& start == -1*/) {
                 start = point;
             } else if (start != -1 /*&& score != 0 */) {
+                // means that we've found the next point that follows the starting point of the non-overlapping interval
                 res.add(new Interval(start, point));
                 start = -1; // reset start
             }
@@ -80,21 +77,36 @@ public class Sol759_EmployeeFreeTime {
     }
 
     // priority queue
+    // https://leetcode.com/problems/employee-free-time/solutions/195308/java-priorityqueue-solution-time-complexity-o-n-log-k/
+    // time O(NlogN) N is the total number of intervals in all the lists. K is the number of people.
+    // as it adds all intervals in the queue
     public List<Interval> employeeFreeTime2(List<List<Interval>> avails) {
         List<Interval> result = new ArrayList<>();
         PriorityQueue<Interval> pq = new PriorityQueue<>((a, b) -> a.start - b.start); // sort by start
 
-        avails.forEach(e -> pq.addAll(e));
+        for (List<Interval> e : avails) {
+            pq.addAll(e);
+        }
 
-        Interval temp = pq.poll();
-        while(!pq.isEmpty()) {
-            if(temp.end < pq.peek().start) { // no intersect
-                result.add(new Interval(temp.end, pq.peek().start));
-                temp = pq.poll(); // becomes the next temp interval
-            } else { // intersect or sub merged
-                temp = temp.end < pq.peek().end ? pq.peek() : temp;
-                pq.poll();
+        Interval prev = pq.poll();
+        while (!pq.isEmpty()) {
+            Interval cur = pq.poll(); // will always be polled after each step in the loop
+            //if there is a gap between previous ending and current start then,
+            //we have found a free interval
+            if (cur.start > prev.end) {
+                result.add(new Interval(prev.end, cur.start));
             }
+            //if prev has greater ending then it will override the current ending
+            if (prev.end < cur.end) {
+                prev = cur;
+            }
+//            if (temp.end < pq.peek().start) { // no intersect
+//                result.add(new Interval(temp.end, pq.peek().start));
+//                temp = pq.poll(); // becomes the next temp interval
+//            } else { // intersect or sub merged
+//                temp = temp.end < pq.peek().end ? pq.peek() : temp;
+//                pq.poll();
+//            }
         }
         return result;
     }
@@ -135,5 +147,24 @@ public class Sol759_EmployeeFreeTime {
         }
 
         return employeesFreeTime;
+    }
+
+    // just arraylist
+    public List<Interval> employeeFreeTime4(List<List<Interval>> avails) {
+        List<Interval> result = new ArrayList<>();
+        List<Interval> timeLine = new ArrayList<>();
+        avails.forEach(e -> timeLine.addAll(e));
+        Collections.sort(timeLine, ((a, b) -> a.start - b.start));
+
+        Interval temp = timeLine.get(0);
+        for(Interval each : timeLine) {
+            if(temp.end < each.start) {
+                result.add(new Interval(temp.end, each.start));
+                temp = each;
+            } else {
+                temp = temp.end < each.end ? each : temp;
+            }
+        }
+        return result;
     }
 }

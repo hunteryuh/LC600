@@ -27,6 +27,9 @@ Note: Do not use class member/global/static variables to store states.
 Your serialize and deserialize algorithms should be stateless.
 https://www.lintcode.com/help/binary-tree-representation/
 https://www.jiuzhang.com/solution/binary-tree-serialization/
+
+https://leetcode.com/problems/serialize-and-deserialize-binary-tree/description/
+
 */
 
 
@@ -42,11 +45,11 @@ public class Sol297_SerializeAndDeserializeBinaryTree {
           queue.add(root);
           while(!queue.isEmpty()){
               TreeNode node = queue.poll();
-              if (node != null){
-                  sb.append(node.val + ",");
+              if (node != null) {
+                  sb.append(node.val).append(",");
                   queue.add(node.left);
                   queue.add(node.right);
-              }else{
+              } else {
                   sb.append("#,"); // many null "#" for the last few leaves in this method
               }
           }
@@ -235,7 +238,7 @@ public class Sol297_SerializeAndDeserializeBinaryTree {
       private TreeNode helper(Queue<String> queue) {
           String s = queue.poll();
           if (s.equals("#")) return null;
-          TreeNode root = new TreeNode(Integer.valueOf(s));
+          TreeNode root = new TreeNode(Integer.parseInt(s));
           root.left = helper(queue);
           root.right = helper(queue);
           return root;

@@ -85,7 +85,7 @@ public class Sol37_SudokuSolver {
     /*
     System design Round:
 Implement this feature/ app where for every order the customers can go rate the individual
-items they purchased from the restaurent and write a review on it. Basically the feature similar to amazon reviews.
+items they purchased from the restaurant and write a review on it. Basically the feature similar to amazon reviews.
 My thoughts: I start with small scope and go big and scale.
 Scope: 1-10 people
 Did class design, api design.

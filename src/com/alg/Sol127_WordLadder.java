@@ -24,19 +24,20 @@ return its length 5.
 https://leetcode.com/problems/word-ladder/
 */
 public class Sol127_WordLadder {
+
+    // time: O(m^2) * N: m: length of the word, N: number of word in the wordList
     public static int ladderLength(String beginWord, String endWord, List<String> wordList) {
         if (beginWord.length() != endWord.length()) return 0;
-        HashMap<String,Integer> distance = new HashMap<>();
+        HashMap<String, Integer> distance = new HashMap<>();
         HashSet<String> visited = new HashSet<>();
         Queue<String> q = new LinkedList<>();
 
-        HashSet<String> dic = new HashSet<>();
-        dic.addAll(wordList);
+        Set<String> dic = new HashSet<>(wordList);
         q.add(beginWord);
         visited.add(beginWord);
         distance.put(beginWord,1);
         while (!q.isEmpty()){
-            String word = q.remove();
+            String word = q.poll();
             if (word.equals(endWord)) return distance.get(word);
             // if not found, go to find neighbors
             // if the goal is to find one path of transformation, better use DFS depth first search
@@ -50,7 +51,7 @@ public class Sol127_WordLadder {
                     StringBuilder sb = new StringBuilder(word);
                     sb.setCharAt(i,c);  //set the ith char in the stringbuilder as c
                     String newword = sb.toString();
-                    if ( dic.contains(newword) && !visited.contains(newword)){
+                    if (dic.contains(newword) && !visited.contains(newword)){
                         q.add(newword);
                         visited.add(newword);
                         distance.put(newword,distance.get(word)+1);
@@ -60,6 +61,37 @@ public class Sol127_WordLadder {
         }
         return 0;
     }
+
+    // use set to avoid map + visited set
+    public int ladderLength3(String beginWord, String endWord, List<String> wordList) {
+        Set<String> wordSet = new HashSet<>(wordList);
+        Queue<String> queue = new LinkedList<>();
+        int dis = 1;
+        int n = beginWord.length();
+        queue.offer(beginWord);
+        while (!queue.isEmpty()) {
+            int size = queue.size(); // need to get the queue size for  each loop. which is one level to calculate the distance
+            for (int i = 0; i < size; i++) {
+                String word = queue.poll();
+                if (endWord.equals(word)) return dis;
+                for (int j = 0; j < n; j++) {
+                    for (char letter = 'a'; letter <= 'z'; letter++) {
+                        StringBuilder sb = new StringBuilder(word);
+                        sb.setCharAt(j, letter);
+                        String nextWord = sb.toString();
+                        if (wordSet.contains(nextWord)) {
+                            wordSet.remove(nextWord); // a way to mark as visited
+                            queue.offer(nextWord);
+                        }
+                    }
+                }
+            }
+            dis++;
+
+        }
+        return 0;
+    }
+
 
     // https://www.jiuzhang.com/solutions/word-ladder 简单图最短路径问题
 
@@ -76,7 +108,6 @@ public class Sol127_WordLadder {
         System.out.println(s.ladderLength2(start2, end2, list2));
 
     }
-
 
     public int ladderLength2(String beginWord, String endWord, List<String> wordList) {
         if (endWord.length() != beginWord.length()) {
@@ -130,4 +161,42 @@ public class Sol127_WordLadder {
         }
         return words;
     }
+
+    //time O(M^2 * N), where M is size of dequeued word & N is size of our word list
+    public int ladderLength5(String beginWord, String endWord, List<String> wordList) {
+        Set<String> wordSet = new HashSet<>(wordList);
+        Queue<String> queue = new LinkedList<>();
+        queue.offer(beginWord);
+        Set<String> visited = new HashSet();
+        visited.add(beginWord);
+        int dis = 1;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int j = 0; j < size; j++) {
+                String cur = queue.poll();
+                if (cur.equals(endWord)) return dis;
+                for (int i = 0; i < cur.length(); i++) {
+                    char letter = cur.charAt(i);
+                    for (char c = 'a'; c <= 'z'; c++) {
+                        if (c == letter) continue;
+                        StringBuilder sb = new StringBuilder(cur);
+                        sb.setCharAt(i, c);
+                        String newword = sb.toString();
+                        if (wordSet.contains(newword)) {
+                            if (!visited.contains(newword)) {
+                                visited.add(newword);
+                                queue.offer(newword);
+                            }
+                        }
+                    }
+                }
+            }
+
+            dis++;
+        }
+
+        return 0;
+    }
+
+
 }

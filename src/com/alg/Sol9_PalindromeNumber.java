@@ -8,7 +8,8 @@ package com.alg;
 
         If you are thinking of converting the integer to string, note the restriction of using extra space.
 
-        You could also try reversing an integer. However, if you have solved the problem "Reverse Integer", you know that the reversed integer might overflow. How would you handle such case?
+        You could also try reversing an integer. However, if you have solved the problem "Reverse Integer", you know that the reversed integer might overflow.
+        How would you handle such case?
 
         There is a more generic way of solving this problem.*/
 //Determine whether an integer is a palindrome. Do this without extra space.
@@ -16,7 +17,7 @@ public class Sol9_PalindromeNumber {
     public static boolean isPalindrome(int x) {
         boolean res = true;
         if ( x == 0) res = true;
-        else if ( x < 0) res = false;
+        else if (x < 0 ) res = false;
         else {
             int count = 0;
             int t = x;
@@ -55,11 +56,11 @@ public class Sol9_PalindromeNumber {
     public static boolean isPalindrome_2(int x) {
         if (x<0 || (x!=0 && x%10==0)) return false;
         int rev = 0;
-        while (x>rev){
+        while (x > rev) {
             rev = rev * 10 + x % 10;
             x = x/10;
         }
-        return (x==rev || x==rev/10);
+        return (x == rev || x==rev/10);
         // 12321
         // 1232 1
         // 123 12

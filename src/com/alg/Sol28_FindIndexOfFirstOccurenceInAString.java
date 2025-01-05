@@ -3,7 +3,7 @@ package com.alg;
 /**
  * Created by HAU on 6/10/2017.
  */
-public class Sol28_Implement_strStr {
+public class Sol28_FindIndexOfFirstOccurenceInAString {
     //best algorithm : KMP
     //can study an easier algorithm than KMP, which is Rabin-Karp , based on hash function
 
@@ -12,8 +12,8 @@ public class Sol28_Implement_strStr {
         if (source == null || target == null)  // error check
             return -1;
         int i,j;
-        for (i = 0; i <= source.length() - target.length(); i++){  // leave a space before and after two variable operator
-            for (j = 0; j < target.length(); j++){  // leave a space after the ;
+        for (i = 0; i <= source.length() - target.length(); i++) {  // leave a space before and after two variable operator
+            for (j = 0; j < target.length(); j++) {  // leave a space after the ;
                 if (target.charAt(j) != source.charAt(i+j))
                     break;
             }
@@ -43,7 +43,7 @@ public class Sol28_Implement_strStr {
         String toString = "testnew";
         System.out.println(strStr(source,target));
 
-        Sol28_Implement_strStr ss = new Sol28_Implement_strStr();
+        Sol28_FindIndexOfFirstOccurenceInAString ss = new Sol28_FindIndexOfFirstOccurenceInAString();
         System.out.println(ss.strStr2(source, target));
         System.out.println(strReplace(source,target,toString));
     }

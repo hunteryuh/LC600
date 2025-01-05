@@ -1,6 +1,8 @@
 package com.alg;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * Created by HAU on 12/1/2017.
@@ -29,13 +31,33 @@ public class Sol339_NestedListWeightSum {
 
     private int dfs(List<NestedInteger> list, int depth) {
         int sum = 0;
-        for (NestedInteger n: list){
-            if (n.isInteger()){
+        for (NestedInteger n: list) {
+            if (n.isInteger()) {
                 sum += n.getInteger() * depth;
-            }else{
-                sum += dfs(n.getList(),depth+1);
+            } else {
+                sum += dfs(n.getList(),depth + 1);
             }
         }
         return sum;
+    }
+
+    public int depthSum2(List<NestedInteger> nestedList) {
+        Queue<NestedInteger> queue = new LinkedList<>();
+        queue.addAll(nestedList);
+        int depth = 1;
+        int total = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                NestedInteger nested = queue.poll();
+                if (nested.isInteger()) {
+                    total += nested.getInteger() * depth;
+                } else {
+                    queue.addAll(nested.getList());
+                }
+            }
+            depth++;
+        }
+        return total;
     }
 }

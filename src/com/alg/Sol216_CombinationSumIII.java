@@ -7,7 +7,8 @@ import java.util.List;
 /**
  * Created by HAU on 11/19/2017.
  */
-/*Find all possible combinations of k numbers that add up to a number n, given that only numbers from 1 to 9 can be used and each combination should be a unique set of numbers.
+/*Find all possible combinations of k numbers that add up to a number n,
+given that only numbers from 1 to 9 can be used and each combination should be a unique set of numbers.
 
 
 Example 1:
@@ -38,7 +39,7 @@ public class Sol216_CombinationSumIII {
             res.add(new ArrayList<>(sol));
             return;
         }
-        for (int i = start; i <= 9; i++){
+        for (int i = start; i <= 9; i++) {
             sol.add(i);
             dfshelper(res,sol,k,i+1,target-i);
             sol.remove(sol.size() - 1);  // backtracking

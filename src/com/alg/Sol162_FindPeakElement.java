@@ -20,7 +20,7 @@ package com.alg;
         Note:
         Your solution should be in logarithmic complexity.*/
 public class Sol162_FindPeakElement {
-    // O(n)
+    // O(n) https://leetcode.com/problems/find-peak-element/editorial/
     public static int findPeakElement_n(int[] nums) {
         int n = nums.length;
         for (int i = 1; i < n; i++){
@@ -31,7 +31,7 @@ public class Sol162_FindPeakElement {
         return nums.length-1;
     }
 
-    // O(logn)
+    // O(logn) https://leetcode.com/problems/find-peak-element/editorial/
     public static int findPeakElement(int[] nums) {
         int n = nums.length;
         int lo = 0;
@@ -62,6 +62,20 @@ public class Sol162_FindPeakElement {
             return start;
         }
         return end;
+    }
+
+    // recursive binary search
+    public int findPeakBinary(int[] nums) {
+        return search(nums, 0, nums.length - 1);
+    }
+    private int search(int[] nums, int left, int right) {
+        if (left == right) return left;
+        int mid = (left + right) /2;
+        if (nums[mid] < nums[mid + 1]) {
+            return search(nums, mid + 1, right);
+        } else {
+            return search(nums, left, mid);
+        }
     }
 
     public static void main(String[] args) {

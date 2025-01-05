@@ -18,15 +18,15 @@ public class Sol42_TrappingRainWater {
         int left = 0, right = height.length-1;
         int res = 0;
         int leftMax = 0, rightMax = 0;
-        while (left < right){
-            if (height[left] < height[right]){
-                if (height[left] >= leftMax){
+        while (left < right) {
+            if (height[left] < height[right]) {
+                if (height[left] >= leftMax) {
                     leftMax = height[left];
                 }else{
                     res += leftMax - height[left];
                 }
                 left++;
-            }else{
+            } else {
                 if (height[right] >= rightMax){
                     rightMax = height[right];
                 }else{
@@ -49,7 +49,7 @@ public class Sol42_TrappingRainWater {
     // method 2 dp
     /*Time complexity: O(n).
 We store the maximum heights upto a point using 2 iterations of O(n) each.
-We finally update \text{ans}ans using the stored values in O(n).
+We finally update ans using the stored values in O(n).
 
 Space complexity: O(n) extra space.*/
     public static int trapWater(int[] height){
@@ -67,7 +67,7 @@ Space complexity: O(n) extra space.*/
             rightMax[i]= Math.max(height[i],rightMax[i+1]);
         }
         for( int i = 1; i < size - 1; i++){
-            ans += Math.min(leftMax[i],rightMax[i])- height[i];
+            ans += Math.min(leftMax[i],rightMax[i]) - height[i]; // 两个图形的阴影面积 （重合）
         }
         return ans;
     }

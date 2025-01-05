@@ -88,6 +88,7 @@ public class Sol489_RobotRoomCleaner {
             int newy = y + dirs[newdir][1];
             if (!visited.contains(Arrays.asList(newx, newy)) && robot.move()) {
                 dfs(robot, newx, newy, newdir);
+                // Moves backward one step while maintaining the orientation.
                 goback(robot);
             }
             // Changed orientation.  right-hand rule  https://en.wikipedia.org/wiki/Maze-solving_algorithm#Wall_follower
@@ -103,6 +104,17 @@ public class Sol489_RobotRoomCleaner {
         robot.move();
         robot.turnRight();
         robot.turnRight();
+    }
+
+    public static void main(String[] args) {
+        Set<List<Integer>> seta = new HashSet<>();
+        List<Integer> list1 = Arrays.asList(1, 2);
+        List<Integer> list2 = Arrays.asList(1, 2);
+        seta.add(list1);
+        // lists are equal if same size and  contain the same elements in the same order.
+        System.out.println("set contains list1? " + seta.contains(list1)); // true
+        System.out.println("set contains list2? " + seta.contains(list2)); // trie
+
     }
 
 }

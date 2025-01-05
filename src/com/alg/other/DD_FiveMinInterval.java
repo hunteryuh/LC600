@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 /*
 Input - ("mon 10:00 am", mon 11:00 am)
 Output - [11005, 11010, 11015...11100]
@@ -37,6 +39,10 @@ public class DD_FiveMinInterval {
         for (int interval: intervals) {
             res.add(transform(interval));
         }
+        //res = intervals.stream()
+        // .mapToInt(interval -> interval)
+        // .mapToObj(this::transform).
+        // collect(Collectors.toCollection(LinkedList::new));
         return res;
     }
 
@@ -48,7 +54,7 @@ public class DD_FiveMinInterval {
         if (timeArray[2].equals("pm")) {
             hour += 12;
         }
-        int time = map.get(timeArray[0]) * 24 * 60 + hour*60 + mins;
+        int time = map.get(timeArray[0]) * 24 * 60 + hour * 60 + mins;
         return time;
     }
 
@@ -58,6 +64,6 @@ public class DD_FiveMinInterval {
         int mins = time%60;
         String hourStr = hour < 10? "0"+hour: ""+hour;
         String minsStr = mins < 10? "0"+mins: ""+mins;
-        return day+""+ hourStr+ minsStr;
+        return day+ hourStr+ minsStr;
     }
 }

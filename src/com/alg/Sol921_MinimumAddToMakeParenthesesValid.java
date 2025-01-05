@@ -28,6 +28,8 @@ Constraints:
 s[i] is either '(' or ')'.
  */
 public class Sol921_MinimumAddToMakeParenthesesValid {
+    // https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/description/
+    // https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/solutions/181132/c-java-python-straight-forward-one-pass/
     public int minAddtoMakeValid(String s) {
         int left = 0;
         int right = 0;  // left right 代表要加的左bracket和右bracket
@@ -42,5 +44,35 @@ public class Sol921_MinimumAddToMakeParenthesesValid {
             }
         }
         return left + right;
+    }
+
+    public int minAddToMakeValid(String S) {
+        int left = 0, right = 0;
+        for (int i = 0; i < S.length(); ++i) {
+            if (S.charAt(i) == '(') {
+                right++;
+            } else if (right > 0) {
+                right--;
+            } else {
+                left++;
+            }
+        }
+        return left + right;
+    }
+
+    public int minAddToMakeValid2(String s) {
+        int open = 0, close = 0;
+        for (int i = 0; i < s.length(); ++i) {
+            if (s.charAt(i) == '(') {
+                open++;
+            } else {
+                if (open > 0) {
+                    open--;
+                } else {
+                    close++;
+                }
+            }
+        }
+        return open + close;
     }
 }

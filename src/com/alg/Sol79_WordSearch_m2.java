@@ -17,7 +17,7 @@ public class Sol79_WordSearch_m2 {
         int m = board.length;
         int n = board[0].length;
         boolean[][] visited = new boolean[m][n];
-        for ( int i = 0; i < m ; i ++){
+        for (int i = 0; i < m ; i ++){
             for (int j = 0; j < n; j++){
                 if (dfs(board,word,i,j,0,visited)){
                     result = true;

@@ -12,6 +12,7 @@ b) Delete a character
 c) Replace a character*/
 public class Sol72_EditDistance {
     // https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0072.%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB.md
+    // time compleixty O (m * n)
     public static int minDistance(String word1, String word2) {
         if (word1.equals(word2)) {
             return 0;
@@ -31,8 +32,8 @@ public class Sol72_EditDistance {
         }
         for (int i = 1; i <= k1; i++) {
             for (int j= 1; j <= k2; j++) {
-                if (word1.charAt(i-1) == word2.charAt(j-1)){
-                    dp[i][j] = dp[i-1][j-1];
+                if (word1.charAt(i-1) == word2.charAt(j-1)) {
+                    dp[i][j] = dp[i-1][j-1]; //no operation
                 } else {
                     dp[i][j] = Math.min(dp[i-1][j-1], Math.min(dp[i-1][j], dp[i][j-1])) + 1;  // key
                 }
@@ -45,5 +46,28 @@ public class Sol72_EditDistance {
         String s1 = "girlfr";
         String s2 = "frday";
         System.out.println(minDistance(s1,s2));
+    }
+
+    // https://leetcode.com/problems/edit-distance/solutions/3230662/clean-codes-full-explanation-dynamic-programming-c-java-python3
+    public int minDistance2(String word1, String word2) {
+        int m = word1.length();
+        int n = word2.length();
+        int[][] dp = new int[m + 1][n + 1];
+        // dp [i][j] 0..i, 0..j
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= n;j++) {
+                if (i == 0) {
+                    dp[i][j] = j;
+                } else if (j == 0) {
+                    dp[i][j] = i;
+                } else if (word1.charAt(i - 1) == word2.charAt(j -1)) {
+                    dp[i][j] = dp[i-1][j-1];
+                } else {
+                    dp[i][j] = Math.min(dp[i-1][j-1], Math.min(dp[i-1][j], dp[i][j-1])) + 1;
+                }
+            }
+        }
+        return dp[m][n];
+
     }
 }

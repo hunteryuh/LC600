@@ -171,8 +171,7 @@ Output:
         boolean[][] visited = new boolean[m][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (grid[i][j] == '1') {
-                    if (visited[i][j]) continue;
+                if (grid[i][j] == '1' && !visited[i][j]) {
                     dfs(grid, i, j, visited);
                     count++;
                 }
@@ -212,7 +211,7 @@ Output:
     private void bfs(char[][] grid, int x, int y) {
         Queue<int[]> q = new LinkedList<>();
         int[][] dirs = {{0,1}, {1,0}, {0, -1}, {-1, 0}};
-        grid[x][y] = '0';
+//        grid[x][y] = '0';
         q.offer(new int[]{x, y});
         while (!q.isEmpty()) {
             int[] cur = q.poll();

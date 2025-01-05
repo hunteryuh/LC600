@@ -47,7 +47,7 @@ public class Sol226_InvertBinaryTree {
         if (root == null) return root;
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
-        while(!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             TreeNode cur = queue.poll();
             TreeNode temp = cur.left;
             cur.left = cur.right;

@@ -1,6 +1,6 @@
 package com.alg;
 
-import java.util.Arrays;
+import java.util.*;
 
 /*
 Given a characters array tasks, representing the tasks a CPU needs to do, where each letter represents a different task. Tasks could be done in any order. Each task is done in one unit of time. For each unit of time, the CPU could complete either one task or just be idle.
@@ -54,7 +54,6 @@ public class Sol621_TaskScheduler {
         }
 //        return (maxFreq - 1) * (n + 1) + countMaxFreq; // failed for n = 0 case
         return Math.max(tasks.length, (maxFreq - 1) * (n + 1) + countMaxFreq);
-
     }
 
     public static void main(String[] args) {
@@ -64,7 +63,7 @@ public class Sol621_TaskScheduler {
         System.out.println(ss.leastInterval(tasks, n));
     }
 
-    // https://leetcode.com/problems/task-scheduler/solution/
+    // https://leetcode.com/problems/task-scheduler/solution/ greedy
     public int leastInterval2(char[] tasks, int n) {
         // frequencies of the tasks
         int[] frequencies = new int[26];
@@ -84,5 +83,62 @@ public class Sol621_TaskScheduler {
         idle_time = Math.max(0, idle_time);
 
         return idle_time + tasks.length;
+    }
+
+    // https://leetcode.com/problems/task-scheduler/solutions/104493/c-java-clean-code-priority-queue/
+    public int leastInterval3(char[] tasks, int n) {
+        Map<Character, Integer> counts = new HashMap<Character, Integer>();
+        for (char t : tasks) {
+            counts.put(t, counts.getOrDefault(t, 0) + 1);
+        }
+
+        // build queue, sort from descending
+        PriorityQueue<Integer> pq = new PriorityQueue<Integer>((a, b) -> b - a);
+        pq.addAll(counts.values());
+
+        int alltime = 0;
+        int cycle = n + 1;
+        // when queue is not empty, there are remaining tasks
+        while (!pq.isEmpty()) {
+            int worktime = 0;
+            List<Integer> tmp = new ArrayList<>();
+            for (int i = 0; i < cycle; i++) {
+                if (!pq.isEmpty()) {
+                    tmp.add(pq.poll());  // most frequent task
+                    worktime++;  // executed the task, one slot is taken
+                }
+            }
+            for (int cnt : tmp) {
+                if (--cnt > 0) {
+                    pq.offer(cnt); // add valid tasks
+                }
+            }
+            alltime += !pq.isEmpty() ? cycle : worktime; // worktime, same as tmp.size()
+//            alltime += pq.isEmpty()? worktime : cycle;
+        }
+
+        return alltime;
+    }
+
+    // https://leetcode.com/problems/task-scheduler/solutions/104500/java-o-n-time-o-1-space-1-pass-no-sorting-solution-with-detailed-explanation/
+    public int leastInterval4(char[] tasks, int n) {
+        int[] counter = new int[26];
+        int maxFreq = 0;
+        int numberOfTasksWithMaxFreq = 0;
+        for (char task: tasks) {
+            counter[task - 'A']++;
+            if (counter[task - 'A'] == maxFreq) {
+                numberOfTasksWithMaxFreq++;
+            } else if (counter[task - 'A'] > maxFreq) {
+                maxFreq = counter[task - 'A'];
+                numberOfTasksWithMaxFreq = 1;
+            }
+        }
+        int partCountbyMostFreq = maxFreq - 1;
+        int partLengthExcludingMostFreqTasks = n - (numberOfTasksWithMaxFreq - 1);
+        int emptySlots = partLengthExcludingMostFreqTasks * partCountbyMostFreq;
+        int availableTasks = tasks.length - maxFreq * numberOfTasksWithMaxFreq;
+        int numberOfIdles = Math.max(0, emptySlots - availableTasks);
+        return tasks.length + numberOfIdles;
     }
 }

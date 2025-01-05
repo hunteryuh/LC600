@@ -9,7 +9,7 @@ import java.util.TreeSet;
  * Created by HAU on 9/2/2017.
  */
 
-/*Given an unsorted array of integers, find the length of longest increasing
+/*Given an unsorted array of integers, find the length of longest  strictly increasing
         subsequence.
 
         For example,
@@ -25,7 +25,7 @@ public class Sol300_LongestIncreasingSubsequence {
         if (nums == null || nums.length == 0) return 0;
         int n = nums.length;
         int[] L = new int[n];
-        for (int i = 0; i < n ; i++){
+        for (int i = 0; i < n ; i++) {
             L[i] = 1;
             for (int j = 0 ; j < i; j++){
                 if (nums[j] < nums[i] && L[i] < 1 + L[j]){
@@ -55,7 +55,8 @@ public class Sol300_LongestIncreasingSubsequence {
 
     //Dynamic Programming
     /*
-    dp[i] represents the length of the longest increasing subsequence possible considering the array elements upto the i^{th}
+    dp[i] represents the length of the longest increasing subsequence possible
+    considering the array elements upto the i^{th}
     index only ,by necessarily including the ith element.
     dp[i]=max(dp[j])+1,∀0≤j<i, and num[i] > num[j]
 
@@ -156,7 +157,7 @@ public class Sol300_LongestIncreasingSubsequence {
         for (int num: nums) {
             //returns just the least higher value of the current number passed if present.
             //else returns null
-            Integer higher = set.ceiling(num);
+            Integer higher = set.ceiling(num);  // higher >> num
             if (higher == null) {
                 set.add(num);
             } else {
@@ -167,7 +168,7 @@ public class Sol300_LongestIncreasingSubsequence {
         return set.size();
     }
 
-    // binary search nlongn
+    // binary search nlogn
     public int lengthOfLIS_bs2(int[] nums) {
 
         List<Integer> list = new ArrayList<>();
@@ -176,7 +177,7 @@ public class Sol300_LongestIncreasingSubsequence {
 
             if (list.size() == 0 || list.get(list.size() - 1) < nums[i]) {
                 list.add(nums[i]);
-            } else{
+            } else {
                 int left = 0, right = list.size();
                 while (left < right) {
                     int mid = (left + right) / 2;
@@ -195,7 +196,7 @@ public class Sol300_LongestIncreasingSubsequence {
         return list.size();  // the element in the list may not be correct sequence but the size is correct size
     }
 
-    // one pass without binary search
+    // one pass without binary search , O(n^2)
     public int LengthOfLIS(int[] nums) {
         List<Integer> sub = new ArrayList<>();
         sub.add(nums[0]);
@@ -204,6 +205,7 @@ public class Sol300_LongestIncreasingSubsequence {
             if (num > sub.get(sub.size() - 1)) {
                 sub.add(num);
             } else {
+                // Find the first element in sub that is greater than or equal to num
                 int j = 0;
                 while (num > sub.get(j)) j++;
                 sub.set(j, num);

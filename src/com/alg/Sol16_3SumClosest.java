@@ -53,14 +53,14 @@ public class Sol16_3SumClosest {
 
             while ( j < k) {
                 int sum = nums[i] + nums[j] + nums[k];
-                if ( Math.abs(sum- target) < Math.abs(res - target) ){
+                if (Math.abs(sum- target) < Math.abs(res - target) ) {
                     res = sum;
                     if (res == target) return res;
                     }
 
-                if (sum < target){
+                if (sum < target) {
                     j++;
-                }else k--;
+                } else k--;
             }
 
         }

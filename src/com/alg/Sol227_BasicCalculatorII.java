@@ -45,12 +45,13 @@ public class Sol227_BasicCalculatorII {
         int n = s.length();
         if (n == 0) return 0;
         Stack<Integer> stack = new Stack<>();
+//        s.replaceAll(" ", "");
         int num = 0;
         char opr = '+';
         for (int i = 0; i < n; i++) {
             char c = s.charAt(i);
             if (Character.isDigit(c)) {
-                num = num * 10 + c - '0';
+                num = num * 10 + (c - '0'); // add () to avoid overflow for case like  Integer.MAX - 10
             }
 //            else if( !Character.isWhitespace(c) || i == n - 1) {
             if (!Character.isDigit(c) && !Character.isWhitespace(c) || i == n - 1) {
@@ -73,7 +74,9 @@ public class Sol227_BasicCalculatorII {
         while (!stack.isEmpty()) {
             res += stack.pop();
         }
+//        return stack.stream().mapToInt(Integer::intValue).sum();
         return res;
+
     }
 
     public static void main(String[] args) {
@@ -81,8 +84,8 @@ public class Sol227_BasicCalculatorII {
         String s = "3*4";
         Sol227_BasicCalculatorII ss = new Sol227_BasicCalculatorII();
         System.out.println(ss.calculate(s));
-        String t = "3+4*5";
-        System.out.println(ss.calculate(t));
+        String t = " 3+3/2 ";
+        System.out.println(ss.calculate0(t));
         // stack 3
     }
 
@@ -99,7 +102,7 @@ public class Sol227_BasicCalculatorII {
                 currentNumber = (currentNumber * 10) + (currentChar - '0');
             }
             if (!Character.isDigit(currentChar) && !Character.isWhitespace(currentChar) || i == len - 1) {
-                if (operation == '-') {
+                if (operation == '-') { // read the operation stored in previous step
                     stack.push(-currentNumber);
                 }
                 else if (operation == '+') {
@@ -111,7 +114,7 @@ public class Sol227_BasicCalculatorII {
                 else if (operation == '/') {
                     stack.push(stack.pop() / currentNumber);
                 }
-                operation = currentChar;
+                operation = currentChar;  // save the current char as the new op
                 currentNumber = 0;
             }
         }

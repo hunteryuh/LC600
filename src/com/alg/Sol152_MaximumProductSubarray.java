@@ -12,7 +12,7 @@ Find the contiguous subarray within an array (containing at least
 public class Sol152_MaximumProductSubarray {
     public static int maxProduct(int[] nums){
         int n = nums.length;
-        int[] maxp = new int[n];
+        int[] maxp = new int[n]; // the max cumulative up to current element starting from somewhere in the past
         int[] minp = new int[n];
         maxp[0] = minp[0] = nums[0];
         int res = nums[0];
@@ -54,9 +54,9 @@ public class Sol152_MaximumProductSubarray {
         int n = nums.length;
         int max = nums[0], min = nums[0];
         int res = nums[0];
-        for ( int i = 1; i < n; i++){
+        for (int i = 1; i < n; i++) {
             int temp = max;
-            max = Math.max(nums[i], Math.max(max * nums[i],min* nums[i])); // could be itself? ,like {0,2}
+            max = Math.max(nums[i], Math.max(max * nums[i], min* nums[i])); // could be itself? ,like {0,2}
             // wrong max =  Math.max(max * nums[i],min* nums[i]); // could be itself.
             min = Math.min(nums[i], Math.min(min * nums[i],temp* nums[i]));
             // wrong:min = Math.min(min * nums[i],temp* nums[i]);

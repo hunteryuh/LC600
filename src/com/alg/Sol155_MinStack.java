@@ -21,38 +21,64 @@ minStack.pop();
 minStack.top();      --> Returns 0.
 minStack.getMin();   --> Returns -2.*/
 public class Sol155_MinStack {
-    long min;
-    Stack<Long> stack;
-    public Sol155_MinStack(){
-        stack = new Stack<>();
+    class MinStack {
+
+        private Stack<int[]> stack = new Stack<>();
+
+        public MinStack() {
+        }
+
+        public void push(int x) {
+
+            /* If the stack is empty, then the min value
+             * must just be the first value we add. */
+            if (stack.isEmpty()) {
+                stack.push(new int[]{x, x});
+                return;
+            }
+
+            int currentMin = stack.peek()[1];
+            stack.push(new int[]{x, Math.min(x, currentMin)});
+        }
+
+        public void pop() {
+            stack.pop();
+        }
+
+        public int top() {
+            return stack.peek()[0];
+        }
+
+        public int getMin() {
+            return stack.peek()[1];
+        }
     }
-    public void push(int x){
-        if(stack.isEmpty()){
-            stack.push(0L);
-            min = x;
-        }else{
-            stack.push(x - min);//Could be negative if min value needs to change
-            if ( x < min){
-                min = x;
+
+    // two stack
+    class MinStack2 {
+        Stack<Integer> stack = new Stack<>();
+        Stack<Integer> minStack = new Stack<>();
+
+        public void push(int x) {
+            stack.push(x);
+            if (minStack.isEmpty() || x <= minStack.peek()) {
+                minStack.push(x);
             }
         }
-    }
-    public void pop(){
-        if(stack.isEmpty()) return;;
-        long pop = stack.pop();
-        if (pop < 0){
-            min = min - pop; //If negative, increase the min value
+
+        public void pop() {
+            int top = stack.pop();
+            if (top == minStack.peek()) {
+                minStack.pop();
+            }
         }
-    }
-    public int top(){
-        long top = stack.peek();
-        if (top > 0){
-            return (int) (top + min);
-        }else{
-            return (int) min;
+
+        public int top() {
+            return stack.peek();
         }
-    }
-    public int getMin(){
-        return (int)min;
+
+        public int getMin() {
+            return minStack.peek();
+        }
     }
 }

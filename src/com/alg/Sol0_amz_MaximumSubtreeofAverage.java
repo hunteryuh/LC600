@@ -51,8 +51,8 @@ public class Sol0_amz_MaximumSubtreeofAverage {
                 left.sum + right.sum + root.val,
                 left.size + right.size + 1
         );
-        if(subtreeRoot == null ||
-                subtreeRes.sum * result.size < subtreeRes.size * result.sum){
+        if (subtreeRoot == null ||
+                subtreeRes.sum * result.size < subtreeRes.size * result.sum) {
             subtreeRes = result;
             subtreeRoot = root;
         }

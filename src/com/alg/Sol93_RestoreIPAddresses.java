@@ -50,7 +50,7 @@ public class Sol93_RestoreIPAddresses {
             sb.deleteCharAt(sb.length() - 1);
             res.add(sb.toString());
         }
-        for (int i = start; i<s.length() && i < start + 3; i++) {
+        for (int i = start; i < s.length() && i < start + 3; i++) {
             String sec = s.substring(start, i + 1);
             if (isValid(sec)) {
                 sol.add(sec);

@@ -1,9 +1,6 @@
 package com.alg;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /*
 Given a string s that contains parentheses and letters, remove the minimum number of invalid parentheses to make the input string valid.
@@ -67,7 +64,7 @@ public class Sol301_RemoveInvalidParentheses {
         int len = sb.length();
         if (c == '(') {
             dfs(s, i + 1, set, sb, rmL - 1, rmR, open); // not use (
-            dfs(s, i +1, set, sb.append(c), rmL, rmR, open + 1);   // use (
+            dfs(s, i + 1, set, sb.append(c), rmL, rmR, open + 1);   // use (
         } else if ( c == ')') {
             dfs(s, i + 1, set, sb, rmL, rmR - 1, open); // not use )
             dfs(s ,i + 1, set, sb.append(c), rmL, rmR, open - 1); // use )
@@ -75,6 +72,54 @@ public class Sol301_RemoveInvalidParentheses {
             dfs(s, i + 1, set, sb.append(c), rmL, rmR, open);
         }
         sb.setLength(len);  // same as sb.deleteCharAt(sb.length() - 1);
+    }
+
+    // bfs
+    public List<String> removeInvalidParenthesis(String s) {
+        List<String> res = new ArrayList<>();
+        if (s == null) return res;
+        Set<String> visited = new HashSet<>();
+        Queue<String> queue = new LinkedList<>();
+        queue.offer(s);
+        visited.add(s);
+        boolean found = false;
+
+        while (!queue.isEmpty()) {
+            s = queue.poll();
+            if (isValid(s)) {
+                res.add(s);
+                found = true;
+            }
+            if (found) continue;
+            /*
+            the key point is the bool variable "found". Once a string is found to be valid in a level,
+            the variable "found" will be set to true. That means only other strings in the same level
+            will be checked and no shorter strings will be generated for the next level.
+             */
+            // generate all possible states
+            for (int i = 0; i < s.length(); i++) {
+                // we only try to remove left or right paren
+                if (s.charAt(i) != '(' && s.charAt(i) != ')') continue;
+                String t = s.substring(0, i) + s.substring(i + 1);
+                if (!visited.contains(t)) {
+                    // for each state, if not visited, add it to the queue
+                    queue.offer(t);
+                    visited.add(t);
+                }
+            }
+        }
+        return res;
+    }
+    // helper function checks if string s contains valid parentheses
+    boolean isValid(String s) {
+        int count = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '(') count++;
+            if (c == ')') count--;
+            if (count < 0) return false;
+        }
+        return count == 0;
     }
 
 

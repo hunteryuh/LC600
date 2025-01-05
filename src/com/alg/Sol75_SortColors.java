@@ -33,6 +33,23 @@ public class Sol75_SortColors {
         a[j] = temp;
     }
 
+    // counting sort, two pass
+    public void sortColors2(int[] nums) {
+        int c0 = 0;
+        int c1 = 0;
+        int c2 = 0;
+        for (int num: nums) {
+            if (num == 0) c0++;
+            if (num == 1) c1++;
+            if (num == 2) c2++;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (i < c0) nums[i] = 0;
+            else if (i < c0 + c1) nums[i] = 1;
+            else nums[i] = 2;
+        }
+    }
+
     public static void main(String[] args) {
         int[] colors = {1,2,1,0,1,0,2,0,2,0,1,0,2,0};
         sortColors(colors);

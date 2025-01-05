@@ -68,6 +68,16 @@ public class Sol490_TheMaze {
                 }
                 newx -= dir[0];
                 newy -= dir[1];
+                /* approach 2, put +dir[0] or +dir[1] in the while condition so that no need to minus it after the while loop */
+                /*
+                while (newx + dir[0] >= 0 && newy + dir[1] >= 0 && newx + dir[0] < m && newy + dir[1] < n
+                        && maze[newx + dir[0]][newy + dir[1]] == 0) {
+                    newx += dir[0];
+                    newy += dir[1];
+                }
+
+                */
+
                 if (!visited[newx][newy]) {
                     visited[newx][newy] = true;
                     queue.offer(new int[]{newx, newy});

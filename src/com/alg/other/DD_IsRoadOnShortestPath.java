@@ -14,7 +14,11 @@ import java.util.Set;
 /*
 This was the question asked:
 doordash
-A dasher sometimes travels between cities. To avoid delays, the dasher first checks for the shortest routes. Given a map of the cities and their bidirectional roads represented by a graph of nodes and edges, determine which given roads are along any shortest path. Return an array of strings, one for each road in order, where the value is YES if the road is along a shortest path or NO if it is not.The roads or edges are named using their 1-based index within the input arrays.
+A dasher sometimes travels between cities. To avoid delays, the dasher first checks for the shortest routes.
+Given a map of the cities and their bidirectional roads represented by a graph of nodes and edges,
+determine which given roads are along any shortest path. Return an array of strings, one for each road in order,
+where the value is YES if the road is along a shortest path or NO if it is not.
+The roads or edges are named using their 1-based index within the input arrays.
 
 Example
 given a map of g_nodes = 5 nodes, the starting nodes, ending nodes and road lengths are:
@@ -73,7 +77,7 @@ public class DD_IsRoadOnShortestPath {
         for (int i = 0; i < n; i++) {
             parents.add(new ArrayList<>());
         }
-        // sort by weight/ cost
+        // sort by weight/ cost, entry in the queue  int[]{source, cost}
         PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
 
         int[] distance = new int[n];
@@ -131,7 +135,7 @@ public class DD_IsRoadOnShortestPath {
             return;
         }
 
-        for(int parent : parents.get(curr)){
+        for (int parent : parents.get(curr)) {
             roads.add(parent + "-" + curr);
             roads.add(curr + "-" + parent);  // reverse direction of the above road
             backtrack(parents, parent, roads);
@@ -139,7 +143,8 @@ public class DD_IsRoadOnShortestPath {
     }
 
     public boolean[] getAllShortestPaths(int[][] routes, int start, int end, int n) {
-        // dijastra get all shortest in the map from start
+        // get all shortest paths
+        // Dijkstra get all shortest in the map from start
         // (src, [dst, cost])
         n = n+1;
         Map<Integer, List<int[]>> routeMap = new HashMap<>();

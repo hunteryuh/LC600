@@ -5,7 +5,8 @@ package com.alg;
  */
 /* Given a binary tree, find the length of the longest consecutive sequence path.
 
-The path refers to any sequence of nodes from some starting node to any node in the tree along the parent-child connections.
+The path refers to any sequence of nodes from some starting node to any node in the tree
+along the parent-child connections.
 The longest consecutive path need to be from parent to child (cannot be the reverse).
 
 For example,
@@ -42,7 +43,7 @@ public class Sol298_BinaryTreeLongestConsecutivesequence {
     }
     private static int maxLen = 0;
     public  static int longestConsecutive(TreeNode root) {
-        /*Time complexity : O(n)O(n)O(n). The time complexity is the same as an in-order
+        /*Time complexity : O(n). The time complexity is the same as an in-order
         traversal of a binary tree with nnn nodes.*/
         dfshelper(root,null,0);
         return maxLen;

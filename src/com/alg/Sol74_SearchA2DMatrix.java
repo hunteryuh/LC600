@@ -7,6 +7,8 @@ package com.alg;
 
 Integers in each row are sorted from left to right.
 The first integer of each row is greater than the last integer of the previous row.
+
+You must write a solution in O(log(m * n)) time complexity.
 For example,
 
 Consider the following matrix:
@@ -45,6 +47,7 @@ public class Sol74_SearchA2DMatrix {
         System.out.println(searchMatrix(matrix,3));
         System.out.println(searchMatrix2(matrix,3));
     }
+    // Time complexity: O(log(n∗m))
     public static boolean searchMatrix2(int[][] matrix, int target) {
         if( matrix == null || matrix.length ==0 )
             return false;

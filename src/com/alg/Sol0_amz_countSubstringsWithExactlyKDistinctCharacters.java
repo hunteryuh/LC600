@@ -171,13 +171,14 @@ public class Sol0_amz_countSubstringsWithExactlyKDistinctCharacters {
                 left++;
             }
 
-            // window valid
+            // window valid, the window length at the right point, is equal to the number of windows ending here
             count += right - left + 1; // this is a valid window [left, right] with at most K distinct elements
             right++;
         }
         return count;
     }
-    // put in one loop: https://leetcode.com/problems/subarrays-with-k-different-integers/discuss/235417/Sliding-Window-Logical-Thinking
+    // put in one loop:
+    // https://leetcode.com/problems/subarrays-with-k-different-integers/discuss/235417/Sliding-Window-Logical-Thinking
     public int subarraysWithKDistinct(int[] A, int K) {
         Map<Integer, Integer> window1 = new HashMap<>(), window2 = new HashMap<>();
         int l1 = 0, l2 = 0, result = 0;

@@ -91,7 +91,6 @@ public class Sol1428_LeftmostColumnWithAtLeastAOne {
         return res;
     }
     private int binarySearch(BinaryMatrix bm, int row, int lo, int hi) {
-
         while (lo + 1 < hi) {
             int mid = lo + (hi - lo)/ 2;
             if (bm.get(row, mid) == 0) {
@@ -122,6 +121,4 @@ public class Sol1428_LeftmostColumnWithAtLeastAOne {
         }
         return ans;
     }
-
-
 }

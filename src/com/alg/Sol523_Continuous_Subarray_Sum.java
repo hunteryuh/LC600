@@ -35,16 +35,25 @@ public class Sol523_Continuous_Subarray_Sum {
     }
 
     public static boolean checkSubarray(int[] nums, int k){
-        if (nums.length <=1) return false;
+        if (nums.length <= 1) return false;
         int n = nums.length;
         int sum = 0;
         HashMap<Integer,Integer> map = new HashMap<>();
-        map.put(0,-1);
+        map.put(0, -1);
         for(int i=0;i<n;i++){
             sum += nums[i];
-            if(k!=0) sum %= k;
-            if(map.containsKey(sum) && i-map.get(sum)>1) return true;
-            if(!map.containsKey(sum)) map.put(sum,i);
+            if (k!=0) {
+                sum %= k;
+            }
+            // (a+(n*x))%x is same as (a%x)
+            if (map.containsKey(sum) && i - map.get(sum) > 1) {
+                // ensures that the size of subarray is at least 2
+                return true;
+            }
+            if (!map.containsKey(sum)) {
+                // mark the value of prefixMod with the current index.
+                map.put(sum,i);
+            }
         }
         return false;
     }

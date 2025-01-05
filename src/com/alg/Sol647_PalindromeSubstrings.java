@@ -3,7 +3,8 @@ package com.alg;
 /**
  * Created by HAU on 11/30/2017.
  */
-/*Given a string, your task is to count how many palindromic substrings in this string.
+/*Given a string, your task is to count how many palindromic substrings
+in this string.
 
 The substrings with different start indexes or end indexes
 are counted as different substrings even they consist of same characters.
@@ -20,9 +21,9 @@ public class Sol647_PalindromeSubstrings {
     public  static int countSubstrings(String s) {
 
         if (s == null || s.length() == 0) return 0;
-        for (int i = 0; i<s.length();i++){
-            helper(s,i,i);
-            helper(s,i,i+1);
+        for (int i = 0; i < s.length();i++){
+            helper(s, i, i);
+            helper(s, i,i+1);
         }
         return res;
     }
@@ -41,7 +42,7 @@ public class Sol647_PalindromeSubstrings {
     }
     // version 2  time O(n^2)
     public static int countSubPalin(String s){
-        if ( s == null || s.length() == 0){
+        if (s == null || s.length() == 0){
             return 0;
         }
         int count = 0;
@@ -54,8 +55,7 @@ public class Sol647_PalindromeSubstrings {
 
     private static int counthelper(String s, int start, int end) {
         int c = 0;
-        while(start >=0 && end < s.length()
-                && s.charAt(start) == s.charAt(end)){
+        while (start >=0 && end < s.length() && s.charAt(start) == s.charAt(end)){
             c++;
             start--;
             end++;
@@ -85,7 +85,7 @@ public class Sol647_PalindromeSubstrings {
 
             }
         }
-        // for loop can be simplied as below
+        // for loop can be simplified as below
 //        for (int i = n - 1; i>=0; i--) {
 //            for (int j = i; j < n; j++) {
 //                dp[i][j] = s.charAt(i) == s.charAt(j) && (j-i <= 2 || dp[i+1][j-1]);

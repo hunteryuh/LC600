@@ -1,6 +1,6 @@
 package com.alg;
 
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Created by HAU on 6/10/2017.
@@ -73,5 +73,56 @@ public class Sol387_FirstUniqueCharacter_inAString {
         String a = "ccdcde";
         System.out.println(firstUniqChar(a));
         System.out.println(firstUniqChar2(a));
+    }
+
+    // https://leetcode.com/problems/first-unique-character-in-a-string/solutions/917857/java-one-pass-solution/
+    // one pass solution using linkedHashMap
+    // LinkedHashMap preserves insert order (like a linked list)
+    // but also allows for O(1) put, remove, contains operations like a Map.
+    // Therefore the following works as a one pass solution:
+
+    public int firstUniqChar3(String s) {
+        LinkedHashMap<Character, Integer> lhs = new LinkedHashMap<>();
+        Set<Character> knownDups = new HashSet<>();
+        for (int i = 0; i < s.length(); ++i) {
+            Character c = s.charAt(i);
+
+            if (knownDups.contains(c))
+                continue;
+
+            if  (lhs.containsKey(c)) {
+                lhs.remove(c);
+                knownDups.add(c);
+            }
+            else {
+                lhs.put(c, i);
+            }
+        }
+
+        if (lhs.isEmpty())
+            return -1;
+
+        return lhs.entrySet().iterator().next().getValue();
+    }
+
+    // https://leetcode.com/problems/first-unique-character-in-a-string/solutions/2436396/java-one-pass-two-pass-solutions/
+    // one pass method 2
+    public int firstUniqChar4(String s) {
+        Map<Character, Integer> map = new LinkedHashMap<>();
+        int[] freq = new int[26];
+
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            // Repeated character
+            if(freq[c - 'a'] > 0) {
+                map.remove(c);
+            } else {
+                map.put(c, i);
+            }
+
+            freq[c - 'a']++;
+        }
+
+        return map.size() == 0 ? -1 : map.entrySet().iterator().next().getValue();
     }
 }

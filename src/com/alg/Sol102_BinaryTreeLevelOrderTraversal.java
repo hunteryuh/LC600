@@ -95,17 +95,17 @@ public class Sol102_BinaryTreeLevelOrderTraversal {
         Queue<TreeNode> q = new LinkedList<>();
         q.offer(root);
 
-        while (!q.isEmpty()){
+        while (!q.isEmpty()) {
             int size = q.size(); // store the size of the current level
             List<Integer> tmp = new ArrayList<>();
             for (int i = 0; i < size; i++) {
                 // cannot use i < queue.size() as the size changes in the loop, so need to cache the size beforehand
                 TreeNode node = q.poll();  // get the head node of the queue
                 tmp.add(node.val);
-                if (node.left != null){
+                if (node.left != null) {
                     q.offer(node.left);
                 }
-                if (node.right!= null){
+                if (node.right!= null) {
                     q.offer(node.right);
                 }
             }

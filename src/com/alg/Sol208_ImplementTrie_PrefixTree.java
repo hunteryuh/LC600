@@ -12,7 +12,7 @@ public class Sol208_ImplementTrie_PrefixTree {
         public boolean isWord;
         public TrieNode[] children = new TrieNode[26];
         public TrieNode(){}
-        TrieNode(char c){
+        TrieNode(char c) {
             TrieNode node = new TrieNode(c);
             node.val = c;
         }
@@ -50,13 +50,14 @@ public class Sol208_ImplementTrie_PrefixTree {
             TrieNode ws = root;
             for (int i = 0; i < word.length(); i++){
                 char c = word.charAt(i);
-                if ( ws.children[c - 'a'] == null) return false;
+                if (ws.children[c - 'a'] == null) return false;
                 ws = ws.children[c - 'a'];
             }
             return ws.isWord;
         }
 
-        /** Returns if there is any word in the trie that starts with the given prefix. */
+        /** Returns if there is any word in the trie that
+         * starts with the given prefix. */
         public boolean startsWith(String prefix) {
             TrieNode ws = root;
             for(int i = 0; i < prefix.length(); i++){

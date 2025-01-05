@@ -53,6 +53,7 @@ public class Sol1347_MinimumNumberOfStepsToMakeTwoStringAnagram {
         return res;
     }
 
+    // https://leetcode.com/problems/minimum-number-of-steps-to-make-two-strings-anagram/solutions/503450/java-python-3-count-occurrences-and-sum-the-difference-w-analysis/
     public int minSteps2(String s, String t) {
         int[] count = new int[26];
         for (int i = 0; i < s.length(); ++i) {

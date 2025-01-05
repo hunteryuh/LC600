@@ -1,5 +1,6 @@
 package com.alg;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -68,10 +69,64 @@ public class Sol695_MaxAreaOfIsland {
         int[][] grid = new int[][]{{1}};
         int m = grid.length;
         int n = grid[0].length;
-        System.out.println(m);
-        System.out.println(n);
+//        System.out.println(m);
+//        System.out.println(n);
         Sol695_MaxAreaOfIsland ss = new Sol695_MaxAreaOfIsland();
-        System.out.println(ss.maxAreaOfIsland(grid));
+//        System.out.println(ss.maxAreaOfIsland(grid));
+
+        int[][] grid2 = {
+                {1, 3, 5, 5, 5},
+                {1, 5, 5, 1, 5},
+                {1, 1, 5, 5, 5}
+        };
+        int[][] grid3 = {
+                {0, 3, 1, 1, 1},
+                {0, 1, 1, 1, 1},
+                {0, 0, 1, 1, 1}
+        };
+
+//        System.out.println(ss.maxAreaOfIsland_dfs2(grid3));
+//        System.out.println(ss.maxAreaOfIsland2(grid2));
+//        System.out.println(ss.maxAreaWithSameNumber(grid3));
+        System.out.println(ss.longestPath(grid3));
+    }
+
+    public int maxAreaWithSameNumber(int[][] arr) {
+        int maxArea = 1;
+        int n = arr.length, m = arr[0].length;
+        boolean[][] visited = new boolean[arr.length][arr[0].length];
+        for (int row = 0; row < n; row++) {
+            for (int col = 0; col < m; col++) {
+                if (!visited[row][col]) {
+//                    System.out.println("time ");
+                    int x = dfs_samenumber(arr, visited, row, col, arr[row][col]);
+//                    System.out.println(x);
+                    maxArea = Math.max(maxArea, x);
+                }
+            }
+        }
+        System.out.println(Arrays.deepToString(visited));
+
+        return maxArea;
+    }
+
+    public int dfs_samenumber(int[][] arr, boolean[][] visited, int row, int col, int target) {
+
+        int area = 1;
+
+        visited[row][col] = true;
+
+        for(int[] d : dirs) {
+            int newX = row + d[0];
+            int newY = col + d[1];
+
+            if (newX < 0 || newY < 0 || newX >= arr.length || newY >= arr[0].length ||
+                      /*wrong visited[newX][newY]  ||*/
+                arr[newX][newY] != target) continue;  // only skip the non-target one (not the non-visited)
+            area += dfs(arr, visited, newX, newY, target);
+        }
+
+        return area;
     }
 
     // dfs 2
@@ -110,26 +165,81 @@ public class Sol695_MaxAreaOfIsland {
         return area;
     }
 
-    private int bfs(int[][] grid, int i, int j){
-        int m=grid.length,n=grid[0].length;
-        if(grid[i][j]==0) return 0;
-        grid[i][j]=0;
-        Queue<int[]> q=new LinkedList<>();
-        q.offer(new int[]{i,j});
-        int res=1;
-        while(!q.isEmpty()){
-            int[] pos=q.poll();
-            for (int[] dir: dirs){
-                int x=dir[0]+pos[0];
-                int y=dir[1]+pos[1];
-                if(x<0||x>=m||y<0||y>=n||grid[x][y]==0){
+    public int maxAreaOfIsland_dfs2(int[][] grid) {
+        int max_area = 0;
+        for(int i = 0; i < grid.length; i++)
+            for(int j = 0; j < grid[0].length; j++)
+                if(grid[i][j] == 1) max_area = Math.max(max_area, AreaOfIsland(grid, i, j));
+        return max_area;
+    }
+
+    public int AreaOfIsland(int[][] grid, int i, int j){
+        if( i >= 0 && i < grid.length && j >= 0 && j < grid[0].length && grid[i][j] == 1){
+            grid[i][j] = 0;
+            return 1 + AreaOfIsland(grid, i+1, j) + AreaOfIsland(grid, i-1, j) + AreaOfIsland(grid, i, j-1) + AreaOfIsland(grid, i, j+1);
+        }
+        return 0;
+    }
+
+    // bfs
+    // Do with BFS which does not have stack overflow issue for infinite size.
+    // I did with DFS and called for second screen as I explained the limitation with DFS.
+    private int bfs(int[][] grid, int i, int j) {
+        int m = grid.length, n = grid[0].length;
+        if (grid[i][j] == 0) return 0;
+        grid[i][j] = 0; // need to update to 0 as visited
+
+        Queue<int[]> q = new LinkedList<>();
+        q.offer(new int[]{i, j});
+        int res = 1;
+        while (!q.isEmpty()) {
+            int[] pos = q.poll();
+            for (int[] dir : dirs) {
+                int x = dir[0] + pos[0];
+                int y = dir[1] + pos[1];
+                if (x < 0 || x >= m || y < 0 || y >= n || grid[x][y] == 0) {
                     continue;
                 }
-                grid[x][y]=0;
+                grid[x][y] = 0;
                 res++;
-                q.offer(new int[]{x,y});
+                q.offer(new int[]{x, y});
             }
         }
         return res;
+    }
+
+    // longest path dfs
+    public int longestPath(int[][] arr) {
+        int longestPath = 1;
+        int n = arr.length, m = arr[0].length;
+
+        for (int row = 0; row < n; row++) {
+            for (int col = 0; col < m; col++) {
+                boolean[][] visited = new boolean[arr.length][arr[0].length];
+                longestPath = Math.max(longestPath, dfs(arr, visited, row, col, arr[row][col]));
+            }
+        }
+        return longestPath;
+    }
+
+    public int dfs(int[][] arr, boolean[][] visited, int row, int col, int target) {
+        int longestPath = 1;
+
+        visited[row][col] = true;
+
+        for(int[] d : dirs) {
+            int newX = row + d[0];
+            int newY = col + d[1];
+
+            if (newX < 0 || newY < 0 || newX >= arr.length || newY >= arr[0].length ||
+                    visited[newX][newY] || arr[newX][newY] != target ) continue;
+
+            // need to calculate the length at each direction, so inside the for loop
+            int path = 1 + dfs(arr, visited, newX, newY, target);
+            longestPath = Math.max(longestPath, path);
+        }
+
+        return longestPath;
+
     }
 }

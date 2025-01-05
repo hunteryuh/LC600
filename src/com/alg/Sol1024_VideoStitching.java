@@ -48,9 +48,12 @@ Constraints:
 
  */
 public class Sol1024_VideoStitching {
+    // https://leetcode.com/problems/video-stitching/solutions/269988/c-java-6-lines-o-n-log-n/
+    // time: O(NlogN)
     public int videoStitching(int[][] clips, int time) {
         int res = 0;
         Arrays.sort(clips, (a, b) -> a[0] - b[0]); // sort by start
+        // processing each clip only once.
         for (int i = 0, start = 0, end = 0; start < time; start = end, res++) {
             for (; i < clips.length && clips[i][0] <= start; i++) {
                 end = Math.max(end, clips[i][1]);

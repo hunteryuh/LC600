@@ -18,8 +18,8 @@ package com.alg;
 public class Sol7_ReverseInteger {
     public static int reverse(int x) {
         int sign = 1;
-        if (x < 0){
-            if ( x < - 2147483647) return 0;
+        if (x < 0) {
+            if (x < - 2147483647) return 0;
             //Integer.MAX_VALUE
             x = - x;
             sign = -1;
@@ -27,9 +27,7 @@ public class Sol7_ReverseInteger {
         int res = 0;
         int count = 0;
         int digit = x % 10 ;
-        while ( x != 0){
-
-
+        while (x != 0) {
             if ( ++count == 10 && digit > 2){
                 return 0;
             }
@@ -40,7 +38,6 @@ public class Sol7_ReverseInteger {
 
         }
         return res*sign;
-
     }
 
     public static void main(String[] args) {
@@ -60,10 +57,10 @@ public class Sol7_ReverseInteger {
     // better solution: short and elegant
     public static int reverseInt(int x){
         long rev = 0;
-        while (x!= 0) {
-            rev = rev * 10 + x%10;
+        while (x != 0) {
+            rev = rev * 10 + x % 10;
             x /=10;
-            if (rev > Integer.MAX_VALUE || rev < Integer.MIN_VALUE){ // out of range
+            if (rev > Integer.MAX_VALUE || rev < Integer.MIN_VALUE) { // out of range
                 return 0;
             }
         }

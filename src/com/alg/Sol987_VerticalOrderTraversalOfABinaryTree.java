@@ -1,11 +1,6 @@
 package com.alg;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.TreeMap;
+import java.util.*;
 
 /*
 Given the root of a binary tree, calculate the vertical order traversal of the binary tree.
@@ -107,6 +102,92 @@ public class Sol987_VerticalOrderTraversalOfABinaryTree {
         }
         return res;
 
+    }
+    // rewrite 11/16/2024
+    public List<List<Integer>> verticalTraversal2(TreeNode root) {
+        Map<Integer, TreeMap<Integer, PriorityQueue<Integer>>> map = new TreeMap<>();
+        Queue<NodeItem> queue = new LinkedList<>();
+        queue.offer(new NodeItem(root, 0, 0));
+        while (!queue.isEmpty()) {
+            NodeItem cur = queue.poll();
+            if (!map.containsKey(cur.col)) {
+                map.put(cur.col, new TreeMap<>());
+            }
+            // only sort when at both the same row and the same column
+            if (!map.get(cur.col).containsKey(cur.row)) {
+                map.get(cur.col).put(cur.row, new PriorityQueue<>());
+            }
+            map.get(cur.col).get(cur.row).offer(cur.node.val);
+            if (cur.node.left != null) {
+                queue.offer(new NodeItem(cur.node.left, cur.col - 1, cur.row + 1));
+            }
+            if (cur.node.right != null) {
+                queue.offer(new NodeItem(cur.node.right, cur.col + 1, cur.row + 1));
+            }
+        }
+        // build the result with the map
+        List<List<Integer>> res = new ArrayList<>();
+        for (Integer key: map.keySet()) {
+            res.add(new ArrayList<>());
+            int pos = res.size() - 1;
+            for (PriorityQueue<Integer> pq: map.get(key).values()) {
+                while (!pq.isEmpty()) {
+                    res.get(pos).add(pq.poll());
+                }
+
+            }
+        }
+        return res;
+    }
+
+    // this will sort nodes at the same column even for different rows
+    public List<List<Integer>> verticalTraversal3(TreeNode root) {
+        Map<Integer, PriorityQueue<Integer>> map = new TreeMap<>();
+        Queue<NodeWithColumn> queue = new LinkedList<>();
+        queue.offer(new NodeWithColumn(root, 0));
+        while (!queue.isEmpty()) {
+            NodeWithColumn cur = queue.poll();
+            if (!map.containsKey(cur.col)) {
+                map.put(cur.col, new PriorityQueue<>());
+            }
+
+            map.get(cur.col).add(cur.node.val);
+            if (cur.node.left != null) {
+                queue.offer(new NodeWithColumn(cur.node.left, cur.col - 1));
+            }
+            if (cur.node.right != null) {
+                queue.offer(new NodeWithColumn(cur.node.right, cur.col + 1));
+            }
+        }
+        // build the result with the map
+        List<List<Integer>> res = new ArrayList<>();
+        for (Integer key: map.keySet()) {
+            res.add(new ArrayList<>());
+            int pos = res.size() - 1;
+            res.get(pos).addAll(new ArrayList<>(map.get(key)));
+        }
+        return res;
+    }
+
+    class NodeWithColumn{
+        TreeNode node;
+        int col;
+        NodeWithColumn(TreeNode node, int col) {
+            this.node = node;
+            this.col = col;
+        }
+    }
+
+
+    class NodeItem{
+        TreeNode node;
+        int col;
+        int row;
+        NodeItem(TreeNode node, int col, int row) {
+            this.node = node;
+            this.col = col;
+            this.row = row;
+        }
     }
 
     // official https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/solutions/627153/vertical-order-traversal-of-a-binary-tree/

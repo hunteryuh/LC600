@@ -128,4 +128,30 @@ public class Sol416_PartitionEqualSubsetSum {
         }
         return dp[target];
     }
+
+    // TLE, with memoization
+    Boolean[][] memo;
+    public boolean canPartition5(int[] nums) {
+        int target = 0;
+        for (int num: nums) {
+            target += num;
+        }
+        if (target % 2 != 0) return false;
+        target = target /2;
+        int n = nums.length;
+        memo = new Boolean[n + 1][target + 1]; // first n items to reach sum of target
+        return isTargetSubSetSum(nums, target, n);
+    }
+    private boolean isTargetSubSetSum(int[] nums, int target, int n) {
+        if (target == 0) {
+            return true;
+        }
+        if (n <= 0 || target < 0) return false; // all items are positive
+        if (memo[n][target] != null) {
+            return memo[n][target];
+        }
+        memo[n][target] =  isTargetSubSetSum(nums, target - nums[n - 1], n - 1)
+                || isTargetSubSetSum(nums, target, n - 1);
+        return memo[n][target];
+    }
 }

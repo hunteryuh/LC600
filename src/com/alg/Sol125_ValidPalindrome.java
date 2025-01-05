@@ -19,7 +19,7 @@ only alphanumeric characters and ignoring cases.
         https://leetcode.com/problems/valid-palindrome/
 
  */
-public class Sol125ValidPalindrome {
+public class Sol125_ValidPalindrome {
     public static boolean isPalindrome(String s) {
         //boolean res = false;
         if (s.isEmpty()) return true;
@@ -45,10 +45,49 @@ public class Sol125ValidPalindrome {
         int i = 0;
         int j = s.length() - 1;
         while (i < j) {
+            // here the next i < j makes sure i is not out of bound
+            // such as ***___
             while (i < j && !Character.isLetterOrDigit(s.charAt(i))) i++;
             while (i < j && !Character.isLetterOrDigit(s.charAt(j))) j--;
             if (Character.toLowerCase(s.charAt(i)) != Character.toLowerCase(s.charAt(j))) return false;
             i++; j--;
+        }
+        return true;
+    }
+    public boolean isPalindrome2(String s) {
+        int left = 0;
+        int right = s.length() - 1;
+        s = s.toLowerCase();
+        while (left < right) {
+            char cleft = s.charAt(left);
+            char cright = s.charAt(right);
+            if (!Character.isLetterOrDigit(cleft)) {
+                left++;
+                continue;
+            } else if (!Character.isLetterOrDigit(cright)) {
+                right--;
+                continue;
+            } else if (cleft != cright) {
+                return false;
+            }
+            left++;
+            right--;
+
+        }
+        return true;
+    }
+
+    // regular expr
+    public boolean isPanlin(String s) {
+        s = s.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        int i = 0;
+        int j = s.length() - 1;
+        while (i < j) {
+            if (s.charAt(i) != s.charAt(j)) {
+                return false;
+            }
+            i++;
+            j--;
         }
         return true;
     }

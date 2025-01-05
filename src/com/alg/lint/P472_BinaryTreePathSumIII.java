@@ -36,7 +36,7 @@ import java.util.List;
  * }
  */
 public class P472_BinaryTreePathSumIII {
-
+    // https://mrleonhuang.gitbooks.io/lintcode/content/binary-tree-and-divide-conquer/binary-tree-path-sum-iii.html
     class ParentTreeNode {
        public int val;
        public ParentTreeNode parent, left, right;
@@ -80,6 +80,7 @@ public class P472_BinaryTreePathSumIII {
         }
 
         // father indicates a visited node in the graph
+        // 在每一点我们可以有三个方向: 左边, 右边, 和上面. 但是我们需要避免回头, 所以需要一个 father 节点的参数.
         if (root.parent != null && root.parent != father)
             findSum(root.parent, root, target, path, results);
 

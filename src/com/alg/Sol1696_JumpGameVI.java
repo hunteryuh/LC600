@@ -33,6 +33,7 @@ Output: 0
  */
 public class Sol1696_JumpGameVI {
     // pq + sliding window
+    // time: O(nlogn)
     public int maxResult(int[] nums, int k) {
         int n = nums.length;
         int[] score = new int[n];
@@ -47,6 +48,7 @@ public class Sol1696_JumpGameVI {
         return score[n-1];
     }
 
+    // O(n)
     // monotonic decreasing queue
     public int maxResult2(int[] nums, int k) {
         int n = nums.length;

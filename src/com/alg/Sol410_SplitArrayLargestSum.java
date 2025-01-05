@@ -61,7 +61,7 @@ public class Sol410_SplitArrayLargestSum {
         int splits = 1;
         for (int i = 0; i < nums.length; i++) {
             curSum += nums[i];
-            if (curSum > mid) {
+            if (curSum > mid) { // max is "mid", else the current num should be in a new chunk
                 curSum = nums[i];
                 splits++;
                 if (splits > m) return false;

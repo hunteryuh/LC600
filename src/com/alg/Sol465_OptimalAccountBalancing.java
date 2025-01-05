@@ -1,4 +1,10 @@
 package com.alg;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /*
 You are given an array of transactions transactions where transactions[i] = [fromi, toi, amounti] indicates that the person with ID = fromi gave amounti $ to the person with ID = toi.
 
@@ -40,7 +46,33 @@ Constraints:
  */
 public class Sol465_OptimalAccountBalancing {
     // https://leetcode.com/problems/optimal-account-balancing/solutions/95355/concise-9ms-dfs-solution-detailed-explanation/
+    // time: O ((n-1)!)
     public int minTransfers(int[][] transactions) {
-        return 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        // map of each person to its balance after all transactions
+        for (int[] t: transactions) {
+            map.put(t[0], map.getOrDefault(t[0], 0) - t[2]);
+            map.put(t[1], map.getOrDefault(t[1], 0) + t[2]);
+        }
+        return dfssettle(0, new ArrayList<>(map.values()));
+    }
+    private int dfssettle(int cur, List<Integer> debt) {
+        while (cur < debt.size() && debt.get(cur) == 0) {
+            cur++;
+        }
+        if (cur == debt.size()) return 0;
+        int r = Integer.MAX_VALUE;
+        for (int i = cur + 1; i < debt.size(); i++) {
+            // if i (next) is a valid recipient, do the following
+            // 1. add cur's value to next
+            // 2. recursively call dfs(cur + 1)
+            // 3. remove cur's balance from next
+            if (debt.get(i) * debt.get(cur) < 0) {
+                debt.set(i, debt.get(i) + debt.get(cur));
+                r = Math.min(r, 1 + dfssettle( cur + 1, debt));
+                debt.set(i, debt.get(i) - debt.get(cur)); // backtrack
+            }
+        }
+        return r;
     }
 }

@@ -1,12 +1,10 @@
 package com.alg;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
+import java.util.*;
 
 /*
-Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
+Given an integer array nums and an integer k, return the k most frequent elements.
+You may return the answer in any order.
 
 
 
@@ -20,6 +18,7 @@ Input: nums = [1], k = 1
 Output: [1]
  */
 public class Sol347_TopKFrequentElements {
+    // time O(Nlogk)
     public int[] topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> freq = new HashMap<>();
         for (int i : nums) {
@@ -38,6 +37,7 @@ public class Sol347_TopKFrequentElements {
         }
 //        int[] res = new int[k];
 //        int index = 0;
+////         klogk
 //        while (!pq.isEmpty()) {
 //            res[index++] = pq.poll();
 //        }
@@ -51,7 +51,7 @@ public class Sol347_TopKFrequentElements {
         int k = 2;
         Sol347_TopKFrequentElements ss = new Sol347_TopKFrequentElements();
         int[] f = ss.topKFrequent(nums, k);
-        System.out.println(Arrays.toString(f));
+        System.out.println(Arrays.toString(f)); //[ 2, 1]
     }
 
     // max Heap  最简单也是最直观毫无优化的解法，直接用maxHeap放入所有数字，拿出heap头部最大的k个数字  n Log n
@@ -67,5 +67,31 @@ public class Sol347_TopKFrequentElements {
             res[i] = pq.poll();
         }
         return res;
+    }
+
+    // java O(n) bucket sort
+    public int[] topKFreq(int[] nums, int k) {
+        Map<Integer, Integer> freqMap = new HashMap<>();
+        for (int n : nums) {
+            freqMap.put(n, freqMap.getOrDefault(n, 0) + 1);
+        }
+        // bucket sort on freq
+        List<Integer>[] bucket = new List[nums.length + 1];
+        for (int i = 0; i < bucket.length; i++) {
+            bucket[i] = new ArrayList<>();
+        }
+        for (int num: freqMap.keySet()) {
+            bucket[freqMap.get(num)].add(num);
+        }
+        // gather result
+        List<Integer> res = new ArrayList<>();
+        for (int i = bucket.length - 1; i >= 0; i--) {
+            res.addAll(bucket[i]);
+            if (res.size() >= k) {
+                break;
+            }
+        }
+        return res.stream().mapToInt(x -> x).toArray();
+
     }
 }

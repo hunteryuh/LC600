@@ -10,9 +10,11 @@ import java.util.Queue;
 import java.util.TreeMap;
 
 /*
-Given the root of a binary tree, return the vertical order traversal of its nodes' values. (i.e., from top to bottom, column by column).
+Given the root of a binary tree, return the vertical order traversal of its nodes' values.
+(i.e., from top to bottom, column by column).
 
-If two nodes are in the same row and column, the order should be from left to right.
+If two nodes are in the same row and column,
+the order should be from left to right.
 
 
 
@@ -41,7 +43,7 @@ Constraints:
 
  */
 public class Sol314_BinaryTreeVerticalOrderTraversal {
-    // bfs
+    // bfs without sorting: time: O(n) n: the number of nodes in the tree
     public List<List<Integer>> verticalOrder(TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
         if (root == null) return res;
@@ -64,7 +66,7 @@ public class Sol314_BinaryTreeVerticalOrderTraversal {
                 q.offer(cur.right);
                 map.put(cur.right, col + 1);
             }
-            minCol = Math.min(minCol, col);
+            minCol = Math.min(minCol, col); // the current column, for node "cur"
         }
         // trick: this avoids a sort
         while (columnNodes.containsKey(minCol)) {

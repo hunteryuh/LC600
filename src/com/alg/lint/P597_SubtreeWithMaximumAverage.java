@@ -38,6 +38,7 @@ public class P597_SubtreeWithMaximumAverage {
     }
 
 
+    // traverse + divide conquer
     private TreeNode subTree;
     private ResultType subTreeResult;
     // with a custom class as return type to hold multiple values

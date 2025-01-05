@@ -26,10 +26,10 @@ public class Sol142_LinkedListCycleII {
         // two pointer
         if (head == null || head.next == null) return null;
         ListNode fast = head, slow = head;
-        while(fast!= null && fast.next!= null){
+        while (fast!= null && fast.next!= null){
             fast = fast.next.next;
             slow = slow.next;
-            if ( slow == fast){
+            if (slow == fast) {
                 slow = head;  // move the slow pointer to the beginning of the list
                 // now it takes same distance from the fast pointer and the head to the start of the cycle
                 while (slow!= fast){  //  a+ b +c +b = 2(a+b)-->a = c
@@ -46,7 +46,7 @@ public class Sol142_LinkedListCycleII {
     public ListNode getCycleEntrance(ListNode head) {
         Set<ListNode> set = new HashSet<>();
         while (head != null) {
-            if(!set.add(head)) {
+            if (!set.add(head)) {
                 return head;
             }
             head = head.next;

@@ -14,6 +14,7 @@ Notice that you can not jump outside of the array at any time.
  */
 public class Sol1340_JumpGameV {
     // dfs + memo
+    // time O(n^2)
     Integer[] memo;
     int[] arr;
     int n;

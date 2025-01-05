@@ -139,12 +139,11 @@ Explanation: Intervals [1,4] and [4,5] are considered overlapping.
             System.out.println(Arrays.toString(avail));
         }
 //        int[][] res = new int[list.size()][2];
-//        for (int i =0; i < list.size(); i++) {
+//        for (int i = 0; i < list.size(); i++) {
 //            res[i] = list.get(i);
 //        }
 //        return res;
-        return result.toArray(new int[result.size()][]);
-
+        return result.toArray(new int[0][]);
     }
 
     // user List instead of LinkedList variable  (no getLast method, so use .get(xx.size()-1) instead)
@@ -167,7 +166,8 @@ Explanation: Intervals [1,4] and [4,5] are considered overlapping.
     // https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0056.%E5%90%88%E5%B9%B6%E5%8C%BA%E9%97%B4.md
     public int[][] merge0(int[][] intervals) {
         List<int[]> res = new LinkedList<>();
-        Arrays.sort(intervals, (o1, o2) -> Integer.compare(o1[0], o2[0]));
+        Arrays.sort(intervals, Comparator.comparingInt(o -> o[0]));
+//        Arrays.sort(intervals, (o1, o2) -> Integer.compare(o1[0], o2[0]));
 
         int start = intervals[0][0];
         for (int i = 1; i < intervals.length; i++) {

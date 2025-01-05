@@ -27,7 +27,7 @@ public class Sol0_amz_ShortestJobFirst {
         }
     }
     public static float ShortestJobFirst(int[] req, int[] dur){
-        if ( req == null || dur == null || dur.length != req.length) return 0;
+        if (req == null || dur == null || dur.length != req.length) return 0;
         int len = req.length;
         int index = 0;
         int waitTime = 0;
@@ -39,16 +39,16 @@ public class Sol0_amz_ShortestJobFirst {
             }
         });
 
-        while(!pq.isEmpty() || index < len){
-            if(!pq.isEmpty()){
+        while (!pq.isEmpty() || index < len) {
+            if (!pq.isEmpty()) {
                 MyProcess cur = pq.poll();
                 waitTime += curTime - cur.arrTime;
                 curTime += cur.exeTime;
-                while( index < len && curTime >= req[index]){
+                while (index < len && curTime >= req[index]) {
                     pq.offer(new MyProcess(req[index],dur[index]));
                     index++;
                 }
-            }else{
+            } else {
                 pq.offer(new MyProcess(req[index],dur[index]));
                 curTime = req[index++];
             }
@@ -64,7 +64,7 @@ public class Sol0_amz_ShortestJobFirst {
                 curTime += curr.exeTime;
                 waitTime += curTime - curr.arrTime;
                 // add waiting process to the list (queue)
-                while( index < len && curTime > req[index]){
+                while(index < len && curTime > req[index]){
                     pq.add(new MyProcess(req[index],dur[index]));
                     index++;
                 }

@@ -29,6 +29,11 @@ def set_value(self, t, v):
 def max_value(self, cur_t):
  pass
 
+Assume that you work on a trading platform and want to analyze Amazon stock price history.
+Your platform identified an
+important indicator that the highest stock price in the last 1 minute is highly crucial for trader behaviors and decisions.
+How would you write a program to monitor this indicator?
+
 https://leetcode.com/discuss/interview-question/1302614/DoorDash-Onsite-Interview-(new-question-again!)
  */
 public class DD_MaximumFromTheStreamForLastXSeconds {
@@ -36,15 +41,15 @@ public class DD_MaximumFromTheStreamForLastXSeconds {
         private int window;
         Deque<int[]> queue = new ArrayDeque<>(); // {timestamp, value}
         // monotonic queue decreasing  (first element is largest, latest/last element is smallest)
-//        Map<Integer, Integer> map = new HashMap<>();
-//set good state of the queue -> only last x elements needed in queue
+
+        //set good state of the queue -> only last x elements needed in queue
         public StreamProcessor(int window) {
             this.window = window;
         }
 
         public void setValue(int time, int value) {
             int buffer = time - window;
-            while (!queue.isEmpty() && queue.peek()[0] < buffer) {
+            while (!queue.isEmpty() && queue.peekFirst()[0] < buffer) {
                 queue.pollFirst();
             }
 
@@ -55,7 +60,7 @@ public class DD_MaximumFromTheStreamForLastXSeconds {
         }
         public int getMax(int time) {
             int buffer = time - window;
-            while (!queue.isEmpty() && queue.peek()[0] < buffer) {
+            while (!queue.isEmpty() && queue.peekFirst()[0] < buffer) {
                 queue.pollFirst();
             }
             if (queue.isEmpty()) {

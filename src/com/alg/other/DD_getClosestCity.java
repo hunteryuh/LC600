@@ -8,7 +8,8 @@ import java.util.Map;
 //Nearest city
 
 /*
-A number of cities are arranged on a graph that has been divided up like an ordinary Cartesian plane.
+A number of cities are arranged on a graph that has been divided up
+like an ordinary Cartesian plane.
 Each city is located at an integral (x, y) coordinate intersection.
 City names and locations are given in the form of three arrays: c, x, and y,
 which are aligned by the index to provide the city name (c[i]), and its coordinates,
@@ -29,8 +30,8 @@ public class DD_getClosestCity {
         }
 
         List<String> res = new ArrayList<>();
-        for (int i = 0; i < queries.length; i++) {
-            res.add(getClosestCity(cities, x, y, queries[i], map));
+        for (String query : queries) {
+            res.add(getClosestCity(cities, x, y, query, map));
         }
         return res;
     }

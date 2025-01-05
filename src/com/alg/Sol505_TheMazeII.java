@@ -65,8 +65,8 @@ public class Sol505_TheMazeII {
     private void dijkstra(int[][] maze, int[] start, int[][] distance) {
         PriorityQueue<int[]> pq = new PriorityQueue<>( (a,b) -> a[2] - b[2]);
         pq.offer(new int[]{start[0], start[1], 0});
-        while (!pq.isEmpty()) {
-            int[] cur = pq.poll();
+        while (!pq.isEmpty()) {  // m * n : queue size
+            int[] cur = pq.poll();  // log(m*n)
             for (int[] dir : dirs) {
                 int x = cur[0] + dir[0];
                 int y = cur[1] + dir[1];

@@ -119,4 +119,35 @@ public class Sol269_AlienDictionary {
         Sol269_AlienDictionary ss = new Sol269_AlienDictionary();
         ss.alienOrder(strings);
     }
+
+    // interview output on 9/6/2023 Mock check if words are sorted by an order of alphabet array
+    // check sol953, is alien sorted
+    public boolean isWordsSorted(String[] words, char[] alphabet) {
+        if (words.length <= 1) return true;
+        // time O(k) space O(k)
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < alphabet.length; i++) {
+            char c = alphabet[i];
+            map.put(c, i);
+        }
+        // time N * length(word)
+        for (int i = 0; i < words.length - 1; i++) {
+            String left = words[i];
+            String right = words[i + 1];
+            if (left.length() > right.length() && left.startsWith(right)) {
+                return false;
+            }
+            int length = Math.min(left.length(), right.length());
+            for (int k = 0; k < length; k++) {
+                if (left.charAt(k) != right.charAt(k)) {
+                    if (map.get(left.charAt(k)) > map.get(right.charAt(k))) {
+                        return false;
+                    } else {
+                        break; // break for the first different letter that is in order
+                    }
+                }
+            }
+        }
+        return true;
+    }
 }

@@ -44,12 +44,13 @@ Constraints:
 
  */
 public class Sol1306_JumpGameIII {
+    // time O(n)
     public boolean canReach(int[] arr, int start) {
         Queue<Integer> queue = new LinkedList<>();
         queue.offer(start);
         int n = arr.length;
         boolean[] visited = new boolean[n];
-        visited[start] = true;
+        visited[start] = true;  //  or make it negative to mark it visited
         while (!queue.isEmpty()) {
             int cur = queue.poll();
             if (arr[cur] == 0) {

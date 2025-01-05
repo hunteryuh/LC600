@@ -7,7 +7,6 @@ public class Sol206_ReverseLinkedlist {
     public static class ListNode {
         int val;
         ListNode next;
-
         ListNode(int x) { val = x; }
     }
     public static ListNode reverseList(ListNode head){
@@ -22,13 +21,26 @@ public class Sol206_ReverseLinkedlist {
         return newhead;
 
     }
+
+    // recursive 2
+    public static ListNode reverseList2(ListNode head) {
+        return reverse(head, null);
+    }
+    private static ListNode reverse(ListNode head, ListNode newHead) {
+        if (head == null) return newHead;
+        ListNode next = head.next;
+        head.next = newHead;
+        return reverse(next, head);
+    }
+
+    //iterative
     public static ListNode reverseIter(ListNode head){
-        ListNode prev = null;
+        ListNode prev = null; // prev , also the newHead
         while (head != null) {
-            ListNode temp = head.next;
+            ListNode next = head.next;
             head.next = prev;
             prev = head;
-            head = temp;
+            head = next;
         }
         return prev;
     }

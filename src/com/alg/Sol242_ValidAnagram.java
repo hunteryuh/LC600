@@ -23,8 +23,8 @@ public class Sol242_ValidAnagram {
         Map<Character, Integer> counts = new HashMap<>();
         for (int i = 0; i< s.length(); i++){
             Character c = s.charAt(i);
-            if (counts.containsKey(c)){
-                counts.put(c,counts.get(c) + 1);
+            if (counts.containsKey(c)) {
+                counts.put(c, counts.get(c) + 1);
             } else {
                 counts.put(c,1);
             }
@@ -33,7 +33,7 @@ public class Sol242_ValidAnagram {
         }
         for (int i = 0; i< t.length(); i++){
             Character ch = t.charAt(i);
-            if(!counts.containsKey(ch) || counts.get(ch) == 0){
+            if(!counts.containsKey(ch) || counts.get(ch) == 0) {
                 //is about to be negative if t contains more ch than that in s
                 return false;
             }
@@ -50,6 +50,17 @@ public class Sol242_ValidAnagram {
         System.out.println(isAnagram3(s,t2));
         System.out.println(isAnagram3(s,t));
         System.out.println(isAnagram4(s,t));
+
+        Sol242_ValidAnagram ss = new Sol242_ValidAnagram();
+        String input = "hotpot";
+        String[] list = new String[]{"hottop", "hotopt", "hotpit", "httoop", "hptoot"};
+        System.out.println(ss.findKAnagrams(input, list, 3));
+//        print(["hottop", "hotopt", "hptoot"])
+//        input = "omega grill"
+//        list = ["omeag grill", "omeea grill", "omega gril", "omegla gril"]
+//        print(findSimilarRestaurants(intput, list))
+//        print(["omeag grill"])
+        //
     }
 
     public static boolean isAnagram2(String s, String t) {
@@ -80,7 +91,7 @@ public class Sol242_ValidAnagram {
         int[] count = new int[26]; //'z'-'a'+1 = 26
         for(char c:s.toCharArray()) count[c - 'a']++;
         for(char c:t.toCharArray()) {
-            if(count[c-'a'] == 0){
+            if (count[c-'a'] == 0) {
                 return false;
             }
             count[c - 'a']--;
@@ -122,7 +133,8 @@ public class Sol242_ValidAnagram {
     //print(["omeag grill"])
     //
     //"""
-    //Given a restaurant name, find other restaurants in the list that are k-anagrams with each other. A name is a k-anagram with another name if both the conditions below are true:
+    //Given a restaurant name, find other restaurants in the list that are k-anagrams with each other.
+    // A name is a k-anagram with another name if both the conditions below are true:
     //The names contain the same number of characters.
     //The names can be turned into anagrams by changing at most k characters in the string
     //For example:
@@ -133,27 +145,38 @@ public class Sol242_ValidAnagram {
 
     // https://www.geeksforgeeks.org/check-two-strings-k-anagrams-not/
 
-    public boolean areKAnagrams(String str1, String str2,
-                                int k) {
+    public List<String> findKAnagrams(String name, String[] list, int K) {
+        int n = name.length();
+
+        List<String> res = new ArrayList<>();
+
+        for (String item: list) {
+            if (areKAnagrams(name, item, K)) {
+                res.add(item);
+            }
+        }
+        return res;
+    }
+    public boolean areKAnagrams(String str1, String str2, int k) {
         // If both strings are not of equal
         // length then return false
         int n = str1.length();
         if (str2.length() != n)
             return false;
-
-        int[] hash_str1 = new int[26];
-
-        // Store the occurrence of all characters
-        // in a hash_array
-        for (int i = 0; i < n ; i++)
-            hash_str1[str1.charAt(i)-'a']++;
+//
+        int[] freq = new int[256];
+//
+//        // Store the occurrence of all characters
+//        // in a hash_array
+        for (int i = 0; i < n; i++)
+            freq[str1.charAt(i) - 'a']++;
 
         // Store the occurrence of all characters
         // in a hash_array
         int count = 0;
         for (int i = 0; i < n ; i++) {
-            if (hash_str1[str2.charAt(i)-'a'] > 0)
-                hash_str1[str2.charAt(i)-'a']--;
+            if (freq[str2.charAt(i)-'a'] > 0)
+                freq[str2.charAt(i)-'a']--;
             else
                 count++;
 

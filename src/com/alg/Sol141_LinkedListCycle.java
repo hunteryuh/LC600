@@ -3,9 +3,6 @@ package com.alg;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by HAU on 9/17/2017.
- */
 
 /*Given a linked list, determine if it has a cycle in it.
 
@@ -16,7 +13,6 @@ public class Sol141_LinkedListCycle {
     public static class ListNode {
         int val;
         ListNode next;
-
         ListNode(int x) {
             val = x;
             next = null;
@@ -24,6 +20,8 @@ public class Sol141_LinkedListCycle {
     }
     public static boolean hasCycle(ListNode head){
         // using hashtable, O(n) time, O(n) space
+        // may need to override the equals and hashcode to compare object in the set
+// Java Hashset 默认比reference， 如果内部一样但是保存位置不一样也就是重新new过，需要重写equals和hashcode
         Set<ListNode> set = new HashSet<>();
         while (head!= null) {
             if (set.contains(head)) {
@@ -48,7 +46,7 @@ public class Sol141_LinkedListCycle {
         return false;
     }
 
-    public static boolean hasCycle2(ListNode head){
+    public static boolean hasCycle2(ListNode head) {
         // two pointers,
         if (head == null || head.next == null) {
             return false;
@@ -65,9 +63,9 @@ public class Sol141_LinkedListCycle {
         return true;
     }
     // two pointer, same initial pointer for both slow and fast
-    public static boolean hasCycle3(ListNode head){
+    public static boolean hasCycle3(ListNode head) {
         ListNode slow = head, fast = head;
-        while(fast.next != null && fast.next.next != null){
+        while (fast.next != null && fast.next.next != null){
             slow = slow.next;
             fast = fast.next.next;
             if (slow == fast) return true;

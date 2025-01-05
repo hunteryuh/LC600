@@ -14,7 +14,6 @@ dict = ["leet", "code"].
 
 Return true because "leetcode" can be segmented as "leet code".*/
 public class Sol139_WordBreak {
-
     public static boolean wordBreak(String s, List<String> wordDict) {
         //Breadth-First-Search
         Set<String> set = new HashSet<>(wordDict);
@@ -41,17 +40,17 @@ public class Sol139_WordBreak {
     /*
 
     Time complexity : O(n^3). For every starting index, the search can continue till the end of the given string.
-    Space complexity : O(n). Queue of at most nnn size is needed.
+    Space complexity : O(n). Queue of at most n size is needed.
 
 */
-    // dp approach time O(n^3), space O(n)
+    // dp approach time O(n^3), space O(n) , n : length of s
     public static boolean wordBreakdp(String s, List<String> wordDict){
         Set<String> set = new HashSet<>(wordDict);
         boolean[] dp = new boolean[s.length() + 1];
         dp[0] = true; // initial state
-        for (int i = 1; i <=s.length(); i++){
-            for (int j= 0; j < i; j++) {
-                if (dp[j] && set.contains(s.substring(j,i))){
+        for (int i = 1; i <= s.length(); i++){
+            for (int j = 0; j < i; j++) {
+                if (dp[j] && set.contains(s.substring(j,i))) {
                     dp[i]= true;
                     break;
                 }
@@ -154,6 +153,7 @@ public class Sol139_WordBreak {
                 }
             }
         }
+        // visited[start] default to false, mark it as true to indicate we have checked this starting position and did not find a solution
         visited[start] = true;
         return false;
     }

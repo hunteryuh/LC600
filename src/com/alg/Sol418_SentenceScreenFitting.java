@@ -32,6 +32,7 @@ The character '-' signifies an empty space on the screen.
 
 */
 public class Sol418_SentenceScreenFitting {
+    // https://leetcode.com/problems/sentence-screen-fitting/solutions/90845/21ms-18-lines-java-solution/
     public static int wordsTyping(String[] sentence, int rows, int cols) {
         /*句子的总长度的求法时要在每个单词后面加上一个空格(包括最后一个单词)，我们遍历屏幕的每一行，然后每次start都加上宽度，
         然后看all[start%len]是否为空格，是的话就start加1，这样做的好处是可以处理末尾是没有空格的情况，比如宽度为1，只有一个单词a，
@@ -50,6 +51,7 @@ public class Sol418_SentenceScreenFitting {
                     start--;
                 }
             }
+            System.out.println(start);
         }
         return start /len;
     }
@@ -57,8 +59,10 @@ public class Sol418_SentenceScreenFitting {
     public static void main(String[] args) {
         String[] sentence = {"I","had","apple","pie"};
         String[] s2 = {"I","had","apple"};
+        String[] s3 = {"abc","de","f"};
         //System.out.println(wordsTyping(sentence,4,5));
-        System.out.println(wordsTyping(s2,4,5));
+//        System.out.println(wordsTyping(s2,4,5));
+        System.out.println(wordsTyping(s3,4,6));
 
     }
     // method 2

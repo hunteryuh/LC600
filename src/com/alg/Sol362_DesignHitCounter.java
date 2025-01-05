@@ -62,14 +62,14 @@ public class Sol362_DesignHitCounter {
     // https://leetcode.com/problems/design-hit-counter/solution/
     class HitCounter {
 
-        private Queue<Integer> hits;
+        private Queue<Integer> hits; // Integer, not int
 
         public HitCounter() {
             this.hits = new LinkedList<>();
         }
 
         public void hit(int timestamp) {
-            hits.add(timestamp);
+            hits.offer(timestamp);
         }
 
         public int getHits(int timestamp) {
@@ -81,7 +81,7 @@ public class Sol362_DesignHitCounter {
                     break;
                 }
             }
-//            while (!hits.isEmpty() && timestamp - hits.peek() >= 300) {
+//            while (!hits.isEmpty() && timestamp - hits.peek() >= 300) {  including == 300
 //                hits.poll();
 //            }
             return hits.size();

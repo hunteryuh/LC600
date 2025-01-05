@@ -2,8 +2,10 @@ package com.alg;
 
 import sun.awt.image.ImageWatched;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Set;
 
 /*
 You are given an m x n grid grid where:
@@ -107,9 +109,82 @@ public class Sol864_ShortestPathToGetAllKeys {
         return -1;
     }
 
+
     public static void main(String[] args) {
         String[] s = {"@.a.#","###.#","b.A.B"};
         Sol864_ShortestPathToGetAllKeys ss = new Sol864_ShortestPathToGetAllKeys();
         System.out.println(ss.shortestPathAllKeys(s));
     }
+    class State {
+        int row;
+        int col;
+        String key;
+        State(int row, int col, String key) {
+            this.row = row;
+            this.col = col;
+            this.key = key;
+        }
+        public String toString() {
+            return row + "-" + col + "-" + key;
+        }
+    }
+    public int shortestPathAllKeys2(String[] grid) {
+        int rows = grid.length;
+        int cols = grid[0].length();
+        int[][] dirs = { {-1, 0}, {1, 0}, {0, 1}, {0, -1}};
+        Set<String> visited = new HashSet<>();
+        int steps = 0;
+        Queue<State> queue = new LinkedList<>();
+
+        int keycount = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i].charAt(j) == '@') {
+                    queue.offer(new State(i, j, ""));
+                } else if (grid[i].charAt(j) >= 'a' && grid[i].charAt(j) <= 'f') {
+                    keycount++;
+                }
+            }
+        }
+        visited.add(queue.peek().toString());
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                State cur = queue.poll();
+                int r = cur.row;
+                int c = cur.col;
+                String key = cur.key;
+                if (key.length() == keycount) {
+                    return steps;
+                }
+                for (int[] dir: dirs) {
+                    int nr = r + dir[0];
+                    int nc = c + dir[1];
+
+                    if (nr < 0 || nr >= rows || nc < 0 || nc >= cols
+                    || grid[nr].charAt(nc) == '#' ) {
+                        continue;
+                    }
+                    char ch = grid[nr].charAt(nc);
+                    if (ch>= 'A' && ch <= 'F' && key.indexOf(Character.toLowerCase(ch)) == -1) {
+                        continue;
+                    }
+                    String newStateKey = key;
+
+                    if (key.indexOf(ch) == -1 && ch >= 'a' && ch <= 'f') {
+                        newStateKey += ch;
+                    }
+                    State newState = new State(nr , nc , newStateKey);
+                    if (!visited.contains(newState.toString())) {
+                        queue.offer(newState);
+                        visited.add(newState.toString());
+                    }
+                }
+            }
+            steps++;
+        }
+        return -1;
+    }
+
 }

@@ -1,11 +1,6 @@
 package com.alg;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
+import java.util.*;
 
 /*
     There are n cities connected by some number of flights. You are given an array flights where flights[i] = [fromi, toi, pricei] indicates that there is a flight from city fromi to city toi with cost pricei.
@@ -86,8 +81,8 @@ public class Sol787_CheapestFlightsWithinKStops {
             map.putIfAbsent(flight[0], new ArrayList<>());
             map.get(flight[0]).add(new int[]{flight[1], flight[2]}); // src -> dst, price
         }
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[0] - b[0]);
-        pq.add(new int[]{0, src, k + 1});  // {cost, city, step}
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[0] - b[0]); //[0]: cost
+        pq.add(new int[]{0, src, k + 1});  // {cost, source_city, number of stops from the src}
         while (!pq.isEmpty()) {
             int[] top = pq.poll();
             int price = top[0];
@@ -101,6 +96,115 @@ public class Sol787_CheapestFlightsWithinKStops {
                     }
                 }
             }
+        }
+        return -1;
+    }
+
+
+    // dijikstra 2
+    //  https://leetcode.com/problems/cheapest-flights-within-k-stops/editorial/
+    public int findCheapestPrice3(int n, int[][] flights, int src, int dst, int k) {
+        Map<Integer, List<int[]>> adj = new HashMap<>();
+        for (int[] i : flights)
+            adj.computeIfAbsent(i[0], value -> new ArrayList<>()).add(new int[] { i[1], i[2] });
+
+        int[] stops = new int[n];
+        Arrays.fill(stops, Integer.MAX_VALUE);
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
+        // {dist_from_src_node, node, number_of_stops_from_src_node}
+        pq.offer(new int[] { 0, src, 0 });
+
+        while (!pq.isEmpty()) {
+            int[] temp = pq.poll();
+            int dist = temp[0];
+            int node = temp[1];
+            int steps = temp[2];
+            // We have already encountered a path with a lower cost and fewer stops,
+            // or the number of stops exceeds the limit.
+            if (steps > stops[node] || steps > k + 1)
+                continue;
+            stops[node] = steps;
+            if (node == dst)
+                return dist;
+            if (!adj.containsKey(node))
+                continue;
+            for (int[] a : adj.get(node)) {
+                pq.offer(new int[] { dist + a[1], a[0], steps + 1 });
+            }
+        }
+        return -1;
+    }
+
+    // regular bfs, time limit exceeded
+    public int findCheapestPrice4(int n, int[][] flights, int src, int dst, int K) {
+        Map<Integer,List<int[]>> map=new HashMap<>();
+        for(int[] i:flights) {
+            map.putIfAbsent(i[0],new ArrayList<>());
+            map.get(i[0]).add(new int[]{i[1],i[2]});
+        }
+        int step=0;
+        Queue<int[]> q=new LinkedList<>();
+        q.offer(new int[]{src,0});
+        int ans= Integer.MAX_VALUE;
+        while (!q.isEmpty()) {
+            int size=q.size();
+            for(int i=0;i<size;i++) {
+                int[] curr=q.poll();
+                if(curr[0] == dst)
+                    ans=Math.min(ans,curr[1]);
+                if(!map.containsKey(curr[0]))
+                    continue;
+                for(int[] f:map.get(curr[0])) {
+                    if (curr[1]+f[1]>ans)      //Pruning
+                        continue;
+                    q.offer(new int[]{f[0],curr[1]+f[1]});
+                }
+            }
+            if(step++ > K)
+                break;
+        }
+        return ans==Integer.MAX_VALUE?-1:ans;
+    }
+
+    // bfs passed, with distance map/array
+    // https://leetcode.com/problems/cheapest-flights-within-k-stops/editorial/ similar approach 1
+    public int findCheapestPrice_6(int n, int[][] flights, int src, int dst, int k) {
+        Map<Integer, List<int[]>> map = new HashMap<>();
+        Map<Integer, Integer> distance = new HashMap<>();
+        for (int[] flight : flights) {
+            map.putIfAbsent(flight[0],new ArrayList<>());
+            map.get(flight[0]).add(new int[]{flight[1], flight[2]});
+            distance.put(flight[1], Integer.MAX_VALUE);
+        }
+        // add queue with [city , cost]
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[]{src, 0});
+
+        distance.put(src, 0);
+        int stop = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                int[] cur = queue.poll();
+                int city = cur[0];
+                int cost = cur[1];
+                if (!map.containsKey(city)) continue;
+                for (int[] nei: map.get(city)) {
+                    if (cost + nei[1] < distance.get(nei[0])) {
+                        distance.put(nei[0], cost + nei[1]);
+                        queue.offer(new int[]{nei[0], cost + nei[1]});
+                    }
+                }
+
+            }
+
+            stop++;
+            if (stop > k) {
+                break;
+            }
+        }
+        if (distance.containsKey(dst) && distance.get(dst) != Integer.MAX_VALUE) {
+            return distance.get(dst);
         }
         return -1;
     }

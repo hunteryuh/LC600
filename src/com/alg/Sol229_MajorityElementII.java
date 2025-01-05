@@ -24,8 +24,8 @@ public class Sol229_MajorityElementII {
             }
         }
         List<Integer> list = new ArrayList<>();
-        for (Map.Entry<Integer,Integer> entry : map.entrySet()){
-            if (entry.getValue() > nums.length / 3){
+        for (Map.Entry<Integer,Integer> entry : map.entrySet()) {
+            if (entry.getValue() > nums.length / 3) {
                 list.add(entry.getKey());
             }
         }

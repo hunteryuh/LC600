@@ -23,14 +23,14 @@ public class Sol3_LongestSubstringWithoutRepeatingCharacters {
         Then we slide the index jj to the right. If it is not in the HashSet, we slide j further.
         Doing so until s[j] is already in the HashSet. At this point, we found the maximum size of substrings
         without duplicate characters start with index i. If we do this for all i, we get our answer.*/
-        if ( s == null || s.length() == 0) return 0;
+        if (s == null || s.isEmpty()) return 0;
         if (s.length() == 1) return 1;
         int n = s.length();
         int result = 0;
         int i = 0, j = 0;
         Set<Character> set = new HashSet<>();
         while (i < n && j < n){
-            // try to extend the sliding window [i,j]
+            // try to extend the sliding window [i,j]  abcccdefgh
             if (!set.contains(s.charAt(j))) {
                 set.add(s.charAt(j++));
                 result = Math.max(j-i, result);
@@ -41,6 +41,7 @@ public class Sol3_LongestSubstringWithoutRepeatingCharacters {
         return result;
     }
 
+    // https://leetcode.com/problems/longest-substring-without-repeating-characters/solutions/1729/11-line-simple-java-solution-o-n-with-explanation/
     public static int lengthOfLongestSubstring(String s) {
 
         /* The reason is that if s[j] have a duplicate in the range [i, j) with index j',
@@ -102,6 +103,40 @@ public class Sol3_LongestSubstringWithoutRepeatingCharacters {
             }
             set.remove(s.charAt(i));
         }
+        return res;
+    }
+
+    // method with set
+    public int lengthOfLongestSubstring5(String s) {
+        int maxLen = 0;
+        Set<Character> window = new HashSet<>();
+
+        int left = 0, right = 0;
+        while (right < s.length()) {
+            while (window.contains(s.charAt(right)))
+                window.remove(s.charAt(left++));
+            window.add(s.charAt(right++));
+            maxLen = Math.max(maxLen, right - left);
+        }
+
+        return maxLen;
+    }
+
+    // method 2 with set
+    public int lengthOfLongestSubstring6(String s) {
+        int res = 0;
+        Set<Character> set = new HashSet<>();
+        int left = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            while (set.contains(c)) {
+                set.remove(s.charAt(left));
+                left++;
+            }
+            set.add(c);
+            res = Math.max(res, i - left + 1);
+        }
+
         return res;
     }
 }

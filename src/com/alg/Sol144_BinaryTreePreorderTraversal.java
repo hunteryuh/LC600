@@ -90,7 +90,7 @@ public class Sol144_BinaryTreePreorderTraversal {
         if (root == null) return result;
         Stack<TreeNode> stack = new Stack<>();
         stack.push(root);
-        while (!stack.isEmpty()){
+        while (!stack.isEmpty()) {
             TreeNode node = stack.pop();
             result.add(node.val);
             if (node.right != null) stack.push(node.right);

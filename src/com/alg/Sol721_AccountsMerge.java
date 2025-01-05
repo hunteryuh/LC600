@@ -26,7 +26,7 @@ public class Sol721_AccountsMerge {
 
         for (List<String> account: accounts) {
             String username = account.get(0); // first item is the username
-            for(int i = 1; i < account.size(); i++){
+            for (int i = 1; i < account.size(); i++){
                 if(!graph.containsKey(account.get(i))){
                     graph.put(account.get(i), new HashSet<>());
                 }
@@ -108,4 +108,45 @@ public class Sol721_AccountsMerge {
         }
         return res;
     }
+
+    public List<List<String>> accountsMerge3(List<List<String>> accounts) {
+        Map<String, Set<String>> emailGraph = new HashMap<>();
+        Map<String, String> emailToNameMap = new HashMap<>();
+        for (List<String> account: accounts) {
+            String name = account.get(0);
+            for (int i = 1; i < account.size(); i++) {
+                String email = account.get(i);
+                emailToNameMap.put(email, name);
+                emailGraph.putIfAbsent(email, new HashSet<>());
+                if (i == 1) continue;
+                emailGraph.get(email).add(account.get(i - 1));
+                emailGraph.get(account.get(i - 1)).add(email);
+            }
+        }
+        List<List<String>> res = new ArrayList<>();
+        Set<String> visited = new HashSet<>();
+        for (String email: emailToNameMap.keySet()) {
+            if (!visited.contains(email)) {
+                visited.add(email);
+                List<String> allEmails = new ArrayList<>();
+                dfsAll(allEmails, email, visited, emailGraph);
+                Collections.sort(allEmails);
+                allEmails.add(0, emailToNameMap.get(email));
+                res.add(allEmails);
+            }
+        }
+        return res;
+    }
+
+    private void dfsAll(List<String> allEmails, String email, Set<String> visited, Map<String, Set<String>> emailGraph) {
+        visited.add(email);
+        allEmails.add(email);
+        for (String other: emailGraph.get(email)) {
+            if (!visited.contains(other)) {
+                dfsAll(allEmails, other, visited, emailGraph);
+            }
+        }
+    }
+
+
 }

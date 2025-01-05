@@ -1,5 +1,6 @@
 package com.alg;
 
+import java.util.PriorityQueue;
 import java.util.Stack;
 
 /*
@@ -40,7 +41,7 @@ Constraints:
  */
 public class Sol224_BasicCalculator {
     // https://leetcode.com/problems/basic-calculator/discuss/62362/JAVA-Easy-Version-To-Understand!!!!!
-    public int calcuate(String s) {
+    public int calculate(String s) {
         // 3 + ( 5  - 2)
         Stack<Integer> stack = new Stack<>();
         int result = 0;
@@ -63,8 +64,8 @@ public class Sol224_BasicCalculator {
                 sign = 1;
             } else if (c == ')') {
                 int op2 = result;
-                int operator = stack.pop();
-                int op1 = stack.pop();
+                int operator = stack.pop(); // 第一个POP出来的是符号，是括号前的那个符号
+                int op1 = stack.pop(); // 第二次这OP出来的才是之前处理的数字，现在在括号相加
                 result = op2 * operator + op1;
             } else if (c == '+') {
                 sign = 1;
@@ -80,6 +81,34 @@ public class Sol224_BasicCalculator {
         System.out.println(Integer.MAX_VALUE);
         System.out.println(Integer.MIN_VALUE);
         Sol224_BasicCalculator ss = new Sol224_BasicCalculator();
-        System.out.println("answer is " + ss.calcuate(s));
+        System.out.println("answer is " + ss.calculate(s));
+    }
+
+    // stack with recursive help
+    int i = 0;
+    public int calculate2(String s) {
+        Stack<Integer> stack = new Stack<>();
+        char operator = '+';
+        int num = 0;
+        while (i < s.length()) {
+            char ch = s.charAt(i++);
+            if (Character.isDigit(ch)) {
+                num = num * 10 + (ch - '0');
+            }
+            if (ch == '(') {
+                num = calculate2(s);
+            }
+            if (i >= s.length() || ch == '+' || ch == '-' || ch == ')') {
+                if (operator == '+') {
+                    stack.push(num);
+                } else {
+                    stack.push(-num);
+                }
+                operator = ch;
+                num = 0;
+            }
+            if (ch == ')') break;
+        }
+        return stack.stream().mapToInt(Integer::intValue).sum();
     }
 }

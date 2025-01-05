@@ -90,7 +90,7 @@ public class Sol55_JumpGame {
         return max >= nums.length - 1;
     }
 
-    // recursion
+    // recursion, backtracking O(2^n) , 10^7 TLE
     public boolean canJump4(int[] nums) {
         return canJumpFromPosition(0, nums);
     }
@@ -104,6 +104,25 @@ public class Sol55_JumpGame {
             }
         }
         return false;
+    }
+
+    // dp, i.e memoization based on backtracking above
+    // time: N^2
+    Integer[] memo;
+    public boolean canJump5(int[] nums) {
+        memo = new Integer[nums.length];
+        memo[memo.length - 1] = 1;
+        return canJumpFromPosition2(0, nums) == 1;
+    }
+    public int canJumpFromPosition2(int pos, int[] nums) {
+        if (memo[pos] != null) return memo[pos];
+        int furthest = Math.min(nums[pos] + pos, nums.length - 1);
+        for (int next = pos + 1; next <= furthest; next++) {
+            if (canJumpFromPosition2(next, nums) == 1) {
+                return memo[pos] = 1; // immediately returns 1 and stores it in memo[pos].
+            }
+        }
+        return memo[pos] = -1;
     }
 
 

@@ -1,6 +1,7 @@
 package com.alg;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -16,6 +17,9 @@ Given the following matrix:
  [ 4, 5, 6 ],
  [ 7, 8, 9 ]
 ]
+
+
+https://leetcode.com/problems/spiral-matrix/
 You should return [1,2,3,6,9,8,7,4,5].*/
 public class Sol54_SpiralMatrix {
     public static List<Integer> spiralOrder(int[][] matrix){
@@ -55,6 +59,10 @@ public class Sol54_SpiralMatrix {
                 {9,10,11,12}
         };
         System.out.println(spiralOrder(m));
+
+        Sol54_SpiralMatrix ss = new Sol54_SpiralMatrix();
+        List<Integer> res = ss.spiralOrder3(m);
+        System.out.println(res);
     }
 
     public List<Integer> spiralOrder2(int[][] matrix) {
@@ -86,6 +94,32 @@ public class Sol54_SpiralMatrix {
             r2--;
             c1++;
             c2--;
+        }
+        return res;
+    }
+
+    public List<Integer> spiralOrder3(int[][] matrix) {
+        List<Integer> res = new LinkedList<>();
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int up = 0;
+        int down = m - 1;
+        int left = 0;
+        int right = n - 1;
+        while (res.size() < m * n) {
+            for (int j = left; j <= right && res.size() < m * n; j++) { // use res.size() < m * n to stop anytime it finds all numbers
+                res.add(matrix[up][j]);
+            }
+            for (int i = up + 1; i <= down - 1 && res.size() < m * n; i++) {
+                res.add(matrix[i][right]);
+            }
+            for (int j = right; j >= left && res.size() < m * n; j--) {
+                res.add(matrix[down][j]);
+            }
+            for (int i = down - 1; i > up && res.size() < m * n; i--) {
+                res.add(matrix[i][left]);
+            }
+            up++; down--;left++;right--;
         }
         return res;
     }

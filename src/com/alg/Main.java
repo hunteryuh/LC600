@@ -79,7 +79,7 @@ public class Main {
                     li.add(currNode);
                     parents.set(neigh, li);
 
-                } else if (currDist + extraDist  == distance[neigh]){
+                } else if (currDist + extraDist == distance[neigh]) {
                     parents.get(neigh).add(currNode); // {Key: (to) next stap, value: source (from)}
                 }
             }
@@ -109,7 +109,7 @@ public class Main {
 
     // parents map stores key as current/to location, value is from location
     private static void backtrack(List<List<Integer>> parents, int curr, Set<String> roads) {
-        if (parents.get(curr) == null || parents.get(curr).size() == 0){
+        if (parents.get(curr) == null || parents.get(curr).isEmpty()) {
             return;
         }
         for(int parent : parents.get(curr)){

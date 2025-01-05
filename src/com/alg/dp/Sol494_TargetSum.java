@@ -51,4 +51,33 @@ public class Sol494_TargetSum {
         return dp[knsize];
     }
     // https://leetcode.com/problems/target-sum/discuss/1629253/Java-01-knapsack-with-explanation
+
+    // recursion with memoization
+    int total;
+    public int findTargetSum2(int[] nums, int s){
+        for (int i : nums) {
+            total += i;
+        }
+        int[][] memo = new int[nums.length][2 * total + 1];
+        for (int[] row: memo) {
+            Arrays.fill(row, Integer.MIN_VALUE);
+        }
+        return calculate(nums, 0, 0, s, memo);
+    }
+    private int calculate(int[] nums, int i, int sum, int s, int[][] memo) {
+        if (i == nums.length) {
+            if (sum == s) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+        if (memo[i][sum + total] != Integer.MIN_VALUE) { // use sum + total just ot make a positive integer as index
+            return memo[i][sum + total];
+        }
+        int add = calculate(nums, i + 1, sum + nums[i], s, memo);
+        int subtract = calculate(nums, i + 1, sum - nums[i], s, memo);
+        memo[i][sum + total] = add + subtract;
+        return memo[i][sum + total];
+    }
 }

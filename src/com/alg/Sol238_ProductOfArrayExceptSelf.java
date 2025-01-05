@@ -16,13 +16,15 @@ Follow up:
 Could you solve it with constant space complexity?
 (Note: The output array does not count as extra space for the purpose of space complexity analysis.)*/
 public class Sol238_ProductOfArrayExceptSelf {
+    // time O(n)
+    // space O(n)
     public int[] productExceptSelf0(int[] nums) {
         int n = nums.length;
         int[] leftP = new int[n];
         int[] rightP = new int[n];
         leftP[0] = 1;
-        for(int i = 1; i < n ; i++){
-            leftP[i] = leftP[i-1] * nums[i-1];  // products of all items on the left
+        for (int i = 1; i < n ; i++) {
+            leftP[i] = leftP[i-1] * nums[i-1];  // products of all items on the left of i
         }
         rightP[n-1] = 1;
         for (int i = n-2; i>=0; i--) {

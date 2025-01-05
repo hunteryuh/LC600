@@ -62,7 +62,7 @@ public class Sol36_ValidSudoku {
     public static boolean isValidSudoku(char[][] board) {
         Set set = new HashSet();
         assert board.length == 9;
-        for ( int i = 0; i< 9; i++){
+        for (int i = 0; i< 9; i++){
             for (int j = 0; j < 9; j++){
                 if (board[i][j] != '.'){
                     if (!set.add(board[i][j] +" in row "+ i)||

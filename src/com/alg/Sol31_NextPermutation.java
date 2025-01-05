@@ -22,16 +22,16 @@ Implement next permutation, which rearranges numbers into the lexicographically 
 public class Sol31_NextPermutation {
     public static void nextPermutation(int[] nums) {
         int n = nums.length;
-        if ( n == 1) return;
+        if (n == 1) return;
         int i = n - 1;
-        while ( i > 0 && nums[i] <= nums[i-1]){
+        while (i > 0 && nums[i] <= nums[i-1]) {
             i--;
         }
-        if (i == 0){
+        if (i == 0) {
             reverse_sub(nums,0,n-1);
             return;
         }
-        if ( i == n - 1){
+        if (i == n - 1) {
             swap(nums,i,i-1);
             return;
         }
@@ -39,8 +39,8 @@ public class Sol31_NextPermutation {
         reverse_sub(nums,i,n-1);
 
         int k = i - 1;
-        while ( i < n){
-            if (nums[i] <= nums[k]){ // including equal
+        while (i < n) {
+            if (nums[i] <= nums[k]) { // including equal
                 i++;
             }
 			else {
@@ -56,8 +56,8 @@ public class Sol31_NextPermutation {
         nums[j] = t;
     }
     private static void reverse_sub(int[] nums, int i, int j){
-        if ( i >= j) return;
-        while ( i < j){
+        if (i >= j) return;
+        while (i < j) {
             int tmp = nums[i];
             nums[i] = nums[j];
             nums[j] = tmp;

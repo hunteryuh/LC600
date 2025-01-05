@@ -9,7 +9,8 @@ Valid operators are +, -, *, and /. Each operand may be an integer or another ex
 
 Note that division between two integers should truncate toward zero.
 
-It is guaranteed that the given RPN expression is always valid. That means the expression would always evaluate to a result, and there will not be any division by zero operation.
+It is guaranteed that the given RPN expression is always valid.
+That means the expression would always evaluate to a result, and there will not be any division by zero operation.
 
 
 
@@ -40,7 +41,7 @@ public class Sol150_EvaluateReversePolishNotation {
         Stack<Integer> stack = new Stack<>();
         for (int i = 0; i < tokens.length; i++) {
             String c = tokens[i];
-            if (!"+-*/".contains(c)) {
+            if (!"+-*/".contains(c)) { // or isNumeric
                 stack.push(Integer.parseInt(c));
             } else if (c.equals("+")) {
                 int o1 = stack.pop();
@@ -67,5 +68,9 @@ public class Sol150_EvaluateReversePolishNotation {
         String[] tokens ={"10","6","9","3","+","-11","*","/","*","17","+","5","+"};
         Sol150_EvaluateReversePolishNotation pp = new Sol150_EvaluateReversePolishNotation();
         System.out.println(pp.evalRPN(tokens));
+    }
+
+    private boolean isDigit(Character c) {
+        return Character.isDigit(c);
     }
 }

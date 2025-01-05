@@ -3,6 +3,7 @@ package com.alg;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * Created by HAU on 8/14/2017.
@@ -24,7 +25,7 @@ public class Sol17_LetterCombinationOfPhoneNumber {
     }
 
     private static void dfs(String digits, String[] map, StringBuilder sb, ArrayList<String> result, int index) {
-        if (sb.length() == digits.length()){
+        if (sb.length() == digits.length()) {
             result.add(sb.toString());
             return;
         }
@@ -34,7 +35,6 @@ public class Sol17_LetterCombinationOfPhoneNumber {
             sb.append(letters.charAt(i));
             dfs(digits, map, sb, result,index + 1);
             sb.deleteCharAt(sb.length() - 1);
-
         }
     }
 
@@ -52,14 +52,14 @@ public class Sol17_LetterCombinationOfPhoneNumber {
 
     public static List<String> LetterCom2(String digits){
         LinkedList<String> res = new LinkedList<>();
-        if ( digits == null || digits.length() == 0) return res;
+        if (digits == null || digits.length() == 0) return res;
 
         String[] maps ={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
         res.add("");
-        for (int i = 0; i < digits.length(); i++){
+        for (int i = 0; i < digits.length(); i++) {
             int t = digits.charAt(i) - '0';
 //            int t = Character.getNumericValue(digits.charAt(i));
-            while (res.peek().length() == i){
+            while (res.peek().length() == i) {
                 String ss = res.remove(); // return the first
                 for (char c : maps[t].toCharArray()){
                     res.add( ss + c);
@@ -99,5 +99,24 @@ public class Sol17_LetterCombinationOfPhoneNumber {
             dfs(digits, map, res, sb, start + 1);
             sb.deleteCharAt(sb.length() - 1);
         }
+    }
+    // bfs method
+    String[] map = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    public List<String> letterCombinations2(String digits) {
+        Queue<String> q = new LinkedList<>();
+        if (digits == null || digits.isEmpty()) return new ArrayList<>(q);
+        q.offer("");
+        for (int i = 0; i < digits.length(); i++) {
+            String temp = map[digits.charAt(i) - '0'];
+            int size = q.size(); // number of strings in the queue
+            for (int j = 0; j < size; j++) {
+                String pre = q.poll();
+                for (char c: temp.toCharArray()) {
+                    q.offer(pre + c);
+                }
+            }
+        }
+        return new ArrayList<>(q);
+
     }
 }

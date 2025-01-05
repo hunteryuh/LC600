@@ -74,6 +74,18 @@ public class Sol674_LongestContinuousIncreasingSubsequence {
         return result;
     }
 
+    // sliding window
+    public int findLengthOfLCIS4(int[] nums) {
+        int ans = 0, left = 0;
+        for (int i = 0; i < nums.length; ++i) {
+            if (i > 0 && nums[i-1] >= nums[i]) { //if not strictly increasing, reset left
+                left = i;
+            }
+            ans = Math.max(ans, i - left + 1);
+        }
+        return ans;
+    }
+
 
     public static void main(String[] args) {
         Sol674_LongestContinuousIncreasingSubsequence ss = new Sol674_LongestContinuousIncreasingSubsequence();

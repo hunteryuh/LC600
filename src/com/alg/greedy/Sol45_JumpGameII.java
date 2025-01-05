@@ -63,7 +63,7 @@ public class Sol45_JumpGameII {
         return step;
     }
 
-    // dp
+    // dp O(n^2)
     public int jump3(int[] nums) {
         int[] dp = new int[nums.length]; // min steps to reach i
         Arrays.fill(dp, Integer.MAX_VALUE);

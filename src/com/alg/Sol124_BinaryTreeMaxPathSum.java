@@ -6,7 +6,8 @@ The path sum of a path is the sum of the node's values in the path.
 
 Given the root of a binary tree, return the maximum path sum of any non-empty path.
 
-
+A path is a continuous sequence of nodes connected to each other. There will always be at least one node in a path.
+In a path, except for the starting and ending nodes, every node is connected to two other nodes in the sequence.
 
 Example 1:
 
@@ -41,8 +42,16 @@ public class Sol124_BinaryTreeMaxPathSum {
         int left= Math.max(0, postOrder(node.left));
         int right = Math.max(0, postOrder(node.right));
         // the price to start a new path where `node` is a highest node
-        res = Math.max(res, node.val + left + right);  //
+        res = Math.max(res, node.val + left + right);
+        /*
+        The path sum gain contributed by the subtree can be derived from a path that includes at most one child
+        of the root. You may wonder, why can't we include both children? If we include both children in the path,
+        the path would have to make a fork at the root. The root is already connected to its parent.
+        Now, if we include both children as well, with three connections, it wouldn't be a valid path anymore.
+        Therefore, we can say that the path would consist of at most one child of the root.
+         */
         // return the max gain if continue the same path
+        // return the max sum for a path starting at the root of subtree (continue the same path)
         return Math.max(left, right) + node.val;
     }
 
@@ -86,7 +95,7 @@ public class Sol124_BinaryTreeMaxPathSum {
 
     // 给定一棵二叉树，找到二叉树的最大路径和，路径必须从根节点出发。
     //
-    //路径可在任意节点结束，但至少包含一个节点（也就是根节点）
+    // 路径可在任意节点结束，但至少包含一个节点（也就是根节点）
     // https://www.jiuzhang.com/problem/binary-tree-maximum-path-sum-ii/
     public int maxPathSum3(TreeNode root) {
         if (root == null) {
@@ -107,14 +116,25 @@ public class Sol124_BinaryTreeMaxPathSum {
     }
 
     // https://www.geeksforgeeks.org/find-maximum-path-sum-two-leaves-binary-tree/
-    // maximum path sum between 2 leaf nodes in a binary tree
+    // maximum path sum between two leaf nodes in a binary tree, The maximum sum path may or may not go through the root.
+    // For example, in the following binary tree, the maximum sum is 27(3 + 6 + 9 + 0 – 1 + 10)
+
+    // A utility function to find the maximum sum between any
+    // two leaves.This function calculates two values:
+    // 1) Maximum path sum between two leaves which is stored
+    // in res.
+    // 2) The maximum root to leaf path sum which is returned.
     private int postOrder2(TreeNode node) {
         if (node == null) return 0;
-        int left = postOrder(node.left);
-        int right = postOrder(node.right);
+        // recursively calculate max sum from node to leaf for left and right subtrees
+        int left = postOrder2(node.left);
+        int right = postOrder2(node.right);
+        // to make sure its leaf nodes, only update res when the node has two leaf nodes
+        // res stores a sum for a path that connects two leaf nodes with the current node as root
+        // // If both left and right children exist
         if (node.left != null && node.right != null) {
             res = Math.max(res, node.val + left + right);
-        } // to make sure its leaf nodes, only update res when the node has two leaf nodes
+        }
         System.out.println("Current res is " + res + " at node " + node.val);
         int sum = node.val + Math.max(left, right);
         System.out.println("Current sum is " + sum);

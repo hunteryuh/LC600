@@ -47,19 +47,19 @@ public class Sol128_LongestConsecutiveSubsequence {
 
         //optimal method, using set and loop in the set
     public static int longestConsecutive2(int[] nums) {
-        Set<Integer> num_set = new HashSet<Integer>();
+        Set<Integer> set = new HashSet<Integer>();
         for (int num : nums) {
-            num_set.add(num);
+            set.add(num);
         }
 
         int longestStreak = 0;
 
-        for (int num : num_set) {
-            if (!num_set.contains(num-1)) {
+        for (int num : set) {
+            if (!set.contains(num-1)) { // just iterate in the forward direction
                 int currentNum = num;
                 int currentStreak = 1;
 
-                while (num_set.contains(currentNum+1)) {
+                while (set.contains(currentNum+1)) {
                     currentNum += 1;
                     currentStreak += 1;
                 }

@@ -2,14 +2,7 @@ package com.alg.other;
 
 import com.sun.istack.internal.NotNull;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 //https://www.geeksforgeeks.org/find-first-non-repeating-character-stream-characters/
 /*
@@ -151,6 +144,57 @@ public class FindFirstNonRepeating {
 // Java 8-ness is optional (pun intended!)
         public synchronized Optional<Object> find() {
             return uniques.stream().findFirst();
+        }
+    }
+
+
+    public class LinkedHashSet2<E> {
+        private final HashMap<E, Node<E>> map;
+        private final LinkedList<Node<E>> list;
+
+        private class Node<E> {
+            E value;
+            Node<E> next;
+            Node<E> prev;
+
+            Node(E value) {
+                this.value = value;
+            }
+        }
+
+        // implement linkedhashset using hashmap and linkedlist
+        // add O(1), contains O(1), remove O(1)
+
+        public LinkedHashSet2() {
+            map = new HashMap<>();
+            list = new LinkedList<>();
+        }
+
+        public boolean add(E element) {
+            if (map.containsKey(element)) {
+                return false; // Element already exists
+            }
+
+            Node<E> newNode = new Node<>(element);
+            map.put(element, newNode);
+            list.addLast(newNode);
+            return true;
+        }
+
+        public boolean contains(E element) {
+            return map.containsKey(element);
+        }
+
+        public boolean remove(E element) {
+            Node<E> nodeToRemove = map.get(element);
+
+            if (nodeToRemove == null) {
+                return false; // Element not found
+            }
+
+            map.remove(element);
+            list.remove(nodeToRemove);  // only the neighbors needs to be updated node.prev.next = node.next
+            return true;
         }
     }
 }

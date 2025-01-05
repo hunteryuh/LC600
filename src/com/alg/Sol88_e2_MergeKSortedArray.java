@@ -22,7 +22,7 @@ public class Sol88_e2_MergeKSortedArray {
         }
         int m = 0;
         int res[] = new int[totalLen];
-        while(!pq.isEmpty()){
+        while(!pq.isEmpty()){ // time: total number of elements in all arrays * log(k) K: number of arrays
             ArrayContainer ac = pq.poll();
             res[m++] = ac.arr[ac.index];
             if(ac.index < ac.arr.length - 1){

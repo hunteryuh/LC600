@@ -1,10 +1,6 @@
 package com.alg;
 
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Created by HAU on 11/25/2017.
@@ -34,20 +30,40 @@ public class Sol239_SlidingWindowMaximum {
         int[] res = new int[nums.length - k + 1];
         LinkedList<Integer> deque = new LinkedList<>();
         for (int i = 0; i < nums.length; i++){
-            while(!deque.isEmpty() && deque.peekFirst() < i - k + 1) {  // can change while to if as it only removes one item each time i++
+            while (!deque.isEmpty() && deque.peekFirst() < i - k + 1) {  // can change while to if as it only removes one item each time i++
                 deque.pollFirst();  // remove numbers out of range [i-k+1, i]
                 // poll, same as pollFirst, remove the head element
             }
             // compare last elements with nums[i]
-            while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]){
+            while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
                 deque.pollLast();  // same as removeLast
             }
             deque.offerLast(i);  // add the end of the list, same as offer, addLast
-            if ( i >= k - 1) {
+            if (i >= k - 1) {
                 // You want to ensure the deque window only has decreasing elements. That way, the leftmost element is always the largest.
                 res[i-k+1] = nums[deque.peekFirst()]; // same as peek, check the first element in the queue
             }
 
+        }
+        return res;
+    }
+    // pq O(nlogn)
+    public int[] maxSlidingWindowPriorityQueue(int[] nums, int k) {
+        int n = nums.length;
+        int[] res = new int[n - k + 1];
+        PriorityQueue<int[]> pq = new PriorityQueue<>( (a,b) -> b[1] - a[1]);
+        for (int i = 0; i < k; i++) {
+            pq.offer(new int[]{i, nums[i]}); // index, value at index i
+        }
+        res[0] = pq.peek()[1];
+        int index = 1;
+        for (int i = k; i < n; i++) {
+            while (!pq.isEmpty() && i - pq.peek()[0] >= k) {
+                pq.poll();
+            }
+            pq.offer(new int[]{i, nums[i]});
+            res[index] = pq.peek()[1];
+            index++;
         }
         return res;
     }
@@ -61,9 +77,10 @@ public class Sol239_SlidingWindowMaximum {
         int ri = 0;
         // store index
         Deque<Integer> q = new ArrayDeque<>();
+//        Deque<Integer> q = new LinkedList(); // or new LinkedList()
         for (int i = 0; i < a.length; i++) {
             int startWindowIndex = i - k + 1;
-            // remove numbers out of range k; 左出q,保证窗口大小k-1
+            // remove numbers out of range k; 左出q, 保证窗口大小 k-1
             while (!q.isEmpty() && i - q.peekFirst() >= k) {
                 q.pollFirst();
             }

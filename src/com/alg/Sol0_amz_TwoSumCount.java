@@ -11,7 +11,7 @@ import java.util.Set;
 /* count how many pairs of numbers that sum to the target*/
 public class Sol0_amz_TwoSumCount {
     public int countPairs(int[] nums, int target){
-        if ( nums == null || nums.length == 0){
+        if (nums == null || nums.length == 0) {
             return 0;
         }
         int count = 0;
@@ -40,7 +40,7 @@ public class Sol0_amz_TwoSumCount {
     
     public int countPairs2(int[] nums, int target) {
         Map<Integer, Integer> map = new HashMap();
-        for(int n : nums) {
+        for (int n : nums) {
             map.put(n, map.getOrDefault(n, 0) + 1);
         }
         int res = 0;

@@ -53,12 +53,12 @@ Space: O(N)
         );
         ListNode dummy = new ListNode(0);
         ListNode tail = dummy;
-        for(ListNode node : lists) {
+        for (ListNode node : lists) {   //k
             if (node != null) {
-                pq.add(node); // all head nodes of the lists
+                pq.offer(node); // all head nodes of the lists  Log(k)
             }
         }
-        while(!pq.isEmpty()) {
+        while (!pq.isEmpty()) {
             tail.next = pq.poll();  // get all smallest nodes in the polling
             tail = tail.next;
             if (tail.next != null) {

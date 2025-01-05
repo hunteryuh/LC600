@@ -6,7 +6,7 @@ package com.alg;
 /*Given a string s, find the longest palindromic substring in s.
         You may assume that the maximum length of s is 1000.*/
 public class Sol5_LongestPalindromicSubstring {
-    //(Expand Around Center)  O(n^2) time, O(1) space
+    //(Expand Around Center)  O(n^2) time, O(1) space 中心扩散
     public static String longestPalindrome(String s){
         int n = s.length();
         if ( n==0) return "";
@@ -31,6 +31,33 @@ public class Sol5_LongestPalindromicSubstring {
         return j-i-1;  // i and j are out of palindrome range, so minus 1
     }
 
+    // 中心扩散 start+length, no need to calculate "end" index
+    int start = 0;
+    int maxSize = 0;
+    public String longestPalindrome2(String s) {
+        for (int i = 0; i < s.length(); i++) {
+            helper2(s, i, 0);
+            helper2(s, i, 1);
+        }
+        return s.substring(start, start + maxSize);
+    }
+
+    private void helper2(String s, int cur, int offset) {
+        int left = cur;
+        int right =  left + offset;
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+        // 退回到正确状态
+
+        left++;
+        right--;
+        if (right - left + 1 > maxSize) {
+            start = left;
+            maxSize = right - left + 1;
+        }
+    }
     // 中心扩散法 时间 O(n^2) space: O(1)
     public String longestPalin2(String s) {
         StringBuilder sb = new StringBuilder();

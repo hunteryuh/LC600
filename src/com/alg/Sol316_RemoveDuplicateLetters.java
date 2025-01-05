@@ -9,7 +9,8 @@ import java.util.Map;
 import java.util.Set;
 
 /*
-Given a string s, remove duplicate letters so that every letter appears once and only once. You must make sure your result is the smallest in lexicographical order among all possible results.
+Given a string s, remove duplicate letters so that every letter appears once and only once.
+You must make sure your result is the smallest in lexicographical order among all possible results.
 
 
 
@@ -32,6 +33,7 @@ s consists of lowercase English letters.
 Note: This question is the same as 1081: https://leetcode.com/problems/smallest-subsequence-of-distinct-characters/
  */
 public class Sol316_RemoveDuplicateLetters {
+    // https://leetcode.com/problems/remove-duplicate-letters/editorial/
     public String removeDuplicateLetters(String s) {
         // find pos - the index of the leftmost letter in our solution
         // we create a counter and end the iteration once the suffix doesn't have each unique character
@@ -54,8 +56,12 @@ public class Sol316_RemoveDuplicateLetters {
         String s = "cbab";
         String ans = ss.removeDuplicateLetters(s);
         System.out.println(ans);
+
+        ss.smallestSubsequence(s);
     }
 
+    // time : O(n)
+    // space: O(1)
     public String smallestSubsequence(String s) {
         Deque<Character> stack = new ArrayDeque<>();
         Set<Character> set = new HashSet<>();
@@ -71,18 +77,25 @@ public class Sol316_RemoveDuplicateLetters {
                 // exists, but larger than current c, need to remove
                 // if it appears later
                 while (!stack.isEmpty() && c < stack.peek() && lastOccurrence.get(stack.peek()) > i) {
-                    set.remove(stack.pop());
-//                    set.remove(stack.peek());
-//                    stack.pop();
+//                    set.remove(stack.pop());
+                    set.remove(stack.peek());
+                    stack.pop();
                 }
                 set.add(c);
                 stack.push(c);
             }
         }
         StringBuilder sb = new StringBuilder();
-        for (char c: stack) {
-            sb.append(c);
+
+        while (!stack.isEmpty()) {
+            sb.append(stack.pop());
         }
         return sb.reverse().toString();
+
+//        System.out.println(String.valueOf(stack));
+//        for (char c: stack) {
+//            sb.append(c);
+//        }
+//        return sb.toString();
     }
 }

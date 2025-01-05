@@ -34,7 +34,7 @@ public class Sol0_amz_InsertIntoCycleLinkedlist {
         }
     }
     public static ListNode insertCycle(ListNode head, int val) {
-        if ( head == null){
+        if (head == null) {
             ListNode res = new ListNode(val);
             res.next = res;
             return res;

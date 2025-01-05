@@ -51,4 +51,25 @@ public class Sol159_LongestSubstringWithAtMost2DistinctChars {
         }
         return res;
     }
+
+    public int lengthOfLongestSubstringTwoDistinct2(String s){
+        int res = 0;
+        int left = 0;
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            map.put(c, map.getOrDefault(c, 0) + 1);
+            while (map.size() > 2) {
+                char ch = s.charAt(left);
+                map.put(ch, map.get(ch) - 1);
+                if (map.get(ch) == 0) {
+                    map.remove(ch);
+                }
+                left++;
+            }
+            res = Math.max(res, i - left + 1);
+
+        }
+        return res;
+    }
 }

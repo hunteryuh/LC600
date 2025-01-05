@@ -34,7 +34,6 @@ public class Sol1047_RemoveAllAdjacentDuplicatesInString {
             } else {
                 stack.push(c);
             }
-            //ay
         }
         StringBuilder sb = new StringBuilder();
         while (!stack.isEmpty()) {

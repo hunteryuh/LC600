@@ -75,6 +75,38 @@ public class Sol110_BalancedBinaryTree {
         return 1 + Math.max(leftHeight, rightHeight);
     }
 
+    class ResultType {
+        boolean isBalanced;
+        int maxHeight;
+
+        ResultType(boolean isBalance, int depth) {
+            this.isBalanced = isBalance;
+            this.maxHeight = depth;
+        }
+    }
+
+    public boolean isBalanced3(TreeNode root) {
+        return helper(root).isBalanced;
+    }
+
+    private ResultType helper(TreeNode root) {
+        if (root == null) {
+            return new ResultType(true, 0);
+        }
+
+        ResultType leftResult = helper(root.left);
+        ResultType rightResult = helper(root.right);
+
+        if (!leftResult.isBalanced || !rightResult.isBalanced) {
+            return new ResultType(false, -1);
+        }
+        if (Math.abs(leftResult.maxHeight - rightResult.maxHeight) > 1) {
+            return new ResultType(false, - 1);
+        }
+        int maxDepth = Math.max(leftResult.maxHeight, rightResult.maxHeight) + 1;
+        return new ResultType(true, maxDepth);
+    }
+
  /*   public static boolean isBalanced(TreeNode root) {
         int depth[] = new int[1];
         return isBalanced(root, depth);
@@ -97,4 +129,6 @@ public class Sol110_BalancedBinaryTree {
 
         return false;
     }*/
+
+
 }

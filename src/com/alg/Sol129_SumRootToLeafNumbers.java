@@ -52,7 +52,6 @@ public class Sol129_SumRootToLeafNumbers {
     public int sumNumbers(TreeNode root) {
         return sumRoot(root, 0);
     }
-
     private int sumRoot(TreeNode node, int sum) {
         if (node == null) return sum;
 

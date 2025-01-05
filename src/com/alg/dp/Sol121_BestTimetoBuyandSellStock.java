@@ -86,11 +86,11 @@ public class Sol121_BestTimetoBuyandSellStock {
         // dp[i][1]代表第i天不持有股票的最大收益
         int[][] dp = new int[length][2];
         int result = 0;
-        dp[0][0] = -prices[0];
-        dp[0][1] = 0;
+        dp[0][0] = -prices[0]; // 股市刚开场，自己就买入被套牢， 钱在股市不在你手上目前无法套现
+        dp[0][1] = 0; // 股市刚开场，自己手里0 为空钱为0
         for (int i = 1; i < length; i++) {
-            dp[i][0] = Math.max(dp[i - 1][0], -prices[i]);// 第i天买入股票，所得现金就是买入今天的股票后所得现金即：-prices[i]
-            dp[i][1] = Math.max(dp[i - 1][0] + prices[i], dp[i - 1][1]);
+            dp[i][0] = Math.max(dp[i - 1][0], -prices[i]);// 昨天没股票的状态就是初始状态，一定为0 （最多一次交易）第i天买入股票，所得现金就是买入今天的股票后所得现金即：-prices[i]
+            dp[i][1] = Math.max(dp[i - 1][0] + prices[i], dp[i - 1][1]); // 昨天没股票在手，或者昨天有股票今天卖了
         }
         return dp[length - 1][1];
     }

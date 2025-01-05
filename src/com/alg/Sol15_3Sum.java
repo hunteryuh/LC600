@@ -28,7 +28,7 @@ public class Sol15_3Sum {
             for (int j = i + 1; j < n - 1; j++) {
                 //Arrays.sort(nums);
                 int k = Arrays.binarySearch(nums,j + 1, n, -nums[i] - nums[j]);
-                if ( k > j){
+                if (k > j) {
                     List<Integer> intlist = new ArrayList<>();
                     intlist.add(nums[i]);
                     intlist.add(nums[j]);
@@ -50,7 +50,7 @@ public class Sol15_3Sum {
                 int j = i + 1;
                 int k = n - 1;
                 int sum = 0 - nums[i];
-                while ( j < k) {
+                while (j < k) {
 
                     if ( nums[j] + nums[k] == sum) {
                         if (!list.contains(Arrays.asList(nums[i], nums[j], nums[k]))) {
@@ -71,11 +71,12 @@ public class Sol15_3Sum {
     }
 
     // https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0015.%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C.md
+    // two pointer
     public static List<List<Integer>> ThreeSum(int[] nums) {
         //O(n^2) time complexity
         //外层for 执行n 次，里面俩层循一共也只有n 次，因为lo 和 hi 是单调变化的，一个从头往后，一个从后往前
         int n = nums.length;
-        List<List<Integer>> list = new ArrayList<List<Integer>>();
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
         Arrays.sort(nums);
         for (int i = 0; i < n - 2; i++){
             // 错误去重方法，将会漏掉-1,-1,2 这种情况
@@ -90,14 +91,21 @@ public class Sol15_3Sum {
             int j = i + 1;
             int k = n - 1;
             int sum = 0 - nums[i];
-            while ( j < k) {
+            while (j < k) {
                 if (nums[j] + nums[k] == sum) {
-                    list.add(Arrays.asList(nums[i], nums[j], nums[k]));
+                    result.add(Arrays.asList(nums[i], nums[j], nums[k]));
                     while (j < k && nums[j] == nums[j+1]) j++;  // skip the same values
                     while (j < k && nums[k] == nums[k-1]) k--;
 
                     j++;  // increase j to a different nums[j]
                     k--;
+
+                    /* another way to dedupe left and right
+                    j++;
+                    k--;
+                    while (j < k && nums[j] == nums[j - 1]) j++;
+                    while (j < k && nums[k] == nums[k + 1]) k--;
+                     */
                 } else if (nums[j] + nums[k] < sum){
                     j++;
                 } else if (nums[j] + nums[k] > sum ){
@@ -106,7 +114,7 @@ public class Sol15_3Sum {
             }
 
         }
-        return list;  //passed
+        return result;  //passed
     }
 
     public static void main(String[] args) {

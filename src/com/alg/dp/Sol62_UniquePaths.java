@@ -5,10 +5,19 @@ package com.alg.dp;
  */
 /*A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
 
-The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
+The robot can only move either down or right at any point in time.
+The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
 
 How many possible unique paths are there?*/
 public class Sol62_UniquePaths {
+
+    // recursion solution ( not fast enough)
+    public int uniquePaths0(int m, int n) {
+        if (m == 1 || n == 1) {
+            return 1;
+        }
+        return uniquePaths(m - 1, n) + uniquePaths(m, n - 1);
+    }
     public static int uniquePaths(int m, int n){
         //time O(mn), space(mn)
         int[][] matrix = new int[m][n];
@@ -35,9 +44,10 @@ public class Sol62_UniquePaths {
     public static int uniquePaths2(int m, int n){
         int[] dp = new int[n];
         //initial
-        for (int i = 0; i< n ; i++){
+        for (int i = 0; i < n ; i++) {
             dp[i] = 1;
         }
+        // Arrays.fill(dp, 1);
         for (int i = 1; i < m; i++){
             for (int j = 1; j < n ; j++){
                 dp[j] += dp[j-1];
@@ -50,7 +60,7 @@ public class Sol62_UniquePaths {
         int total = m + n - 2;
         int k = Math.min(m-1, n-1);
         long res = 1;
-        for (int i = 1; i <=k; i++) {
+        for (int i = 1; i <= k; i++) {
             res = res * total/i;
             total--;
         }

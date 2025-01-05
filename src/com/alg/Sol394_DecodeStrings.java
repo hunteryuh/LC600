@@ -5,7 +5,41 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- * Created by HAU on 11/8/2017.
+ Given an encoded string, return its decoded string.
+
+ The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times. Note that k is guaranteed to be a positive integer.
+
+ You may assume that the input string is always valid; there are no extra white spaces, square brackets are well-formed, etc. Furthermore, you may assume that the original data does not contain any digits and that digits are only for those repeat numbers, k. For example, there will not be input like 3a or 2[4].
+
+ The test cases are generated so that the length of the output will never exceed 105.
+
+
+
+ Example 1:
+
+ Input: s = "3[a]2[bc]"
+ Output: "aaabcbc"
+
+ Example 2:
+
+ Input: s = "3[a2[c]]"
+ Output: "accaccacc"
+
+ Example 3:
+
+ Input: s = "2[abc]3[cd]ef"
+ Output: "abcabccdcdcdef"
+
+
+
+ Constraints:
+
+ 1 <= s.length <= 30
+ s consists of lowercase English letters, digits, and square brackets '[]'.
+ s is guaranteed to be a valid input.
+ All the integers in s are in the range [1, 300].
+
+
  */
 /*Examples:
 microsoft 2/2/2022  decode string
@@ -46,7 +80,8 @@ public class Sol394_DecodeStrings {
 
     public static void main(String[] args) {
         String s = "3[b2[a]]c";
-        System.out.println(decodeString(s));
+        Sol394_DecodeStrings ss = new Sol394_DecodeStrings();
+        System.out.println(ss.decodeString3(s));
     }
 
     // bottom  2[bc]   top
@@ -119,10 +154,11 @@ Assume, nnn is the length of the string sss.
                 currentString = new StringBuilder();
                 k = 0;
             } else if (ch == ']') {
-                StringBuilder decodedString = stringStack.pop();
+                StringBuilder decodedString = stringStack.pop();  //  "3[b2[a]]c";
+                System.out.println(decodedString.toString());
                 // decode currentK[currentString] by appending currentString k times
                 for (int currentK = countStack.pop(); currentK > 0; currentK--) {
-                    decodedString.append(currentString);
+                    decodedString.append(currentString.toString());
                 }
                 currentString = decodedString;
             } else {

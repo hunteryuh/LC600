@@ -1,12 +1,6 @@
 package com.alg.dp;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /*
 Given a string s and a dictionary of strings wordDict,
@@ -75,7 +69,7 @@ public class Sol140_WordBreakII {
         return result;
     }
 
-    public List<String> wordBreak(String s, Set<String> wordDict) {
+    public List<String> wordBreak2(String s, Set<String> wordDict) {
         return DFS(s, wordDict, new HashMap<String, LinkedList<String>>());
     }
 
@@ -101,7 +95,151 @@ public class Sol140_WordBreakII {
     }
 
     public static void main(String[] args) {
-
+        Sol140_WordBreakII ss = new Sol140_WordBreakII();
+        List<String> wordDict = Arrays.asList("cat","cats","and","sand","dog");
+        String s = "catsanddog";
+//        List<String> res = ss.wordBreak2(s, new HashSet<>(wordDict));
+        List<String> r2 = ss.wordBreak6(s, wordDict);
+        System.out.println(r2);
     }
+
+    // trie optimization
+    // https://leetcode.com/problems/word-break-ii/solutions/1325635/trie-dfs-java/
+    TrieItem root = new TrieItem();
+    public List<String> wordBreak3(String s, List<String> wordDict) {
+        for(String word : wordDict) {
+            addWord(word, root);
+        }
+        List<String> res = new ArrayList<>();
+        List<String> current = new ArrayList<>();
+        dfs(s, 0, root, current, res);
+        return res;
+    }
+    private void dfs(String s, int index, TrieItem node, List<String> current, List<String> res) {
+        if(index == s.length()) {
+            if(node == root) {
+                res.add(String.join(" ", current));
+            }
+            return;
+        }
+        if (node == null) return;//invalid
+        TrieItem trie = node.children[s.charAt(index) - 'a'];
+        if(trie != null && trie.isWord) {
+            current.add(trie.word);
+            dfs(s, index + 1, root, current, res); // find a word, search from the trie root
+            current.remove(current.size() - 1);
+        }
+        dfs(s, index + 1, trie, current, res); // dfs for the next char which is not end of word
+    }
+    private void addWord(String word, TrieItem root) {
+        TrieItem ptr = root;
+        for(int i = 0; i < word.length(); ++i) {
+            int idx = word.charAt(i) - 'a';
+            if (ptr.children[idx] == null) ptr.children[idx] = new TrieItem();
+            ptr = ptr.children[idx];
+        }
+        ptr.isWord = true;
+        ptr.word = word;
+    }
+
+    class TrieItem {
+        boolean isWord;
+        String word;
+        TrieItem[] children;
+        TrieItem() {
+            children = new TrieItem[26];
+        }
+    }
+
+    // trie solution 2
+    class TrieNode {
+
+        boolean isEnd;
+        TrieNode[] children;
+
+        TrieNode() {
+            isEnd = false;
+            children = new TrieNode[26];
+        }
+    }
+
+    class Trie {
+
+        TrieNode root;
+
+        Trie() {
+            root = new TrieNode();
+        }
+
+        void insert(String word) {
+            TrieNode node = root;
+            for (char c : word.toCharArray()) {
+                int index = c - 'a';
+                if (node.children[index] == null) {
+                    node.children[index] = new TrieNode();
+                }
+                node = node.children[index];
+            }
+            node.isEnd = true;
+        }
+    }
+
+    public List<String> wordBreak6(String s, List<String> wordDict) {
+        // Build the Trie from the word dictionary
+        Trie trie = new Trie();
+        for (String word : wordDict) {
+            trie.insert(word);
+        }
+
+        // Map to store results of subproblems
+        Map<Integer, List<String>> dp = new HashMap<>();
+
+        // Iterate from the end of the string to the beginning
+        for (int startIdx = s.length(); startIdx >= 0; startIdx--) {
+            // List to store valid sentences starting from startIdx
+            List<String> validSentences = new ArrayList<>();
+
+            // Initialize current node to the root of the trie
+            TrieNode currentNode = trie.root;
+
+            // Iterate from startIdx to the end of the string
+            for (int endIdx = startIdx; endIdx < s.length(); endIdx++) {
+                char c = s.charAt(endIdx);
+                int index = c - 'a';
+
+                // Check if the current character exists in the trie
+                if (currentNode.children[index] == null) {
+                    break;
+                }
+
+                // Move to the next node in the trie
+                currentNode = currentNode.children[index];
+
+                // Check if we have found a valid word
+                if (currentNode.isEnd) {
+                    String currentWord = s.substring(startIdx, endIdx + 1);
+
+                    // If it's the last word, add it as a valid sentence
+                    if (endIdx == s.length() - 1) {
+                        validSentences.add(currentWord);
+                    } else {
+                        // If it's not the last word, append it to each sentence formed by the remaining substring
+                        List<String> sentencesFromNextIndex = dp.get(endIdx + 1);
+                        for (String sentence : sentencesFromNextIndex) {
+                            validSentences.add(currentWord + " " + sentence);
+                        }
+                    }
+                }
+            }
+
+            // Store the valid sentences in dp
+            dp.put(startIdx, validSentences);
+        }
+        System.out.println(dp);
+
+        // Return the sentences formed from the entire string
+        return dp.getOrDefault(0, new ArrayList<>());
+    }
+
 
 }

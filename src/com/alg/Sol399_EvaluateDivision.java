@@ -63,15 +63,18 @@ public class Sol399_EvaluateDivision {
     }
 
     // dividend 被除数 divisor 除数
-
     private Map<String, Map<String, Double>> buildGraph(List<List<String>> equations, double[] values) {
-        Map<String, Map<String, Double>> map = new HashMap<>();
+        Map<String, Map<String, Double>> map = new HashMap<>(); // key: v1, value: v2 and quotient
         String v1, v2;
         for (int i = 0; i < equations.size(); i++) {
             List<String> eqn = equations.get(i);
             v1 = eqn.get(0);
             v2 = eqn.get(1);
+
             map.computeIfAbsent(v1, k -> new HashMap<>()).put(v2, values[i]);
+            // below it is another way to write the logic above
+            // map.putIfAbsent(v1, new HashMap<>());
+            // map.get(v1).put(v2, values[i]);
             map.computeIfAbsent(v2, k -> new HashMap<>()).put(v1, 1/values[i]);
         }
         return map;
@@ -84,14 +87,14 @@ public class Sol399_EvaluateDivision {
             return graph.get(v1).get(v2);
         }
         visited.add(v1);
-        for (Map.Entry<String, Double> neigbor: graph.get(v1).entrySet()) {
-            if (visited.contains(neigbor.getKey())) continue;
-            double result = dfs(neigbor.getKey(), v2, visited, graph);
+        for (Map.Entry<String, Double> neighbor: graph.get(v1).entrySet()) {
+            if (visited.contains(neighbor.getKey())) continue;
+            double result = dfs(neighbor.getKey(), v2, visited, graph);
             if (result != -1) {
-                return neigbor.getValue() * result;
+                return neighbor.getValue() * result;
             }
         }
-        // visited.remove(v1);  // works either way
+        visited.remove(v1);  // //visited.remove(v1)  works either way
         return -1.0;
     }
 

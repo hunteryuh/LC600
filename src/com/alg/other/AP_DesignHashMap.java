@@ -4,7 +4,7 @@ import java.util.stream.*;
 import java.util.concurrent.*;
 // https://leetcode.com/problems/design-hashmap/solutions/?orderBy=most_votes
 public class AP_DesignHashMap {
-
+// https://leetcode.com/problems/design-hashmap/solutions/227081/java-solutions/ leetcode 706
     /*
      * We want to implement a hash map without using any library provided by the programming language.
      * API:
@@ -60,7 +60,7 @@ public class AP_DesignHashMap {
             int index = hash(key) % size;
             Node node = arr[index];
 
-            while (node != null && node.key.equals(key)) {
+            while (node != null && !node.key.equals(key)) {
                 node = node.next;
             }
             if (node != null) {
@@ -78,6 +78,35 @@ public class AP_DesignHashMap {
             int hashCode = key.hashCode();
             hashCode = hashCode < 0 ? hashCode * -1 : hashCode;
             return hashCode;
+        }
+    }
+
+
+
+    // use large array
+    class MyHashMap
+    {
+        int[] map;
+
+        public MyHashMap()
+        {
+            map = new int[1000001];
+            Arrays.fill(map,-1);
+        }
+
+        public int get(int key)
+        {
+            return map[key];
+        }
+
+        public void put(int key, int value)
+        {
+            map[key] = value;
+        }
+
+        public void remove(int key)
+        {
+            map[key] = -1;
         }
     }
 }

@@ -28,7 +28,7 @@ public class DD_getAvailableDeliveries {
                 continue;
             }
 
-            if (daysBetween == 1) {
+//            if (daysBetween == 1) { // this is all the "else"
                 if (dasher.isHighTier) {
                     if (currentDateTime.getHour() >= 18) {
                         eligibleDeliveries.add(delivery);
@@ -40,7 +40,7 @@ public class DD_getAvailableDeliveries {
                     eligibleDeliveries.add(delivery);
                     continue;
                 }
-            }
+//            }
         }
 
         return eligibleDeliveries;

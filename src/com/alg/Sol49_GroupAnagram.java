@@ -29,12 +29,12 @@ public class Sol49_GroupAnagram {
     public static List<List<String>> groupAnagrams(String[] strs) {
         if (strs.length == 0) return new ArrayList<List<String>>();
         Map<String, List<String>> res = new HashMap<>();
-        for (String s : strs){
+        for (String s : strs) {
             char[] car = s.toCharArray();
             Arrays.sort(car);
             String key = String.valueOf(car);
-            if (!res.containsKey(key)){
-                res.put(key, new ArrayList());
+            if (!res.containsKey(key)) {
+                res.put(key, new ArrayList<>());
             }
 
             res.get(key).add(s);
@@ -44,7 +44,7 @@ public class Sol49_GroupAnagram {
             res.put(key,anagrams);*/
 
         }
-        return new ArrayList(res.values());
+        return new ArrayList<>(res.values());
     }
 
     public static void main(String[] args) {

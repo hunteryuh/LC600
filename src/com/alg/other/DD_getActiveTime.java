@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
-Given a sequence of timestamps & actions of a dasher's activity within a day, we would like to know the active time of the dasher. Idle time is defined as the dasher has NO delivery at hand. (That means all items have been dropped off at this moment and the dasher is just waiting for another pickup) Active time equals total time minus idle time. Below is an example. Dropoff can only happen after pickup. 12:00am means midnight and 12:00pm means noon. All the time is within a day.
+Given a sequence of timestamps & actions of a dasher's activity within a day,
+we would like to know the active time of the dasher.
+Idle time is defined as the dasher has NO delivery at hand. (That means all items have been dropped off at this moment and the dasher is just waiting for another pickup) Active time equals total time minus idle time. Below is an example. Dropoff can only happen after pickup. 12:00am means midnight and 12:00pm means noon. All the time is within a day.
 
 Timestamp(12h) | Action
 8:30am | pickup
@@ -17,6 +19,7 @@ Timestamp(12h) | Action
 total time = 2:25pm-8:30am = 355 mins;
 idle time = 10:20am-9:10am = 70 mins;
 active time = total time-idle time = 355-70 = 285 mins;
+total active time
  */
 public class DD_getActiveTime {
     private int getActiveTimes(List<String> activity) {
@@ -25,12 +28,12 @@ public class DD_getActiveTime {
         int endTime = 0;
         int result = 0;
         for (String currentActivity : activity) {
-            String[] split = currentActivity.split("\\s+");
+            String[] split = currentActivity.split("\\s+"); // sequences of one or more whitespace characters
             String timing = split[0];
             String method = split[1];
-            if(method.equals("pickup")) {
+            if (method.equals("pickup")) {
                 timer++;
-                if(timer == 1) {
+                if (timer == 1) {
                     startTime = getMinutes(timing);
                 }
             } else {

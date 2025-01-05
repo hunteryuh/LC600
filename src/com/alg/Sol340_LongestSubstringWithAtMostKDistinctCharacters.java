@@ -67,8 +67,9 @@ public class Sol340_LongestSubstringWithAtMostKDistinctCharacters {
         ss.lengthOfLongestSubstringKDistinct(s, k);
     }
 
-    // gurantee time O(N) with ordered map: linkedhashmap
+    // guaranteed time O(N) with ordered map: linkedhashmap， inserted with order
     public int lengOfLSKDistinct(String s, int k) {
+        // store the position of the MOST RECENT occurrence of a character in the window
         Map<Character, Integer> map = new LinkedHashMap<>();
         int max = 0;
         int left = 0;
@@ -77,9 +78,9 @@ public class Sol340_LongestSubstringWithAtMostKDistinctCharacters {
             map.remove(ch);
             map.put(ch, i);
             if (map.size() > k) {
-                char c1 = map.keySet().iterator().next();
+                char c1 = map.keySet().iterator().next(); //  or treemap.firstEntry()
                 int idx1 = map.get(c1);
-                left = idx1 + 1;
+                left = idx1 + 1;// starting point of the new window
                 map.remove(c1);
             }
             max = Math.max(max, i - left + 1);

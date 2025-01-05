@@ -10,7 +10,8 @@ In this problem, a tree is an undirected graph that is connected and has no cycl
 
 You are given a graph that started as a tree with n nodes labeled from 1 to n, with one additional edge added. The added edge has two different vertices chosen from 1 to n, and was not an edge that already existed. The graph is represented as an array edges of length n where edges[i] = [ai, bi] indicates that there is an edge between nodes ai and bi in the graph.
 
-Return an edge that can be removed so that the resulting graph is a tree of n nodes. If there are multiple answers, return the answer that occurs last in the input.
+Return an edge that can be removed so that the resulting graph is a tree of n nodes.
+If there are multiple answers, return the answer that occurs last in the input.
 
 Example 1:
 
@@ -84,6 +85,8 @@ public class Sol684_RedundantConnection {
 
 
     // method 2: dfs
+    // https://leetcode.com/problems/redundant-connection/editorial/
+    // similar to https://leetcode.com/problems/redundant-connection/solutions/2052496/java-dfs-solution-with-explain/
     public int[] findRedundantCon(int[][] edges) {
 //        Map<Integer, List<Integer>> map = new HashMap<>();
         List<List<Integer>> graph = new ArrayList<>();
@@ -97,6 +100,7 @@ public class Sol684_RedundantConnection {
             int u = edge[0] - 1;
             int v = edge[1] - 1;
             if (!graph.get(u).isEmpty() && !graph.get(v).isEmpty()) {
+                // Actually a redundant edge means after we add this edge, the graph will contain a cycle.
                 if (dfs(u, v, graph, visited)) {
                     return edge;
                 }
@@ -118,6 +122,47 @@ public class Sol684_RedundantConnection {
             }
         }
         visited[start] = false; // need backtracking
+        return false;
+    }
+
+
+    //
+    boolean[] visited;
+
+    public int[] findRedundantConnection2(int[][] edges) {
+        HashMap<Integer, List<Integer>> hashMap = new HashMap<>();
+        for(int i = 0; i < edges.length; i++){
+            hashMap.put(i + 1, new ArrayList<>());
+        }
+
+        int[] res = new int[2];
+        for(int i = 0; i < edges.length; i++){
+            int[] edge = edges[i];
+            visited = new boolean[edges.length + 1];
+            if(!hashMap.get(edge[0]).isEmpty() && !hashMap.get(edge[1]).isEmpty()
+                    && dfs(edge[0], edge[1], hashMap)){
+                return edge;
+            }
+            hashMap.get(edge[0]).add(edge[1]);
+            hashMap.get(edge[1]).add(edge[0]);
+        }
+        return res;
+    }
+
+    public boolean dfs(int src, int target, HashMap<Integer, List<Integer>> hashMap){
+        if(src == target){
+            return true;
+        }
+        visited[src] = true;
+
+        for(Integer next: hashMap.get(src)){
+            if (!visited[next]) {
+                if (dfs(next, target, hashMap)){
+                    return true;
+                }
+            }
+        }
+
         return false;
     }
 }

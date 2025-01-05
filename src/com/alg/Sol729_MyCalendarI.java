@@ -47,6 +47,7 @@ public class Sol729_MyCalendarI {
     }
 
     // TreeMap, sort by the key: start time, value: end time
+    // time O(nlogn)
     class MyCalendar2 {
         TreeMap<Integer, Integer> map;
 

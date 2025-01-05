@@ -22,11 +22,11 @@ and to take course 0 you should also have finished course 1. So it is impossible
 
 /*This problem can be converted to finding if a graph contains a cycle.*/
 public class Sol207_CourseSchedule {
-
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         if (numCourses == 0 || prerequisites.length == 0) return true;
 
-        List<Integer>[] graph = new ArrayList[numCourses]; // an ArrayList, each item in the array is a List of integer
+        List<Integer>[] graph = new ArrayList[numCourses];
+        // an ArrayList, each item in the array is a List of integer
 
         int[] inDegrees = new int[numCourses];
 
@@ -80,7 +80,7 @@ public class Sol207_CourseSchedule {
         int numNoPre = queue.size(); // number of courses that have no prerequisites
 
         while(!queue.isEmpty()){
-            int top = queue.remove();
+            int top = queue.poll();
             for (int i = 0; i<len; i++){
                 // if a course's prerequisite can be satisfied by a course in queue
                 if (prerequisites[i][1] == top) {
@@ -167,6 +167,7 @@ public class Sol207_CourseSchedule {
         visited[u] = 2;
     }
 
+    // use map instead of an array of list for the graph
     public boolean canFinish3(int numCourses, int[][] prerequisites) {
         int count = 0;
         //

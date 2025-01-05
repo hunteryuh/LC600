@@ -34,16 +34,16 @@ public class Sol39_CombinationSum {
     }
 
     private static void helper(int[] candidates, int index, ArrayList<Integer> subset, int target, ArrayList<List<Integer>> result) {
-        if (target == 0){
+        if (target == 0) {
             ArrayList<Integer> tmp = new ArrayList<>(subset);
             result.add(tmp);
             return;
         }
-        for ( int i = index; i < candidates.length; i++){
+        for (int i = index; i < candidates.length; i++){
             if (candidates[i] > target) return;
             subset.add(candidates[i]);
             //The same repeated number may be chosen from C unlimited number of times.
-            helper(candidates,i,subset,target - candidates[i],result); // still start from i, not i + 1
+            helper(candidates,i,subset,target - candidates[i], result); // still start from i, not i + 1
             subset.remove(subset.size() - 1);
         }
 
@@ -139,6 +139,32 @@ public class Sol39_CombinationSum {
             sol.add(candidates[i]);
             dfs(candidates, target, sol, res, sum, i);
             sum -= candidates[i];
+            sol.remove(sol.size() - 1);
+        }
+    }
+
+    // no need to sort, and use global variable
+    int[] candidates;
+    int target;
+    public List<List<Integer>> combinationSum4(int[] candidates, int target) {
+        this.candidates = candidates;
+        this.target = target;
+        List<List<Integer>> res = new ArrayList<>();
+        dfs(res, new ArrayList<>(), 0, 0);
+        return res;
+    }
+
+    private void dfs(List<List<Integer>> res, List<Integer> sol, int sum, int start) {
+        if (sum > target) {
+            return;
+        }
+        if (sum == target) {
+            res.add(new ArrayList<>(sol));
+            return;
+        }
+        for (int i = start; i < candidates.length; i++) {
+            sol.add(candidates[i]);
+            dfs(res, sol, sum + candidates[i], i);
             sol.remove(sol.size() - 1);
         }
     }

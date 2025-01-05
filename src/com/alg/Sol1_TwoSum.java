@@ -27,7 +27,7 @@ public class Sol1_TwoSum {
 
         // to get O(n) time, need to use Hashmap
         HashMap<Integer,Integer> map = new HashMap<>();
-        for ( int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++){
             map.put(nums[i], i);
         }
         for (int i = 0; i < n; i++){
@@ -38,6 +38,18 @@ public class Sol1_TwoSum {
             }
         }
         return res;
+    }
+
+    public int[] twoSum4(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(target - nums[i]) && map.get(target-nums[i]) != i) {
+                return new int[]{i, map.get(target-nums[i])};
+            } else {
+                map.put(nums[i], i);
+            }
+        }
+        return null;
     }
 
     // O(n^2)

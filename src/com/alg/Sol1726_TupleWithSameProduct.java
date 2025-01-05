@@ -6,8 +6,6 @@ import java.util.Map;
 /*
 Given an array nums of distinct positive integers, return the number of tuples (a, b, c, d) such that a * b = c * d where a, b, c, and d are elements of nums, and a != b != c != d.
 
-
-
 Example 1:
 
 Input: nums = [2,3,4,6]
@@ -45,9 +43,14 @@ public class Sol1726_TupleWithSameProduct {
         int res = 0;
         for (int key : map.keySet()) {
             int count = map.get(key);
-            int time = (0 + count - 1) * count / 2; // sum arithmetic sequence
-            res += time * 8;  // each couple has 8 results
+            int time = (0 + count - 1) * count / 2; // here we use combinatorial nC2 (choose two out of n)
+            // count: number of pairs whose product is key
+            res += time * 8;  // Each tuple [a,b,c,d] can be arranged in 8 different ways matching the criteria.
         }
+//        for (int val: map.values()) { // use value directly
+//            int time = val * (val - 1) /2;
+//            res += time * 8;
+//        }
         return res;
     }
 }

@@ -1,14 +1,7 @@
 package com.alg;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /*
 You are given two string arrays username and website and an integer array timestamp. All the given arrays are of the same length and the tuple [username[i], website[i], timestamp[i]] indicates that the user username[i] visited the website website[i] at time timestamp[i].
@@ -29,6 +22,7 @@ doordash onsite consolidate doordash
 https://leetcode.com/discuss/interview-question/1583430/doordash-questions-consolidated
  */
 public class Sol1152_AnalyzeUserWebsiteVisitPattern {
+    // https://leetcode.com/problems/analyze-user-website-visit-pattern/solutions/355606/java-very-easy-understand-with-explanation/
     public List<String> mostVisitedPattern(String[] username, int[] timestamp, String[] website) {
         Map<String, List<Pair>> map = new HashMap<>();
         for (int i = 0; i < username.length; i++) {
@@ -38,14 +32,18 @@ public class Sol1152_AnalyzeUserWebsiteVisitPattern {
         String res = "";
         for (String user: map.keySet()) {
             List<Pair> patterns = map.get(user);
+            // this set is to avoid visit the same 3-seq in one user
             Set<String> set = new HashSet<>();
-            patterns.sort(Comparator.comparingInt(a -> a.time));
+            Collections.sort(patterns, (a, b) -> a.time - b.time);
+//            patterns.sort(Comparator.comparingInt(a -> a.time));
+            // brutal force O(N ^ 3)
             for (int i = 0; i < patterns.size(); i++) {
                 for (int j = i + 1; j < patterns.size(); j++) {
                     for (int k = j + 1; k < patterns.size(); k++) {
                         String pattern = patterns.get(i).website + " " + patterns.get(j).website + " " + patterns.get(k).website;
-                        if (set.add(pattern)) {
+                        if (!set.contains(pattern)) {
                             patternCount.put(pattern, patternCount.getOrDefault(pattern, 0) + 1);
+                            set.add(pattern);
                         }
                         if (res.equals("") || patternCount.get(pattern) > patternCount.get(res) ||
                             (patternCount.get(pattern) == patternCount.get(res) && pattern.compareTo(res) < 0)) {

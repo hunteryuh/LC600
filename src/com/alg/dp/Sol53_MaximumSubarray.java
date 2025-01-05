@@ -11,6 +11,17 @@ For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
 the contiguous subarray [4,-1,2,1] has the largest sum = 6.
 */
 public class Sol53_MaximumSubarray {
+
+    // time O(n)
+    public int maxSubarray0(int[] nums) {
+        int sum = 0;
+        int res = Integer.MIN_VALUE;
+        for (int i = 0; i < nums.length; i++) {
+            sum = Math.max(sum + nums[i], nums[i]);
+            res = Math.max(sum, res);
+        }
+        return res;
+    }
     public static int maxSubArray(int[] nums){
         if (nums.length ==0) return 0;
         int currentSubarray = nums[0];
@@ -64,9 +75,9 @@ public class Sol53_MaximumSubarray {
     //camp
     public static int maxsubarray(int[] nums){
         int cursum = 0;
-        int maxsum = Integer.MAX_VALUE;
+        int maxsum = Integer.MIN_VALUE;
         for (int i = 0; i< nums.length;i++){
-            if (cursum <=0){
+            if (cursum <=0) {
                 cursum = nums[i];
             }else{
                 cursum += nums[i];

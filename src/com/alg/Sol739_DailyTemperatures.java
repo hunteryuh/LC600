@@ -125,7 +125,7 @@ public class Sol739_DailyTemperatures {
             while (!stack.isEmpty() && tmp[i] >= tmp[stack.peek()]) {
                 stack.pop();
             }
-            res[i] = stack.isEmpty() ? 0: stack.peek() - 1;
+            res[i] = stack.isEmpty() ? 0: stack.peek() - i;
             stack.push(i);
         }
         return res;

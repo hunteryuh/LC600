@@ -104,6 +104,27 @@ public class Sol57_InsertIntervals {
         return res.toArray(new int[res.size()][]);
     }
 
+    // method 2.1 from gucheng
+    public int[][] insert3(int[][] intervals, int[] newInterval) {
+        List<int[]> res = new ArrayList<>();
+        for (int[] cur : intervals) {
+            if (newInterval == null || cur[1] < newInterval[0]) {
+                res.add(cur);
+            } else if (newInterval[1] < cur[0]) {
+//                res.addAll(List.of(newInterval, cur));
+                res.addAll(Arrays.asList(newInterval, cur));
+                newInterval = null;
+            } else {
+                newInterval[0] = Math.min(cur[0], newInterval[0]);
+                newInterval[1] = Math.max(cur[1], newInterval[1]);
+            }
+        }
+        if (newInterval != null) {
+            res.add(newInterval);
+        }
+        return res.toArray(new int[0][]); // 0 will be updated as the actual list size in the logic
+    }
+
     public static void main(String[] args) {
         int[][] intervals = {
                 {1,2}, {3,5}, {6,7}, {8,10}, {12,16}
@@ -148,8 +169,9 @@ public class Sol57_InsertIntervals {
         //  1 2   6 9  9 11    20  24
         //      5     10
 //        int[] toadd = newInterval;
-        // start of the new interval is already bigger than end of previous interval in intervals after the while loop above,
-        // so compare its end to the start of interval[i]
+        // start of the new interval is already smaller than end of previous interval in intervals
+        // after the while loop above,
+        // so compare its (the new interval's end to the start of interval[i]
         while (i < n && newInterval[1] >= intervals[i][0]) {
             int start = Math.min(intervals[i][0], newInterval[0]);
             int end = Math.max(intervals[i][1], newInterval[1] );

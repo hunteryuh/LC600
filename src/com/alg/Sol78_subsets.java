@@ -29,24 +29,23 @@ If nums = [1,2,3], a solution is:
 
 public class Sol78_subsets {
 
-    //list 是个接口， arraylist是个具体 的实现， linkedlist是另一种，它的Add跟remove与arraylist不同
-    public static List<List<Integer>> subsets(int[] nums){
-        ArrayList<List<Integer>> result = new ArrayList<>();
-        if (nums == null){
+    // list 是个接口， arraylist是个具体 的实现， linkedlist是另一种，它的Add跟remove与arraylist不同
+    public static List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (nums == null) {
             return result;
         }
-        if (nums.length == 0){
+        if (nums.length == 0) {
             result.add(new ArrayList<Integer>());
             return result;
         }
-
 //        Arrays.sort(nums); // no need to sort if no duplicate
 
         //[1,2] == [2,1], no duplicate subsets
         // find all subsets starting from empty sets
         // all subsets start from empty set []
         // all string start with ""  ( empty string)
-        ArrayList<Integer> subset = new ArrayList<>();
+        List<Integer> subset = new ArrayList<>();
         helper(nums, 0, subset, result);
 
         return result;
@@ -56,24 +55,24 @@ public class Sol78_subsets {
     // 1. definition of recursion: in nums, find all subsets starting from subset, put in results
     private static void helper(int[] nums,
                                int offset,
-                               ArrayList<Integer> subset,
-                               ArrayList<List<Integer>> result){
+                               List<Integer> subset,
+                               List<List<Integer>> result){
         // 2. break-down of recursion
         // wrong: result.add(subset)
         // clone operation:  deep copy
-        result.add(new ArrayList<Integer>(subset));//??
+        result.add(new ArrayList<>(subset)); // ??
 
         if (offset >= nums.length) { //终止条件可不加 因为 offset >= nums.size()，本层for循环本来也结束了。
             return;
         }
 
-        for (int i = offset; i < nums.length; i++){
+        for (int i = offset; i < nums.length; i++) {
             subset.add(nums[i]);
             // [] -> [1]
             // find all subsets starting from [1]
-            helper(nums,i+1, subset, result);
+            helper(nums,i + 1, subset, result);
             // now subset is [1]
-            // do backtracing: [1]->[]
+            // do backtracking: [1]->[]
             subset.remove(subset.size()-1);
         }
 
@@ -104,7 +103,7 @@ public class Sol78_subsets {
     public List<List<Integer>> subsets2(int[] nums) {
         LinkedList<Integer> sol = new LinkedList<>();
         List<List<Integer>> res = new ArrayList<>();
-        if (nums == null || nums.length == 0) return res;
+//        if (nums == null || nums.length == 0) return res; // can remove, it still passes
 
         dfs(nums, res, sol, 0);
         return res;

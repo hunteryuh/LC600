@@ -72,7 +72,8 @@ public class Sol496_NextGreaterElementI {
         return res;
     }
 
-    // from left to right shorter version, monotonic （decreasing stack, top element is the smallest and popped
+    // from left to right shorter version, monotonic
+    // （decreasing stack, top element is the smallest and popped
     // bottom element is largest
     public int[] nextG(int[] nums1, int nums2[]) {
         int size = nums1.length;

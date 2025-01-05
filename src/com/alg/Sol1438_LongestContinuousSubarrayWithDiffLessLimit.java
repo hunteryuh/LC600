@@ -7,9 +7,9 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 /*
-Given an array of integers nums and an integer limit, return the size of the longest non-empty subarray such that the absolute difference between any two elements of this subarray is less than or equal to limit.
-
-
+Given an array of integers nums and an integer limit, return the size of the longest
+non-empty subarray such that the absolute difference between any two elements of this subarray
+is less than or equal to limit.
 
 Example 1:
 
@@ -73,6 +73,7 @@ public class Sol1438_LongestContinuousSubarrayWithDiffLessLimit {
 
     // two deque
     // Time O(N), space O(n)
+    // https://leetcode.com/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit/solutions/609743/java-detailed-explanation-sliding-window-deque-o-n/
     public int longestSubarray2(int[] A, int limit) {
         Deque<Integer> maxQueue = new ArrayDeque<>();
         Deque<Integer> minQueue = new ArrayDeque<>();

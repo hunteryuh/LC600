@@ -1,8 +1,6 @@
 package com.alg;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 /*
 Given a string s of '(' , ')' and lowercase English characters.
@@ -128,21 +126,22 @@ public class Sol1249_MinimumRemovetoMakeValidParenthesis {
     }
 
     // rolling state, use stack to store index
+    // time O(n), n is the length of the input string
     public String minRemoveToMakeValid4(String s) {
-        Stack<Integer> st = new Stack<>();
+        Stack<Integer> stack = new Stack<>();
         Set<Integer> indicesToRemove = new HashSet<>();
         for (int i = 0; i < s.length(); ++i) {
-            if (s.charAt(i) == '(') st.push(i);
+            if (s.charAt(i) == '(') stack.push(i);
             else if (s.charAt(i) == ')') {
-                if (st.isEmpty()) {
+                if (stack.isEmpty()) {
                     indicesToRemove.add(i);
                 } else {
-                    st.pop();
+                    stack.pop();
                 }
             }
         }
-        while (!st.empty()) {
-            indicesToRemove.add(st.pop());
+        while (!stack.empty()) {
+            indicesToRemove.add(stack.pop());
         }
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
@@ -152,4 +151,141 @@ public class Sol1249_MinimumRemovetoMakeValidParenthesis {
         }
         return sb.toString();
     }
+
+    //Generate all distinct balanced parentheses strings
+    //after removing the minimum number of parentheses
+    //edit
+    // input s = "()())"
+    // output ["(())", "(())"]
+    // use backtracking
+
+    public class BalancedParentheses {
+        public List<String> removeInvalidParentheses(String s) {
+            Set<String> result = new HashSet<>();
+            int leftToRemove = 0, rightToRemove = 0;
+
+            // First, we find out the number of misplaced left and right parentheses
+            for (char c : s.toCharArray()) {
+                if (c == '(') {
+                    leftToRemove++;
+                } else if (c == ')') {
+                    if (leftToRemove == 0) {
+                        rightToRemove++;
+                    } else {
+                        leftToRemove--;
+                    }
+                }
+            }
+
+            // Use backtracking to generate all possibilities
+            backtrack(s, 0, 0, 0, leftToRemove, rightToRemove, new StringBuilder(), result);
+
+            return new ArrayList<>(result);
+        }
+
+        private void backtrack(String s, int index, int leftCount, int rightCount, int leftToRemove, int rightToRemove, StringBuilder expression, Set<String> result) {
+            // If we've reached the end of the string, add the current expression to the result if it's valid
+            if (index == s.length()) {
+                if (leftToRemove == 0 && rightToRemove == 0) {
+                    result.add(expression.toString());
+                }
+                return;
+            }
+
+            char currentChar = s.charAt(index);
+            int length = expression.length();
+
+            // If the current character is a left parenthesis and we can remove it, do so
+            if (currentChar == '(' && leftToRemove > 0) {
+                backtrack(s, index + 1, leftCount, rightCount, leftToRemove - 1, rightToRemove, expression, result);
+            }
+
+            // If the current character is a right parenthesis and we can remove it, do so
+            if (currentChar == ')' && rightToRemove > 0) {
+                backtrack(s, index + 1, leftCount, rightCount, leftToRemove, rightToRemove - 1, expression, result);
+            }
+
+            // Append the current character and move to the next one
+            expression.append(currentChar);
+
+            // If it's not a parenthesis, just continue
+            if (currentChar != '(' && currentChar != ')') {
+                backtrack(s, index + 1, leftCount, rightCount, leftToRemove, rightToRemove, expression, result);
+            } else if (currentChar == '(') {
+                // If it's an open parenthesis, increment the count and continue
+                backtrack(s, index + 1, leftCount + 1, rightCount, leftToRemove, rightToRemove, expression, result);
+            } else if (rightCount < leftCount) {
+                // If it's a close parenthesis and we have more opens, increment the count and continue
+                backtrack(s, index + 1, leftCount, rightCount + 1, leftToRemove, rightToRemove, expression, result);
+            }
+
+            // Backtrack and remove the last character
+            expression.deleteCharAt(length);
+        }
+
+
+        // method 2
+        public List<String> removeInvalidParentheses2(String s) {
+            Set<String> result = new HashSet<>();
+            int maxRemoved = countUnbalanced(s); // To track maximum number of parentheses to remove
+            // First pass to find the max number of parentheses to remove
+            ;
+            backtrack2(s, 0, 0, 0, maxRemoved, new StringBuilder(), result);
+            return new ArrayList<>(result);
+        }
+
+        private int countUnbalanced(String s) {
+            int left = 0, right = 0;
+            for (char c : s.toCharArray()) {
+                if (c == '(') {
+                    left++;
+                } else if (c == ')') {
+                    if (left > 0) {
+                        left--;
+                    } else {
+                        right++;
+                    }
+                }
+            }
+            // Total parentheses to remove is the unmatched left and right
+            return left + right;
+        }
+        private void backtrack2(String s, int index, int leftCount, int rightCount, int maxRemove, StringBuilder current, Set<String> result) {
+            if (index == s.length()) {
+                if (leftCount == rightCount) {
+                    result.add(current.toString());
+                }
+                return;
+            }
+
+            char c = s.charAt(index);
+            if (c == '(') {
+                // Option to remove this '('
+                if (maxRemove > 0) {
+                    backtrack2(s, index + 1, leftCount, rightCount, maxRemove - 1, current, result);
+                }
+                // Option to keep this '('
+                current.append(c);
+                backtrack2(s, index + 1, leftCount + 1, rightCount, maxRemove, current, result);
+                current.deleteCharAt(current.length() - 1);
+            } else if (c == ')') {
+                // Option to remove this ')'
+                if (maxRemove > 0) {
+                    backtrack2(s, index + 1, leftCount, rightCount, maxRemove - 1, current, result);
+                }
+                // Option to keep this ')'
+                if (leftCount > rightCount) {
+                    current.append(c);
+                    backtrack2(s, index + 1, leftCount, rightCount + 1, maxRemove, current, result);
+                    current.deleteCharAt(current.length() - 1);
+                }
+            } else {
+                // Just add the character if it's not parentheses
+                current.append(c);
+                backtrack2(s, index + 1, leftCount, rightCount, maxRemove, current, result);
+                current.deleteCharAt(current.length() - 1);
+            }
+        }
+    }
+
 }

@@ -2,9 +2,6 @@ package com.alg;
 
 import java.util.Stack;
 
-/**
- * Created by HAU on 11/28/2017.
- */
 /*Implement the following operations of a queue using stacks.
 
 push(x) -- Push element x to the back of queue.
@@ -26,7 +23,6 @@ public class Sol232_ImplementQueueUsingStacks {
             while (!stack.isEmpty()) tmp.push(stack.pop());
             stack.push(x);
             while(!tmp.isEmpty()) stack.push(tmp.pop());
-            
         }
 
         /** Removes the element from in front of queue and returns that element. */

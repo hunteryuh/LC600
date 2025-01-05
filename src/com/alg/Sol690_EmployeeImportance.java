@@ -99,7 +99,7 @@ public class Sol690_EmployeeImportance {
         return maxId;
     }
     // see public class Sol0_amz_MaximumSubtreeofAverage
-    // get highest perfor‍‍‌‍‍‌‍‌‌‌‌‍‍‍‌‍mance r‍‍‍‌‌‍‌‍‌‌‍‍‍‍‍‍‍‌ating average
+    // get the highest performance rating average
     private double[] getMaxAveHelper(Employee root) {
         if (root == null) {
             return new double[]{0, 0}; // sum and count

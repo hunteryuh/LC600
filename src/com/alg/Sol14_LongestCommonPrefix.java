@@ -1,5 +1,8 @@
 package com.alg;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by HAU on 8/4/2017.
  */
@@ -31,7 +34,7 @@ Constraints:
 
 
 public class Sol14_LongestCommonPrefix {
-    public static String longestCommonPrefix(String[] strs){
+    public static String longestCommonPrefix(String[] strs) {
         // vertical scanning
         //Time complexity : O(S) , where S is the sum of all characters in all strings.
         //Even though the worst case is still the same as Approach #1, in the best case there are at most
@@ -53,7 +56,11 @@ public class Sol14_LongestCommonPrefix {
         String[] arr = {"apple", "apps","appss","apt"};
         //System.out.println(longestCommonPrefix(arr));
         // output:  ap
-        System.out.println(longestCommonPrefix2(arr));
+//        System.out.println(longestCommonPrefix2(arr));
+
+        Sol14_LongestCommonPrefix ss = new Sol14_LongestCommonPrefix();
+        String[] input = {"ab", "a"};
+        System.out.println(ss.longestCommonPrefixWithTrie(input));
     }
     public static String longestCommonPrefix2(String[] strs) {
         // horizontal scanning
@@ -65,9 +72,55 @@ public class Sol14_LongestCommonPrefix {
                 //String indexOf(String str) : This method returns the index within this
                 // string of the first occurrence of the specified substring.
                 //If it does not occur as a substring, -1 is returned. and -1 != 0
-                        prefix = prefix.substring(0, prefix.length() - 1);
+                prefix = prefix.substring(0, prefix.length() - 1);
                 if (prefix.isEmpty()) return "";
             }
         return prefix;
+    }
+
+    // worked as of 11/25/2024
+    public String longestCommonPrefixWithTrie(String[] strs){
+        if (strs.length == 1) return strs[0];
+        int n = strs.length;
+        TrieNode root = new TrieNode();
+        for (String word: strs) {
+            addWord(word, root);
+        }
+        return searchLCP(strs[0], root, n);
+    }
+
+    private String searchLCP(String word, TrieNode root, int n) {
+        TrieNode node = root;
+        StringBuilder sb  = new StringBuilder();
+        for (char c: word.toCharArray()) {
+            if (node.childrenMap.get(c).count == n) {
+                node = node.childrenMap.get(c);
+                sb.append(c);
+            } else {
+                return sb.toString();
+            }
+        }
+        return sb.toString();
+    }
+
+    private void addWord(String word, TrieNode root) {
+        TrieNode node = root;
+        for (char c: word.toCharArray()) {
+            node.childrenMap.putIfAbsent(c, new TrieNode());
+            node = node.childrenMap.get(c);
+            node.count++;
+        }
+        node.isWord = true;
+    }
+
+    class TrieNode{
+        Map<Character, TrieNode> childrenMap;
+        int count;
+        boolean isWord;
+        TrieNode() {
+            childrenMap = new HashMap<>();
+            isWord = false;
+            count = 0;
+        }
     }
 }

@@ -44,11 +44,16 @@ public class Sol135_Candy {
             }
         }
         return Arrays.stream(res).sum();
+//        int sum = 0;
+//        for (int re : res) {
+//            sum += re;
+//        }
+//        return sum;
     }
 
     public static void main(String[] args) {
         int[] ratings = {1,0,2};
         Sol135_Candy ss = new Sol135_Candy();
-        System.out.println(ss.candy(ratings));
+        System.out.println(ss.candy(ratings));  // 5
     }
 }

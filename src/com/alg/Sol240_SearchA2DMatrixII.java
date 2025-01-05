@@ -23,7 +23,7 @@ Given target = 5, return true.
 Given target = 20, return false.*/
 public class Sol240_SearchA2DMatrixII {
     public static boolean searchMatrix(int[][] matrix, int target) {
-        // start from bottom left
+        // start from bottom left, this would work equally well with a pointer initialized from top right
         // time O(n+m)
         // space O(1)
         int row = matrix.length - 1;

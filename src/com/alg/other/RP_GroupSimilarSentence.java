@@ -14,7 +14,7 @@ https://www.1point3acres.com/bbs/thread-911199-1-1.html
 给一个list of 同义词 和 一个list of sentences， 把相似的sentence group到一起
 ie：input: [("main", "primary"), ("main", "important"), ("rating", "score")]
  ["main email" , "secondary email", "primary email", "important email", "performance rating", "performance score"]
-output: [ ["main email", "primary email", "importan‍‍‌‍‍‌‍‌‌‌‌‍‍‍‌‍t email"], ["secondary email"], ["performance rating", "performance score"] ]
+output: [ ["main email", "primary email", "important email"], ["secondary email"], ["performance rating", "performance score"] ]
 注意 相似的sentence是指这个sentence中每个word要么相同要么是同义词，比较的时候只要比较每个word就行了
  */
 public class RP_GroupSimilarSentence {
@@ -47,6 +47,7 @@ public class RP_GroupSimilarSentence {
             }
             sentenceMap.computeIfAbsent(key.toString(), x -> new ArrayList<>()).add(sentence);
         }
+        System.out.println(sentenceMap);
         List<List<String>> res = new ArrayList<>();
         for (List<String> values : sentenceMap.values()) {
             res.add(values);

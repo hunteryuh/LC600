@@ -62,8 +62,8 @@ public class Sol113_PathSumII {
             // no return here;
             //sol.remove(sol.size() - 1);
         }
-        dfs(root.left,sum - root.val,sol, res);
-        dfs(root.right,sum - root.val,sol, res);
+        dfs2(root.left,sum - root.val,sol, res);
+        dfs2(root.right,sum - root.val,sol, res);
 
         sol.remove(sol.size() - 1); // remove the last integer
     }

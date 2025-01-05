@@ -1,6 +1,8 @@
 package com.alg;
 
 import java.util.ArrayList;
+import java.util.List;
+
 /*
 Given an array of strings words and a width maxWidth, format the text such that each line has exactly maxWidth characters and is fully (left and right) justified.
 
@@ -58,19 +60,20 @@ public class Sol68_TextJustification {
         int count = 0; // length of word[i-1]
         int last = 0;
 
-        for (int i = 0; i < words.length ; i++){
-            if ( count + words[i].length() + i - last > L){
+        for (int i = 0; i < words.length ; i++) {
+            if (count + words[i].length() + i - last > L) {
                 int spacenum = 0;
                 int extraspace = 0;
-                if ( i - last -1 > 0){
+                if (i - last - 1 > 0) {
                     spacenum = (L - count )/(i - last - 1);
-                    extraspace = ( L-count)%(i - last - 1);
+                    extraspace = (L-count)%(i - last - 1);
                 }
+
                 StringBuilder sb = new StringBuilder();
-                for ( int j = last; j < i; j++){
+                for (int j = last; j < i; j++) {
                     sb.append(words[j]);
-                    if ( j< i-1){
-                        for( int k = 0; k < spacenum; k++){
+                    if (j < i-1) {
+                        for(int k = 0; k < spacenum; k++){
                             sb.append(" ");
                         }
                         if (extraspace > 0){
@@ -90,6 +93,7 @@ public class Sol68_TextJustification {
             count += words[i].length();
 
         }
+
         StringBuilder ll = new StringBuilder();
         for (int i = last; i < words.length; i++){
             ll.append(words[i]);
@@ -97,20 +101,70 @@ public class Sol68_TextJustification {
                 ll.append(" ");
             }
         }
-        for ( int i =ll.length() ; i < L; i++){
+        for (int i =ll.length() ; i < L; i++) {
             ll.append(" "); // needed?
         }
         res.add(ll.toString());
         return res;
-
     }
 
     public static void main(String[] args) {
         String[] words = {"This", "is", "an", "example", "of", "text", "justification."};
         int t = 16;
-        ArrayList<String> result = fullJustify(words,t);
-        for (String s: result){
+        List<String> result = justifyText(words,t);
+        for (String s: result) {
             System.out.println(s);
         }
+    }
+
+    public static List<String> justifyText(String[] words, int maxWidth) {
+        List<String> res = new ArrayList<>();
+        int i = 0;
+        while (i < words.length) {
+            int width = words[i].length();
+            // position of last word in line
+            int last = i + 1;
+            while (last < words.length && width + words[last].length() + 1 <= maxWidth) {
+                width = width + words[last].length() + 1; // here with one space between words
+                last++;
+            }
+            StringBuilder sb = new StringBuilder();
+            int numofSpacer = last - i - 1;
+            System.out.println("last is :" + last);
+            System.out.println("num of spacers: " + numofSpacer);
+            // last line or only one word in this line, left-justified
+            if (last == words.length || numofSpacer == 0) {
+                sb.append(words[i]);
+                for (int j = i + 1; j < last; j++) {
+                    sb.append(" ").append(words[j]);  // if there is more than one word in the line
+                }
+                for (int j = sb.length(); j< maxWidth; j++) {
+                    sb.append(" ");
+                }
+            } else {
+                System.out.println("width is: " + width); // 4 + 1 + 2 + 1 + 2  = 10
+                int numOfSpaces = (maxWidth - width) / numofSpacer;  // (16 - 10) / 2 = 3 without basic one-space separator
+                System.out.println("num of spaces: " + numOfSpaces); // 3
+                // extra space
+                int numOfExtra = (maxWidth - width) % numofSpacer;  // 6 % 2 == 0
+                System.out.println("num of numOfExtra: " + numOfExtra);
+                for (int j = i; j < last; j++) {
+                    sb.append(words[j]);
+                    if (j < last - 1) {
+                        for (int k = 0; k <= numOfSpaces; k++) { // actual space: numOfSpaces + 1
+                            sb.append(" ");
+                        }
+                        if (numOfExtra > 0) {
+                            sb.append(" ");
+                            numOfExtra--;
+                        }
+                    }
+
+                }
+            }
+            res.add(sb.toString());
+            i = last;
+        }
+        return res;
     }
 }

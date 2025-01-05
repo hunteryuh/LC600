@@ -67,7 +67,7 @@ public class Sol564_FindtheClosestPalindrome {
             if (Math.abs(can - nl) < diff) {
                 diff = Math.abs(can - nl);
                 res = can;
-            } else if (Math.abs(can - nl ) == diff) {
+            } else if (Math.abs(can - nl) == diff) {
                 res = Math.min(res, can);
             }
         }
@@ -76,7 +76,6 @@ public class Sol564_FindtheClosestPalindrome {
     }
 
     private long getPalindrome(Long half, boolean isEven) {
-
         long res = half;
         if (!isEven) {
             half = half / 10;

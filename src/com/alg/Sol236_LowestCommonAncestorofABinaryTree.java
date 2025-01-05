@@ -122,7 +122,7 @@ public class Sol236_LowestCommonAncestorofABinaryTree {
         return false;
     }
 
-    // parent pointer, iterative
+    // parent pointer, iterative, lca
     Map<TreeNode, TreeNode> parents = new HashMap<>();
     public TreeNode lowestCA(TreeNode root, TreeNode p, TreeNode q) {
         dfs(null, root);

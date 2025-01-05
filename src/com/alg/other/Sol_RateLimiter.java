@@ -44,7 +44,7 @@ public class Sol_RateLimiter {
                 timings.poll();
             }
             //the remaining queue is the number of hits within the 1000 ms
-            if(timings.size() < MAX_HITS) {
+            if (timings.size() < MAX_HITS) {
                 //add the timeOfHit
                 timings.add(timeOfHit);
                 //update the holder

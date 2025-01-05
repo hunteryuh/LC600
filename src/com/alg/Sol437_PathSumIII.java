@@ -10,7 +10,8 @@ import java.util.Map;
 
 Find the number of paths that sum to a given value.
 
-The path does not need to start or end at the root or a leaf, but it must go downwards (traveling only from parent nodes to child nodes).
+The path does not need to start or end at the root or a leaf,
+but it must go downwards (traveling only from parent nodes to child nodes).
 
 The tree has no more than 1,000 nodes and the values are in the range -1,000,000 to 1,000,000.
 
@@ -48,7 +49,7 @@ public class Sol437_PathSumIII {
     private static int findPath(TreeNode root, int sum) {
         int res = 0;
         if (root == null) return res;
-        if ( sum == root.val){
+        if (sum == root.val) {
             res++;
         }
         res += findPath(root.left, sum - root.val);
@@ -56,6 +57,7 @@ public class Sol437_PathSumIII {
         return res;
     }
 
+    // https://leetcode.com/problems/path-sum-iii/solutions/1525060/easy-solution-using-java-dfs-map/
     // method 2, presum
     public static int pathSum2(TreeNode root, int sum){
         Map<Integer,Integer> map = new HashMap<>();
@@ -67,13 +69,13 @@ public class Sol437_PathSumIII {
         if ( root == null) return 0;
         sum += root.val;
         // check if there is a subarray equals to target
-        int res = map.getOrDefault(sum - target, 0);
+        int count = map.getOrDefault(sum - target, 0);
         map.put(sum, map.getOrDefault(sum,0)+1);
         // extend to left and right child
-        res += backtrack(root.left,sum, target, map) + backtrack(root.right,sum,target,map);
+        count += backtrack(root.left,sum, target, map) + backtrack(root.right,sum,target,map);
         // remove the current node so it won't affect other path
         map.put(sum, map.get(sum) - 1);
-        return res;
+        return count;
     }
 
 }

@@ -48,7 +48,7 @@ public class Sol662_MaximumWidthOfBinaryTree {
         queue.offer(new Pair(root, 1));
         int res = 1;
         while (!queue.isEmpty()) {
-            int size = queue.size();
+            int size = queue.size(); // determine the boundary between levels
             int left = 0;
             int right = 0;
             for (int i = 0; i < size; i++) {

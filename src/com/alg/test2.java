@@ -3,12 +3,21 @@ package com.alg;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Created by HAU on 7/6/2017.
  */
 public class test2 {
     public static void main(String[] args) {
+
+        Stack<Integer> myStack = new Stack<>();
+        myStack.push(1);
+        myStack.push(2);
+        for (int i : myStack) {
+            System.out.println("instack ");
+            System.out.println(i); // 1, 2
+        }
 
         final List<String> list1 = new ArrayList<>(Arrays.asList("Hello", "World!", "How", "Are", "You"));
         System.out.println(list1);

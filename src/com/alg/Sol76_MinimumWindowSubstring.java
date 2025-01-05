@@ -24,7 +24,7 @@ contain all the characters in T in complexity O(n).
 
     // https://www.jiuzhang.com/problem/minimum-window-substring/
 public class Sol76_MinimumWindowSubstring {
-    public static  String minWindow(String s, String t){
+    public static String minWindow(String s, String t){
         // s : source; t: target to find
         if (t.length() > s.length()) return "";
         String result = "";
@@ -217,5 +217,45 @@ public class Sol76_MinimumWindowSubstring {
         }
         if (length > s.length()) return "";
         return s.substring(resLeft, resLeft + length);
+    }
+
+    // new attempt 11/3/2024, worked
+    public String minWindow5(String s, String t) {
+        if (t.length() > s.length()) return "";
+        Map<Character, Integer> tMap = new HashMap<>();
+        for (char c : t.toCharArray()) {
+            tMap.put(c, tMap.getOrDefault(c, 0) + 1);
+        }
+        Map<Character, Integer> sMap = new HashMap<>();
+        int left = 0;
+        int resultLeft = 0;
+        int match = 0;
+        int minLength = s.length() + 1;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (tMap.containsKey(c)) {
+                sMap.put(c, sMap.getOrDefault(c, 0) + 1);
+                if (sMap.get(c).equals(tMap.get(c))) {
+                    match++;
+                }
+            }
+            while (match == tMap.size()) {
+                if (i - left + 1 < minLength) {
+                    minLength = i - left + 1;
+                    resultLeft = left;
+                }
+                char cl = s.charAt(left);
+                if (tMap.containsKey(cl)) {
+                    sMap.put(cl, sMap.get(cl) - 1);
+                    if (sMap.get(cl) < tMap.get(cl)) {
+                        match--;
+                    }
+                }
+                left++;
+            }
+
+        }
+        if (minLength > s.length()) return "";
+        return s.substring(resultLeft, resultLeft + minLength);
     }
 }

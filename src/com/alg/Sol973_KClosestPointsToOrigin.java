@@ -22,6 +22,7 @@ We only want the closest k = 1 points from the origin, so the answer is just [[-
 public class Sol973_KClosestPointsToOrigin {
 
     // max heap/max priority queue, capped at k elements  time: O(NlogK)
+    // maintain top K smallest elements from the first one to current one
     // https://leetcode.com/problems/k-closest-points-to-origin/solution/
     public static int[][] kClosest(int[][] points, int k) {
         PriorityQueue<int[]> pq = new PriorityQueue<>(
